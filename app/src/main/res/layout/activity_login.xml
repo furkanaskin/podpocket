@@ -37,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
+                android:text="@{viewModel.userName}"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -52,6 +53,7 @@
             android:layout_marginStart="32dp"
             android:hint="@string/password"
             app:boxStrokeWidth="2dp"
+            app:passwordToggleEnabled="true"
             android:textColorHint="@color/textColor"
             app:boxStrokeColor="@color/buttonStrokeColor">
 
@@ -60,18 +62,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:text="@{viewModel.password}"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
+        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+            android:id="@+id/textViewForgetPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tilPassword"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="Şifremi Unuttum" />
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:layout_below="@id/tilPassword"
-            android:layout_marginTop="50dp"
-            android:text="@string/sign_in"
+            android:layout_below="@id/textViewForgetPassword"
+            android:layout_marginTop="24dp"
+            android:onClick="@{() -> viewModel.buttonClick()}"
+            android:text="@{viewModel.buttonText}"
             android:backgroundTint="@color/buttonStrokeColor"/>
+
+
+        <com.furkanaskin.app.podpocket.ui.PodPocketLightTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonLogin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@{viewModel.summaryText}" />
     </RelativeLayout>
 </layout>

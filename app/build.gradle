@@ -82,14 +82,16 @@ dependencies {
     implementation "androidx.cardview:cardview:$support_version"
 
     //firebase
-    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-database:16.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.2.1'
 
     //timber
     implementation rootProject.ext.timber
 
     //crashlytics
     implementation(rootProject.ext.crashlytics) {
-        transitive = true;
+        transitive = true
     }
 
     //di

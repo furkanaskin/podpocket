@@ -7,4 +7,6 @@
     <string name="register">Kayıt Ol</string>
     <string name="email">E-posta Adresiniz</string>
     <string name="password">Parolanız</string>
+    <string name="already_register">Henüz üye değil misiniz?</string>
+    <string name="already_have_account">Hesabınız var mı?</string>
 </resources>
