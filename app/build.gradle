@@ -1,0 +1,154 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.25.4'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+def STRING = 'String'
+def BUILD_TIME = 'BUILD_TIME'
+
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+android {
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion "28.0.3"
+
+    defaultConfig {
+        applicationId "com.furkanaskin.app.podpocket"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "0.0.1"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField STRING, BUILD_TIME, "\"${rootProject.ext.buildTime}\""
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            ext.enableCrashlytics = false
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/atomicfu.kotlin_module'
+        exclude 'META-INF/rxjava.properties'
+    }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //supportLib
+    implementation "androidx.legacy:legacy-support-v4:$support_version"
+    implementation "androidx.appcompat:appcompat:$support_version"
+    implementation "com.google.android.material:material:$support_version"
+    implementation "androidx.recyclerview:recyclerview:$support_version"
+    implementation "androidx.cardview:cardview:$support_version"
+
+    //firebase
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+
+    //timber
+    implementation rootProject.ext.timber
+
+    //crashlytics
+    implementation(rootProject.ext.crashlytics) {
+        transitive = true;
+    }
+
+    //di
+    implementation rootProject.ext.dagger
+    kapt rootProject.ext.daggerApt
+    //implementation rootProject.ext.daggerSupport
+    //annotationProcessor rootProject.ext.daggerAnnotation
+
+    //rx
+    implementation rootProject.ext.rxJava
+    implementation rootProject.ext.rxAndroid
+    implementation rootProject.ext.rxKotlin
+
+    //net
+    implementation rootProject.ext.retrofit
+    implementation rootProject.ext.okHttp
+    implementation rootProject.ext.gson
+    implementation rootProject.ext.rxJavaAdapter
+    implementation rootProject.ext.gsonConverter
+
+    //picasso
+    implementation rootProject.ext.picasso
+
+    //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+
+    // anko
+    implementation "org.jetbrains.anko:anko:$anko_version"
+    implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
+
+    //arch-comp Lifecycles, LiveData, and ViewModel
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
+    //arch-comp Room
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
+    //Paging
+    implementation "android.arch.paging:runtime:$paging_version"
+
+    // data binding
+    kapt "com.android.databinding:compiler:3.1.0"
+    annotationProcessor "com.android.databinding:compiler:3.1.4"
+
+    //test
+    testImplementation 'junit:junit:4.12'
+    testImplementation "android.arch.core:core-testing:$lifecycle_version"
+    testImplementation "android.arch.persistence.room:testing:$room_version"
+    testImplementation "android.arch.paging:common:$paging_version"
+
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs'
+    })
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+}
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android-extensions'
+

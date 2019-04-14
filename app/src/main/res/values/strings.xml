@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Podpocket</string>
+    <string name="position" translatable="false">position</string>
+    <string name="title">Title</string>
+    <string name="hello">Merhaba!</string>
+    <string name="sign_in">Giriş Yap</string>
+    <string name="register">Kayıt Ol</string>
+    <string name="email">E-posta Adresiniz</string>
+    <string name="password">Parolanız</string>
+</resources>
