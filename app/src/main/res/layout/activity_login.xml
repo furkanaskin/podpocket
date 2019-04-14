@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:text="@{viewModel.userName}"
+                android:text="@={viewModel.userName}"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,9 +62,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:text="@{viewModel.password}"
+                android:text="@={viewModel.password}"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tilPassword"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:checked="@={viewModel.agreement}"
+            app:visibility="@{viewModel.agreementView}" />
+
+        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/agreement"
+            android:layout_toEndOf="@+id/agreement"
+            app:visibility="@{viewModel.agreementView}" />
 
         <com.furkanaskin.app.podpocket.ui.PodPocketTextView
             android:id="@+id/textViewForgetPassword"
@@ -74,6 +91,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
             android:text="Şifremi Unuttum" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonLogin"
             android:layout_width="match_parent"
@@ -93,6 +111,7 @@
             android:layout_below="@id/buttonLogin"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
+            android:onClick="@{() -> viewModel.alreadyHasAccount()}"
             android:fontFamily="@font/montserrat_regular"
             android:text="@{viewModel.summaryText}" />
     </RelativeLayout>

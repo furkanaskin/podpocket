@@ -1,6 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.login
 
 import android.app.Application
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.databinding.ObservableField
@@ -9,8 +10,6 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 
 /**
  * Created by Furkan on 14.04.2019
@@ -31,19 +30,13 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     var registerSuccess: ObservableField<Boolean> = ObservableField(false)
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
 
-    // ****************************************************************
-    // XML'deki buttonClick inflate edilemediği için build fail oluyor.
-    // ****************************************************************
-
-    private var mDatabase: FirebaseDatabase? = null
-    private var mDatabaseReference: DatabaseReference? = null
-    private var mAuth: FirebaseAuth? = null
+    private lateinit var mAuth: FirebaseAuth
 
     init {
         (app as? Podpocket)?.component?.inject(this)
     }
 
-    private var type: Int = Constants.LoginActivityType.LOGIN_TYPE
+    private var type: Int = Constants.LoginActivityType.REGISTER_TYPE
 
     fun setType(type: Int) {
         this.type = type
@@ -58,7 +51,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         setType(if (type == Constants.LoginActivityType.LOGIN_TYPE) Constants.LoginActivityType.REGISTER_TYPE else Constants.LoginActivityType.LOGIN_TYPE)
     }
 
-    private fun buttonClick() {
+    fun buttonClick() {
         if (type == Constants.LoginActivityType.LOGIN_TYPE) {
 
         } else if (type == Constants.LoginActivityType.REGISTER_TYPE) {
@@ -90,30 +83,26 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         return result
     }
 
-    private fun getData(): HashMap<String, Any> {
-        val data = HashMap<String, Any>()
-        data.put("Email", userName.get() ?: "")
-
-        return data
-    }
-
     private fun registerClicked() {
         if (getValidationMessages()) {
-            trackEvent("", getData())
             initFirebase()
-            mAuth?.createUserWithEmailAndPassword(userName.get()!!, password.get()!!)
+            mAuth.createUserWithEmailAndPassword(userName.get()!!, password.get()!!)
                     ?.addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             registerSuccess.set(true)
                             verifyEmail()
+                        } else {
+                            Log.v("qqq", task.exception.toString())
                         }
+                    }.addOnFailureListener { task ->
+                        Log.v("Fail", "firebase")
                     }
 
         }
     }
 
     private fun verifyEmail() {
-        val mUser = mAuth!!.currentUser
+        val mUser = mAuth.currentUser
         mUser!!.sendEmailVerification().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 sendMailSuccess.set(true)
@@ -121,9 +110,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         }
     }
 
-    fun initFirebase() {
-        mDatabase = FirebaseDatabase.getInstance()
-        mDatabaseReference = mDatabase!!.reference.child("Users")
+    private fun initFirebase() {
         mAuth = FirebaseAuth.getInstance()
     }
 }
