@@ -32,6 +32,6 @@
             android:text="@string/app_name"
             android:layout_below="@id/imageViewAppLogo"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/colorAccent"/>
+            android:textColor="@color/colorPrimary" />
     </RelativeLayout>
 </layout>

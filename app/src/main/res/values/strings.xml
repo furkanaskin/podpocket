@@ -9,4 +9,10 @@
     <string name="password">Parolanız</string>
     <string name="already_register">Henüz üye değil misiniz?</string>
     <string name="already_have_account">Hesabınız var mı?</string>
+    <string name="agreement">Üye olurken Kullanım Şartlarını ve Sözleşmesi’ni kabul ediyorum.</string>
+    <string name="agreement_part_first">Kullanım</string>
+    <string name="agreement_part_second"> Şartlarını </string>
+    <string name="agreement_part_third"> ve </string>
+    <string name="agreement_part_fourth">Sözleşmesi’ni </string>
+    <string name="agreement_message">\"Adıma yapılacak herhangi bir işlemden google play sorumludur.\" :)</string>
 </resources>

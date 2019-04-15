@@ -1,8 +1,14 @@
 package com.furkanaskin.app.podpocket.ui.login
 
+import android.content.DialogInterface
+import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
+import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.ActivityLoginBinding
+import com.jaychang.st.SimpleText
+import kotlinx.android.synthetic.main.activity_login.*
 
 /**
  * Created by Furkan on 14.04.2019
@@ -13,6 +19,56 @@ class LoginActivity : BaseActivity<LoginViewModel,ActivityLoginBinding>(LoginVie
 
     override fun initViewModel(viewModel: LoginViewModel) {
         binding.viewModel = viewModel
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        init()
+
+        val simpleText = SimpleText.from(getString(R.string.agreement))
+                .first(getString(R.string.agreement_part_first))
+                .textColor(R.color.colorPrimary)
+                .pressedTextColor(R.color.colorPrimary)
+                .onClick(textViewAgreement) { text, range, tag ->
+                    showAgreementDialog()
+                }
+                .first(getString(R.string.agreement_part_second))
+                .textColor(R.color.colorPrimary)
+                .pressedTextColor(R.color.colorPrimary)
+                .onClick(textViewAgreement) { text, range, tag ->
+                    showAgreementDialog()
+                }
+                .first(getString(R.string.agreement_part_third))
+                .textColor(R.color.textColor)
+                .pressedTextColor(R.color.colorPrimary)
+                .onClick(textViewAgreement) { text, range, tag ->
+                    showAgreementDialog()
+                }
+                .first(getString(R.string.agreement_part_fourth))
+                .textColor(R.color.colorPrimary)
+                .pressedTextColor(R.color.colorPrimary)
+                .onClick(textViewAgreement) { text, range, tag ->
+                    showAgreementDialog()
+                }
+
+
+        textViewAgreement.text = simpleText
+    }
+
+    private fun init() {
+        val viewType = intent.getIntExtra(Constants.IntentName.LOGIN_ACTIVITY_TYPE, Constants.LoginActivityType.LOGIN_TYPE)
+        viewModel.setType(viewType)
+    }
+
+    private fun showAgreementDialog() {
+        AlertDialog.Builder(this)
+                .setMessage(R.string.agreement_message)
+                .setNeutralButton("Tamam"
+                ) { dialogInterface: DialogInterface, i: Int ->
+                    dialogInterface.cancel()
+                }
+                .create()
+                .show()
     }
 
 }

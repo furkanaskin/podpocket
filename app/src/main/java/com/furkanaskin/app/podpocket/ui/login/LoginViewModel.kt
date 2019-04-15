@@ -36,7 +36,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         (app as? Podpocket)?.component?.inject(this)
     }
 
-    private var type: Int = Constants.LoginActivityType.REGISTER_TYPE
+    private var type: Int = Constants.LoginActivityType.LOGIN_TYPE
 
     fun setType(type: Int) {
         this.type = type
@@ -45,6 +45,10 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         agreementView.set(type == Constants.LoginActivityType.REGISTER_TYPE)
         buttonText.set(if (type == Constants.LoginActivityType.LOGIN_TYPE) getApplication<Application>().getString(R.string.sign_in) else getApplication<Application>().getString(R.string.register))
         summaryText.set(if (type == Constants.LoginActivityType.LOGIN_TYPE) getApplication<Application>().getString(R.string.already_register) else getApplication<Application>().getString(R.string.already_have_account))
+    }
+
+    private fun getType() {
+
     }
 
     fun alreadyHasAccount() {
@@ -86,15 +90,14 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     private fun registerClicked() {
         if (getValidationMessages()) {
             initFirebase()
-            mAuth.createUserWithEmailAndPassword(userName.get()!!, password.get()!!)
-                    ?.addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            registerSuccess.set(true)
-                            verifyEmail()
-                        } else {
-                            Log.v("qqq", task.exception.toString())
-                        }
-                    }.addOnFailureListener { task ->
+            mAuth.createUserWithEmailAndPassword(userName.get()!!, password.get()!!).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    registerSuccess.set(true)
+                    verifyEmail()
+                } else {
+                    Log.v("qqq", task.exception.toString())
+                }
+            }.addOnFailureListener { task ->
                         Log.v("Fail", "firebase")
                     }
 

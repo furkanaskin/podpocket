@@ -105,6 +105,9 @@ dependencies {
     implementation rootProject.ext.rxAndroid
     implementation rootProject.ext.rxKotlin
 
+    //Spannable textView
+    implementation 'com.jaychang:simpletext:2.0.1'
+
     //net
     implementation rootProject.ext.retrofit
     implementation rootProject.ext.okHttp
