@@ -15,4 +15,5 @@
     <string name="agreement_part_third"> ve </string>
     <string name="agreement_part_fourth">Sözleşmesi’ni </string>
     <string name="agreement_message">\"Adıma yapılacak herhangi bir işlemden google play sorumludur.\" :)</string>
+    <string name="forget_password">Şifremi Unuttum</string>
 </resources>

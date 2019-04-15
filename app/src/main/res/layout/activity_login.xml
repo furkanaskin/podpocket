@@ -91,7 +91,7 @@
             android:layout_below="@id/tilPassword"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:text="Şifremi Unuttum"
+            android:text="@string/forget_password"
             app:visibility="@{viewModel.forgetPasswordView}" />
 
         <com.google.android.material.button.MaterialButton

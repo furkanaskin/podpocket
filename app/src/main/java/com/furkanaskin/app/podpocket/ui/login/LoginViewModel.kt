@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.login
 
 import android.app.Application
-import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.databinding.ObservableField
@@ -10,6 +9,7 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
 import com.google.firebase.auth.FirebaseAuth
+import timber.log.Timber
 
 /**
  * Created by Furkan on 14.04.2019
@@ -94,12 +94,10 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                 if (task.isSuccessful) {
                     registerSuccess.set(true)
                     verifyEmail()
-                } else {
-                    Log.v("qqq", task.exception.toString())
                 }
             }.addOnFailureListener { task ->
-                        Log.v("Fail", "firebase")
-                    }
+                Timber.e(task.cause)
+            }
 
         }
     }
