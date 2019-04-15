@@ -1,6 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.login
 
 import android.app.Application
+import android.content.Intent
 import android.util.Patterns
 import android.widget.Toast
 import androidx.databinding.ObservableField
@@ -8,6 +9,7 @@ import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
+import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordActivity
 import com.google.firebase.auth.FirebaseAuth
 import timber.log.Timber
 
@@ -25,6 +27,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     var agreementView: ObservableField<Boolean> = ObservableField(false)
     var buttonText: ObservableField<String> = ObservableField(getApplication<Application>().getString(R.string.sign_in))
     var summaryText: ObservableField<String> = ObservableField(getApplication<Application>().getString(R.string.already_register))
+    var progressBarView: ObservableField<Boolean> = ObservableField(false)
 
     var loginSuccess: ObservableField<Boolean> = ObservableField(false)
     var registerSuccess: ObservableField<Boolean> = ObservableField(false)
@@ -47,17 +50,13 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         summaryText.set(if (type == Constants.LoginActivityType.LOGIN_TYPE) getApplication<Application>().getString(R.string.already_register) else getApplication<Application>().getString(R.string.already_have_account))
     }
 
-    private fun getType() {
-
-    }
-
     fun alreadyHasAccount() {
         setType(if (type == Constants.LoginActivityType.LOGIN_TYPE) Constants.LoginActivityType.REGISTER_TYPE else Constants.LoginActivityType.LOGIN_TYPE)
     }
 
     fun buttonClick() {
         if (type == Constants.LoginActivityType.LOGIN_TYPE) {
-
+            loginClicked()
         } else if (type == Constants.LoginActivityType.REGISTER_TYPE) {
             registerClicked()
         }
@@ -89,16 +88,35 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     private fun registerClicked() {
         if (getValidationMessages()) {
+            progressBarView.set(true)
             initFirebase()
             mAuth.createUserWithEmailAndPassword(userName.get()!!, password.get()!!).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     registerSuccess.set(true)
                     verifyEmail()
+                    progressBarView.set(false)
                 }
             }.addOnFailureListener { task ->
                 Timber.e(task.cause)
+                progressBarView.set(false)
             }
 
+        }
+    }
+
+    private fun loginClicked() {
+        if (getValidationMessages()) {
+            progressBarView.set(true)
+            initFirebase()
+            mAuth.signInWithEmailAndPassword(userName.get()!!, password.get()!!).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    loginSuccess.set(true)
+                    progressBarView.set(false)
+                }
+            }.addOnFailureListener { task ->
+                Timber.e(task.cause)
+                progressBarView.set(false)
+            }
         }
     }
 
@@ -113,5 +131,15 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     private fun initFirebase() {
         mAuth = FirebaseAuth.getInstance()
+
+    }
+
+    fun forgetPasswordClicked() {
+
+        val intent = Intent(getApplication(), ForgetPasswordActivity::class.java)
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        getApplication<Application>().startActivity(intent)
+
     }
 }

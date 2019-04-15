@@ -5,12 +5,11 @@ import android.content.SharedPreferences
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.di.module.ApplicationModule
 import com.furkanaskin.app.podpocket.di.module.DatabaseModule
-import com.furkanaskin.app.podpocket.ui.main.MainActivityViewModel
-
 import com.furkanaskin.app.podpocket.di.module.NetModule
+import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordViewModel
 import com.furkanaskin.app.podpocket.ui.login.LoginViewModel
+import com.furkanaskin.app.podpocket.ui.main.MainActivityViewModel
 import com.furkanaskin.app.podpocket.ui.splash.SplashActivityViewModel
-
 import dagger.Component
 import javax.inject.Singleton
 
@@ -33,4 +32,6 @@ interface ApplicationComponent {
     fun inject(splashActivityViewModel: SplashActivityViewModel)
 
     fun inject(loginViewModel: LoginViewModel)
+
+    fun inject(forgetPasswordViewModel: ForgetPasswordViewModel)
 }

@@ -3,6 +3,7 @@ package com.furkanaskin.app.podpocket.ui.login
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.databinding.Observable
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.core.Constants
@@ -53,6 +54,14 @@ class LoginActivity : BaseActivity<LoginViewModel,ActivityLoginBinding>(LoginVie
 
 
         textViewAgreement.text = simpleText
+
+        viewModel.registerSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                showRegisterSuccessDialog()
+            }
+
+        })
+
     }
 
     private fun init() {
@@ -63,6 +72,17 @@ class LoginActivity : BaseActivity<LoginViewModel,ActivityLoginBinding>(LoginVie
     private fun showAgreementDialog() {
         AlertDialog.Builder(this)
                 .setMessage(R.string.agreement_message)
+                .setNeutralButton("Tamam"
+                ) { dialogInterface: DialogInterface, i: Int ->
+                    dialogInterface.cancel()
+                }
+                .create()
+                .show()
+    }
+
+    private fun showRegisterSuccessDialog() {
+        AlertDialog.Builder(this)
+                .setMessage(R.string.register_success_dialog)
                 .setNeutralButton("Tamam"
                 ) { dialogInterface: DialogInterface, i: Int ->
                     dialogInterface.cancel()

@@ -46,7 +46,7 @@ ext{
     retrofitVersion = '2.5.0'
     okHttpVersion = '3.14.1'
     picassoVersion = '2.71828'
-    crashlyticsVersion = '2.9.4'
+    crashlyticsVersion = '2.9.9'
     gsonVersion = '2.8.5'
     lifecycle_version = "2.0.0"
     room_version = "1.1.1"

@@ -114,6 +114,9 @@ dependencies {
     implementation rootProject.ext.gson
     implementation rootProject.ext.rxJavaAdapter
     implementation rootProject.ext.gsonConverter
+    
+    //material progressbar
+    implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
 
     //picasso
     implementation rootProject.ext.picasso

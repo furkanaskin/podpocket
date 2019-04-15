@@ -16,4 +16,8 @@
     <string name="agreement_part_fourth">Sözleşmesi’ni </string>
     <string name="agreement_message">\"Adıma yapılacak herhangi bir işlemden google play sorumludur.\" :)</string>
     <string name="forget_password">Şifremi Unuttum</string>
+    <string name="mail_delay">*Parola sıfırlama mailinin gelmesi biraz süre alabilir.</string>
+    <string name="reset_password">Parolayı Sıfırla</string>
+    <string name="reset_password_dialog">Parola sıfırlama maili gönderildi.</string>
+    <string name="register_success_dialog">Hesabınız oluşturuldu! Lütfen mail gelen kutunuzu kontrol ediniz.</string>
 </resources>

@@ -45,18 +45,16 @@
             android:layout_height="wrap_content"
             android:text="@string/sign_in"
             android:elevation="2dp"
-            android:layout_below="@id/textViewHello"
-            android:layout_marginTop="175dp"
             android:layout_marginStart="30dp"
             android:onClick="@{() -> viewModel.loginClick()}"
             android:layout_marginEnd="30dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textColorHint="@color/buttonStrokeColor"
             app:strokeColor="@color/buttonStrokeColor"
             app:strokeWidth="2dp"
             app:cornerRadius="50dp"
             android:textColor="@color/colorPrimary"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            backgroundTint="@android:color/white"/>
+            android:layout_above="@id/buttonRegister" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonRegister"
@@ -64,10 +62,11 @@
             android:layout_height="wrap_content"
             android:text="@string/register"
             android:textColor="@android:color/white"
-            android:layout_below="@id/buttonLogin"
             android:layout_marginTop="20dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
             android:onClick="@{() -> viewModel.registerClick()}"
             app:strokeColor="@android:color/white"
             app:cornerRadius="50dp"
