@@ -10,7 +10,8 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordActivity
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.*
 import timber.log.Timber
 
 /**
@@ -95,12 +96,10 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                     registerSuccess.set(true)
                     verifyEmail()
                     progressBarView.set(false)
+                } else {
+                    checkFirebaseCredentials(task)
                 }
-            }.addOnFailureListener { task ->
-                Timber.e(task.cause)
-                progressBarView.set(false)
             }
-
         }
     }
 
@@ -112,10 +111,10 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                 if (task.isSuccessful) {
                     loginSuccess.set(true)
                     progressBarView.set(false)
+                } else {
+                    checkFirebaseCredentials(task)
+                    progressBarView.set(false)
                 }
-            }.addOnFailureListener { task ->
-                Timber.e(task.cause)
-                progressBarView.set(false)
             }
         }
     }
@@ -131,6 +130,42 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     private fun initFirebase() {
         mAuth = FirebaseAuth.getInstance()
+
+    }
+
+    private fun checkFirebaseCredentials(task: Task<AuthResult>) {
+        progressBarView.set(true)
+        val errorType = task.exception
+        var errorMessage = ""
+
+        when (errorType) {
+
+            is FirebaseAuthInvalidCredentialsException -> {
+                errorMessage = "Lütfen mail adresi ve şifrenizi kontrol ediniz."
+                progressBarView.set(false)
+            }
+            is FirebaseAuthWeakPasswordException -> {
+                errorMessage = "Lütfen daha güçlü bir parola deneyiniz."
+                progressBarView.set(false)
+            }
+            is FirebaseAuthUserCollisionException -> {
+                errorMessage = "Zaten böyle bir kullanıcı var."
+                progressBarView.set(false)
+            }
+            is FirebaseAuthInvalidUserException -> {
+                errorMessage = "Böyle bir kullanıcı bulunamadı."
+                progressBarView.set(false)
+            }
+            else -> {
+                Timber.v(errorType.toString())
+                errorMessage = "Beklenmedik bir hata oluştu.."
+                progressBarView.set(false)
+            }
+        }
+
+        if (!errorMessage.isNullOrEmpty()) {
+            Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_LONG).show()
+        }
 
     }
 

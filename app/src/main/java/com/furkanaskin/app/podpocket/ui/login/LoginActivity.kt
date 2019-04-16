@@ -1,6 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.login
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.Observable
@@ -8,6 +9,7 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.ActivityLoginBinding
+import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.jaychang.st.SimpleText
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -58,6 +60,21 @@ class LoginActivity : BaseActivity<LoginViewModel,ActivityLoginBinding>(LoginVie
         viewModel.registerSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
                 showRegisterSuccessDialog()
+                viewModel.setType(Constants.LoginActivityType.LOGIN_TYPE)
+            }
+
+        })
+
+        viewModel.loginSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                async {
+                    Thread.sleep(100)
+                    val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+                    runOnUiThread {
+                        startActivity(intent)
+                        finish()
+                    }
+                }
             }
 
         })

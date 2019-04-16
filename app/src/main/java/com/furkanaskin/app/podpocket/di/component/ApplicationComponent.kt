@@ -6,9 +6,16 @@ import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.di.module.ApplicationModule
 import com.furkanaskin.app.podpocket.di.module.DatabaseModule
 import com.furkanaskin.app.podpocket.di.module.NetModule
+import com.furkanaskin.app.podpocket.ui.bookcase.BookCaseViewModel
+import com.furkanaskin.app.podpocket.ui.dashboard.DashboardViewModel
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordViewModel
+import com.furkanaskin.app.podpocket.ui.home.HomeViewModel
 import com.furkanaskin.app.podpocket.ui.login.LoginViewModel
 import com.furkanaskin.app.podpocket.ui.main.MainActivityViewModel
+import com.furkanaskin.app.podpocket.ui.player.PlayerViewModel
+import com.furkanaskin.app.podpocket.ui.profile.ProfileViewModel
+import com.furkanaskin.app.podpocket.ui.search.SearchViewModel
+import com.furkanaskin.app.podpocket.ui.settings.SettingsViewModel
 import com.furkanaskin.app.podpocket.ui.splash.SplashActivityViewModel
 import dagger.Component
 import javax.inject.Singleton
@@ -34,4 +41,18 @@ interface ApplicationComponent {
     fun inject(loginViewModel: LoginViewModel)
 
     fun inject(forgetPasswordViewModel: ForgetPasswordViewModel)
+
+    fun inject(dashboardViewModel: DashboardViewModel)
+
+    fun inject(homeViewModel: HomeViewModel)
+
+    fun inject(searchViewModel: SearchViewModel)
+
+    fun inject(bookCaseViewModel: BookCaseViewModel)
+
+    fun inject(profileViewModel: ProfileViewModel)
+
+    fun inject(playerViewModel: PlayerViewModel)
+
+    fun inject(settingsViewModel: SettingsViewModel)
 }
