@@ -39,7 +39,7 @@ ext {
     targetSdkVersion = 28
     minSdkVersion = 21
 
-    support_version = '1.0.0-rc02'
+    support_version = '1.0.0'
     rxJavaVersion = '2.1.14'
     rxKotlinVersion = '2.2.0'
     timberVersion = '4.7.0'
@@ -54,11 +54,11 @@ ext {
     paging_version = "1.0.0"
     coroutines_version = "1.2.0"
     anko_version = "0.10.8"
-    navigationVersion = "2.0.0"
+    navigationVersion = "1.0.0-rc02"
 
     //navigation
-    navigationFragment = "androidx.navigation:navigation-fragment:$navigationVersion"
-    navigationUI = "androidx.navigation:navigation-ui:$navigationVersion"
+    navigationFragment = "android.arch.navigation:navigation-fragment-ktx:$navigationVersion"
+    navigationUI = "android.arch.navigation:navigation-ui-ktx:$navigationVersion"
 
     //rx
     rxJava = "io.reactivex.rxjava2:rxjava:$rxJavaVersion"

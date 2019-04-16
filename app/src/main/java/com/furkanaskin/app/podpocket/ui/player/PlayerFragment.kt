@@ -10,4 +10,8 @@ import com.furkanaskin.app.podpocket.databinding.FragmentPlayerBinding
 
 class PlayerFragment : BaseFragment<PlayerViewModel, FragmentPlayerBinding>(PlayerViewModel::class.java) {
     override fun getLayoutRes(): Int = R.layout.fragment_player
+
+    override fun init() {
+        mBinding.viewModel = viewModel
+    }
 }

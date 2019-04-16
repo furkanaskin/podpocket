@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_login.*
  * Created by Furkan on 14.04.2019
  */
 
-class LoginActivity : BaseActivity<LoginViewModel,ActivityLoginBinding>(LoginViewModel::class.java){
+class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginViewModel::class.java) {
     override fun getLayoutRes(): Int = R.layout.activity_login
 
     override fun initViewModel(viewModel: LoginViewModel) {
@@ -67,14 +67,14 @@ class LoginActivity : BaseActivity<LoginViewModel,ActivityLoginBinding>(LoginVie
 
         viewModel.loginSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-                async({
-                    Thread.sleep(100)
-                    val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
-                    runOnUiThread {
-                        startActivity(intent)
-                        finish()
-                    }
-                })
+
+                Thread.sleep(100)
+                val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+                runOnUiThread {
+                    startActivity(intent)
+                    finish()
+                }
+
             }
 
         })

@@ -10,4 +10,7 @@ import com.furkanaskin.app.podpocket.databinding.FragmentBookCaseBinding
 
 class BookCaseFragment : BaseFragment<BookCaseViewModel, FragmentBookCaseBinding>(BookCaseViewModel::class.java) {
     override fun getLayoutRes(): Int = R.layout.fragment_book_case
+    override fun init() {
+        mBinding.viewModel = viewModel
+    }
 }

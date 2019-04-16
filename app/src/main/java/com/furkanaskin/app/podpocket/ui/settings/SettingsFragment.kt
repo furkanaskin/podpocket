@@ -10,4 +10,7 @@ import com.furkanaskin.app.podpocket.databinding.FragmentSettingsBinding
 
 class SettingsFragment : BaseFragment<SettingsViewModel, FragmentSettingsBinding>(SettingsViewModel::class.java) {
     override fun getLayoutRes(): Int = R.layout.fragment_settings
+    override fun init() {
+        mBinding.viewModel = viewModel
+    }
 }

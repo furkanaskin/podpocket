@@ -1,3 +1,11 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
+
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
@@ -8,15 +16,9 @@ buildscript {
     }
 }
 
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: "androidx.navigation.safeargs"
-
 def STRING = 'String'
 def BUILD_TIME = 'BUILD_TIME'
 
-apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -163,6 +165,4 @@ repositories {
     mavenCentral()
 }
 
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'kotlin-android-extensions'
 

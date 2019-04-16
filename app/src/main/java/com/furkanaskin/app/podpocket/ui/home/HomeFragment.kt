@@ -10,4 +10,8 @@ import com.furkanaskin.app.podpocket.databinding.FragmentHomeBinding
 
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewModel::class.java) {
     override fun getLayoutRes(): Int = R.layout.fragment_home
+
+    override fun init() {
+        mBinding.viewModel = viewModel
+    }
 }

@@ -10,4 +10,7 @@ import com.furkanaskin.app.podpocket.databinding.FragmentSearchBinding
 
 class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(SearchViewModel::class.java) {
     override fun getLayoutRes(): Int = R.layout.fragment_search
+    override fun init() {
+        mBinding.viewModel = viewModel
+    }
 }
