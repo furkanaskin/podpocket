@@ -9,10 +9,14 @@ import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
+import com.furkanaskin.app.podpocket.db.AppDatabase
+import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordActivity
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
+import org.jetbrains.anko.doAsync
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Created by Furkan on 14.04.2019
@@ -35,6 +39,9 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
 
     private lateinit var mAuth: FirebaseAuth
+
+    @Inject
+    lateinit var db: AppDatabase
 
     init {
         (app as? Podpocket)?.component?.inject(this)
@@ -95,6 +102,21 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                 if (task.isSuccessful) {
                     registerSuccess.set(true)
                     verifyEmail()
+
+                    val user = UserEntity(3,
+                            mAuth.currentUser?.uid,
+                            userName.get()!!,
+                            password.get()!!,
+                            "",
+                            "",
+                            0,
+                            "")
+
+                    doAsync {
+                        db.userDao().insertUser(user)
+                    }
+
+
                     progressBarView.set(false)
                 } else {
                     checkFirebaseCredentials(task)

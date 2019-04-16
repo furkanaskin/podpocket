@@ -150,6 +150,9 @@ dependencies {
     kapt "com.android.databinding:compiler:3.1.4"
     annotationProcessor "com.android.databinding:compiler:3.1.4"
 
+    //android debug database
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+
     //test
     testImplementation 'junit:junit:4.12'
     testImplementation "android.arch.core:core-testing:$lifecycle_version"

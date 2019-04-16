@@ -1,0 +1,59 @@
+package com.furkanaskin.app.podpocket.db.entities
+
+import android.os.Parcel
+import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.furkanaskin.app.podpocket.core.BaseEntity
+
+/**
+ * Created by Furkan on 16.04.2019
+ */
+
+@Entity(tableName = "User")
+data class UserEntity(
+        @PrimaryKey
+        var id: Int? = null,
+        var uniqueId: String? = null,
+        var email: String? = null,
+        var password: String? = null,
+        var name: String? = null,
+        var surname: String? = null,
+        var age: Int? = null,
+        var mostLovedCategory: String? = null) : BaseEntity(), Parcelable {
+
+    constructor(parcel: Parcel) : this(
+            parcel.readValue(Int::class.java.classLoader) as Int?,
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readInt(),
+            parcel.readString())
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeValue(id)
+        parcel.writeString(uniqueId)
+        parcel.writeString(email)
+        parcel.writeString(password)
+        parcel.writeString(name)
+        parcel.writeString(surname)
+        parcel.writeValue(age)
+        parcel.writeString(mostLovedCategory)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<UserEntity> {
+        override fun createFromParcel(parcel: Parcel): UserEntity {
+            return UserEntity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<UserEntity?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
