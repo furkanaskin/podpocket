@@ -5,6 +5,8 @@
     <color name="colorAccent">#FD767A</color>
     <color name="textColor">#464555</color>
     <color name="buttonStrokeColor">#9097FD</color>
+    <color name="bottomNavBackgroundColor">#D5D2D7</color>
+    <color name="bottomNavItemTint">#67689A</color>
 
 
     <color name="white">#FFFFFF</color>

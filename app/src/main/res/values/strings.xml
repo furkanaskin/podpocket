@@ -20,4 +20,8 @@
     <string name="reset_password">Parolayı Sıfırla</string>
     <string name="reset_password_dialog">Parola sıfırlama maili gönderildi.</string>
     <string name="register_success_dialog">Hesabınız oluşturuldu! Lütfen mail gelen kutunuzu kontrol ediniz.</string>
+    <string name="home">Anasayfa</string>
+    <string name="search">Ara</string>
+    <string name="bookcase">Kitaplık</string>
+    <string name="profile">Profil</string>
 </resources>

@@ -67,14 +67,14 @@ class LoginActivity : BaseActivity<LoginViewModel,ActivityLoginBinding>(LoginVie
 
         viewModel.loginSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-                async {
+                async({
                     Thread.sleep(100)
                     val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
                     runOnUiThread {
                         startActivity(intent)
                         finish()
                     }
-                }
+                })
             }
 
         })

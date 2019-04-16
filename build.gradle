@@ -11,6 +11,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.3.2'
         classpath 'com.google.gms:google-services:4.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.0.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -31,7 +32,7 @@ allprojects {
     }
 }
 
-ext{
+ext {
 
     buildToolsVersion = '28.0.3'
     compileSdkVersion = 28
@@ -53,6 +54,11 @@ ext{
     paging_version = "1.0.0"
     coroutines_version = "1.2.0"
     anko_version = "0.10.8"
+    navigationVersion = "2.0.0"
+
+    //navigation
+    navigationFragment = "androidx.navigation:navigation-fragment:$navigationVersion"
+    navigationUI = "androidx.navigation:navigation-ui:$navigationVersion"
 
     //rx
     rxJava = "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
@@ -67,8 +73,10 @@ ext{
 
     //dagger
     dagger = "com.google.dagger:dagger-android:$daggerVersion"
-    daggerSupport = "com.google.dagger:dagger-android-support:$daggerVersion" // if you use the support libraries
-    daggerAnnotation = "com.google.dagger:dagger-android-processor:$daggerVersion" //for annotationProcessor
+    daggerSupport = "com.google.dagger:dagger-android-support:$daggerVersion"
+    // if you use the support libraries
+    daggerAnnotation = "com.google.dagger:dagger-android-processor:$daggerVersion"
+    //for annotationProcessor
     daggerApt = "com.google.dagger:dagger-compiler:$daggerVersion"
 
     //net

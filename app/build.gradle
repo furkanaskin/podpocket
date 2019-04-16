@@ -11,6 +11,7 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs"
 
 def STRING = 'String'
 def BUILD_TIME = 'BUILD_TIME'
@@ -93,6 +94,11 @@ dependencies {
     implementation(rootProject.ext.crashlytics) {
         transitive = true
     }
+
+    //navigation
+
+    implementation rootProject.ext.navigationFragment
+    implementation rootProject.ext.navigationUI
 
     //di
     implementation rootProject.ext.dagger
