@@ -83,6 +83,7 @@ dependencies {
     implementation "com.google.android.material:material:$support_version"
     implementation "androidx.recyclerview:recyclerview:$support_version"
     implementation "androidx.cardview:cardview:$support_version"
+    implementation 'androidx.core:core-ktx:1.1.0-alpha04'
 
     //firebase
     implementation 'com.google.firebase:firebase-core:16.0.8'
@@ -138,7 +139,7 @@ dependencies {
 
     //arch-comp Lifecycles, LiveData, and ViewModel
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
+    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
     //arch-comp Room
     implementation "android.arch.persistence.room:runtime:$room_version"
     kapt "android.arch.persistence.room:compiler:$room_version"
