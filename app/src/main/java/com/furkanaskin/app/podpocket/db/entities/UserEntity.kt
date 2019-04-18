@@ -12,8 +12,8 @@ import com.furkanaskin.app.podpocket.core.BaseEntity
 
 @Entity(tableName = "User")
 data class UserEntity(
-        @PrimaryKey
-        var id: Int? = null,
+        @PrimaryKey(autoGenerate = true)
+        var id: Int = 0,
         var uniqueId: String? = null,
         var email: String? = null,
         var password: String? = null,
@@ -23,7 +23,7 @@ data class UserEntity(
         var mostLovedCategory: String? = null) : BaseEntity(), Parcelable {
 
     constructor(parcel: Parcel) : this(
-            parcel.readValue(Int::class.java.classLoader) as Int?,
+            parcel.readValue(Int::class.java.classLoader) as Int,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -31,6 +31,7 @@ data class UserEntity(
             parcel.readString(),
             parcel.readInt(),
             parcel.readString())
+
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(id)

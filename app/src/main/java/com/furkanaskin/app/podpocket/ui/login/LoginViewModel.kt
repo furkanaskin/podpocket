@@ -2,6 +2,7 @@ package com.furkanaskin.app.podpocket.ui.login
 
 import android.app.Application
 import android.content.Intent
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.databinding.ObservableField
@@ -11,9 +12,14 @@ import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.db.AppDatabase
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
+import com.furkanaskin.app.podpocket.service.response.Search
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordActivity
+import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
 import timber.log.Timber
 import javax.inject.Inject
@@ -37,6 +43,8 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     var loginSuccess: ObservableField<Boolean> = ObservableField(false)
     var registerSuccess: ObservableField<Boolean> = ObservableField(false)
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
+
+    val disposables = CompositeDisposable()
 
     private lateinit var mAuth: FirebaseAuth
 
@@ -98,21 +106,20 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         if (getValidationMessages()) {
             progressBarView.set(true)
             initFirebase()
-            mAuth.createUserWithEmailAndPassword(userName.get()!!, password.get()!!).addOnCompleteListener { task ->
+            mAuth.createUserWithEmailAndPassword(userName.get() ?: "", password.get()
+                    ?: "").addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     registerSuccess.set(true)
                     verifyEmail()
 
-                    val user = UserEntity(3,
-                            mAuth.currentUser?.uid,
-                            userName.get()!!,
-                            password.get()!!,
-                            "",
-                            "",
-                            0,
-                            "")
 
                     doAsync {
+
+                        val user = UserEntity(
+                                uniqueId = mAuth.currentUser?.uid ?: "",
+                                email = userName.get() ?: "",
+                                password = password.get() ?: "")
+
                         db.userDao().insertUser(user)
                     }
 
@@ -198,5 +205,27 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         getApplication<Application>().startActivity(intent)
 
+    }
+
+    fun testAPI() {
+        disposables.add(api.fullTextSearch("Junior Talks")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : CallbackWrapper<Search>(getApplication()) {
+                    override fun onSuccess(t: Search) {
+                        Log.v("Request", "Success")
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Log.v("Request", "Failed")
+                    }
+
+                }))
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        disposables.clear()
     }
 }

@@ -28,6 +28,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
         super.onCreate(savedInstanceState)
         init()
 
+        viewModel.testAPI()
+
         val simpleText = SimpleText.from(getString(R.string.agreement))
                 .first(getString(R.string.agreement_part_first))
                 .textColor(R.color.colorPrimary)

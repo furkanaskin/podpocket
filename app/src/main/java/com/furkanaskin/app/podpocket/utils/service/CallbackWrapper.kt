@@ -1,12 +1,16 @@
 package com.furkanaskin.app.podpocket.utils.service
 
 import android.app.Application
+import android.widget.Toast
+import com.furkanaskin.app.podpocket.service.response.Error
+import com.google.gson.Gson
 import io.reactivex.observers.DisposableObserver
+import okhttp3.ResponseBody
+import org.jetbrains.anko.runOnUiThread
 import retrofit2.HttpException
 import java.io.IOException
 import java.lang.ref.WeakReference
 import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 
 abstract class CallbackWrapper<T : Any>(application: Application) : DisposableObserver<T>() {
     var weakReference: WeakReference<Application>? = WeakReference(application)
@@ -16,14 +20,44 @@ abstract class CallbackWrapper<T : Any>(application: Application) : DisposableOb
     }
 
     override fun onError(e: Throwable) {
+        val message: String?
         if (e is HttpException) {
+            if (e.response().raw().request().url().toString().endsWith("/v2/identification/register"))
+                message = "E-posta adresi kullanımda."
+            else
+                message = getErrorMessage(e.response().errorBody())
         } else if (e is SocketTimeoutException) {
-        } else if (e is UnknownHostException) {
+            message = "Sunucudan cevap alınamadı."
         } else if (e is IOException) {
+            message = "Ağ ile ilgili bir hata oluştu. Lütfen tekrar deneyiniz."
         } else {
+            message = e.message
         }
+
+        if (message.isNullOrEmpty().not())
+            weakReference?.get()?.let { app ->
+                app.runOnUiThread {
+                    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                }
+            }
     }
 
     override fun onComplete() {
     }
+
+    private fun getErrorMessage(responseBody: ResponseBody?): String? {
+        try {
+            val error = Gson().fromJson<Error>(responseBody?.string(), Error::class.java)
+
+            if (error.errors.isNotEmpty() && error.errors[0].data.pointer == "/data/attributes/email") {
+                return "E-posta adresi kullanımda."
+            }
+
+            return "${error.errors[0].data.detail!!.substringAfterLast("/")} ${error.errors[0].data.pointer}"
+        } catch (e: Exception) {
+            return ""
+        }
+
+    }
+
 }

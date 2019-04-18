@@ -1,19 +1,21 @@
 package com.furkanaskin.app.podpocket.di.module
 
 import android.os.Environment
+import com.furkanaskin.app.podpocket.core.Constants
+import com.furkanaskin.app.podpocket.service.PodpocketAPI
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
-import okhttp3.OkHttpClient
-import javax.inject.Named
-import javax.inject.Singleton
 import okhttp3.Cache
-import java.util.concurrent.TimeUnit
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.Retrofit
-import com.google.gson.Gson
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.GsonBuilder
+import java.util.concurrent.TimeUnit
+import javax.inject.Named
+import javax.inject.Singleton
 
 
 @Module
@@ -57,15 +59,12 @@ class NetModule {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
     }
 
-    /**
-     * Example service
-     */
-    /*@Provides
+
+    @Provides
     @Singleton
-    WordpressService provideService(Retrofit.Builder builder) {
-        return builder.baseUrl(BuildConfig.API_URL)
+    fun provideService(retrofit: Retrofit.Builder): PodpocketAPI {
+        return retrofit.baseUrl(Constants.NetworkService.BASE_URL)
                 .build()
-                .create(WordpressService.class);
+                .create(PodpocketAPI::class.java)
     }
-    */
 }

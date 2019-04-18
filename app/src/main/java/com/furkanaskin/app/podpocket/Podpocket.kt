@@ -15,8 +15,8 @@ class Podpocket : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         Stetho.initializeWithDefaults(this)
+
     }
 }
 
