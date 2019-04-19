@@ -22,10 +22,7 @@ abstract class CallbackWrapper<T : Any>(application: Application) : DisposableOb
     override fun onError(e: Throwable) {
         val message: String?
         if (e is HttpException) {
-            if (e.response().raw().request().url().toString().endsWith("/v2/identification/register"))
-                message = "E-posta adresi kullanımda."
-            else
-                message = getErrorMessage(e.response().errorBody())
+            message = getErrorMessage(e.response().errorBody())
         } else if (e is SocketTimeoutException) {
             message = "Sunucudan cevap alınamadı."
         } else if (e is IOException) {
@@ -46,16 +43,12 @@ abstract class CallbackWrapper<T : Any>(application: Application) : DisposableOb
     }
 
     private fun getErrorMessage(responseBody: ResponseBody?): String? {
-        try {
+        return try {
             val error = Gson().fromJson<Error>(responseBody?.string(), Error::class.java)
 
-            if (error.errors.isNotEmpty() && error.errors[0].data.pointer == "/data/attributes/email") {
-                return "E-posta adresi kullanımda."
-            }
-
-            return "${error.errors[0].data.detail!!.substringAfterLast("/")} ${error.errors[0].data.pointer}"
+            "${error.errors[0].data.detail!!.substringAfterLast("/")} ${error.errors[0].data.pointer}"
         } catch (e: Exception) {
-            return ""
+            ""
         }
 
     }

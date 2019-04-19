@@ -1,4 +1,4 @@
-package com.furkanaskin.app.podpocket.service
+package com.furkanaskin.app.podpocket.service.response
 
 import com.google.gson.annotations.SerializedName
 

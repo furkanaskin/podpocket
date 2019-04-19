@@ -208,7 +208,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun testAPI() {
-        disposables.add(api.fullTextSearch("Junior Talks")
+        disposables.add(api.fullTextSearch("Junior Talks", 0, "", 1, "", "")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : CallbackWrapper<Search>(getApplication()) {
