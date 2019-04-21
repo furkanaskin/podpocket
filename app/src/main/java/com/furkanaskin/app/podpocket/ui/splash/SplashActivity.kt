@@ -3,10 +3,10 @@ package com.furkanaskin.app.podpocket.ui.splash
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
-import androidx.appcompat.app.AppCompatActivity
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivitySplashBinding
+import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.main.MainActivity
 
 
@@ -23,10 +23,21 @@ class SplashActivity : BaseActivity<SplashActivityViewModel, ActivitySplashBindi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.alreadyLogged()
+
         countDownTimer = object : CountDownTimer(3000, 1000) {
             override fun onFinish() {
-                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-                finish()
+                when (viewModel.loginSuccess.get()) {
+                    false -> {
+                        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                        finish()
+                    }
+                    true -> {
+                        startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
+                        finish()
+                    }
+                }
+
             }
 
             override fun onTick(millisUntilFinished: Long) {
@@ -40,4 +51,6 @@ class SplashActivity : BaseActivity<SplashActivityViewModel, ActivitySplashBindi
 
         countDownTimer?.cancel()
     }
+
+
 }

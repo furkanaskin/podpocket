@@ -17,7 +17,7 @@ interface UserDao {
     fun deleteAll()
 
     @Query("Select * from User where uniqueId=:userUniqueID")
-    fun getUser(userUniqueID: Int): LiveData<UserEntity>
+    fun getUser(userUniqueID: String): LiveData<UserEntity>
 
     @Update
     fun updateUser(user: UserEntity)

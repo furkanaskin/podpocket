@@ -44,7 +44,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     var registerSuccess: ObservableField<Boolean> = ObservableField(false)
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
 
-    val disposables = CompositeDisposable()
+    private val disposables = CompositeDisposable()
 
     private lateinit var mAuth: FirebaseAuth
 
@@ -165,7 +165,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     private fun checkFirebaseCredentials(task: Task<AuthResult>) {
         progressBarView.set(true)
         val errorType = task.exception
-        var errorMessage = ""
+        var errorMessage: String
 
         when (errorType) {
 
