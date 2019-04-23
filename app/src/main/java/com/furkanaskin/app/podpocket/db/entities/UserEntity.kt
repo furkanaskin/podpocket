@@ -19,7 +19,7 @@ data class UserEntity(
         var password: String? = null,
         var name: String? = null,
         var surname: String? = null,
-        var age: Int? = null,
+        var birthday: String? = null,
         var mostLovedCategory: String? = null) : BaseEntity(), Parcelable {
 
     constructor(parcel: Parcel) : this(
@@ -29,7 +29,7 @@ data class UserEntity(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readInt(),
+            parcel.readString(),
             parcel.readString())
 
 
@@ -40,7 +40,7 @@ data class UserEntity(
         parcel.writeString(password)
         parcel.writeString(name)
         parcel.writeString(surname)
-        parcel.writeValue(age)
+        parcel.writeValue(birthday)
         parcel.writeString(mostLovedCategory)
     }
 

@@ -33,6 +33,7 @@ class SplashActivityViewModel(app : Application) : BaseViewModel(app){
 
         if (localID != null) {
             loginSuccess.set(true)
+
         }
 
     }

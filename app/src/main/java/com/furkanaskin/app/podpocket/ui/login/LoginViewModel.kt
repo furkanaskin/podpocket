@@ -217,7 +217,6 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.v("Request", "Failed")
                     }
 
                 }))

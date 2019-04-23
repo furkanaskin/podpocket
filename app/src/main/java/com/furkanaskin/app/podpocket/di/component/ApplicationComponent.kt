@@ -6,6 +6,7 @@ import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.di.module.ApplicationModule
 import com.furkanaskin.app.podpocket.di.module.DatabaseModule
 import com.furkanaskin.app.podpocket.di.module.NetModule
+import com.furkanaskin.app.podpocket.ui.after_register.AfterRegisterViewModel
 import com.furkanaskin.app.podpocket.ui.bookcase.BookCaseViewModel
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardViewModel
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordViewModel
@@ -55,4 +56,6 @@ interface ApplicationComponent {
     fun inject(playerViewModel: PlayerViewModel)
 
     fun inject(settingsViewModel: SettingsViewModel)
+
+    fun inject(afterRegisterViewModel: AfterRegisterViewModel)
 }

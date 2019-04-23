@@ -24,4 +24,9 @@
     <string name="search">Ara</string>
     <string name="bookcase">Kitaplık</string>
     <string name="profile">Profil</string>
+    <string name="know_you_closely">Seni yakından tanıyalım!</string>
+    <string name="surname">Soyadınız</string>
+    <string name="name">Adınız</string>
+    <string name="save">Kaydet</string>
+    <string name="birthday">Doğum Tarihiniz</string>
 </resources>

@@ -9,7 +9,7 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.ActivityLoginBinding
-import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
+import com.furkanaskin.app.podpocket.ui.after_register.AfterRegisterActivity
 import com.jaychang.st.SimpleText
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -71,7 +71,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
 
                 Thread.sleep(100)
-                val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+                val intent = Intent(this@LoginActivity, AfterRegisterActivity::class.java)
                 runOnUiThread {
                     startActivity(intent)
                     finish()

@@ -90,6 +90,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:16.1.0'
     implementation 'com.google.firebase:firebase-auth:16.2.1'
 
+    //circular ImageView
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
+
     //timber
     implementation rootProject.ext.timber
 

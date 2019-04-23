@@ -9,4 +9,5 @@ open class BaseViewModel(app: Application) : AndroidViewModel(app) {
 
     @field:[Inject]
     lateinit var api: PodpocketAPI
+
 }
