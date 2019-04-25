@@ -43,7 +43,6 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
                             id = user.id,
                             uniqueId = user.uniqueId,
                             email = user.email,
-                            password = user.password,
                             name = viewModel.userName.get(),
                             surname = viewModel.userSurname.get(),
                             birthday = viewModel.userBirthDay.get())

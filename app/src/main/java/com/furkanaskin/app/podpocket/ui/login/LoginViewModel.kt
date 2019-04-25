@@ -109,8 +109,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
                         val user = UserEntity(
                                 uniqueId = mAuth.currentUser?.uid ?: "",
-                                email = userName.get() ?: "",
-                                password = password.get() ?: "")
+                                email = userName.get() ?: "")
 
                         db.userDao().insertUser(user)
                     }

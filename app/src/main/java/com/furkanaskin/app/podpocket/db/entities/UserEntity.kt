@@ -16,7 +16,6 @@ data class UserEntity(
         var id: Int = 0,
         var uniqueId: String? = null,
         var email: String? = null,
-        var password: String? = null,
         var name: String? = null,
         var surname: String? = null,
         var birthday: String? = null,
@@ -29,7 +28,6 @@ data class UserEntity(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readString(),
             parcel.readString())
 
 
@@ -37,7 +35,6 @@ data class UserEntity(
         parcel.writeValue(id)
         parcel.writeString(uniqueId)
         parcel.writeString(email)
-        parcel.writeString(password)
         parcel.writeString(name)
         parcel.writeString(surname)
         parcel.writeValue(birthday)
