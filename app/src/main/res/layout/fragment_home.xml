@@ -32,7 +32,7 @@
             android:id="@+id/textViewHello"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="48dp"
+            android:layout_margin="16dp"
             android:textSize="24sp" />
 
         <com.google.android.material.button.MaterialButton

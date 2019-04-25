@@ -13,4 +13,5 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
     override fun init() {
         mBinding.viewModel = viewModel
     }
+
 }

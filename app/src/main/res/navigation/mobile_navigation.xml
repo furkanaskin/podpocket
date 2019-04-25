@@ -8,31 +8,31 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.furkanaskin.app.podpocket.ui.settings.SettingsFragment"
-        android:label="fragment_settings"
+        android:label="AYARLAR"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.furkanaskin.app.podpocket.ui.home.HomeFragment"
-        android:label="fragment_home"
+        android:label="ANASAYFA"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/bookCaseFragment"
         android:name="com.furkanaskin.app.podpocket.ui.bookcase.BookCaseFragment"
-        android:label="fragment_book_case"
+        android:label="KITAPLIK"
         tools:layout="@layout/fragment_book_case" />
     <fragment
         android:id="@+id/playerFragment"
         android:name="com.furkanaskin.app.podpocket.ui.player.PlayerFragment"
-        android:label="fragment_player"
+        android:label="OYNAT"
         tools:layout="@layout/fragment_player" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.furkanaskin.app.podpocket.ui.profile.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="PROFIL"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.furkanaskin.app.podpocket.ui.search.SearchFragment"
-        android:label="fragment_search"
+        android:label="ARA"
         tools:layout="@layout/fragment_search" />
 </navigation>
