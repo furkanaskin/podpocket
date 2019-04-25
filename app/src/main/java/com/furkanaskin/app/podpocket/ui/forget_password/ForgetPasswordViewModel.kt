@@ -4,8 +4,6 @@ import android.app.Application
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
-import com.furkanaskin.app.podpocket.utils.extensions.logE
-import com.google.firebase.auth.FirebaseAuth
 import timber.log.Timber
 
 /**
@@ -18,15 +16,12 @@ class ForgetPasswordViewModel(app: Application) : BaseViewModel(app) {
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
 
-    private lateinit var mAuth: FirebaseAuth
-
     init {
         (app as? Podpocket)?.component?.inject(this)
     }
 
 
     fun buttonClick() {
-        initFirebase()
         progressBarView.set(true)
         if (!userName.get().isNullOrEmpty()) {
             userName.get()?.let {
@@ -42,18 +37,5 @@ class ForgetPasswordViewModel(app: Application) : BaseViewModel(app) {
             }
         }
     }
-
-    private fun initFirebase() {
-        mAuth = FirebaseAuth.getInstance()
-
-        if (mAuth == null)
-            try {
-                initFirebase()
-                Thread.sleep(500)
-            } catch (e: Exception) {
-                logE(e.toString())
-            }
-    }
-
 
 }

@@ -49,6 +49,15 @@
             app:civ_shadow_color="#8BC34A"
             app:civ_shadow_radius="10" />
 
+        <!--
+                <ImageView
+                    android:layout_width="175dp"
+                    android:layout_height="175dp"
+                    android:id="@+id/imageViewUser"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="100dp"
+                    android:src="@drawable/ic_dummy_user"/>-->
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabChangeImage"
             android:layout_width="wrap_content"
@@ -142,7 +151,6 @@
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
             android:backgroundTint="@color/buttonStrokeColor"
-            android:onClick="@{() -> viewModel.saveClicked()}"
             android:text="@string/save"
             android:textColor="@android:color/white"
             app:cornerRadius="50dp"

@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.db.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 
@@ -17,7 +16,7 @@ interface UserDao {
     fun deleteAll()
 
     @Query("Select * from User where uniqueId=:userUniqueID")
-    fun getUser(userUniqueID: String): LiveData<UserEntity>
+    fun getUser(userUniqueID: String): UserEntity
 
     @Update
     fun updateUser(user: UserEntity)

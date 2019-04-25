@@ -23,7 +23,6 @@ class SplashActivity : BaseActivity<SplashActivityViewModel, ActivitySplashBindi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.alreadyLogged()
 
         countDownTimer = object : CountDownTimer(3000, 1000) {
             override fun onFinish() {
