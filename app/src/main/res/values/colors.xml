@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#9097FD</color>
-    <color name="colorPrimaryDark">#67689A</color>
+    <color name="colorPrimaryDark">#2C2939</color>
     <color name="colorAccent">#FD767A</color>
     <color name="textColor">#464555</color>
     <color name="buttonStrokeColor">#9097FD</color>
     <color name="bottomNavBackgroundColor">#D5D2D7</color>
     <color name="bottomNavItemTint">#67689A</color>
+    <color name="colorPrettyOrange">#F48B8C</color>
+    <color name="colorPrettyPurple">#E4417B</color>
+    <color name="colorLoginText">#D8D8D8</color>
 
 
     <color name="white">#FFFFFF</color>

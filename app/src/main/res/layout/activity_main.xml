@@ -17,27 +17,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+        android:background="@drawable/ic_app_bg"
         tools:context=".ui.main.MainActivity">
 
 
         <ImageView
             android:id="@+id/imageViewAppLogo"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
-            android:src="@drawable/ic_playbutton"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/textViewHello"
+            android:layout_marginStart="64dp"
+            android:layout_marginBottom="100dp"
+            android:src="@drawable/app_logo_small" />
+
+
+        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/imageViewAppLogo"
+            android:layout_alignBottom="@id/imageViewAppLogo"
+            android:layout_marginStart="24dp"
+            android:layout_toEndOf="@id/imageViewAppLogo"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@android:color/white"
+            android:textSize="32sp" />
 
         <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hello"
             android:id="@+id/textViewHello"
-            android:layout_below="@id/imageViewAppLogo"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:textSize="24sp"
             android:textAllCaps="true"
-            android:textColor="@color/textColor"/>
+            android:textColor="@color/white" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonLogin"
@@ -49,11 +64,11 @@
             android:onClick="@{() -> viewModel.loginClick()}"
             android:layout_marginEnd="30dp"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:textColorHint="@color/buttonStrokeColor"
-            app:strokeColor="@color/buttonStrokeColor"
+            android:textColor="@color/colorPrettyPurple"
+            android:textColorHint="@color/colorPrettyPurple"
             app:strokeWidth="2dp"
             app:cornerRadius="50dp"
-            android:textColor="@color/colorPrimary"
+            app:strokeColor="@color/colorPrettyPurple"
             android:layout_above="@id/buttonRegister" />
 
         <com.google.android.material.button.MaterialButton
@@ -62,8 +77,8 @@
             android:layout_height="wrap_content"
             android:text="@string/register"
             android:textColor="@android:color/white"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="30dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="30dp"
@@ -71,7 +86,7 @@
             app:strokeColor="@android:color/white"
             app:cornerRadius="50dp"
             app:strokeWidth="2dp"
-            android:backgroundTint="@color/buttonStrokeColor"/>
+            android:backgroundTint="@color/colorPrettyPurple" />
 
     </RelativeLayout>
 </layout>

@@ -16,6 +16,7 @@
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/ic_app_bg"
         android:fitsSystemWindows="true"
         tools:context=".ui.login.LoginActivity">
 
@@ -29,17 +30,49 @@
             app:mpb_useIntrinsicPadding="false"
             app:visibility="@{viewModel.progressBarView}" />
 
+        <ImageView
+            android:id="@+id/imageViewAppLogoSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tilPassword"
+            android:layout_marginStart="64dp"
+            android:layout_marginBottom="150dp"
+            android:src="@drawable/app_logo_small" />
+
+        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/imageViewAppLogoSmall"
+            android:layout_alignBottom="@id/imageViewAppLogoSmall"
+            android:layout_marginStart="24dp"
+            android:layout_toEndOf="@id/imageViewAppLogoSmall"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@android:color/white"
+            android:textSize="32sp" />
+
+        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tilEmail"
+            android:layout_alignStart="@id/tilEmail"
+            android:layout_marginBottom="8dp"
+            android:text="@{viewModel.buttonText}"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEmail"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="200dp"
             android:layout_marginEnd="32dp"
             android:hint="@string/email"
             android:textColorHint="@color/textColor"
-            app:boxStrokeColor="@color/buttonStrokeColor"
+            app:boxStrokeColor="@color/colorPrettyPurple"
             app:boxStrokeWidth="2dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -48,7 +81,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:text="@={viewModel.userName}" />
+                android:text="@={viewModel.userName}"
+                android:textColor="@color/colorPrettyPurple" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -63,9 +97,10 @@
             android:layout_marginEnd="32dp"
             android:hint="@string/password"
             android:textColorHint="@color/textColor"
-            app:boxStrokeColor="@color/buttonStrokeColor"
+            app:boxStrokeColor="@color/colorPrettyPurple"
             app:boxStrokeWidth="2dp"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorPrettyPurple">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextPassword"
@@ -73,7 +108,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:text="@={viewModel.password}" />
+                android:text="@={viewModel.password}"
+                android:textColor="@color/colorPrettyPurple" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
@@ -84,6 +120,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
             android:checked="@={viewModel.agreement}"
+            android:textColor="@color/white"
             app:visibility="@{viewModel.agreementView}" />
 
         <com.furkanaskin.app.podpocket.ui.PodPocketTextView
@@ -92,6 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/agreement"
             android:layout_toEndOf="@+id/agreement"
+            android:textColor="@color/colorPrettyPurple"
             app:visibility="@{viewModel.agreementView}" />
 
         <com.furkanaskin.app.podpocket.ui.PodPocketTextView
@@ -103,29 +141,31 @@
             android:layout_marginTop="30dp"
             android:onClick="@{() -> viewModel.forgetPasswordClicked()}"
             android:text="@string/forget_password"
+            android:textColor="@color/colorLoginText"
             app:visibility="@{viewModel.forgetPasswordView}" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tilPassword"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="72dp"
-            android:layout_marginEnd="32dp"
-            android:backgroundTint="@color/buttonStrokeColor"
-            android:onClick="@{() -> viewModel.buttonClick()}"
-            android:text="@{viewModel.buttonText}" />
 
 
         <com.furkanaskin.app.podpocket.ui.PodPocketLightTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonLogin"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
+            android:layout_marginBottom="32dp"
             android:fontFamily="@font/montserrat_regular"
             android:onClick="@{() -> viewModel.alreadyHasAccount()}"
-            android:text="@{viewModel.summaryText}" />
+            android:text="@{viewModel.summaryText}"
+            android:textColor="@color/colorLoginText" />
+
+        <ImageView
+            android:id="@+id/imageViewDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="75dp"
+            android:layout_marginBottom="100dp"
+            android:onClick="@{() -> viewModel.buttonClick()}"
+            android:src="@drawable/btn_submit" />
     </RelativeLayout>
 </layout>
