@@ -28,8 +28,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
             mAuth.signOut()
         }
 
-        textViewHello.text = "Hoşgeldin, ${user.name}"
-
     }
 
 

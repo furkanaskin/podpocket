@@ -29,4 +29,5 @@
     <string name="name">Adınız</string>
     <string name="save">Kaydet</string>
     <string name="birthday">Doğum Tarihiniz</string>
+    <string name="explore">Keşfet</string>
 </resources>

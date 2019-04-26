@@ -3,7 +3,6 @@ package com.furkanaskin.app.podpocket.ui.dashboard
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.furkanaskin.app.podpocket.R
@@ -25,16 +24,13 @@ class DashboardActivity : BaseActivity<DashboardViewModel, ActivityDashboardBind
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initToolbar()
         setupNavigation()
 
     }
 
     private fun setupNavigation() {
         val navController = findNavController(R.id.container_fragment)
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.bottomNavigation.setupWithNavController(navController)
-        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -44,11 +40,5 @@ class DashboardActivity : BaseActivity<DashboardViewModel, ActivityDashboardBind
     }
 
     override fun onSupportNavigateUp(): Boolean = findNavController(R.id.container_fragment).navigateUp()
-
-
-    private fun initToolbar() {
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
 
 }
