@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -13,6 +14,7 @@ import androidx.navigation.Navigation
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.doAsync
+import timber.log.Timber
 
 abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : Fragment() {
     lateinit var viewModel: VM
@@ -33,8 +35,16 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = getViewM()
-        initFirebase()
-        getUser()
+
+        try {
+            if (!::user.isInitialized || !::mAuth.isInitialized) {  // if initialized, don't initialize again.
+                initFirebase()
+                getUser()
+            }
+        } catch (e: UninitializedPropertyAccessException) { // For unexpected crash.
+            Timber.e(e)
+            Toast.makeText(this.context, "Beklenmeyen bir hata oluştu, lütfen tekrar deneyiniz.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
