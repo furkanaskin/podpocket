@@ -15,6 +15,7 @@
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/ic_app_bg"
         android:fitsSystemWindows="true"
         tools:context=".ui.after_register.AfterRegisterActivity">
 
@@ -34,7 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:text="@string/know_you_closely" />
+            android:text="@string/know_you_closely"
+            android:textColor="@color/colorPrettyOrange" />
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/imageViewUser"
@@ -42,21 +44,12 @@
             android:layout_height="175dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_dummy_user"
             app:civ_border_color="#EEEEEE"
             app:civ_border_width="4dp"
             app:civ_shadow="true"
-            app:civ_shadow_color="#8BC34A"
             app:civ_shadow_radius="10" />
-
-        <!--
-                <ImageView
-                    android:layout_width="175dp"
-                    android:layout_height="175dp"
-                    android:id="@+id/imageViewUser"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="100dp"
-                    android:src="@drawable/ic_dummy_user"/>-->
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabChangeImage"
@@ -66,6 +59,7 @@
             android:layout_alignBottom="@id/imageViewUser"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/colorPrettyPurple"
             android:src="@android:drawable/ic_menu_camera" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -79,7 +73,7 @@
             android:layout_marginEnd="32dp"
             android:hint="@string/name"
             android:textColorHint="@color/textColor"
-            app:boxStrokeColor="@color/buttonStrokeColor"
+            app:boxStrokeColor="@color/colorPrettyPurple"
             app:boxStrokeWidth="2dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -88,7 +82,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:maxLines="1"
-                android:text="@={viewModel.userName}" />
+                android:text="@={viewModel.userName}"
+                android:textColor="@color/colorPrettyPurple" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -103,7 +98,7 @@
             android:layout_marginEnd="32dp"
             android:hint="@string/surname"
             android:textColorHint="@color/textColor"
-            app:boxStrokeColor="@color/buttonStrokeColor"
+            app:boxStrokeColor="@color/colorPrettyPurple"
             app:boxStrokeWidth="2dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -112,7 +107,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:maxLines="1"
-                android:text="@={viewModel.userSurname}" />
+                android:text="@={viewModel.userSurname}"
+                android:textColor="@color/colorPrettyPurple" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,7 +123,7 @@
             android:layout_marginEnd="32dp"
             android:hint="@string/birthday"
             android:textColorHint="@color/textColor"
-            app:boxStrokeColor="@color/buttonStrokeColor"
+            app:boxStrokeColor="@color/colorPrettyPurple"
             app:boxStrokeWidth="2dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -136,26 +132,19 @@
                 android:layout_height="wrap_content"
                 android:inputType="date"
                 android:maxLines="1"
-                android:text="@={viewModel.userBirthDay}" />
+                android:text="@={viewModel.userBirthDay}"
+                android:textColor="@color/colorPrettyPurple" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        <com.google.android.material.button.MaterialButton
+        <ImageView
             android:id="@+id/buttonDone"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="30dp"
-            android:backgroundTint="@color/buttonStrokeColor"
-            android:text="@string/save"
-            android:textColor="@android:color/white"
-            app:cornerRadius="50dp"
-            app:strokeColor="@android:color/white"
-            app:strokeWidth="2dp" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="75dp"
+            android:src="@drawable/btn_submit" />
 
     </RelativeLayout>
 </layout>

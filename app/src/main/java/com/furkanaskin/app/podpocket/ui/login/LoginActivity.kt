@@ -44,8 +44,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
                     showAgreementDialog()
                 }
                 .first(getString(R.string.agreement_part_third))
-                .textColor(R.color.colorPrettyOrange)
-                .pressedTextColor(R.color.colorPrettyOrange)
+                .textColor(R.color.colorPrettyPurple)
+                .pressedTextColor(R.color.colorPrettyPurple)
                 .onClick(textViewAgreement) { _, _, _ ->
                     showAgreementDialog()
                 }

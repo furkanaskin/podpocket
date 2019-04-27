@@ -81,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
+                android:fontFamily="@font/montserrat_regular"
                 android:text="@={viewModel.userName}"
                 android:textColor="@color/colorPrettyPurple" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -108,6 +109,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:maxLines="1"
+                android:fontFamily="@font/montserrat_regular"
                 android:text="@={viewModel.password}"
                 android:textColor="@color/colorPrettyPurple" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -161,10 +163,9 @@
             android:id="@+id/imageViewDone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="75dp"
-            android:layout_marginBottom="100dp"
+            android:layout_below="@id/tilPassword"
+            android:layout_marginTop="120dp"
             android:onClick="@{() -> viewModel.buttonClick()}"
             android:src="@drawable/btn_submit" />
     </RelativeLayout>
