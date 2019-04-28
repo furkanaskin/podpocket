@@ -9,15 +9,20 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.ActivityLoginBinding
+import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.ui.after_register.AfterRegisterActivity
 import com.jaychang.st.SimpleText
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.doAsync
 
 /**
  * Created by Furkan on 14.04.2019
  */
 
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginViewModel::class.java) {
+
+    lateinit var user: UserEntity
+
     override fun getLayoutRes(): Int = R.layout.activity_login
 
     override fun initViewModel(viewModel: LoginViewModel) {
@@ -27,8 +32,6 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
-
-        viewModel.testAPI()
 
         val simpleText = SimpleText.from(getString(R.string.agreement))
                 .first(getString(R.string.agreement_part_first))
@@ -75,7 +78,6 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
                     startActivity(intent)
                     finish()
                 }
-
             }
 
         })
@@ -107,6 +109,12 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
                 }
                 .create()
                 .show()
+    }
+
+    private fun getUser() {
+        doAsync {
+            user = viewModel.mAuth.currentUser?.uid?.let { viewModel.db.userDao().getUser(it) }!!
+        }
     }
 
 }

@@ -90,6 +90,7 @@
             android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/editTextSearch"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_below="@id/textViewTagLine"
@@ -105,13 +106,37 @@
             android:textColorHint="@color/textColor"
             android:textSize="14sp" />
 
+        <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView
+            android:id="@+id/textViewBestPodcasts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextSearch"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/best_podcasts_in_your_region"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+
+        <com.furkanaskin.app.podpocket.ui.PodPocketRecyclerView
+            android:id="@+id/recyclerViewBestPodcasts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewBestPodcasts"
+            android:layout_alignStart="@id/textViewBestPodcasts"
+            android:layout_marginTop="16dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            app:layoutManager="LinearLayoutManager" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonLogout"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/recyclerViewBestPodcasts"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="80dp"
+            android:layout_marginTop="24dp"
             android:text="Log out" />
 
 

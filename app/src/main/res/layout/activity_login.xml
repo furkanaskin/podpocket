@@ -165,7 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tilPassword"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="75dp"
             android:onClick="@{() -> viewModel.buttonClick()}"
             android:src="@drawable/btn_submit" />
     </RelativeLayout>

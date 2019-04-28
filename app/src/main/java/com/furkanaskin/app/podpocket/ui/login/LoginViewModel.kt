@@ -2,7 +2,6 @@ package com.furkanaskin.app.podpocket.ui.login
 
 import android.app.Application
 import android.content.Intent
-import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.databinding.ObservableField
@@ -11,14 +10,10 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
-import com.furkanaskin.app.podpocket.service.response.Search
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordActivity
-import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
 import timber.log.Timber
 
@@ -191,21 +186,6 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         getApplication<Application>().startActivity(intent)
 
-    }
-
-    fun testAPI() {
-        disposables.add(api.fullTextSearch("Junior Talks", 0, "", 1, "", "")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<Search>(getApplication()) {
-                    override fun onSuccess(t: Search) {
-                        Log.v("Request", "Success")
-                    }
-
-                    override fun onError(e: Throwable) {
-                    }
-
-                }))
     }
 
     override fun onCleared() {

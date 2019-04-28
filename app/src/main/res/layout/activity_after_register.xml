@@ -38,18 +38,14 @@
             android:text="@string/know_you_closely"
             android:textColor="@color/colorPrettyOrange" />
 
-        <com.mikhaellopez.circularimageview.CircularImageView
+        <ImageView
             android:id="@+id/imageViewUser"
             android:layout_width="175dp"
             android:layout_height="175dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_dummy_user"
-            app:civ_border_color="#EEEEEE"
-            app:civ_border_width="4dp"
-            app:civ_shadow="true"
-            app:civ_shadow_radius="10" />
+            android:src="@drawable/ic_dummy_user" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabChangeImage"
@@ -141,9 +137,9 @@
             android:id="@+id/buttonDone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="75dp"
+            android:layout_below="@id/tilBirthday"
+            android:layout_marginTop="16dp"
             android:src="@drawable/btn_submit" />
 
     </RelativeLayout>
