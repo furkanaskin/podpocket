@@ -31,5 +31,6 @@
     <string name="birthday">Doğum Tarihiniz</string>
     <string name="explore">Keşfet</string>
     <string name="best_podcasts_in_your_region">Bölgendeki en iyi podcastler</string>
+    <string name="player_queue">Liste</string>
 
 </resources>

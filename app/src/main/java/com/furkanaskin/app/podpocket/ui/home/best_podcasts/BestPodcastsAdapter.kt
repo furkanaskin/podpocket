@@ -23,9 +23,14 @@ class BestPodcastsAdapter(private val callBack: (ChannelsItem) -> Unit) : BaseAd
                 parent,
                 false
         )
-
         val viewModel = BestPodcastsListItemViewModel((parent.context as Activity).application)
         mBinding.viewModel = viewModel
+
+        mBinding.cardView.setOnClickListener {
+            mBinding.viewModel?.item?.get()?.let {
+                callBack.invoke(it)
+            }
+        }
         return mBinding
     }
 

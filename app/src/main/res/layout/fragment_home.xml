@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextSearch"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_16_dp"
             android:text="@string/best_podcasts_in_your_region"
             android:textAllCaps="true"
             android:textColor="@color/white"
@@ -126,8 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewBestPodcasts"
-            android:layout_alignStart="@id/textViewBestPodcasts"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_16_dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
             app:layoutManager="LinearLayoutManager" />

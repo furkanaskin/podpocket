@@ -50,8 +50,7 @@
                     android:layout_toEndOf="@id/imageViewTrackDisk"
                     android:ellipsize="end"
                     android:text="Twoloud&amp;JustLuke-Be The One(Club remix)"
-                    android:textColor="@color/white"
-                    tools:text="Twoloud&amp;JustLuke-Be The One(Club remix)" />
+                    android:textColor="@color/white" />
 
 
                 <ImageButton
