@@ -1,17 +1,13 @@
 package com.furkanaskin.app.podpocket.ui.home
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.furkanaskin.app.podpocket.R
-import com.furkanaskin.app.podpocket.core.BaseCallBack
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentHomeBinding
-import com.furkanaskin.app.podpocket.generated.callback.OnClickListener
 import com.furkanaskin.app.podpocket.service.response.BestPodcasts
 import com.furkanaskin.app.podpocket.ui.home.best_podcasts.BestPodcastsAdapter
-import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -49,12 +45,11 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     fun initAdapter() {
         val adapter = BestPodcastsAdapter { item ->
-            val intent = Intent(activity, PlayerActivity::class.java)
-          //  val bundle = Bundle()
 
-            //bundle.putParcelable("pod",item)
-            intent.putExtra("pod", item)
-            startActivity(intent)
+            val podcastId = item.id
+            val action = HomeFragmentDirections.actionHomeFragmentToPodcastEpisodesFragment()
+            action.podcastID = podcastId!!
+            findNavController().navigate(action)
         }
 
         mBinding.recyclerViewBestPodcasts.adapter = adapter

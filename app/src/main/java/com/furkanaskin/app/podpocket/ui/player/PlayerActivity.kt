@@ -1,13 +1,10 @@
 package com.furkanaskin.app.podpocket.ui.player
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityPlayerBinding
-import com.furkanaskin.app.podpocket.service.response.ChannelsItem
+import com.furkanaskin.app.podpocket.service.response.EpisodesItem
 
 /**
  * Created by Furkan on 16.04.2019
@@ -23,8 +20,9 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val item = intent.getParcelableExtra<ChannelsItem>("pod")
+        val item = intent.getParcelableExtra<EpisodesItem>("pod")
         binding.textViewAlbumName.text = item?.title
+
     }
 
 }

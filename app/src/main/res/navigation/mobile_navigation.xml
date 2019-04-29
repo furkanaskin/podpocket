@@ -14,7 +14,11 @@
         android:id="@+id/homeFragment"
         android:name="com.furkanaskin.app.podpocket.ui.home.HomeFragment"
         android:label="ANASAYFA"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_podcastEpisodesFragment"
+            app:destination="@id/podcastEpisodesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/bookCaseFragment"
         android:name="com.furkanaskin.app.podpocket.ui.bookcase.BookCaseFragment"
@@ -30,4 +34,13 @@
         android:name="com.furkanaskin.app.podpocket.ui.search.SearchFragment"
         android:label="ARA"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/podcastEpisodesFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.podcast_episodes.PodcastEpisodesFragment"
+        android:label="PodcastEpisodesFragment">
+        <argument
+            android:name="podcastID"
+            android:defaultValue="hello2"
+            app:argType="string" />
+    </fragment>
 </navigation>

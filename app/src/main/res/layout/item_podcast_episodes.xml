@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.furkanaskin.app.podpocket.ui.podcast_episodes.episodes.EpisodesListItemViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageViewPodcastCover"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    app:setDrawableLink="@{viewModel.item.getThumbnail()}" />
+
+                <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView
+                    android:id="@+id/textViewPodcastTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_32_dp"
+                    android:layout_marginTop="@dimen/margin_16_dp"
+                    android:layout_toEndOf="@id/imageViewPodcastCover"
+                    android:lines="2"
+                    android:minLines="2"
+                    android:singleLine="false"
+                    android:text="@{viewModel.item.getTitle()}"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+</layout>
