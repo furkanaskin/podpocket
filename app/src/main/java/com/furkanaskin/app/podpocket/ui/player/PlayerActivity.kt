@@ -7,11 +7,6 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityPlayerBinding
 import com.furkanaskin.app.podpocket.service.response.EpisodesItem
-import com.furkanaskin.app.podpocket.service.response.JustListen
-import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_player.*
 
 /**
@@ -33,11 +28,11 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         super.onCreate(savedInstanceState)
 
         val item = intent.getParcelableExtra<EpisodesItem>("pod")
+        viewModel.item.set(item)
         podcastTitle = intent.getStringExtra("podTitle")
         setAudio(item)
 
     }
-
 
     fun setAudio(audio: EpisodesItem) {
         binding.textViewAlbumName.text = podcastTitle
