@@ -37,7 +37,7 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
 
             val intent = Intent(activity, PlayerActivity::class.java)
             intent.putExtra("pod", item)
-            intent.putExtra("podcastTitle", podcastTitle)
+            intent.putExtra("podTitle", podcastTitle)
             startActivity(intent)
 
         }
