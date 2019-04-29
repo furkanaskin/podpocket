@@ -36,9 +36,9 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
         super.onViewCreated(view, savedInstanceState)
         val adapter = EpisodesAdapter { item ->
 
-            item.podcastTitle=podcastTitle
             val intent = Intent(activity, PlayerActivity::class.java)
             intent.putExtra("pod", item)
+            intent.putExtra("podTitle", podcastTitle)
             startActivity(intent)
 
         }
