@@ -18,13 +18,15 @@ import kotlinx.android.synthetic.main.fragment_home.*
  */
 
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewModel::class.java) {
+    override fun initViewModel() {
+        mBinding.viewModel = viewModel
+    }
 
     val disposable = CompositeDisposable()
 
     override fun getLayoutRes(): Int = R.layout.fragment_home
 
     override fun init() {
-        mBinding.viewModel = viewModel
     }
 
 

@@ -45,6 +45,10 @@
             android:name=".ui.after_register.AfterRegisterActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.player.PlayerActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme" />
 
 
         <meta-data

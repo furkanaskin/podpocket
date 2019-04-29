@@ -14,7 +14,7 @@ class PlayerViewModel(app: Application) : BaseViewModel(app) {
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
 
     init {
-        (app as? Podpocket)?.component?.inject(this)
+        (app as? Podpocket)?.component!!.inject(this)
     }
 
 }

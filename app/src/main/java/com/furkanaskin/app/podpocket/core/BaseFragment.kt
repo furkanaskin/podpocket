@@ -30,6 +30,8 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
     @LayoutRes
     abstract fun getLayoutRes(): Int
 
+    abstract fun initViewModel()
+
     private fun getViewM(): VM = ViewModelProviders.of(this).get(mViewModelClass)
     open fun onInject() {}
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +52,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         init(inflater, container!!)
-        init()
+        initViewModel()
         super.onCreateView(inflater, container, savedInstanceState)
         return mBinding.root
     }

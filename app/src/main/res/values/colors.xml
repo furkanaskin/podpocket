@@ -7,6 +7,11 @@
     <color name="buttonStrokeColor">#9097FD</color>
     <color name="bottomNavBackgroundColor">#D5D2D7</color>
     <color name="bottomNavItemTint">#67689A</color>
+    <color name="mainBackgroundColor">#2C2939</color>
+    <color name="grayTextColor">#94939A</color>
+    <color name="graySeekBar">#555360</color>
+    <color name="grayAddQueue">#413E4D</color>
+    <color name="specialGreen">#50E3C2</color>
     <color name="colorPrettyOrange">#F48B8C</color>
     <color name="colorPrettyPurple">#E4417B</color>
     <color name="colorLoginText">#D8D8D8</color>

@@ -9,9 +9,12 @@ import com.furkanaskin.app.podpocket.databinding.FragmentProfileBinding
  */
 
 class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(ProfileViewModel::class.java) {
+    override fun initViewModel() {
+        mBinding.viewModel = viewModel
+    }
+
     override fun getLayoutRes(): Int = R.layout.fragment_profile
 
     override fun init() {
-        mBinding.viewModel = viewModel
     }
 }

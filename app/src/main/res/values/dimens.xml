@@ -3,4 +3,24 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+
+    <dimen name="margin_4_dp">4dp</dimen>
+    <dimen name="margin_8_dp">8dp</dimen>
+    <dimen name="margin_16_dp">16dp</dimen>
+    <dimen name="margin_32_dp">32dp</dimen>
+    <dimen name="margin_48_dp">48dp</dimen>
+
+   <dimen name="dimen_4_sp">4sp</dimen>
+    <dimen name="dimen_8_sp">8sp</dimen>
+    <dimen name="dimen_16_sp">16sp</dimen>
+    <dimen name="dimen_12_sp">12sp</dimen>
+    <dimen name="dimen_32_sp">32sp</dimen>
+    <dimen name="dimen_48_sp">48sp</dimen>
+
+
+
+    <dimen name="albumTextSize">18sp</dimen>
+    <dimen name="episodeTextSize">14sp</dimen>
+
 </resources>

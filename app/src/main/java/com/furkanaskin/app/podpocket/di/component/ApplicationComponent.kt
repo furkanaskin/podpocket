@@ -53,9 +53,10 @@ interface ApplicationComponent {
 
     fun inject(profileViewModel: ProfileViewModel)
 
-    fun inject(playerViewModel: PlayerViewModel)
-
     fun inject(settingsViewModel: SettingsViewModel)
 
     fun inject(afterRegisterViewModel: AfterRegisterViewModel)
+
+    fun inject(playerViewModel: PlayerViewModel)
+
 }

@@ -21,11 +21,6 @@
         android:label="KITAPLIK"
         tools:layout="@layout/fragment_book_case" />
     <fragment
-        android:id="@+id/playerFragment"
-        android:name="com.furkanaskin.app.podpocket.ui.player.PlayerFragment"
-        android:label="OYNAT"
-        tools:layout="@layout/fragment_player" />
-    <fragment
         android:id="@+id/profileFragment"
         android:name="com.furkanaskin.app.podpocket.ui.profile.ProfileFragment"
         android:label="PROFIL"
