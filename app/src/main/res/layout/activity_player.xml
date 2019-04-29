@@ -20,8 +20,16 @@
         android:orientation="vertical"
         tools:context=".ui.player.PlayerActivity">
 
+        <ImageView
+            android:id="@+id/imageViewCover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/relativeLayoutContainer"
+            android:scaleType="centerCrop"
+            app:setDrawableLink="@{viewModel.item.getImage()}" />
 
         <RelativeLayout
+            android:id="@+id/relativeLayoutContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -41,15 +49,17 @@
                     android:layout_marginTop="@dimen/margin_4_dp"
                     android:src="@drawable/ic_track_disk" />
 
-                <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+                <com.furkanaskin.app.podpocket.utils.ui.GMMarqueTextView
                     android:id="@+id/textViewTrackName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8_dp"
                     android:layout_marginTop="@dimen/margin_8_dp"
                     android:layout_marginEnd="@dimen/margin_16_dp"
+                    app:centerText="false"
+                    app:forceMarquee="true"
+                    app:marqueeEnabled="true"
                     android:layout_toEndOf="@id/imageViewTrackDisk"
-                    android:ellipsize="end"
                     android:text="Twoloud&amp;JustLuke-Be The One(Club remix)"
                     android:textColor="@color/white" />
 
@@ -159,7 +169,7 @@
 
                 <ImageButton
                     android:id="@+id/imageViewPlayPauseButton"
-                    android:layout_width="30dp"
+                    android:layout_width="25dp"
                     android:layout_height="70dp"
                     android:layout_weight="1"
                     android:background="@drawable/play_button"

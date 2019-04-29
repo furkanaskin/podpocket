@@ -32,11 +32,11 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         super.onCreate(savedInstanceState)
 
         val item = intent.getParcelableExtra<EpisodesItem>("pod")
+        viewModel.item.set(item)
         podcastTitle = intent.getStringExtra("podTitle")
         setAudio(item)
 
     }
-
 
     fun setAudio(audio: EpisodesItem) {
         binding.textViewAlbumName.text = podcastTitle
