@@ -117,6 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/seekBarPlayer"
                     android:layout_marginTop="@dimen/margin_8_dp"
+                    android:layout_marginStart="@dimen/margin_16_dp"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dimen_8_sp"
                     tools:text="01:02:52" />
@@ -128,6 +129,7 @@
                     android:layout_below="@id/seekBarPlayer"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/margin_8_dp"
+                    android:layout_marginEnd="@dimen/margin_16_dp"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dimen_8_sp"
                     tools:text="01:43:40" />
