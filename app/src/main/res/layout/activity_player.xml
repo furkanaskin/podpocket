@@ -15,17 +15,18 @@
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/mainBackgroundColor"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        android:background="@color/mainBackgroundColor"
         tools:context=".ui.player.PlayerActivity">
 
 
         <RelativeLayout
-            android:layout_marginBottom="60dp"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp">
+
             <RelativeLayout
                 android:id="@+id/relativeLayoutTrack"
                 android:layout_width="wrap_content"
@@ -62,10 +63,10 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_below="@id/relativeLayoutTrack"
                 android:id="@+id/relativeLayoutNameAndEpisode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/relativeLayoutTrack"
                 android:layout_margin="@dimen/margin_16_dp">
 
                 <com.furkanaskin.app.podpocket.ui.PodPocketTextView
@@ -154,11 +155,13 @@
                     android:layout_weight="1"
                     android:src="@drawable/ic_previous" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/imageViewPlayPauseButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="70dp"
                     android:layout_weight="1"
+                    android:background="@drawable/play_button"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_play" />
 
                 <ImageView
@@ -180,8 +183,8 @@
             <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_below="@id/relativeLayoutControls"
+                android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/margin_16_dp"
                 android:backgroundTint="@color/grayAddQueue"
                 android:text="@string/player_queue"

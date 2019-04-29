@@ -23,6 +23,7 @@ import io.reactivex.schedulers.Schedulers
 class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentPodcastEpisodesBinding>(PodcastEpisodesViewModel::class.java) {
     val disposable = CompositeDisposable()
     val episodesList: MutableList<EpisodesItem?>? = null
+    var podcastTitle:String = ""
 
 
     override fun getLayoutRes(): Int = R.layout.fragment_podcast_episodes
@@ -35,6 +36,7 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
         super.onViewCreated(view, savedInstanceState)
         val adapter = EpisodesAdapter { item ->
 
+            item.podcastTitle=podcastTitle
             val intent = Intent(activity, PlayerActivity::class.java)
             intent.putExtra("pod", item)
             startActivity(intent)
@@ -47,6 +49,7 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                     override fun onSuccess(t: Podcasts) {
 
                         (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t.episodes)
+                        podcastTitle= t.title!!
 
                     }
 

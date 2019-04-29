@@ -39,4 +39,7 @@
         <item name="android:fontFamily">@font/montserrat_semibold</item>
     </style>
 
+    <style name="AppTheme.RoundedCornerMaterialButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/play_button</item>
+    </style>
 </resources>
