@@ -6,7 +6,6 @@ import android.view.View
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentPodcastEpisodesBinding
-import com.furkanaskin.app.podpocket.service.response.EpisodesItem
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.PodPocketItemDecoration
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
@@ -22,8 +21,7 @@ import io.reactivex.schedulers.Schedulers
 
 class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentPodcastEpisodesBinding>(PodcastEpisodesViewModel::class.java) {
     val disposable = CompositeDisposable()
-    val episodesList: MutableList<EpisodesItem?>? = null
-    var podcastTitle:String = ""
+    lateinit var podcastTitle: String
 
 
     override fun getLayoutRes(): Int = R.layout.fragment_podcast_episodes
@@ -34,11 +32,12 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val adapter = EpisodesAdapter { item ->
 
-            item.podcastTitle=podcastTitle
             val intent = Intent(activity, PlayerActivity::class.java)
             intent.putExtra("pod", item)
+            intent.putExtra("podcastTitle", podcastTitle)
             startActivity(intent)
 
         }

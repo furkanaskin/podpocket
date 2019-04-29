@@ -8,4 +8,14 @@
         <attr name="civ_fill_color" format="color" />
         <attr name="civ_circle_background_color" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="GMMarqueTextView">
+        <attr name="marqueeEnabled" format="boolean" />
+        <attr name="edgeEffectEnabled" format="boolean" />
+        <attr name="edgeEffectWidth" format="integer" />
+        <attr name="edgeEffectColor" format="color" />
+        <attr name="pauseDuration" format="integer" />
+        <attr name="forceMarquee" format="boolean" />
+        <attr name="centerText" format="boolean" />
+    </declare-styleable>
 </resources>
