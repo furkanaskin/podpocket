@@ -29,5 +29,7 @@
     <string name="name">Adınız</string>
     <string name="save">Kaydet</string>
     <string name="birthday">Doğum Tarihiniz</string>
-    <string name="player_queue">LİSTE</string>
+    <string name="explore">Keşfet</string>
+    <string name="best_podcasts_in_your_region">Bölgendeki en iyi podcastler</string>
+
 </resources>
