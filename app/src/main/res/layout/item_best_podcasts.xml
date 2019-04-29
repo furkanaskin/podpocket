@@ -10,16 +10,16 @@
     </data>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp">
+        android:layout_width="120dp"
+        android:layout_height="180dp">
 
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:backgroundTint="@android:color/transparent"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp">
@@ -27,7 +27,7 @@
             <ImageView
                 android:id="@+id/imageViewPodcastCover"
                 android:layout_width="120dp"
-                android:layout_height="165dp"
+                android:layout_height="128dp"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
                 app:setDrawableLink="@{viewModel.item.getImage()}" />
@@ -40,10 +40,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/cardView"
             android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
-            android:maxLength="20"
-            android:maxLines="2"
+            android:gravity="center"
+            android:lines="2"
+            android:minLines="2"
+            android:singleLine="false"
             android:text="@{viewModel.item.getTitle()}"
             android:textColor="@color/white"
             android:textSize="14sp" />

@@ -17,6 +17,8 @@
         android:layout_height="match_parent"
         android:background="@drawable/ic_app_bg"
         android:fitsSystemWindows="true"
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="true"
         tools:context=".ui.home.HomeFragment">
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar

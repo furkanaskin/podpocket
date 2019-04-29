@@ -11,6 +11,7 @@ import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.ActivityLoginBinding
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.ui.after_register.AfterRegisterActivity
+import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.jaychang.st.SimpleText
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.doAsync
@@ -72,12 +73,27 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
         viewModel.loginSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
 
-                Thread.sleep(100)
-                val intent = Intent(this@LoginActivity, AfterRegisterActivity::class.java)
-                runOnUiThread {
-                    startActivity(intent)
-                    finish()
+                doAsync {
+                    user = viewModel.mAuth.currentUser?.uid?.let { viewModel.db.userDao().getUser(it) }!!
+
+                    runOnUiThread {
+
+                        if (user.surname.isNullOrEmpty()) {
+                            Thread.sleep(100)
+                            val intent = Intent(this@LoginActivity, AfterRegisterActivity::class.java)
+
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Thread.sleep(100)
+                            val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
                 }
+
             }
 
         })
@@ -109,12 +125,6 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
                 }
                 .create()
                 .show()
-    }
-
-    private fun getUser() {
-        doAsync {
-            user = viewModel.mAuth.currentUser?.uid?.let { viewModel.db.userDao().getUser(it) }!!
-        }
     }
 
 }
