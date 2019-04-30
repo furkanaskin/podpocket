@@ -23,6 +23,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:backgroundTint="@android:color/transparent"
+            app:explicitContent="@{viewModel.item.getExplicitContent()}"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp">
 

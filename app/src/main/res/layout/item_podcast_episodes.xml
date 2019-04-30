@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@android:color/transparent"
             app:cardCornerRadius="10dp"
+            app:explicitContent="@{viewModel.item.getExplicitContent()}"
             app:cardElevation="10dp">
 
             <RelativeLayout
