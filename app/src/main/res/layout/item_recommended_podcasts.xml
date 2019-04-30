@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.furkanaskin.app.podpocket.ui.home.best_podcasts.BestPodcastsListItemViewModel" />
+            type="com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPodcastsListItemViewModel" />
     </data>
 
     <RelativeLayout

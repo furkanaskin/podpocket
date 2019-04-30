@@ -7,7 +7,6 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentPodcastEpisodesBinding
 import com.furkanaskin.app.podpocket.service.response.Podcasts
-import com.furkanaskin.app.podpocket.ui.PodPocketItemDecoration
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.ui.podcast_episodes.episodes.EpisodesAdapter
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
@@ -55,8 +54,6 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                 }))
 
         mBinding.recyclerViewPodcastEpisodes.adapter = adapter
-        mBinding.recyclerViewPodcastEpisodes.addItemDecoration(PodPocketItemDecoration(30))
-
     }
 
     fun getPodcastId(): String {
