@@ -8,7 +8,12 @@ import android.widget.SeekBar
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityPlayerBinding
+import com.furkanaskin.app.podpocket.service.response.Episodes
 import com.furkanaskin.app.podpocket.service.response.EpisodesItem
+import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_player.*
 
 /**
@@ -20,6 +25,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     lateinit var podcastTitle: String
     private lateinit var runnable: Runnable
     private var handler: Handler = Handler()
+    val disposable = CompositeDisposable()
+    val episodeItem = EpisodesItem
 
 
     override fun getLayoutRes(): Int = R.layout.activity_player
@@ -33,14 +40,29 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         val item = intent.getParcelableExtra<EpisodesItem>("pod")
         viewModel.item.set(item)
-        podcastTitle = intent.getStringExtra("podTitle")
-        setAudio(item)
+
+        disposable.add(viewModel.getEpisodeDetails(item.id ?: "").subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : CallbackWrapper<Episodes>(viewModel.getApplication()) {
+                    override fun onSuccess(t: Episodes) {
+                        viewModel.episodeItem.set(t)
+                    }
+
+                    override fun onComplete() {
+                        super.onComplete()
+
+                        viewModel.episodeItem.get()?.let { setAudio(it) }
+
+                    }
+
+                }))
 
     }
 
-    fun setAudio(audio: EpisodesItem) {
-        binding.textViewAlbumName.text = podcastTitle
-        binding.textViewEpisodeName.text = audio.title
+    fun setAudio(audio: Episodes) {
+        binding.textViewAlbumName.text = audio.podcast?.title
+        binding.textViewTrackName.text = audio.title
+        binding.textViewEpisodeName.text = audio.pubDateMs.toString()
         binding.seekBarPlayer.max = audio.audioLength!!
 
         mediaPlayer = MediaPlayer.create(this, Uri.parse(audio.audio))
@@ -74,9 +96,10 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             }
 
         })
+
     }
 
-    fun updateSeekBar(audio: EpisodesItem) {
+    fun updateSeekBar(audio: Episodes) {
         binding.seekBarPlayer.max = audio.audioLength ?: 0
 
         runnable = Runnable {
