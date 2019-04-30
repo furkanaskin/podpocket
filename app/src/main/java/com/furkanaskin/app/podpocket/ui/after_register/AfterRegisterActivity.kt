@@ -78,10 +78,4 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         return viewModel.userID.get() != null
     }
 
-    private fun getUser() {
-        doAsync {
-            user = viewModel.mAuth.currentUser?.uid?.let { viewModel.db.userDao().getUser(it) }!!
-        }
-    }
-
 }

@@ -59,12 +59,12 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
      */
     abstract fun initViewModel(viewModel: VM)
 
-    private fun initFirebase() {
+    fun initFirebase() {
         mAuth = FirebaseAuth.getInstance()
 
     }
 
-    private fun getUser() {
+    fun getUser() {
         doAsync {
             user = viewModel.mAuth.currentUser?.uid?.let { viewModel.db.userDao().getUser(it) }!!
         }

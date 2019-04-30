@@ -27,7 +27,7 @@
 
             <ImageView
                 android:id="@+id/imageViewPodcastCover"
-                android:layout_width="120dp"
+                android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
@@ -50,7 +50,7 @@
             android:minLines="2"
             android:singleLine="false"
             android:text="@{viewModel.item.getTitle()}"
-            android:textColor="@color/white"
+            android:textColor="@color/colorLoginText"
             android:textSize="14sp" />
 
         <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView

@@ -41,8 +41,10 @@
 
             <ImageView
                 android:layout_width="256dp"
-                android:layout_height="256dp"
+                android:layout_height="266dp"
                 android:layout_alignParentEnd="true"
+                android:adjustViewBounds="true"
+                android:fitsSystemWindows="true"
                 android:src="@drawable/ic_home_bg" />
 
             <ImageView
@@ -51,7 +53,7 @@
                 android:layout_height="50dp"
                 android:layout_below="@id/textViewHello"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="52dp"
+                android:layout_marginTop="57dp"
                 android:src="@drawable/app_logo_small" />
 
             <ImageView
@@ -59,8 +61,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="52dp"
-                android:layout_marginEnd="36dp"
+                android:layout_marginTop="57dp"
+                android:layout_marginEnd="35dp"
                 android:src="@drawable/ic_gradient_search" />
 
             <com.furkanaskin.app.podpocket.ui.PodPocketTextView
@@ -189,7 +191,7 @@
                 android:layout_below="@id/recyclerViewRecommendedEpisodes"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="24dp"
-                android:paddingBottom="?attr/actionBarSize"
+                android:layout_marginBottom="?attr/actionBarSize"
                 android:text="Log out" />
 
         </RelativeLayout>
