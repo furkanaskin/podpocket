@@ -53,8 +53,9 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
                         viewModel.episodeItem.get()?.let { setAudio(it) }
                         doAsync {
-                            // Save last played podcast to DB
+                            // Save last played podcast and episode to DB
                             user.lastPlayedPodcast = viewModel.episodeItem.get()?.podcast?.id
+                            user.lastPlayedEpisode = viewModel.episodeItem.get()?.id
                             viewModel.db.userDao().updateUser(user)
                         }
 

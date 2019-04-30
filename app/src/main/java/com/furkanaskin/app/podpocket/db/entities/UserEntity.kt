@@ -20,10 +20,12 @@ data class UserEntity(
         var surname: String? = null,
         var birthday: String? = null,
         var mostLovedCategory: String? = null,
-        var lastPlayedPodcast: String? = null) : BaseEntity(), Parcelable {
+        var lastPlayedPodcast: String? = null,
+        var lastPlayedEpisode: String? = null) : BaseEntity(), Parcelable {
 
     constructor(parcel: Parcel) : this(
             parcel.readValue(Int::class.java.classLoader) as Int,
+            parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -42,6 +44,7 @@ data class UserEntity(
         parcel.writeValue(birthday)
         parcel.writeString(mostLovedCategory)
         parcel.writeString(lastPlayedPodcast)
+        parcel.writeString(lastPlayedEpisode)
     }
 
     override fun describeContents(): Int {
