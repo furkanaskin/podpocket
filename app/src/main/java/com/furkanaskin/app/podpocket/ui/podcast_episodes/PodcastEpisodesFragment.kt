@@ -38,7 +38,6 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
             val intent = Intent(activity, PlayerActivity::class.java)
             intent.putExtra("pod", item)
             intent.putExtra("podTitle", podcastTitle)
-            item.id
             startActivity(intent)
 
         }
@@ -49,7 +48,7 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                     override fun onSuccess(t: Podcasts) {
 
                         (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t.episodes)
-                        podcastTitle= t.title!!
+                        podcastTitle = t.title!!
 
                     }
 

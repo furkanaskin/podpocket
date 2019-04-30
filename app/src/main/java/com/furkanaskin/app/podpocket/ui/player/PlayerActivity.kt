@@ -4,6 +4,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.SeekBar
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
@@ -15,6 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_player.*
+import org.jetbrains.anko.doAsync
 
 /**
  * Created by Furkan on 16.04.2019
@@ -22,11 +24,9 @@ import kotlinx.android.synthetic.main.activity_player.*
 
 class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(PlayerViewModel::class.java) {
     lateinit var mediaPlayer: MediaPlayer
-    lateinit var podcastTitle: String
     private lateinit var runnable: Runnable
     private var handler: Handler = Handler()
     val disposable = CompositeDisposable()
-    val episodeItem = EpisodesItem
 
 
     override fun getLayoutRes(): Int = R.layout.activity_player
@@ -52,6 +52,11 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                         super.onComplete()
 
                         viewModel.episodeItem.get()?.let { setAudio(it) }
+                        doAsync {
+                            // Save last played podcast to DB
+                            user.lastPlayedPodcast = viewModel.episodeItem.get()?.podcast?.id
+                            viewModel.db.userDao().updateUser(user)
+                        }
 
                     }
 
@@ -64,6 +69,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         binding.textViewTrackName.text = audio.title
         binding.textViewEpisodeName.text = audio.pubDateMs.toString()
         binding.seekBarPlayer.max = audio.audioLength!!
+
+        Log.v("qqq", audio.podcast?.id.toString())
 
         mediaPlayer = MediaPlayer.create(this, Uri.parse(audio.audio))
 

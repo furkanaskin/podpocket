@@ -22,8 +22,6 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         binding.viewModel = viewModel
     }
 
-    lateinit var user: UserEntity
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

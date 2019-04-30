@@ -9,7 +9,6 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.ActivityLoginBinding
-import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.ui.after_register.AfterRegisterActivity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.jaychang.st.SimpleText
@@ -21,8 +20,6 @@ import org.jetbrains.anko.doAsync
  */
 
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginViewModel::class.java) {
-
-    lateinit var user: UserEntity
 
     override fun getLayoutRes(): Int = R.layout.activity_login
 

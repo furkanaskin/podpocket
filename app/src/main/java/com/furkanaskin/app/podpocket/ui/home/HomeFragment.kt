@@ -53,14 +53,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         }
 
         mBinding.recyclerViewBestPodcasts.adapter = adapter
-        // mBinding.recyclerViewBestPodcasts.addItemDecoration(PodPocketItemDecoration(30))
-
 
     }
 
     private fun initBestPodcasts() {
 
-        disposable.add(viewModel.api.getBestPodcasts("tr", 1)
+        disposable.add(viewModel.getBestPodcasts("tr", 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : CallbackWrapper<BestPodcasts>(viewModel.getApplication()) {
