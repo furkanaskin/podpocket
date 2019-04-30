@@ -33,5 +33,6 @@
     <string name="best_podcasts_in_your_region">Bölgendeki en iyi podcastler</string>
     <string name="player_queue">Liste</string>
     <string name="recommended_podcasts">Senin için önerilen podcastler</string>
+    <string name="recommended_episodes">Senin için önerilen bölümler</string>
 
 </resources>

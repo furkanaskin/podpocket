@@ -157,6 +157,28 @@
                 android:layout_below="@id/textViewRecommendedPodcasts"
                 android:layout_marginTop="@dimen/margin_16_dp"
                 android:clipToPadding="false"
+                android:orientation="horizontal" />
+
+            <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView
+                android:id="@+id/textViewRecommendedEpisodes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recyclerViewRecommendedPodcasts"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="@dimen/margin_16_dp"
+                android:text="@string/recommended_episodes"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+
+            <com.furkanaskin.app.podpocket.ui.PodPocketRecyclerView
+                android:id="@+id/recyclerViewRecommendedEpisodes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewRecommendedEpisodes"
+                android:layout_marginTop="@dimen/margin_16_dp"
+                android:clipToPadding="false"
                 android:orientation="horizontal"
                 app:layoutManager="LinearLayoutManager" />
 
@@ -164,9 +186,10 @@
                 android:id="@+id/buttonLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_below="@id/recyclerViewRecommendedPodcasts"
+                android:layout_below="@id/recyclerViewRecommendedEpisodes"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="24dp"
+                android:paddingBottom="?attr/actionBarSize"
                 android:text="Log out" />
 
         </RelativeLayout>

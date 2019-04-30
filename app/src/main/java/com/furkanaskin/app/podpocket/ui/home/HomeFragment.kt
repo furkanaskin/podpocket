@@ -1,5 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,9 +10,13 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentHomeBinding
 import com.furkanaskin.app.podpocket.service.response.BestPodcasts
+import com.furkanaskin.app.podpocket.service.response.EpisodeRecommendations
 import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
+import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.home.best_podcasts.BestPodcastsAdapter
+import com.furkanaskin.app.podpocket.ui.home.recommended_episodes.RecommendedEpisodesAdapter
 import com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPodcastsAdapter
+import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -28,6 +33,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
     }
 
     val disposable = CompositeDisposable()
+    var data: Podcasts? = null
+
 
     override fun getLayoutRes(): Int = R.layout.fragment_home
 
@@ -48,9 +55,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         initRecommendedPodcastsAdapter()
         initRecommendedPodcasts()
 
+        initRecommendedEpisodesAdapter()
+        initRecommendedEpisodes()
+
     }
 
-    fun initBestPodcastsAdapter() {
+    private fun initBestPodcastsAdapter() {
         val adapter = BestPodcastsAdapter { item ->
 
             val podcastId = item.id
@@ -64,7 +74,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     }
 
-    fun initRecommendedPodcastsAdapter() {
+    private fun initRecommendedPodcastsAdapter() {
         val adapter = RecommendedPodcastsAdapter { item ->
             val podcastId = item.id
             val action = HomeFragmentDirections.actionHomeFragmentToPodcastEpisodesFragment()
@@ -73,6 +83,40 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         }
 
         mBinding.recyclerViewRecommendedPodcasts.adapter = adapter
+        mBinding.recyclerViewRecommendedPodcasts.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
+
+    }
+
+    private fun initRecommendedEpisodesAdapter() {
+        val adapter = RecommendedEpisodesAdapter { item ->
+
+            disposable.add(viewModel.getEpisodes(item.podcastId!!).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
+
+                        override fun onSuccess(t: Podcasts) {
+                            data = t
+                        }
+
+                        override fun onComplete() {
+                            super.onComplete()
+
+                            data?.episodes?.forEachIndexed { _, episodesItem ->
+                                if (episodesItem?.id == item.id) {
+
+                                    val intent = Intent(activity, PlayerActivity::class.java)
+                                    intent.putExtra("pod", episodesItem)
+                                    startActivity(intent)
+
+                                }
+                            }
+
+                        }
+
+                    }))
+        }
+
+        mBinding.recyclerViewRecommendedEpisodes.adapter = adapter
     }
 
     private fun initBestPodcasts() {
@@ -97,13 +141,26 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
     private fun initRecommendedPodcasts() {
 
         disposable.add(viewModel.getPodcastRecommendations(user.lastPlayedPodcast
-                ?: "a77e4e3f156248ec9252da682bc70d79", 0)
+                ?: "1c8374ef2e8c41928010347f66401e56", 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : CallbackWrapper<PodcastRecommendations>(viewModel.getApplication()) {
                     override fun onSuccess(t: PodcastRecommendations) {
                         Log.v("qqq", t.recommendations.toString())
                         (mBinding.recyclerViewRecommendedPodcasts.adapter as RecommendedPodcastsAdapter).submitList(t.recommendations)
+                    }
+
+                }))
+    }
+
+    private fun initRecommendedEpisodes() {
+        disposable.add(viewModel.getEpisodeRecommendations(user.lastPlayedEpisode
+                ?: "53fd8c1a373b46888638cbeb14b571d1", 0)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : CallbackWrapper<EpisodeRecommendations>(viewModel.getApplication()) {
+                    override fun onSuccess(t: EpisodeRecommendations) {
+                        (mBinding.recyclerViewRecommendedEpisodes.adapter as RecommendedEpisodesAdapter).submitList(t.recommendations)
                     }
 
                 }))

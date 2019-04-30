@@ -20,8 +20,6 @@
             android:id="@+id/cardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:backgroundTint="@android:color/transparent"
             app:explicitContent="@{viewModel.item.getExplicitContent()}"
             app:cardCornerRadius="10dp"
@@ -31,7 +29,6 @@
                 android:id="@+id/imageViewPodcastCover"
                 android:layout_width="120dp"
                 android:layout_height="128dp"
-                android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
                 app:setDrawableLink="@{viewModel.item.getImage()}" />
 
