@@ -45,7 +45,7 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
                     override fun onSuccess(t: Podcasts) {
-
+                        viewModel.podcast.set(t)
                         (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t.episodes)
                         podcastTitle = t.title!!
 

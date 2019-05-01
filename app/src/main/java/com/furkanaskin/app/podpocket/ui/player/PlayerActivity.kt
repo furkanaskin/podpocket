@@ -4,7 +4,6 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.widget.SeekBar
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
@@ -26,7 +25,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     lateinit var mediaPlayer: MediaPlayer
     private lateinit var runnable: Runnable
     private var handler: Handler = Handler()
-    val disposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
 
 
     override fun getLayoutRes(): Int = R.layout.activity_player
@@ -71,8 +70,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         binding.textViewEpisodeName.text = audio.pubDateMs.toString()
         binding.seekBarPlayer.max = audio.audioLength!!
 
-        Log.v("qqq", audio.podcast?.id.toString())
-
         mediaPlayer = MediaPlayer.create(this, Uri.parse(audio.audio))
 
 
@@ -107,7 +104,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
     }
 
-    fun updateSeekBar(audio: Episodes) {
+    private fun updateSeekBar(audio: Episodes) {
         binding.seekBarPlayer.max = audio.audioLength ?: 0
 
         runnable = Runnable {
@@ -122,7 +119,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         handler.postDelayed(runnable, 1000)
     }
 
-    val MediaPlayer.seconds: Int
+    private val MediaPlayer.seconds: Int
         get() {
             return this.duration / 1000
         }
