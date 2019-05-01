@@ -22,9 +22,9 @@ class SplashActivityViewModel(app: Application) : BaseViewModel(app) {
     private fun alreadyLogged() {
         doAsync {
             val firebaseID = mAuth.currentUser?.uid
-            val localID = firebaseID?.let { db.userDao().getUser(it) }
+            val user = firebaseID?.let { db.userDao().getUser(it) }
 
-            if (localID != null) {
+            if (user != null) {
                 loginSuccess.set(true)
 
             }

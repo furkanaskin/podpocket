@@ -37,9 +37,9 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
                 doAsync {
 
                     val willBeUpdated = UserEntity(
-                            id = user.id,
-                            uniqueId = user.uniqueId,
-                            email = user.email,
+                            id = user?.id ?: 0,
+                            uniqueId = user?.uniqueId ?: "",
+                            email = user?.email,
                             name = viewModel.userName.get(),
                             surname = viewModel.userSurname.get(),
                             birthday = viewModel.userBirthDay.get())

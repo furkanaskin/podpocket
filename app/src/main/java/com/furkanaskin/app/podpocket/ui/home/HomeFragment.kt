@@ -2,7 +2,6 @@ package com.furkanaskin.app.podpocket.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -140,13 +139,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     private fun initRecommendedPodcasts() {
 
-        disposable.add(viewModel.getPodcastRecommendations(user.lastPlayedPodcast
+        disposable.add(viewModel.getPodcastRecommendations(user?.lastPlayedPodcast
                 ?: "1c8374ef2e8c41928010347f66401e56", 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : CallbackWrapper<PodcastRecommendations>(viewModel.getApplication()) {
                     override fun onSuccess(t: PodcastRecommendations) {
-                        Log.v("qqq", t.recommendations.toString())
                         (mBinding.recyclerViewRecommendedPodcasts.adapter as RecommendedPodcastsAdapter).submitList(t.recommendations)
                     }
 
@@ -154,7 +152,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
     }
 
     private fun initRecommendedEpisodes() {
-        disposable.add(viewModel.getEpisodeRecommendations(user.lastPlayedEpisode
+        disposable.add(viewModel.getEpisodeRecommendations(user?.lastPlayedEpisode
                 ?: "53fd8c1a373b46888638cbeb14b571d1", 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
