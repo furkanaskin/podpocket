@@ -118,13 +118,26 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         }
     }
 
+
     private fun loginClicked() {
         if (getValidationMessages()) {
             progressBarView.set(true)
             mAuth.signInWithEmailAndPassword(userName.get()!!, password.get()!!).addOnCompleteListener { task ->
+
                 if (task.isSuccessful) {
+
+                    doAsync {
+                        val user = UserEntity(
+                                uniqueId = mAuth.currentUser?.uid ?: "",
+                                email = userName.get() ?: "")
+
+                        db.userDao().insertUser(user)
+
+                    }
+
                     loginSuccess.set(true)
                     progressBarView.set(false)
+
                 } else {
                     checkFirebaseCredentials(task)
                     progressBarView.set(false)

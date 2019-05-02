@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.service.response
 
-import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -87,10 +86,9 @@ data class ChannelsItem(
                 parcel.readParcelable(Extra::class.java.classLoader),
                 parcel.readString(),
                 parcel.readString(),
-                parcel.readString()) {
-        }
+                parcel.readString())
 
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
                 parcel.writeString(country)
                 parcel.writeString(image)
                 parcel.writeString(website)
@@ -126,4 +124,8 @@ data class ChannelsItem(
                         return arrayOfNulls(size)
                 }
         }
+
+    fun getTotalEpisodes(): String? {
+        return "$totalEpisodes Bölüm"
+    }
 }

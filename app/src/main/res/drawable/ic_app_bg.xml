@@ -9,12 +9,4 @@
         android:pathData="M0,0h375v812h-375z"
         android:strokeWidth="1"
         android:strokeColor="#00000000" />
-    <path
-        android:fillAlpha="0.14"
-        android:fillColor="#FFFFFF"
-        android:fillType="evenOdd"
-        android:pathData="M123.5,798L252.5,798A2.5,2.5 0,0 1,255 800.5L255,800.5A2.5,2.5 0,0 1,252.5 803L123.5,803A2.5,2.5 0,0 1,121 800.5L121,800.5A2.5,2.5 0,0 1,123.5 798z"
-        android:strokeWidth="1"
-        android:strokeAlpha="0.14"
-        android:strokeColor="#00000000" />
 </vector>

@@ -2,7 +2,10 @@ package com.furkanaskin.app.podpocket.core
 
 import android.view.View
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.furkanaskin.app.podpocket.R
+import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
 
 /**
@@ -27,5 +30,15 @@ object BindingAdapter {
             return
         Picasso.get().cancelRequest(view)
         Picasso.get().load(link).into(view)
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:explicitContent")
+    fun explicitContent(view: MaterialCardView, explicitContent: Boolean) {
+
+        if (explicitContent) {
+            view.strokeColor = ContextCompat.getColor(view.context, R.color.colorCyan)
+            view.strokeWidth = 4
+        }
     }
 }

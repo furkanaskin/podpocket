@@ -13,7 +13,6 @@ import com.furkanaskin.app.podpocket.ui.after_register.AfterRegisterActivity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.jaychang.st.SimpleText
 import kotlinx.android.synthetic.main.activity_login.*
-import org.jetbrains.anko.doAsync
 
 /**
  * Created by Furkan on 14.04.2019
@@ -70,28 +69,26 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
         viewModel.loginSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
 
-                doAsync {
-                    user = viewModel.mAuth.currentUser?.uid?.let { viewModel.db.userDao().getUser(it) }!!
+                getUser()
 
-                    runOnUiThread {
+                runOnUiThread {
 
-                        if (user.surname.isNullOrEmpty()) {
-                            Thread.sleep(100)
-                            val intent = Intent(this@LoginActivity, AfterRegisterActivity::class.java)
+                    Thread.sleep(1000)
 
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            Thread.sleep(100)
-                            val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
-
-                            startActivity(intent)
-                            finish()
-                        }
+                    if (user?.surname.isNullOrEmpty()) {
+                        Thread.sleep(100)
+                        val intent = Intent(this@LoginActivity, AfterRegisterActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Thread.sleep(100)
+                        val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                 }
-
             }
+
 
         })
 

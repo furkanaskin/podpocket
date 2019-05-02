@@ -44,7 +44,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     private val trackSelector: TrackSelector = DefaultTrackSelector(trackSelectionFactory)
 
     private var handler: Handler = Handler()
-    val disposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
 
 
     override fun getLayoutRes(): Int = R.layout.activity_player
@@ -74,9 +74,9 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                         viewModel.episodeItem.get()?.let { setAudio(it) }
                         doAsync {
                             // Save last played podcast and episode to DB
-                            user.lastPlayedPodcast = viewModel.episodeItem.get()?.podcast?.id
-                            user.lastPlayedEpisode = viewModel.episodeItem.get()?.id
-                            viewModel.db.userDao().updateUser(user)
+                            user?.lastPlayedPodcast = viewModel.episodeItem.get()?.podcast?.id
+                            user?.lastPlayedEpisode = viewModel.episodeItem.get()?.id
+                            user?.let { viewModel.db.userDao().updateUser(it) }
                         }
 
                     }
@@ -96,6 +96,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         player.addListener(eventListener)
         initDefaultTimeBar()
 
+        mediaPlayer = MediaPlayer.create(this, Uri.parse(audio.audio))
 
         with(player) {
             prepare(mediaSource)

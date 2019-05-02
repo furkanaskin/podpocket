@@ -62,7 +62,7 @@ interface PodpocketAPI {
 
     @Headers("X-ListenAPI-Key: 82e6628b74404fb9a26a934b7d1adfa0")
     @GET("episodes/{id}/recommendations")
-    fun getEpisodesRecommendations(@Path("id") episodeId: String, @Query("safe_mod") explicitContent: Int): Observable<EpisodeRecommendations>
+    fun getEpisodeRecommendations(@Path("id") episodeId: String, @Query("safe_mod") explicitContent: Int): Observable<EpisodeRecommendations>
 
     // Post Requests
 

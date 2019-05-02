@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.core
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -10,7 +9,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.doAsync
-import timber.log.Timber
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : AppCompatActivity() {
 
@@ -18,7 +16,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
     abstract fun getLayoutRes(): Int
 
     lateinit var mAuth: FirebaseAuth
-    lateinit var user: UserEntity
+    var user: UserEntity? = null
 
     val binding by lazy {
         DataBindingUtil.setContentView(this, getLayoutRes()) as DB
@@ -40,15 +38,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
 
         onInject()
 
-        try {
-            if (!::user.isInitialized || !::mAuth.isInitialized) {  // if initialized, don't initialize again.
-                initFirebase()
-                getUser()
-            }
-        } catch (e: UninitializedPropertyAccessException) { // For unexpected crash.
-            Timber.e(e)
-            Toast.makeText(this, "Beklenmeyen bir hata oluştu, lütfen tekrar deneyiniz.", Toast.LENGTH_SHORT).show()
-        }
+        initFirebase()
+        getUser()
     }
 
     /**
@@ -59,12 +50,12 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
      */
     abstract fun initViewModel(viewModel: VM)
 
-    private fun initFirebase() {
+    fun initFirebase() {
         mAuth = FirebaseAuth.getInstance()
 
     }
 
-    private fun getUser() {
+    fun getUser() {
         doAsync {
             user = viewModel.mAuth.currentUser?.uid?.let { viewModel.db.userDao().getUser(it) }!!
         }

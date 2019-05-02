@@ -72,4 +72,8 @@ data class Podcasts(
 
         @field:SerializedName("episodes")
         val episodes: List<EpisodesItem?>? = null
-)
+) {
+    fun getTotalEpisodes(): String? {
+        return "$totalEpisodes Bölüm"
+    }
+}

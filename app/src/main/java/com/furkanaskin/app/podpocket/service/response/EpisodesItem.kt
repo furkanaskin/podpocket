@@ -3,6 +3,8 @@ package com.furkanaskin.app.podpocket.service.response
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class EpisodesItem(
 
@@ -84,6 +86,20 @@ data class EpisodesItem(
 
         override fun newArray(size: Int): Array<EpisodesItem?> {
             return arrayOfNulls(size)
+        }
+    }
+
+    fun getPubDateMs(): String {
+        return getDateTime(pubDateMs ?: 0) ?: ""
+    }
+
+    private fun getDateTime(s: Long): String? {
+        return try {
+            val sdf = SimpleDateFormat("MM/dd/yyyy")
+            val netDate = Date(s)
+            sdf.format(netDate)
+        } catch (e: Exception) {
+            e.toString()
         }
     }
 }
