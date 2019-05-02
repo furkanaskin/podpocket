@@ -21,6 +21,7 @@ import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelection
 import com.google.android.exoplayer2.trackselection.TrackSelector
+import com.google.android.exoplayer2.ui.TimeBar
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
@@ -96,7 +97,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         player.addListener(eventListener)
         initDefaultTimeBar()
 
-        mediaPlayer = MediaPlayer.create(this, Uri.parse(audio.audio))
 
         with(player) {
             prepare(mediaSource)
@@ -123,8 +123,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     }
 
     private fun setProgress() {
-//        time_current.text = binding.viewModel?.stringForTime(exoPlayer!!.currentPosition.toInt())
-//        player_end_time.text = binding.viewModel?.stringForTime(exoPlayer!!.duration.toInt())
+        binding.textViewCurrentTime.text = binding.viewModel?.stringForTime(player.currentPosition.toInt())
+        binding.textViewEndTime.text = binding.viewModel?.stringForTime(player.duration.toInt())
 
         if (handler == null) handler = Handler()
         handler.post(object : Runnable {
@@ -133,8 +133,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                     binding.defaultTimeBar.setDuration((player.duration / 1000))
                     val mCurrentPosition = player.currentPosition.toInt() / 1000
                     binding.defaultTimeBar.setPosition(mCurrentPosition.toLong())
-//                    time_current.text = binding.viewModel?.stringForTime(exoPlayer!!.currentPosition.toInt())
-//                    player_end_time.text = binding.viewModel?.stringForTime(exoPlayer!!.duration.toInt())
+                    binding.textViewCurrentTime.text = binding.viewModel?.stringForTime(player.currentPosition.toInt())
+                    binding.textViewEndTime.text = binding.viewModel?.stringForTime(player.duration.toInt())
                     handler.postDelayed(this, 1000)
                 }
             }
@@ -143,7 +143,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
     private fun initDefaultTimeBar() {
         binding.defaultTimeBar.requestFocus()
-        // binding.defaultTimeBar.addListener(timeBarListener)
+        binding.defaultTimeBar.addListener(timeBarListener)
         binding.defaultTimeBar.onFocusChangeListener = object : SeekBar.OnSeekBarChangeListener, View.OnFocusChangeListener {
             override fun onFocusChange(p0: View?, p1: Boolean) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -167,7 +167,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         }
         binding.imageViewNextButton.setOnClickListener {
-            player.seekTo(700)
             Log.e("buffered", player.bufferedPosition.toString())
             Log.e("buffered", player.currentPosition.toString())
         }
@@ -186,19 +185,19 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             }
         }
     }
-//
-//    private val  timeBarListener=object:TimeBar.OnScrubListener{
-//        override fun onScrubMove(timeBar: TimeBar?, position: Long) {
-//        }
-//
-//        override fun onScrubStart(timeBar: TimeBar?, position: Long) {
-//        }
-//
-//        override fun onScrubStop(timeBar: TimeBar?, position: Long, canceled: Boolean) {
-//            player.seekTo(position)
-//        }
-//
-//    }
+
+    private val timeBarListener = object : TimeBar.OnScrubListener {
+        override fun onScrubMove(timeBar: TimeBar?, position: Long) {
+        }
+
+        override fun onScrubStart(timeBar: TimeBar?, position: Long) {
+        }
+
+        override fun onScrubStop(timeBar: TimeBar?, position: Long, canceled: Boolean) {
+            player.seekTo(position * 1000L)
+        }
+
+    }
 
 
     override fun onBackPressed() {

@@ -7,6 +7,7 @@ import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.service.response.Episodes
 import com.furkanaskin.app.podpocket.service.response.EpisodesItem
 import io.reactivex.Observable
+import java.util.*
 
 /**
  * Created by Furkan on 16.04.2019
@@ -26,4 +27,23 @@ class PlayerViewModel(app: Application) : BaseViewModel(app) {
     fun getEpisodeDetails(id: String): Observable<Episodes> {
         return api.getEpisodesById(id)
     }
+
+    fun stringForTime(timeMs: Int): String {
+        val mFormatBuilder = StringBuilder()
+        val mFormatter: Formatter
+        mFormatter = Formatter(mFormatBuilder, Locale.getDefault())
+        val totalSeconds = timeMs / 1000
+
+        val seconds = totalSeconds % 60
+        val minutes = totalSeconds / 60 % 60
+        val hours = totalSeconds / 3600
+
+        mFormatBuilder.setLength(0)
+        return if (hours > 0) {
+            mFormatter.format("%d:%02d:%02d", hours, minutes, seconds).toString()
+        } else {
+            mFormatter.format("%02d:%02d", minutes, seconds).toString()
+        }
+    }
+
 }

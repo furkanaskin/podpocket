@@ -124,26 +124,24 @@
                     />
 
                 <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-                    android:id="@+id/textViewLeftMinute"
+                    android:id="@+id/textViewCurrentTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/defaultTimeBar"
-                    android:layout_marginTop="@dimen/margin_8_dp"
-                    android:layout_marginStart="@dimen/margin_16_dp"
+                    android:layout_marginStart="@dimen/margin_8_dp"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dimen_8_sp"
+                    android:textSize="@dimen/dimen_12_sp"
                     tools:text="01:02:52" />
 
                 <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-                    android:id="@+id/textViewRightMinute"
+                    android:id="@+id/textViewEndTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/defaultTimeBar"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/margin_8_dp"
-                    android:layout_marginEnd="@dimen/margin_16_dp"
+                    android:layout_marginEnd="@dimen/margin_8_dp"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dimen_8_sp"
+                    android:textSize="@dimen/dimen_12_sp"
                     tools:text="01:43:40" />
             </RelativeLayout>
 
