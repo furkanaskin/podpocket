@@ -1,10 +1,10 @@
 package com.furkanaskin.app.podpocket.ui.player
 
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.View
 import android.widget.SeekBar
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
@@ -12,10 +12,21 @@ import com.furkanaskin.app.podpocket.databinding.ActivityPlayerBinding
 import com.furkanaskin.app.podpocket.service.response.Episodes
 import com.furkanaskin.app.podpocket.service.response.EpisodesItem
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.trackselection.TrackSelection
+import com.google.android.exoplayer2.trackselection.TrackSelector
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_player.*
 import org.jetbrains.anko.doAsync
 
 /**
@@ -23,8 +34,15 @@ import org.jetbrains.anko.doAsync
  */
 
 class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(PlayerViewModel::class.java) {
-    lateinit var mediaPlayer: MediaPlayer
-    private lateinit var runnable: Runnable
+    private lateinit var player: SimpleExoPlayer
+    private lateinit var mediaSource: MediaSource
+    private lateinit var dataSourceFactory: DefaultDataSourceFactory
+    private val BANDWIDTH_METER = DefaultBandwidthMeter()
+    private var isPlaying = false
+
+    private val trackSelectionFactory: TrackSelection.Factory = AdaptiveTrackSelection.Factory()
+    private val trackSelector: TrackSelector = DefaultTrackSelector(trackSelectionFactory)
+
     private var handler: Handler = Handler()
     val disposable = CompositeDisposable()
 
@@ -40,6 +58,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         val item = intent.getParcelableExtra<EpisodesItem>("pod")
         viewModel.item.set(item)
+        dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoPlayerSample"), BANDWIDTH_METER)
+
 
         disposable.add(viewModel.getEpisodeDetails(item.id ?: "").subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -65,78 +85,129 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
     }
 
-    fun setAudio(audio: Episodes) {
+    private fun setAudio(audio: Episodes) {
         binding.textViewAlbumName.text = audio.podcast?.title
         binding.textViewTrackName.text = audio.title
         binding.textViewEpisodeName.text = audio.pubDateMs.toString()
-        binding.seekBarPlayer.max = audio.audioLength!!
 
-        Log.v("qqq", audio.podcast?.id.toString())
+        mediaSource = ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(audio.audio))
 
-        mediaPlayer = MediaPlayer.create(this, Uri.parse(audio.audio))
+        player = ExoPlayerFactory.newSimpleInstance(this, trackSelector)
+        player.addListener(eventListener)
+        initDefaultTimeBar()
 
 
-        imageViewPlayPauseButton.setOnClickListener {
-            if (mediaPlayer.isPlaying) {
-                binding.imageViewPlayPauseButton.setImageResource(R.drawable.ic_play)
-                mediaPlayer.pause()
-            } else {
-                binding.imageViewPlayPauseButton.setImageResource(R.drawable.pause)
-                mediaPlayer.start()
-                updateSeekBar(audio)
+        with(player) {
+            prepare(mediaSource)
+            binding.imageViewPlayButton.setOnClickListener {
+                setPlayPause(!isPlaying)
             }
         }
 
-        binding.seekBarPlayer.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+    }
+
+
+    private fun setPlayPause(play: Boolean) {
+        isPlaying = play
+        player.playWhenReady = play
+
+        if (!isPlaying) {
+            binding.imageViewPlayButton.setImageResource(R.drawable.ic_play)
+        } else {
+            setProgress()
+            binding.imageViewPlayButton.setImageResource(R.drawable.pause)
+
+        }
+    }
+
+    private fun setProgress() {
+//        time_current.text = binding.viewModel?.stringForTime(exoPlayer!!.currentPosition.toInt())
+//        player_end_time.text = binding.viewModel?.stringForTime(exoPlayer!!.duration.toInt())
+
+        if (handler == null) handler = Handler()
+        handler.post(object : Runnable {
+            override fun run() {
+                if (player != null && isPlaying) {
+                    binding.defaultTimeBar.setDuration((player.duration / 1000))
+                    val mCurrentPosition = player.currentPosition.toInt() / 1000
+                    binding.defaultTimeBar.setPosition(mCurrentPosition.toLong())
+//                    time_current.text = binding.viewModel?.stringForTime(exoPlayer!!.currentPosition.toInt())
+//                    player_end_time.text = binding.viewModel?.stringForTime(exoPlayer!!.duration.toInt())
+                    handler.postDelayed(this, 1000)
+                }
+            }
+        })
+    }
+
+    private fun initDefaultTimeBar() {
+        binding.defaultTimeBar.requestFocus()
+        // binding.defaultTimeBar.addListener(timeBarListener)
+        binding.defaultTimeBar.onFocusChangeListener = object : SeekBar.OnSeekBarChangeListener, View.OnFocusChangeListener {
+            override fun onFocusChange(p0: View?, p1: Boolean) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+                if (!p2) {
+                    return
+                }
+
+                player.seekTo(p1 * 1000L)
+            }
+
             override fun onStartTrackingTouch(p0: SeekBar?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onStopTrackingTouch(p0: SeekBar?) {
-
+                player.seekTo((p0?.progress ?: 0) * 1000L)
             }
 
-            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-//                binding.seekBarPlayer.progress=p1
-//                if(p2){
-//                    mediaPlayer.seekTo(p1)
-//                }
-            }
-
-        })
+        }
+        binding.imageViewNextButton.setOnClickListener {
+            player.seekTo(700)
+            Log.e("buffered", player.bufferedPosition.toString())
+            Log.e("buffered", player.currentPosition.toString())
+        }
 
     }
 
-    fun updateSeekBar(audio: Episodes) {
-        binding.seekBarPlayer.max = audio.audioLength ?: 0
+    private val eventListener = object : ExoPlayer.EventListener {
+        override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+            when (playbackState) {
+                ExoPlayer.STATE_ENDED -> {
+                    setPlayPause(false)
+                    binding.defaultTimeBar.setDuration(player.duration)
+                    player.seekTo(0)
 
-        runnable = Runnable {
-            binding.seekBarPlayer.progress = mediaPlayer.currentSeconds
-
-            binding.textViewLeftMinute.text = mediaPlayer.currentSeconds.toString()
-            val diff = mediaPlayer.seconds - mediaPlayer.currentSeconds
-            binding.textViewRightMinute.text = diff.toString()
-
-            handler.postDelayed(runnable, 1000)
+                }
+            }
         }
-        handler.postDelayed(runnable, 1000)
     }
+//
+//    private val  timeBarListener=object:TimeBar.OnScrubListener{
+//        override fun onScrubMove(timeBar: TimeBar?, position: Long) {
+//        }
+//
+//        override fun onScrubStart(timeBar: TimeBar?, position: Long) {
+//        }
+//
+//        override fun onScrubStop(timeBar: TimeBar?, position: Long, canceled: Boolean) {
+//            player.seekTo(position)
+//        }
+//
+//    }
 
-    val MediaPlayer.seconds: Int
-        get() {
-            return this.duration / 1000
-        }
-
-
-    // Extension property to get media player current position in seconds
-    val MediaPlayer.currentSeconds: Int
-        get() {
-            return this.currentPosition / 1000
-        }
 
     override fun onBackPressed() {
-        mediaPlayer.pause()
+        player.stop()
         super.onBackPressed()
+    }
+
+    override fun onDestroy() {
+        player.stop()
+        super.onDestroy()
     }
 }
 

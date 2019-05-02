@@ -113,19 +113,21 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/relativeLayoutNameAndEpisode">
 
-                <SeekBar
-                    android:id="@+id/seekBarPlayer"
+                <com.google.android.exoplayer2.ui.DefaultTimeBar
+                    android:id="@+id/defaultTimeBar"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginTop="@dimen/margin_8_dp"
-                    android:progressDrawable="@drawable/seekbar_filter_activity"
-                    android:thumb="@drawable/thumb_image_go" />
+                    app:played_color="#000000"
+                    app:unplayed_color="@color/white"
+
+                    />
 
                 <com.furkanaskin.app.podpocket.ui.PodPocketTextView
                     android:id="@+id/textViewLeftMinute"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/seekBarPlayer"
+                    android:layout_below="@id/defaultTimeBar"
                     android:layout_marginTop="@dimen/margin_8_dp"
                     android:layout_marginStart="@dimen/margin_16_dp"
                     android:textColor="@color/white"
@@ -136,7 +138,7 @@
                     android:id="@+id/textViewRightMinute"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/seekBarPlayer"
+                    android:layout_below="@id/defaultTimeBar"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/margin_8_dp"
                     android:layout_marginEnd="@dimen/margin_16_dp"
@@ -167,14 +169,15 @@
                     android:layout_weight="1"
                     android:src="@drawable/ic_previous" />
 
+
                 <ImageButton
-                    android:id="@+id/imageViewPlayPauseButton"
-                    android:layout_width="25dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
+                    android:id="@+id/imageViewPlayButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:background="@drawable/play_button"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_play" />
+
 
                 <ImageView
                     android:id="@+id/imageViewNextButton"
