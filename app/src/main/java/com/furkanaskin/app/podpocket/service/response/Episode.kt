@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-data class Episodes(
+data class Episode(
 
         @field:SerializedName("image")
         val image: String? = null,
@@ -68,8 +68,8 @@ data class Episodes(
         parcel.writeString(description)
         parcel.writeString(title)
         parcel.writeString(listennotesUrl)
-        parcel.writeValue(audioLength)
         parcel.writeParcelable(podcast, flags)
+        parcel.writeValue(audioLength)
         parcel.writeString(audio)
         parcel.writeString(id)
         parcel.writeValue(pubDateMs)
@@ -80,12 +80,12 @@ data class Episodes(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Episodes> {
-        override fun createFromParcel(parcel: Parcel): Episodes {
-            return Episodes(parcel)
+    companion object CREATOR : Parcelable.Creator<Episode> {
+        override fun createFromParcel(parcel: Parcel): Episode {
+            return Episode(parcel)
         }
 
-        override fun newArray(size: Int): Array<Episodes?> {
+        override fun newArray(size: Int): Array<Episode?> {
             return arrayOfNulls(size)
         }
     }
