@@ -4,8 +4,7 @@ import android.app.Application
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
-import com.furkanaskin.app.podpocket.service.response.Episodes
-import com.furkanaskin.app.podpocket.service.response.EpisodesItem
+import com.furkanaskin.app.podpocket.service.response.Episode
 import io.reactivex.Observable
 import java.util.*
 
@@ -16,16 +15,15 @@ import java.util.*
 class PlayerViewModel(app: Application) : BaseViewModel(app) {
 
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
-    val item: ObservableField<EpisodesItem> = ObservableField()
-    val episodeItem: ObservableField<Episodes> = ObservableField()
+    val item: ObservableField<Episode> = ObservableField()
 
     init {
         (app as? Podpocket)?.component!!.inject(this)
     }
 
 
-    fun getEpisodeDetails(id: String): Observable<Episodes> {
-        return api.getEpisodesById(id)
+    fun getEpisodeDetails(id: String): Observable<Episode> {
+        return api.getEpisodeById(id)
     }
 
     fun stringForTime(timeMs: Int): String {

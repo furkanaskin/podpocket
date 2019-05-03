@@ -9,9 +9,7 @@ import android.widget.SeekBar
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityPlayerBinding
-import com.furkanaskin.app.podpocket.service.response.Episodes
-import com.furkanaskin.app.podpocket.service.response.EpisodesItem
-import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
+import com.furkanaskin.app.podpocket.service.response.Episode
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -25,9 +23,6 @@ import com.google.android.exoplayer2.ui.TimeBar
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.player_container.*
 import org.jetbrains.anko.doAsync
 
@@ -46,7 +41,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     private val trackSelector: TrackSelector = DefaultTrackSelector(trackSelectionFactory)
 
     private var handler: Handler = Handler()
-    private val disposable = CompositeDisposable()
 
 
     override fun getLayoutRes(): Int = R.layout.activity_player
@@ -58,36 +52,22 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val item = intent.getParcelableExtra<EpisodesItem>("pod")
+        val item = intent.getParcelableExtra<Episode>("pod")
         viewModel.item.set(item)
         dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoPlayerSample"), BANDWIDTH_METER)
 
+        setAudio(item)
 
-        disposable.add(viewModel.getEpisodeDetails(item.id ?: "").subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<Episodes>(viewModel.getApplication()) {
-                    override fun onSuccess(t: Episodes) {
-                        viewModel.episodeItem.set(t)
-                    }
-
-                    override fun onComplete() {
-                        super.onComplete()
-
-                        viewModel.episodeItem.get()?.let { setAudio(it) }
-                        doAsync {
-                            // Save last played podcast and episode to DB
-                            user?.lastPlayedPodcast = viewModel.episodeItem.get()?.podcast?.id
-                            user?.lastPlayedEpisode = viewModel.episodeItem.get()?.id
-                            user?.let { viewModel.db.userDao().updateUser(it) }
-                        }
-
-                    }
-
-                }))
+        doAsync {
+            // Save last played podcast and episode to DB
+            user?.lastPlayedPodcast = viewModel.item.get()?.podcast?.id
+            user?.lastPlayedEpisode = viewModel.item.get()?.id
+            user?.let { viewModel.db.userDao().updateUser(it) }
+        }
 
     }
 
-    private fun setAudio(audio: Episodes) {
+    private fun setAudio(audio: Episode) {
         binding.textViewAlbumName.text = audio.podcast?.title
         binding.textViewTrackName.text = audio.title
         binding.textViewEpisodeName.text = audio.pubDateMs.toString()

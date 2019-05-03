@@ -9,9 +9,9 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentHomeBinding
 import com.furkanaskin.app.podpocket.service.response.BestPodcasts
+import com.furkanaskin.app.podpocket.service.response.Episode
 import com.furkanaskin.app.podpocket.service.response.EpisodeRecommendations
 import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
-import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.home.best_podcasts.BestPodcastsAdapter
 import com.furkanaskin.app.podpocket.ui.home.recommended_episodes.RecommendedEpisodesAdapter
 import com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPodcastsAdapter
@@ -32,7 +32,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
     }
 
     val disposable = CompositeDisposable()
-    var data: Podcasts? = null
+    var data: Episode? = null
 
 
     override fun getLayoutRes(): Int = R.layout.fragment_home
@@ -89,26 +89,20 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
     private fun initRecommendedEpisodesAdapter() {
         val adapter = RecommendedEpisodesAdapter { item ->
 
-            disposable.add(viewModel.getEpisodes(item.podcastId!!).subscribeOn(Schedulers.io())
+            disposable.add(viewModel.getEpisodeDetails(item.id ?: "").subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
+                    .subscribeWith(object : CallbackWrapper<Episode>(viewModel.getApplication()) {
 
-                        override fun onSuccess(t: Podcasts) {
+                        override fun onSuccess(t: Episode) {
                             data = t
                         }
 
                         override fun onComplete() {
                             super.onComplete()
 
-                            data?.episodes?.forEachIndexed { _, episodesItem ->
-                                if (episodesItem?.id == item.id) {
-
-                                    val intent = Intent(activity, PlayerActivity::class.java)
-                                    intent.putExtra("pod", episodesItem)
-                                    startActivity(intent)
-
-                                }
-                            }
+                            val intent = Intent(activity, PlayerActivity::class.java)
+                            intent.putExtra("pod", data)
+                            startActivity(intent)
 
                         }
 

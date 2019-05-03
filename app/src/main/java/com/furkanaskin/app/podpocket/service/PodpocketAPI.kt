@@ -22,11 +22,15 @@ interface PodpocketAPI {
 
     @Headers("X-ListenAPI-Key: 82e6628b74404fb9a26a934b7d1adfa0")
     @GET("podcasts/{id}")
-    fun getPodcastsById(@Path("id") podcastId: String): Observable<Podcasts>
+    fun getPodcastById(@Path("id") podcastId: String): Observable<Podcasts>
+
+    @Headers("X-ListenAPI-Key: 82e6628b74404fb9a26a934b7d1adfa0")
+    @GET("podcasts/{id}")
+    fun getPodcastByIdWithPaging(@Path("id") podcastId: String, @Query("next_episode_pub_date") pubDate: Number): Observable<Podcasts>
 
     @Headers("X-ListenAPI-Key: 82e6628b74404fb9a26a934b7d1adfa0")
     @GET("episodes/{id}")
-    fun getEpisodesById(@Path("id") episodeId: String): Observable<Episodes>
+    fun getEpisodeById(@Path("id") episodeId: String): Observable<Episode>
 
     @Headers("X-ListenAPI-Key: 82e6628b74404fb9a26a934b7d1adfa0")
     @GET("curated_podcasts/{id}")
