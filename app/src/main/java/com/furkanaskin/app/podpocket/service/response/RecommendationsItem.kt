@@ -33,7 +33,7 @@ data class RecommendationsItem(
         @field:SerializedName("podcast_title")
         val podcastTitle: String? = null,
 
-        @field:SerializedName("audio_length")
+        @field:SerializedName("audio_length_sec")
         val audioLength: Int? = null,
 
         @field:SerializedName("publisher")

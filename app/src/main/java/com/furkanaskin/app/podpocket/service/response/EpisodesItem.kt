@@ -20,7 +20,7 @@ data class EpisodesItem(
         @field:SerializedName("listennotes_edit_url")
         val listennotesEditUrl: String? = null,
 
-        @field:SerializedName("audio_length")
+        @field:SerializedName("audio_length_sec")
         val audioLength: Int? = null,
 
         @field:SerializedName("description")

@@ -55,7 +55,7 @@ data class ResultsItem(
         @field:SerializedName("publisher_original")
         val publisherOriginal: String? = null,
 
-        @field:SerializedName("audio_length")
+        @field:SerializedName("audio_length_sec")
         val audioLength: String? = null,
 
         @field:SerializedName("audio")
