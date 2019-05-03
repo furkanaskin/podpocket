@@ -15,7 +15,7 @@ import com.furkanaskin.app.podpocket.service.response.EpisodesItem
  * Created by Furkan on 29.04.2019
  */
 
-class EpisodesAdapter(private val callBack: (EpisodesItem) -> Unit) : BaseAdapter<EpisodesItem>(diffCallback) {
+class EpisodesAdapter(private val callBack: (EpisodesItem, Int) -> Unit) : BaseAdapter<EpisodesItem>(diffCallback) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemPodcastEpisodesBinding>(
                 LayoutInflater.from(parent.context),
@@ -29,14 +29,14 @@ class EpisodesAdapter(private val callBack: (EpisodesItem) -> Unit) : BaseAdapte
 
         mBinding.cardView.setOnClickListener {
             mBinding.viewModel?.item?.get()?.let {
-                callBack.invoke(it)
+                callBack.invoke(it, mBinding.viewModel!!.position)
             }
         }
         return mBinding
     }
 
     override fun bind(binding: ViewDataBinding, position: Int) {
-        (binding as ItemPodcastEpisodesBinding).viewModel?.item?.set(getItem(position))
+        (binding as ItemPodcastEpisodesBinding).viewModel?.setModel(getItem(position), position)
         binding.executePendingBindings()
     }
 }

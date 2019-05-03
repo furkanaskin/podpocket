@@ -30,4 +30,13 @@ class PodcastEpisodesViewModel(app: Application) : BaseViewModel(app) {
     fun getEpisodeDetails(id: String): Observable<Episode> {
         return api.getEpisodeById(id)
     }
+
+    fun getAllIds(position: Int): List<String> {
+        var ids: ArrayList<String> = ArrayList()
+        for (i in podcast.get()?.episodes?.indices!!) {
+            podcast.get()?.episodes!![i]?.id?.let { ids.add(it) }
+
+        }
+        return ids
+    }
 }

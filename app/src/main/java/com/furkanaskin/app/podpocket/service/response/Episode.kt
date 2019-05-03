@@ -44,6 +44,7 @@ data class Episode(
 
         @field:SerializedName("maybe_audio_invalid")
         val maybeAudioInvalid: Boolean? = null
+
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),

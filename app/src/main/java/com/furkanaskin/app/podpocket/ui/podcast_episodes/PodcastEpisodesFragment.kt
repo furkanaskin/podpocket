@@ -13,6 +13,7 @@ import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 /**
  * Created by Furkan on 29.04.2019
@@ -32,11 +33,12 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = EpisodesAdapter { item ->
+        val adapter = EpisodesAdapter { item, position ->
 
             val intent = Intent(activity, PlayerActivity::class.java)
             intent.putExtra("pod", item)
-            intent.putExtra("podTitle", podcastTitle)
+            intent.putExtra("position", position.toString())
+            intent.putStringArrayListExtra("allPodIds", viewModel.getAllIds(position) as ArrayList<String>?)
             startActivity(intent)
 
         }
