@@ -149,12 +149,14 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                     textViewCurrentTime.text = binding.viewModel?.stringForTime(player.currentPosition.toInt())
                     textViewEndTime.text = binding.viewModel?.stringForTime(player.duration.toInt())
                     handler.postDelayed(this, 1000)
+
                 }
             }
         })
     }
 
     private fun nextEpisode() {
+        //for next episode
         imageViewNextButton.setOnClickListener {
             if (currentPosition != 0) {
 
