@@ -28,6 +28,7 @@ import com.google.android.exoplayer2.util.Util
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.player_container.*
 import org.jetbrains.anko.doAsync
 
 /**
@@ -100,7 +101,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         with(player) {
             prepare(mediaSource)
-            binding.imageViewPlayButton.setOnClickListener {
+            imageViewPlayButton.setOnClickListener {
                 setPlayPause(!isPlaying)
             }
         }
@@ -114,27 +115,29 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         player.playWhenReady = play
 
         if (!isPlaying) {
-            binding.imageViewPlayButton.setImageResource(R.drawable.ic_play)
+            imageViewPlayButton.setImageResource(R.drawable.ic_play)
+            binding.textViewIsPlaying.setText(R.string.paused)
         } else {
             setProgress()
-            binding.imageViewPlayButton.setImageResource(R.drawable.pause)
+            imageViewPlayButton.setImageResource(R.drawable.pause)
+            binding.textViewIsPlaying.setText(R.string.now_playing)
 
         }
     }
 
     private fun setProgress() {
-        binding.textViewCurrentTime.text = binding.viewModel?.stringForTime(player.currentPosition.toInt())
-        binding.textViewEndTime.text = binding.viewModel?.stringForTime(player.duration.toInt())
+        textViewCurrentTime.text = binding.viewModel?.stringForTime(player.currentPosition.toInt())
+        textViewEndTime.text = binding.viewModel?.stringForTime(player.duration.toInt())
 
         if (handler == null) handler = Handler()
         handler.post(object : Runnable {
             override fun run() {
                 if (player != null && isPlaying) {
-                    binding.defaultTimeBar.setDuration((player.duration / 1000))
+                    defaultTimeBar.setDuration((player.duration / 1000))
                     val mCurrentPosition = player.currentPosition.toInt() / 1000
-                    binding.defaultTimeBar.setPosition(mCurrentPosition.toLong())
-                    binding.textViewCurrentTime.text = binding.viewModel?.stringForTime(player.currentPosition.toInt())
-                    binding.textViewEndTime.text = binding.viewModel?.stringForTime(player.duration.toInt())
+                    defaultTimeBar.setPosition(mCurrentPosition.toLong())
+                    textViewCurrentTime.text = binding.viewModel?.stringForTime(player.currentPosition.toInt())
+                    textViewEndTime.text = binding.viewModel?.stringForTime(player.duration.toInt())
                     handler.postDelayed(this, 1000)
                 }
             }
@@ -142,9 +145,9 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     }
 
     private fun initDefaultTimeBar() {
-        binding.defaultTimeBar.requestFocus()
-        binding.defaultTimeBar.addListener(timeBarListener)
-        binding.defaultTimeBar.onFocusChangeListener = object : SeekBar.OnSeekBarChangeListener, View.OnFocusChangeListener {
+        defaultTimeBar.requestFocus()
+        defaultTimeBar.addListener(timeBarListener)
+        defaultTimeBar.onFocusChangeListener = object : SeekBar.OnSeekBarChangeListener, View.OnFocusChangeListener {
             override fun onFocusChange(p0: View?, p1: Boolean) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -166,7 +169,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             }
 
         }
-        binding.imageViewNextButton.setOnClickListener {
+        imageViewNextButton.setOnClickListener {
             Log.e("buffered", player.bufferedPosition.toString())
             Log.e("buffered", player.currentPosition.toString())
         }
@@ -178,7 +181,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             when (playbackState) {
                 ExoPlayer.STATE_ENDED -> {
                     setPlayPause(false)
-                    binding.defaultTimeBar.setDuration(player.duration)
+                    defaultTimeBar.setDuration(player.duration)
                     player.seekTo(0)
 
                 }

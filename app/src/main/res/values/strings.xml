@@ -34,5 +34,8 @@
     <string name="player_queue">Liste</string>
     <string name="recommended_podcasts">Senin için önerilen podcastler</string>
     <string name="recommended_episodes">Senin için önerilen bölümler</string>
+    <string name="please_wait">Lütfen bekleyiniz.</string>
+    <string name="now_playing">Şimdi Çalıyor</string>
+    <string name="paused">Duraklatıldı</string>
 
 </resources>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayoutSeekBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/relativeLayoutNameAndEpisode">
+
+    <com.google.android.exoplayer2.ui.DefaultTimeBar
+        android:id="@+id/defaultTimeBar"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/margin_8_dp"
+        app:played_color="#000000"
+        app:unplayed_color="@color/white"
+
+        />
+
+    <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+        android:id="@+id/textViewCurrentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/defaultTimeBar"
+        android:layout_marginStart="@dimen/margin_8_dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimen_12_sp"
+        tools:text="01:02:52" />
+
+    <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+        android:id="@+id/textViewEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/defaultTimeBar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/margin_8_dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimen_12_sp"
+        tools:text="01:43:40" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/relativeLayoutControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewEndTime"
+        android:gravity="center"
+        android:weightSum="5">
+
+        <ImageView
+            android:id="@+id/imageViewShuffleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_shuffle" />
+
+        <ImageView
+            android:id="@+id/imageViewPreviousButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_previous" />
+
+
+        <ImageButton
+            android:id="@+id/imageViewPlayButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/play_button"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_play" />
+
+
+        <ImageView
+            android:id="@+id/imageViewNextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_next" />
+
+        <ImageView
+            android:id="@+id/imageViewRepeatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_repeat" />
+
+    </LinearLayout>
+</RelativeLayout>

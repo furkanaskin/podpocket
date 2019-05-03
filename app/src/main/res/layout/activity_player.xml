@@ -28,18 +28,41 @@
             android:scaleType="centerCrop"
             app:setDrawableLink="@{viewModel.item.getImage()}" />
 
-        <RelativeLayout
-            android:id="@+id/relativeLayoutContainer"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="60dp">
+            android:layout_height="match_parent"
+            android:layout_above="@id/relativeLayoutContainer"
+            android:layout_marginTop="200dp"
+            android:background="@drawable/gradient_track"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bg_now_playing" />
+
+                <com.furkanaskin.app.podpocket.ui.PodPocketLightTextView
+                    android:id="@+id/textViewIsPlaying"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/now_playing"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorCyan" />
+            </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/relativeLayoutTrack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_above="@id/relativeLayoutNameAndEpisode"
                 android:padding="@dimen/margin_16_dp">
 
                 <ImageView
@@ -56,12 +79,12 @@
                     android:layout_marginStart="@dimen/margin_8_dp"
                     android:layout_marginTop="@dimen/margin_8_dp"
                     android:layout_marginEnd="@dimen/margin_16_dp"
+                    android:layout_toEndOf="@id/imageViewTrackDisk"
+                    android:text="@string/please_wait"
+                    android:textColor="@color/white"
                     app:centerText="false"
                     app:forceMarquee="true"
-                    app:marqueeEnabled="true"
-                    android:layout_toEndOf="@id/imageViewTrackDisk"
-                    android:text="Twoloud&amp;JustLuke-Be The One(Club remix)"
-                    android:textColor="@color/white" />
+                    app:marqueeEnabled="true" />
 
 
                 <ImageButton
@@ -70,14 +93,17 @@
                     android:layout_alignParentEnd="true"
                     android:background="@drawable/round_button"
                     android:src="@drawable/ic_track_list" />
+
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/relativeLayoutNameAndEpisode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/relativeLayoutTrack"
-                android:layout_margin="@dimen/margin_16_dp">
+                android:layout_below="@id/relativeLayoutNameAndEpisode"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="@dimen/margin_16_dp"
+                android:layout_marginEnd="@dimen/margin_16_dp">
 
                 <com.furkanaskin.app.podpocket.ui.PodPocketTextView
                     android:id="@+id/textViewAlbumName"
@@ -106,97 +132,24 @@
                     android:src="@drawable/ic_more" />
 
             </RelativeLayout>
+        </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/relativeLayoutSeekBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/relativeLayoutNameAndEpisode">
+        <RelativeLayout
+            android:id="@+id/relativeLayoutContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp">
 
-                <com.google.android.exoplayer2.ui.DefaultTimeBar
-                    android:id="@+id/defaultTimeBar"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="@dimen/margin_8_dp"
-                    app:played_color="#000000"
-                    app:unplayed_color="@color/white"
+            <include
+                android:id="@+id/player_container"
+                layout="@layout/player_container" />
 
-                    />
-
-                <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-                    android:id="@+id/textViewCurrentTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/defaultTimeBar"
-                    android:layout_marginStart="@dimen/margin_8_dp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dimen_12_sp"
-                    tools:text="01:02:52" />
-
-                <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-                    android:id="@+id/textViewEndTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/defaultTimeBar"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/margin_8_dp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dimen_12_sp"
-                    tools:text="01:43:40" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/relativeLayoutControls"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/relativeLayoutSeekBar"
-                android:gravity="center"
-                android:weightSum="5">
-
-                <ImageView
-                    android:id="@+id/imageViewShuffleButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_shuffle" />
-
-                <ImageView
-                    android:id="@+id/imageViewPreviousButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_previous" />
-
-
-                <ImageButton
-                    android:id="@+id/imageViewPlayButton"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/play_button"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_play" />
-
-
-                <ImageView
-                    android:id="@+id/imageViewNextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_next" />
-
-                <ImageView
-                    android:id="@+id/imageViewRepeatButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_repeat" />
-
-            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/relativeLayoutControls"
+                android:layout_below="@id/player_container"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/margin_16_dp"
                 android:backgroundTint="@color/grayAddQueue"
