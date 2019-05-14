@@ -42,7 +42,9 @@ data class EpisodesItem(
         val listennotesUrl: String? = null,
 
         @field:SerializedName("maybe_audio_invalid")
-        val maybeAudioInvalid: Boolean? = null
+        val maybeAudioInvalid: Boolean? = null,
+
+        var isSelected: Boolean? = false
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -57,6 +59,7 @@ data class EpisodesItem(
             parcel.readString(),
             parcel.readValue(Long::class.java.classLoader) as? Long,
             parcel.readString(),
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean)
 
 
@@ -73,6 +76,7 @@ data class EpisodesItem(
         parcel.writeValue(pubDateMs)
         parcel.writeString(listennotesUrl)
         parcel.writeValue(maybeAudioInvalid)
+        parcel.writeValue(isSelected)
     }
 
     override fun describeContents(): Int {
@@ -102,4 +106,5 @@ data class EpisodesItem(
             e.toString()
         }
     }
+
 }

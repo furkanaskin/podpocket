@@ -27,7 +27,7 @@ abstract class BasePagedListAdapter(diffCallback: DiffUtil.ItemCallback<BaseEnti
 
     companion object {
         /**
-         * This diff callback informs the PagedListAdapter how to compute list differences when new
+         * This diff callback informs the PagedListAdapter how to compute queue differences when new
          * PagedLists arrive.
          * <p>
          * When you add a Cheese with the 'Add' button, the PagedListAdapter uses diffCallback to

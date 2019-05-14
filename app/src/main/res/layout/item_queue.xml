@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -24,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/margin_8_dp"
-            android:src="@drawable/ic_track_disk" />
+            android:src="@drawable/ic_unplayed_episode_disc" />
 
         <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView
             android:id="@+id/textViewPodcastTitle"
@@ -35,8 +36,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
             android:layout_toEndOf="@id/imageViewDisc"
+            app:setTextColor="@{viewModel.item.isSelected()}"
             android:text="@{viewModel.item.getTitle()}"
-            android:textColor="@color/colorLoginText"
             android:textSize="14sp" />
     </RelativeLayout>
 </layout>

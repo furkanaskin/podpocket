@@ -2,6 +2,7 @@ package com.furkanaskin.app.podpocket.core
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.furkanaskin.app.podpocket.R
@@ -40,5 +41,16 @@ object BindingAdapter {
             view.strokeColor = ContextCompat.getColor(view.context, R.color.colorCyan)
             view.strokeWidth = 4
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:setTextColor")
+    fun setTextColor(view: TextView, isSelected: Boolean) {
+        if (isSelected)
+            view.setTextColor(ContextCompat.getColor(view.context, R.color.colorCyan))
+        else
+            view.setTextColor(ContextCompat.getColor(view.context, R.color.white))
+
+
     }
 }

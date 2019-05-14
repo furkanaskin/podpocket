@@ -10,7 +10,7 @@ import com.furkanaskin.app.podpocket.service.response.EpisodesItem
  */
 
 class QueueListItemViewModel(app: Application) : BaseViewModel(app) {
-    var item = ObservableField<EpisodesItem>()
+    var item: ObservableField<EpisodesItem> = ObservableField()
     var position = -1
 
     fun setModel(item: EpisodesItem, position: Int) {

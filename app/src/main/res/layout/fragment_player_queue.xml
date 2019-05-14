@@ -20,11 +20,11 @@
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:id="@+id/progressBar"
-            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="true"
-            app:mpb_progressStyle="horizontal"
+            android:layout_centerInParent="true"
+            app:mpb_progressStyle="circular"
             app:mpb_useIntrinsicPadding="false"
             app:visibility="@{viewModel.progressBarView}" />
 
@@ -38,6 +38,7 @@
             android:layout_marginBottom="@dimen/margin_24_dp"
             android:clipToPadding="false"
             android:orientation="vertical"
+            android:paddingBottom="200dp"
             app:layoutManager="LinearLayoutManager" />
 
     </RelativeLayout>

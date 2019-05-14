@@ -229,6 +229,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
+                player.seekTo((p0?.progress ?: 0) * 1000L)
             }
 
             override fun onStopTrackingTouch(p0: SeekBar?) {
@@ -254,6 +255,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
     private val timeBarListener = object : TimeBar.OnScrubListener {
         override fun onScrubMove(timeBar: TimeBar?, position: Long) {
+            player.seekTo(position * 1000L)
         }
 
         override fun onScrubStart(timeBar: TimeBar?, position: Long) {

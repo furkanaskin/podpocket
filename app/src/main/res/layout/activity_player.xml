@@ -32,6 +32,7 @@
             android:id="@+id/fragmentLayoutQueue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@id/relativeLayoutContainer"
             android:visibility="gone" />
 
 
