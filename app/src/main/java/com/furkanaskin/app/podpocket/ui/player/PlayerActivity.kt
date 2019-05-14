@@ -3,10 +3,10 @@ package com.furkanaskin.app.podpocket.ui.player
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityPlayerBinding
@@ -28,6 +28,7 @@ import com.google.android.exoplayer2.util.Util
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_player.*
 import kotlinx.android.synthetic.main.player_container.*
 import org.jetbrains.anko.doAsync
 
@@ -41,6 +42,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     private lateinit var dataSourceFactory: DefaultDataSourceFactory
     private val BANDWIDTH_METER = DefaultBandwidthMeter()
     private var isPlaying = false
+    private lateinit var episodes: ArrayList<String>
 
     private val trackSelectionFactory: TrackSelection.Factory = AdaptiveTrackSelection.Factory()
     private val trackSelector: TrackSelector = DefaultTrackSelector(trackSelectionFactory)
@@ -48,8 +50,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     private var handler: Handler = Handler()
     private val disposable = CompositeDisposable()
     private var currentPosition: Int = 0
-    private lateinit var episodes: ArrayList<String>
-
 
     override fun getLayoutRes(): Int = R.layout.activity_player
 
@@ -62,12 +62,42 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         currentPosition = intent.getStringExtra("position").toInt()
         episodes = intent.getStringArrayListExtra("allPodIds")
-        episodes.get(currentPosition).let { getEpisodeDetail(it) }
+        getEpisodeDetail(episodes[currentPosition])
+
+
+        binding.imageButtonQueue.setOnClickListener {
+            fragmentLayoutQueue.visibility = View.VISIBLE
+            imageButtonCloseQueue.visibility = View.VISIBLE
+            imageButtonQueue.visibility = View.GONE
+            imageViewTrackDisk.visibility = View.GONE
+            textViewTrackName.visibility = View.GONE
+
+            val playerQueueFragment = PlayerQueueFragment.newInstance(viewModel.item.get()?.podcast?.id
+                    ?: "", currentPosition)
+            val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+            transaction.add(R.id.fragmentLayoutQueue, playerQueueFragment, "playerQueueFragment")
+                    .commitNow()
+
+        }
+
+        binding.imageButtonCloseQueue.setOnClickListener {
+            textViewTrackName.visibility = View.VISIBLE
+            imageViewTrackDisk.visibility = View.VISIBLE
+            imageButtonQueue.visibility = View.VISIBLE
+            imageButtonCloseQueue.visibility = View.GONE
+
+            val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+            val queueFragment = supportFragmentManager.findFragmentByTag("playerQueueFragment")
+
+            queueFragment?.let { it -> transaction.remove(it) }
+
+            fragmentLayoutQueue.visibility = View.GONE
+
+        }
 
     }
 
     private fun getEpisodeDetail(episodeId: String) {
-
 
         dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoPlayerSample"), BANDWIDTH_METER)
 
@@ -110,7 +140,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 }
             }
 
-
         }
     }
 
@@ -139,10 +168,9 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         textViewCurrentTime.text = binding.viewModel?.stringForTime(player.currentPosition.toInt())
         textViewEndTime.text = binding.viewModel?.stringForTime(player.duration.toInt())
 
-        if (handler == null) handler = Handler()
         handler.post(object : Runnable {
             override fun run() {
-                if (player != null && isPlaying) {
+                if (isPlaying) {
                     defaultTimeBar.setDuration((player.duration / 1000))
                     val mCurrentPosition = player.currentPosition.toInt() / 1000
                     defaultTimeBar.setPosition(mCurrentPosition.toLong())
@@ -174,7 +202,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         imageViewPreviousButton.setOnClickListener {
             if (currentPosition + 1 != episodes.size) {
                 player.stop()
-                getEpisodeDetail(episodes.get(currentPosition + 1))
+                getEpisodeDetail(episodes[currentPosition + 1])
                 currentPosition += 1
 
             } else {
@@ -190,7 +218,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         defaultTimeBar.addListener(timeBarListener)
         defaultTimeBar.onFocusChangeListener = object : SeekBar.OnSeekBarChangeListener, View.OnFocusChangeListener {
             override fun onFocusChange(p0: View?, p1: Boolean) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
@@ -202,17 +229,12 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onStopTrackingTouch(p0: SeekBar?) {
                 player.seekTo((p0?.progress ?: 0) * 1000L)
             }
 
-        }
-        imageViewNextButton.setOnClickListener {
-            Log.e("buffered", player.bufferedPosition.toString())
-            Log.e("buffered", player.currentPosition.toString())
         }
 
     }

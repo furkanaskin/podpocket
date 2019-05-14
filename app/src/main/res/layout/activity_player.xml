@@ -28,6 +28,12 @@
             android:scaleType="centerCrop"
             app:setDrawableLink="@{viewModel.item.getImage()}" />
 
+        <FrameLayout
+            android:id="@+id/fragmentLayoutQueue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,47 +44,55 @@
             android:gravity="bottom"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/bg_now_playing" />
-
-                <com.furkanaskin.app.podpocket.ui.PodPocketLightTextView
-                    android:id="@+id/textViewIsPlaying"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/now_playing"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorCyan" />
-            </RelativeLayout>
-
 
             <RelativeLayout
                 android:id="@+id/relativeLayoutTrack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/relativeLayoutNameAndEpisode"
-                android:padding="@dimen/margin_16_dp">
+                android:animateLayoutChanges="true"
+                android:paddingTop="@dimen/margin_16_dp"
+                android:paddingEnd="@dimen/margin_16_dp"
+                android:paddingBottom="@dimen/margin_16_dp">
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutNowPlaying"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/bg_now_playing" />
+
+                    <com.furkanaskin.app.podpocket.ui.PodPocketLightTextView
+                        android:id="@+id/textViewIsPlaying"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/now_playing"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorCyan" />
+                </RelativeLayout>
 
                 <ImageView
                     android:id="@+id/imageViewTrackDisk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/relativeLayoutNowPlaying"
                     android:layout_marginTop="@dimen/margin_4_dp"
+                    android:paddingStart="@dimen/margin_16_dp"
                     android:src="@drawable/ic_track_disk" />
 
                 <com.furkanaskin.app.podpocket.utils.ui.GMMarqueTextView
                     android:id="@+id/textViewTrackName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/relativeLayoutNowPlaying"
                     android:layout_marginStart="@dimen/margin_8_dp"
                     android:layout_marginTop="@dimen/margin_8_dp"
-                    android:layout_marginEnd="@dimen/margin_16_dp"
+                    android:layout_marginEnd="@dimen/margin_48_dp"
                     android:layout_toEndOf="@id/imageViewTrackDisk"
                     android:text="@string/please_wait"
                     android:textColor="@color/white"
@@ -86,13 +100,28 @@
                     app:forceMarquee="true"
                     app:marqueeEnabled="true" />
 
-
-                <ImageButton
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/relativeLayoutNowPlaying"
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/round_button"
-                    android:src="@drawable/ic_track_list" />
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/imageButtonQueue"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/round_button"
+                        android:src="@drawable/ic_track_list" />
+
+                    <ImageButton
+                        android:id="@+id/imageButtonCloseQueue"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/round_button"
+                        android:src="@drawable/ic_close_button"
+                        android:visibility="gone" />
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -147,6 +176,7 @@
 
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_Queue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/player_container"

@@ -17,4 +17,9 @@ object Constants {
     object NetworkService {
         val BASE_URL = "https://listen-api.listennotes.com/api/v2/"
     }
+
+    object BundleArguments {
+        val PODCAST_ID = "podcastId"
+        val CURRENT_EPISODE = "currentEpisode"
+    }
 }

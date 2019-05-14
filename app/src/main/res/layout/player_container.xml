@@ -12,10 +12,9 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_marginTop="@dimen/margin_8_dp"
-        app:played_color="#000000"
-        app:unplayed_color="@color/white"
-
-        />
+        app:played_color="@color/colorPrettyPurple"
+        app:scrubber_color="@color/colorCyan"
+        app:unplayed_color="#575461" />
 
     <com.furkanaskin.app.podpocket.ui.PodPocketTextView
         android:id="@+id/textViewCurrentTime"

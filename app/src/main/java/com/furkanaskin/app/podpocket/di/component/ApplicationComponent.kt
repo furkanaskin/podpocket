@@ -13,6 +13,7 @@ import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordViewModel
 import com.furkanaskin.app.podpocket.ui.home.HomeViewModel
 import com.furkanaskin.app.podpocket.ui.login.LoginViewModel
 import com.furkanaskin.app.podpocket.ui.main.MainActivityViewModel
+import com.furkanaskin.app.podpocket.ui.player.PlayerQueueViewModel
 import com.furkanaskin.app.podpocket.ui.player.PlayerViewModel
 import com.furkanaskin.app.podpocket.ui.podcast_episodes.PodcastEpisodesViewModel
 import com.furkanaskin.app.podpocket.ui.profile.ProfileViewModel
@@ -61,5 +62,7 @@ interface ApplicationComponent {
     fun inject(playerViewModel: PlayerViewModel)
 
     fun inject(podcastEpisodesViewModel: PodcastEpisodesViewModel)
+
+    fun inject(playerQueueViewModel: PlayerQueueViewModel)
 
 }
