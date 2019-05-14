@@ -15,7 +15,7 @@ import com.furkanaskin.app.podpocket.service.response.EpisodesItem
  * Created by Furkan on 14.05.2019
  */
 
-class QueueAdapter(private val callBack: (EpisodesItem, Int) -> Unit) : BaseAdapter<EpisodesItem>(queueDiffCallback) {
+class QueueAdapter(private val callBack: (EpisodesItem, Int, Boolean) -> Unit) : BaseAdapter<EpisodesItem>(queueDiffCallback) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemQueueBinding>(
                 LayoutInflater.from(parent.context),
@@ -29,16 +29,17 @@ class QueueAdapter(private val callBack: (EpisodesItem, Int) -> Unit) : BaseAdap
 
         mBinding.relativeLayoutItemContainer.setOnClickListener {
             mBinding.viewModel?.item?.get()?.let {
-                callBack.invoke(it, mBinding.viewModel!!.position)
+                callBack.invoke(it, mBinding.viewModel!!.position, mBinding.viewModel!!.isSelected)
             }
         }
 
         return mBinding
-
     }
 
     override fun bind(binding: ViewDataBinding, position: Int) {
-        (binding as ItemQueueBinding).viewModel?.setModel(getItem(position), position)
+        (binding as ItemQueueBinding).viewModel?.setModel(getItem(position), position, getItem(position).isSelected
+                ?: false)
+
         binding.executePendingBindings()
 
     }
