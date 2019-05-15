@@ -7,13 +7,13 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentPodcastEpisodesBinding
 import com.furkanaskin.app.podpocket.service.response.Podcasts
-import com.furkanaskin.app.podpocket.ui.PodPocketItemDecoration
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.ui.podcast_episodes.episodes.EpisodesAdapter
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 /**
  * Created by Furkan on 29.04.2019
@@ -33,11 +33,12 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = EpisodesAdapter { item ->
+        val adapter = EpisodesAdapter { item, position ->
 
             val intent = Intent(activity, PlayerActivity::class.java)
             intent.putExtra("pod", item)
-            intent.putExtra("podTitle", podcastTitle)
+            intent.putExtra("position", position.toString())
+            intent.putStringArrayListExtra("allPodIds", viewModel.getAllIds(position) as ArrayList<String>?)
             startActivity(intent)
 
         }
@@ -46,17 +47,15 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
                     override fun onSuccess(t: Podcasts) {
-
+                        viewModel.podcast.set(t)
                         (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t.episodes)
-                        podcastTitle= t.title!!
+                        podcastTitle = t.title!!
 
                     }
 
                 }))
 
         mBinding.recyclerViewPodcastEpisodes.adapter = adapter
-        mBinding.recyclerViewPodcastEpisodes.addItemDecoration(PodPocketItemDecoration(30))
-
     }
 
     fun getPodcastId(): String {

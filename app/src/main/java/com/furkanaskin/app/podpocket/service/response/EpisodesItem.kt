@@ -3,6 +3,8 @@ package com.furkanaskin.app.podpocket.service.response
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class EpisodesItem(
 
@@ -18,7 +20,7 @@ data class EpisodesItem(
         @field:SerializedName("listennotes_edit_url")
         val listennotesEditUrl: String? = null,
 
-        @field:SerializedName("audio_length")
+        @field:SerializedName("audio_length_sec")
         val audioLength: Int? = null,
 
         @field:SerializedName("description")
@@ -40,7 +42,9 @@ data class EpisodesItem(
         val listennotesUrl: String? = null,
 
         @field:SerializedName("maybe_audio_invalid")
-        val maybeAudioInvalid: Boolean? = null
+        val maybeAudioInvalid: Boolean? = null,
+
+        var isSelected: Boolean? = false
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -55,6 +59,7 @@ data class EpisodesItem(
             parcel.readString(),
             parcel.readValue(Long::class.java.classLoader) as? Long,
             parcel.readString(),
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean)
 
 
@@ -71,6 +76,7 @@ data class EpisodesItem(
         parcel.writeValue(pubDateMs)
         parcel.writeString(listennotesUrl)
         parcel.writeValue(maybeAudioInvalid)
+        parcel.writeValue(isSelected)
     }
 
     override fun describeContents(): Int {
@@ -86,4 +92,19 @@ data class EpisodesItem(
             return arrayOfNulls(size)
         }
     }
+
+    fun getPubDateMs(): String {
+        return getDateTime(pubDateMs ?: 0) ?: ""
+    }
+
+    private fun getDateTime(s: Long): String? {
+        return try {
+            val sdf = SimpleDateFormat("MM/dd/yyyy")
+            val netDate = Date(s)
+            sdf.format(netDate)
+        } catch (e: Exception) {
+            e.toString()
+        }
+    }
+
 }

@@ -2,7 +2,11 @@ package com.furkanaskin.app.podpocket.core
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.furkanaskin.app.podpocket.R
+import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
 
 /**
@@ -27,5 +31,36 @@ object BindingAdapter {
             return
         Picasso.get().cancelRequest(view)
         Picasso.get().load(link).into(view)
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:explicitContent")
+    fun explicitContent(view: MaterialCardView, explicitContent: Boolean) {
+
+        if (explicitContent) {
+            view.strokeColor = ContextCompat.getColor(view.context, R.color.colorCyan)
+            view.strokeWidth = 4
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:isPlayingTitle")
+    fun isPlayingTitle(view: TextView, isSelected: Boolean) {
+        if (isSelected)
+            view.setTextColor(ContextCompat.getColor(view.context, R.color.colorCyan))
+        else
+            view.setTextColor(ContextCompat.getColor(view.context, R.color.white))
+
+
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:isPlayingIcon")
+    fun isPlayingIcon(view: ImageView, isSelected: Boolean) {
+        if (isSelected)
+            view.setImageResource(R.drawable.ic_track_disk)
+        else
+            view.setImageResource(R.drawable.ic_unplayed_episode_disc)
+
     }
 }

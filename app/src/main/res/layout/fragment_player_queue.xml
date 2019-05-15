@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.furkanaskin.app.podpocket.ui.player.PlayerQueueViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rootView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_app_bg"
+        android:fitsSystemWindows="true"
+        tools:context=".ui.player.PlayerQueueFragment">
+
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_centerInParent="true"
+            app:mpb_progressStyle="circular"
+            app:mpb_useIntrinsicPadding="false"
+            app:visibility="@{viewModel.progressBarView}" />
+
+        <com.furkanaskin.app.podpocket.ui.PodPocketRecyclerView
+            android:id="@+id/recyclerViewQueueEpisodes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_8_dp"
+            android:layout_marginTop="@dimen/margin_24_dp"
+            android:layout_marginEnd="@dimen/margin_8_dp"
+            android:layout_marginBottom="@dimen/margin_24_dp"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingBottom="200dp"
+            app:layoutManager="LinearLayoutManager" />
+
+    </RelativeLayout>
+</layout>

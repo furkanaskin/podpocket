@@ -49,7 +49,7 @@ data class Podcasts(
         @field:SerializedName("rss")
         val rss: String? = null,
 
-        @field:SerializedName("lastest_pub_date_ms")
+        @field:SerializedName("lastest")
         val lastestPubDateMs: Long? = null,
 
         @field:SerializedName("looking_for")
@@ -72,4 +72,8 @@ data class Podcasts(
 
         @field:SerializedName("episodes")
         val episodes: List<EpisodesItem?>? = null
-)
+) {
+    fun getTotalEpisodes(): String? {
+        return "$totalEpisodes Bölüm"
+    }
+}

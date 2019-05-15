@@ -15,33 +15,33 @@ import com.furkanaskin.app.podpocket.service.response.EpisodesItem
  * Created by Furkan on 29.04.2019
  */
 
-class EpisodesAdapter(private val callBack: (EpisodesItem) -> Unit) : BaseAdapter<EpisodesItem>(diffCallback) {
+class EpisodesAdapter(private val callBack: (EpisodesItem, Int) -> Unit) : BaseAdapter<EpisodesItem>(episodeDiffCallback) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemPodcastEpisodesBinding>(
                 LayoutInflater.from(parent.context),
                 R.layout.item_podcast_episodes,
                 parent,
-                false
-        )
+                false)
+
         val viewModel = EpisodesListItemViewModel((parent.context as Activity).application)
 
         mBinding.viewModel = viewModel
 
         mBinding.cardView.setOnClickListener {
             mBinding.viewModel?.item?.get()?.let {
-                callBack.invoke(it)
+                callBack.invoke(it, mBinding.viewModel!!.position)
             }
         }
         return mBinding
     }
 
     override fun bind(binding: ViewDataBinding, position: Int) {
-        (binding as ItemPodcastEpisodesBinding).viewModel?.item?.set(getItem(position))
+        (binding as ItemPodcastEpisodesBinding).viewModel?.setModel(getItem(position), position)
         binding.executePendingBindings()
     }
 }
 
-val diffCallback = object : DiffUtil.ItemCallback<EpisodesItem>() {
+val episodeDiffCallback = object : DiffUtil.ItemCallback<EpisodesItem>() {
     override fun areContentsTheSame(oldItem: EpisodesItem, newItem: EpisodesItem): Boolean =
             oldItem == newItem
 

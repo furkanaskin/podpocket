@@ -38,46 +38,46 @@ data class Extra(
 
         @field:SerializedName("wechat_handle")
         val wechatHandle: String? = null
-):Parcelable {
-        constructor(parcel: Parcel) : this(
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString()) {
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString())
+
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(twitterHandle)
+        parcel.writeString(instagramHandle)
+        parcel.writeString(url3)
+        parcel.writeString(url1)
+        parcel.writeString(url2)
+        parcel.writeString(facebookHandle)
+        parcel.writeString(linkedinUrl)
+        parcel.writeString(youtubeUrl)
+        parcel.writeString(googleUrl)
+        parcel.writeString(spotifyUrl)
+        parcel.writeString(wechatHandle)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Extra> {
+        override fun createFromParcel(parcel: Parcel): Extra {
+            return Extra(parcel)
         }
 
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
-                parcel.writeString(twitterHandle)
-                parcel.writeString(instagramHandle)
-                parcel.writeString(url3)
-                parcel.writeString(url1)
-                parcel.writeString(url2)
-                parcel.writeString(facebookHandle)
-                parcel.writeString(linkedinUrl)
-                parcel.writeString(youtubeUrl)
-                parcel.writeString(googleUrl)
-                parcel.writeString(spotifyUrl)
-                parcel.writeString(wechatHandle)
+        override fun newArray(size: Int): Array<Extra?> {
+            return arrayOfNulls(size)
         }
-
-        override fun describeContents(): Int {
-                return 0
-        }
-
-        companion object CREATOR : Parcelable.Creator<Extra> {
-                override fun createFromParcel(parcel: Parcel): Extra {
-                        return Extra(parcel)
-                }
-
-                override fun newArray(size: Int): Array<Extra?> {
-                        return arrayOfNulls(size)
-                }
-        }
+    }
 }

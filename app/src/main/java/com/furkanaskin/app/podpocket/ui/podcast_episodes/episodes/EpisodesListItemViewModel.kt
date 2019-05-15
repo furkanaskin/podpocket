@@ -11,4 +11,11 @@ import com.furkanaskin.app.podpocket.service.response.EpisodesItem
 
 class EpisodesListItemViewModel(app: Application) : BaseViewModel(app) {
     var item = ObservableField<EpisodesItem>()
+    var position = -1
+
+    fun setModel(item: EpisodesItem, position: Int) {
+        this.item.set(item)
+        this.position = position
+
+    }
 }

@@ -32,5 +32,14 @@
     <string name="explore">Keşfet</string>
     <string name="best_podcasts_in_your_region">Bölgendeki en iyi podcastler</string>
     <string name="player_queue">Liste</string>
+    <string name="recommended_podcasts">Senin için önerilen podcastler</string>
+    <string name="recommended_episodes">Senin için önerilen bölümler</string>
+    <string name="please_wait">Lütfen bekleyiniz.</string>
+    <string name="now_playing">Şimdi Çalıyor</string>
+    <string name="paused">Duraklatıldı</string>
+    <string name="getuser_name">Ad Soyad</string>
+    <string name="e_mail">E-mail</string>
+    <string name="profile_birthday">Doğum Tarihi</string>
+    <string name="profile_favourite_category">En Çok Dinlediğin Kategori</string>
 
 </resources>

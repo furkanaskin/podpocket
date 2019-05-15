@@ -156,6 +156,9 @@ dependencies {
     //android debug database
     implementation 'com.facebook.stetho:stetho:1.5.1'
 
+    //exo player
+    implementation 'com.google.android.exoplayer:exoplayer:2.9.6'
+
     //test
     testImplementation 'junit:junit:4.12'
     testImplementation "android.arch.core:core-testing:$lifecycle_version"

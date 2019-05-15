@@ -4,6 +4,11 @@ import android.app.Application
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
+import com.furkanaskin.app.podpocket.service.response.BestPodcasts
+import com.furkanaskin.app.podpocket.service.response.Episode
+import com.furkanaskin.app.podpocket.service.response.EpisodeRecommendations
+import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
+import io.reactivex.Observable
 
 /**
  * Created by Furkan on 16.04.2019
@@ -16,5 +21,20 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         (app as? Podpocket)?.component?.inject(this)
     }
 
+    fun getBestPodcasts(region: String, explicitContent: Int): Observable<BestPodcasts> {
+        return api.getBestPodcasts(region, explicitContent)
+    }
 
+    fun getPodcastRecommendations(podcastId: String, explicitContent: Int): Observable<PodcastRecommendations> {
+        return api.getPodcastRecommendations(podcastId, explicitContent)
+    }
+
+    fun getEpisodeRecommendations(podcastId: String, explicitContent: Int): Observable<EpisodeRecommendations> {
+        return api.getEpisodeRecommendations(podcastId, explicitContent)
+    }
+
+    fun getEpisodeDetails(id: String): Observable<Episode> {
+
+        return api.getEpisodeById(id)
+    }
 }

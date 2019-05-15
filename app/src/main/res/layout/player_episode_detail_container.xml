@@ -1,0 +1,115 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_above="@id/relativeLayoutContainer"
+    android:layout_marginTop="200dp"
+    android:background="@drawable/gradient_track"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bg_now_playing" />
+
+        <com.furkanaskin.app.podpocket.ui.PodPocketLightTextView
+            android:id="@+id/textViewIsPlaying"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/now_playing"
+            android:textAllCaps="true"
+            android:textColor="@color/colorCyan" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutTrack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_16_dp">
+
+        <ImageView
+            android:id="@+id/imageViewTrackDisk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_4_dp"
+            android:src="@drawable/ic_track_disk" />
+
+        <com.furkanaskin.app.podpocket.utils.ui.GMMarqueTextView
+            android:id="@+id/textViewTrackName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_8_dp"
+            android:layout_marginTop="@dimen/margin_8_dp"
+            android:layout_marginEnd="@dimen/margin_48_dp"
+            android:layout_toEndOf="@id/imageViewTrackDisk"
+            android:text="@string/please_wait"
+            android:textColor="@color/white"
+            app:centerText="false"
+            app:forceMarquee="true"
+            app:marqueeEnabled="true" />
+
+        <ImageButton
+            android:id="@+id/imageButtonQueue"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/round_button"
+            android:elevation="20dp"
+            android:src="@drawable/ic_track_list" />
+
+        <ImageButton
+            android:id="@+id/imageButtonCloseQueue"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/round_button"
+            android:src="@drawable/ic_close_button"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutNameAndEpisode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayoutNameAndEpisode"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/margin_16_dp"
+        android:layout_marginEnd="@dimen/margin_16_dp">
+
+        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+            android:id="@+id/textViewAlbumName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/albumTextSize"
+            tools:text="MARTIN GARRIX SHOW" />
+
+        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+            android:id="@+id/textViewEpisodeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewAlbumName"
+            android:layout_marginTop="@dimen/margin_8_dp"
+            android:textColor="@color/grayTextColor"
+            android:textSize="@dimen/episodeTextSize"
+            tools:text="EPISODE - 147" />
+
+        <ImageView
+            android:id="@+id/imageViewShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/margin_8_dp"
+            android:src="@drawable/ic_more" />
+
+    </RelativeLayout>
+</LinearLayout>
