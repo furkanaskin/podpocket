@@ -21,15 +21,21 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
 
     var userData: UserEntity? = null
 
-    fun getNameAndSurname(): String {
+    fun getName(): String {
 
-        return userData?.name + " " + userData?.surname
+        return userData?.name ?: ""
+    }
+
+
+    fun getSurname(): String {
+
+        return userData?.surname ?: ""
     }
 
     fun changeUserData(user: UserEntity) {
 
         doAsync {
-            db.userDao().insertUser(user)
+            db.userDao().updateUser(user)
         }
     }
 

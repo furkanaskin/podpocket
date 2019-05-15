@@ -29,6 +29,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
     val disposable = CompositeDisposable()
     val queue = mutableListOf<EpisodesItem?>()
     var player: PlayerEntity? = null
+    var prevPos: Int = -1
 
     override fun getLayoutRes(): Int = R.layout.fragment_player_queue
 
@@ -54,12 +55,23 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
         viewModel.db.playerDao().getPlayer().observe(this, Observer<PlayerEntity> { t -> player = t })
 
-        val adapter = QueueAdapter { item, _, _ ->
+        val adapter = QueueAdapter { item, position, _ ->
 
             //TODO - ONCLICK'TE TIKLANAN PODCASTIN TEXT RENGI DEGISTIRILDI. BINDING ADAPTER KULLANILDI.
             //TODO - OGUZ ADAPTER VE ITEMVIEWMODEL'A BAKARSAN ANLARSIN :)
 
             item.isSelected = true
+            queue[position]?.isSelected = true
+
+            /*      prevPos = position
+
+                  if (prevPos > -1 ) {
+                      queue[prevPos]?.isSelected = false
+                  }
+
+
+
+                  var updatedAdapter = (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(queue)*/
             mBinding.recyclerViewQueueEpisodes.adapter?.notifyDataSetChanged()
 
         }

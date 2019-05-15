@@ -15,134 +15,139 @@
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/mainBackgroundColor"
         android:fitsSystemWindows="true"
-        tools:context=".ui.profile.ProfileFragment"
-        android:background="@color/mainBackgroundColor">
+        tools:context=".ui.profile.ProfileFragment">
 
         <LinearLayout
+            android:id="@+id/linearLayoutInfoContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/margin_8_dp">
 
             <com.mikhaellopez.circularimageview.CircularImageView
-                android:layout_marginTop="@dimen/margin_16_dp"
-                android:layout_gravity="center"
                 android:layout_width="100dp"
-                android:layout_height="100dp" />
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_16_dp" />
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_16_dp"
-                android:padding="@dimen/margin_4_dp"
-                android:text="@string/getuser_name"
-                android:textColor="@color/specialGreen" />
-
-            <com.furkanaskin.app.podpocket.ui.PodPocketEditText
-                android:id="@+id/editTextNameSurname"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/white_rectangle_frame_grey"
-                android:imeOptions="actionDone"
-                android:inputType="textPersonName"
-                android:maxLines="1"
-                android:gravity="center|left"
-                android:paddingLeft="@dimen/margin_8_dp"
-                android:textColor="@color/grayTextColor"
-                android:textColorHint="@color/profileHeaderGray"
-                android:textSize="@dimen/dimen_12_sp"
-                android:text="@{viewModel.nameAndSurname}" />
-
-
-            <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_8_dp"
-                android:padding="@dimen/margin_4_dp"
-                android:text="@string/e_mail"
-                android:textColor="@color/specialGreen" />
+                android:hint="@string/name"
+                android:textColorHint="@color/colorCyan"
+                app:boxStrokeColor="@color/colorCyan">
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketEditText
-                android:id="@+id/editTextEmail"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16_dp"
+                    android:inputType="textPersonName"
+                    android:text="@{viewModel.getName()}"
+                    android:textColor="@color/colorPrettyOrange" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/white_rectangle_frame_grey"
-                android:imeOptions="actionDone"
-                android:inputType="textPersonName"
-                android:maxLines="1"
-                android:gravity="center|left"
-
-                android:paddingLeft="@dimen/margin_8_dp"
-                android:textColor="@color/grayTextColor"
-                android:textColorHint="@color/profileHeaderGray"
-                android:textSize="@dimen/dimen_12_sp"
-                android:text="@{viewModel.userData.email}" />
-
-
-            <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_8_dp"
-                android:padding="@dimen/margin_4_dp"
-                android:text="@string/profile_birthday"
-                android:textColor="@color/specialGreen" />
+                android:hint="@string/surname"
+                android:textColorHint="@color/colorCyan"
+                app:boxStrokeColor="@color/colorCyan">
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketEditText
-                android:id="@+id/etBirthday"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextSurname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16_dp"
+                    android:inputType="textPersonName"
+                    android:text="@{viewModel.getSurname()}"
+                    android:textColor="@color/colorPrettyOrange" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/white_rectangle_frame_grey"
-                android:hint="__ / __ / ____"
-                android:imeOptions="actionNext"
-                android:inputType="number"
-                android:maxLines="1"
-                android:gravity="center|left"
-
-                android:text="@{viewModel.userData.birthday}"
-                android:paddingLeft="@dimen/margin_8_dp"
-                android:textColor="@color/grayTextColor"
-                android:textColorHint="@color/profileHeaderGray"
-                android:textSize="@dimen/dimen_12_sp" />
-
-
-            <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_8_dp"
-                android:padding="@dimen/margin_4_dp"
-                android:text="@string/profile_favourite_category"
-                android:textColor="@color/specialGreen" />
+                android:hint="@string/e_mail"
+                android:textColorHint="@color/colorCyan"
+                app:boxStrokeColor="@color/colorCyan">
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketEditText
-                android:id="@+id/editTextMostLovedCategory"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16_dp"
+                    android:inputType="textEmailAddress"
+                    android:text="@{viewModel.userData.email}"
+                    android:textColor="@color/colorPrettyOrange" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/white_rectangle_frame_grey"
-                android:imeOptions="actionDone"
-                android:inputType="textPersonName"
-                android:maxLines="1"
-                android:paddingLeft="@dimen/margin_8_dp"
-                android:textColor="@color/grayTextColor"
-                android:textColorHint="@color/profileHeaderGray"
-                android:textSize="@dimen/dimen_12_sp"
-                android:clickable="false"
-                android:gravity="center|left"
-                android:text="@{viewModel.userData.mostLovedCategory}"
+                android:layout_height="wrap_content"
+                android:hint="@string/profile_birthday"
+                android:textColor="@color/colorPrettyOrange"
+                android:textColorHint="@color/colorCyan"
+                app:boxStrokeColor="@color/colorCyan">
 
-                />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etBirthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16_dp"
+                    android:inputType="date"
+                    android:text="@{viewModel.userData.birthday}"
+                    android:textColor="@color/colorPrettyOrange" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/profile_favourite_category"
+                android:textColorHint="@color/colorCyan"
+                app:boxStrokeColor="@color/colorCyan">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextMostLovedCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16_dp"
+                    android:inputType="textAutoComplete"
+                    android:text="@{viewModel.userData.mostLovedCategory}"
+                    android:textColor="@color/colorPrettyOrange" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
         </LinearLayout>
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonSave"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/margin_8_dp"
-            android:background="@drawable/white_rectangle_frame_grey"
-            android:text="Kaydet"
-            android:gravity="center" />
+            android:layout_below="@id/linearLayoutInfoContainer"
+            android:layout_marginStart="@dimen/margin_8_dp"
+            android:layout_marginTop="@dimen/margin_48_dp"
+            android:layout_marginEnd="@dimen/margin_8_dp"
+            android:gravity="center"
+            android:text="@string/save"
+            android:textColor="@color/colorCyan"
+            app:backgroundTint="@android:color/transparent"
+            app:rippleColor="@color/colorCyan"
+            app:strokeColor="@color/colorCyan"
+            app:strokeWidth="2dp" />
     </RelativeLayout>
 </layout>
