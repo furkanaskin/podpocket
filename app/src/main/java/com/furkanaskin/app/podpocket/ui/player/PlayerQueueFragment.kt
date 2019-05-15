@@ -68,16 +68,17 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
             if (prevPos == -1) {
                 item.isSelected = true
-                mBinding.recyclerViewQueueEpisodes.adapter?.notifyDataSetChanged()
                 prevPos = position
                 (activity as PlayerActivity).getEpisodeDetail(item.id ?: "")
-
+                (activity as PlayerActivity).currentPosition = position
+                updateData()
             } else {
                 queue[prevPos]?.isSelected = false
                 item.isSelected = true
                 prevPos = position
                 (activity as PlayerActivity).getEpisodeDetail(item.id ?: "")
-                mBinding.recyclerViewQueueEpisodes.adapter?.notifyDataSetChanged()
+                (activity as PlayerActivity).currentPosition = position
+                updateData()
             }
 
         }
@@ -112,5 +113,9 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
         mBinding.recyclerViewQueueEpisodes.adapter = adapter
 
+    }
+
+    fun updateData() {
+        mBinding.recyclerViewQueueEpisodes.adapter?.notifyDataSetChanged()
     }
 }
