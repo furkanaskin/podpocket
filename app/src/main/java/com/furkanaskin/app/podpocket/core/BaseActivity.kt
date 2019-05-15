@@ -30,6 +30,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
         super.onCreate(savedInstanceState)
         initViewModel(viewModel)
 
+        initViewModel(viewModel)
         onInject()
     }
 
