@@ -164,7 +164,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
     fun setEpisodeInfo(episode: Episode) {
         binding.textViewTrackName.text = episode.title
-        binding.textViewEpisodeName.text = episode.pubDateMs.toString()
+        binding.textViewPodcastTitle.text = episode.podcast?.title
     }
 
 

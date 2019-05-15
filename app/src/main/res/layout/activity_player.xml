@@ -52,8 +52,7 @@
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
                 android:paddingTop="@dimen/margin_16_dp"
-                android:paddingEnd="@dimen/margin_16_dp"
-                android:paddingBottom="@dimen/margin_16_dp">
+                android:paddingEnd="@dimen/margin_16_dp">
 
                 <RelativeLayout
                     android:id="@+id/relativeLayoutNowPlaying"
@@ -136,15 +135,7 @@
                 android:layout_marginEnd="@dimen/margin_16_dp">
 
                 <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-                    android:id="@+id/textViewAlbumName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/albumTextSize"
-                    tools:text="MARTIN GARRIX SHOW" />
-
-                <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-                    android:id="@+id/textViewEpisodeName"
+                    android:id="@+id/textViewPodcastTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textViewAlbumName"
@@ -158,6 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/margin_8_dp"
                     android:layout_marginTop="@dimen/margin_8_dp"
                     android:src="@drawable/ic_more" />
 
