@@ -16,24 +16,133 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".ui.profile.ProfileFragment">
+        tools:context=".ui.profile.ProfileFragment"
+        android:background="@color/mainBackgroundColor">
 
-        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-            android:id="@+id/progressBar"
-            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:indeterminate="true"
-            app:mpb_progressStyle="horizontal"
-            app:mpb_useIntrinsicPadding="false"
-            app:visibility="@{viewModel.progressBarView}" />
+            android:orientation="vertical"
+            android:padding="@dimen/margin_8_dp">
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Profile Fragment" />
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:layout_marginTop="@dimen/margin_16_dp"
+                android:layout_gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+            <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16_dp"
+                android:padding="@dimen/margin_4_dp"
+                android:text="@string/getuser_name"
+                android:textColor="@color/specialGreen" />
+
+            <com.furkanaskin.app.podpocket.ui.PodPocketEditText
+                android:id="@+id/editTextNameSurname"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/white_rectangle_frame_grey"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:gravity="center|left"
+                android:paddingLeft="@dimen/margin_8_dp"
+                android:textColor="@color/grayTextColor"
+                android:textColorHint="@color/profileHeaderGray"
+                android:textSize="@dimen/dimen_12_sp"
+                android:text="@{viewModel.nameAndSurname}" />
 
 
+            <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8_dp"
+                android:padding="@dimen/margin_4_dp"
+                android:text="@string/e_mail"
+                android:textColor="@color/specialGreen" />
+
+            <com.furkanaskin.app.podpocket.ui.PodPocketEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/white_rectangle_frame_grey"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:gravity="center|left"
+
+                android:paddingLeft="@dimen/margin_8_dp"
+                android:textColor="@color/grayTextColor"
+                android:textColorHint="@color/profileHeaderGray"
+                android:textSize="@dimen/dimen_12_sp"
+                android:text="@{viewModel.userData.email}" />
+
+
+            <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8_dp"
+                android:padding="@dimen/margin_4_dp"
+                android:text="@string/profile_birthday"
+                android:textColor="@color/specialGreen" />
+
+            <com.furkanaskin.app.podpocket.ui.PodPocketEditText
+                android:id="@+id/etBirthday"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/white_rectangle_frame_grey"
+                android:hint="__ / __ / ____"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLines="1"
+                android:gravity="center|left"
+
+                android:text="@{viewModel.userData.birthday}"
+                android:paddingLeft="@dimen/margin_8_dp"
+                android:textColor="@color/grayTextColor"
+                android:textColorHint="@color/profileHeaderGray"
+                android:textSize="@dimen/dimen_12_sp" />
+
+
+            <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8_dp"
+                android:padding="@dimen/margin_4_dp"
+                android:text="@string/profile_favourite_category"
+                android:textColor="@color/specialGreen" />
+
+            <com.furkanaskin.app.podpocket.ui.PodPocketEditText
+                android:id="@+id/editTextMostLovedCategory"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/white_rectangle_frame_grey"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/margin_8_dp"
+                android:textColor="@color/grayTextColor"
+                android:textColorHint="@color/profileHeaderGray"
+                android:textSize="@dimen/dimen_12_sp"
+                android:clickable="false"
+                android:gravity="center|left"
+                android:text="@{viewModel.userData.mostLovedCategory}"
+
+                />
+
+
+        </LinearLayout>
+
+        <com.furkanaskin.app.podpocket.ui.PodPocketButton
+            android:id="@+id/buttonSave"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/margin_8_dp"
+            android:background="@drawable/white_rectangle_frame_grey"
+            android:text="Kaydet"
+            android:gravity="center" />
     </RelativeLayout>
 </layout>

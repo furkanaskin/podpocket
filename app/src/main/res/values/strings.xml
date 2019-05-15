@@ -37,5 +37,9 @@
     <string name="please_wait">Lütfen bekleyiniz.</string>
     <string name="now_playing">Şimdi Çalıyor</string>
     <string name="paused">Duraklatıldı</string>
+    <string name="getuser_name">Ad Soyad</string>
+    <string name="e_mail">E-mail</string>
+    <string name="profile_birthday">Doğum Tarihi</string>
+    <string name="profile_favourite_category">En Çok Dinlediğin Kategori</string>
 
 </resources>
