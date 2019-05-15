@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/margin_8_dp"
+            app:isPlayingIcon="@{viewModel.item.isSelected()}"
             android:src="@drawable/ic_unplayed_episode_disc" />
 
         <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView
@@ -36,7 +37,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
             android:layout_toEndOf="@id/imageViewDisc"
-            app:setTextColor="@{viewModel.item.isSelected()}"
+            app:isPlayingTitle="@{viewModel.item.isSelected()}"
             android:text="@{viewModel.item.getTitle()}"
             android:textSize="14sp" />
     </RelativeLayout>

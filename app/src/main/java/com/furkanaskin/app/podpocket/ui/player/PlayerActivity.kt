@@ -100,6 +100,9 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
     fun getEpisodeDetail(episodeId: String) {
 
+        if (::player.isInitialized)
+            player.release()
+
         dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoPlayerSample"), BANDWIDTH_METER)
 
 
@@ -203,7 +206,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         //for next episode
         imageViewNextButton.setOnClickListener {
             if (currentPosition != 0) {
-
                 player.stop()
                 getEpisodeDetail(episodes.get(currentPosition - 1))
                 currentPosition -= 1

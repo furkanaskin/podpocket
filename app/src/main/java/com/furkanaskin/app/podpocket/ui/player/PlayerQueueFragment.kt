@@ -30,6 +30,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
     val queue = mutableListOf<EpisodesItem?>()
     var player: PlayerEntity? = null
     var prevPos: Int = -1
+    var deleteSelected: Int = 0
 
     override fun getLayoutRes(): Int = R.layout.fragment_player_queue
 
@@ -57,22 +58,27 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
         val adapter = QueueAdapter { item, position, _ ->
 
-            //TODO - ONCLICK'TE TIKLANAN PODCASTIN TEXT RENGI DEGISTIRILDI. BINDING ADAPTER KULLANILDI.
-            //TODO - OGUZ ADAPTER VE ITEMVIEWMODEL'A BAKARSAN ANLARSIN :)
+            // "Talk is cheap, show me the code."
+            // Linus Torvalds..
 
-            item.isSelected = true
-            queue[position]?.isSelected = true
+            if (deleteSelected == 0) {
+                queue[(activity as PlayerActivity).currentPosition]?.isSelected = false
+                deleteSelected += 1
+            }
 
-            /*      prevPos = position
+            if (prevPos == -1) {
+                item.isSelected = true
+                mBinding.recyclerViewQueueEpisodes.adapter?.notifyDataSetChanged()
+                prevPos = position
+                (activity as PlayerActivity).getEpisodeDetail(item.id ?: "")
 
-                  if (prevPos > -1 ) {
-                      queue[prevPos]?.isSelected = false
-                  }
-
-
-
-                  var updatedAdapter = (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(queue)*/
-            mBinding.recyclerViewQueueEpisodes.adapter?.notifyDataSetChanged()
+            } else {
+                queue[prevPos]?.isSelected = false
+                item.isSelected = true
+                prevPos = position
+                (activity as PlayerActivity).getEpisodeDetail(item.id ?: "")
+                mBinding.recyclerViewQueueEpisodes.adapter?.notifyDataSetChanged()
+            }
 
         }
 
@@ -97,6 +103,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
                     override fun onComplete() {
                         super.onComplete()
+                        queue[(activity as PlayerActivity).currentPosition]?.isSelected = true
                         (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(queue)
                         mBinding.progressBar.visibility = View.GONE
                     }
