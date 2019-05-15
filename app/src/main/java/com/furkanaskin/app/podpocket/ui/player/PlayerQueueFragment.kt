@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.FragmentPlayerQueueBinding
+import com.furkanaskin.app.podpocket.db.entities.PlayerEntity
 import com.furkanaskin.app.podpocket.service.response.EpisodesItem
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.player.queue.QueueAdapter
@@ -24,9 +26,9 @@ import timber.log.Timber
 class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQueueBinding>(PlayerQueueViewModel::class.java) {
 
     private val podcastId by lazy { arguments?.getString("podcastId") as String }
-    private val currentPosition by lazy { arguments?.getInt("currentPosition") as Int }
     val disposable = CompositeDisposable()
     val queue = mutableListOf<EpisodesItem?>()
+    var player: PlayerEntity? = null
 
     override fun getLayoutRes(): Int = R.layout.fragment_player_queue
 
@@ -50,7 +52,12 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
         mBinding.progressBar.visibility = View.VISIBLE
 
-        val adapter = QueueAdapter { item, position ->
+        viewModel.db.playerDao().getPlayer().observe(this, Observer<PlayerEntity> { t -> player = t })
+
+        val adapter = QueueAdapter { item, _, _ ->
+
+            //TODO - ONCLICK'TE TIKLANAN PODCASTIN TEXT RENGI DEGISTIRILDI. BINDING ADAPTER KULLANILDI.
+            //TODO - OGUZ ADAPTER VE ITEMVIEWMODEL'A BAKARSAN ANLARSIN :)
 
             item.isSelected = true
             mBinding.recyclerViewQueueEpisodes.adapter?.notifyDataSetChanged()

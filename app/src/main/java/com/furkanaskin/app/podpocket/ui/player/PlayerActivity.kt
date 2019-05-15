@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityPlayerBinding
+import com.furkanaskin.app.podpocket.db.entities.PlayerEntity
 import com.furkanaskin.app.podpocket.service.response.Episode
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import com.google.android.exoplayer2.ExoPlayer
@@ -49,7 +50,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
     private var handler: Handler = Handler()
     private val disposable = CompositeDisposable()
-    private var currentPosition: Int = 0
+    var currentPosition: Int = 0
 
     override fun getLayoutRes(): Int = R.layout.activity_player
 
@@ -97,7 +98,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
     }
 
-    private fun getEpisodeDetail(episodeId: String) {
+    fun getEpisodeDetail(episodeId: String) {
 
         dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoPlayerSample"), BANDWIDTH_METER)
 
@@ -122,7 +123,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 }))
     }
 
-    private fun setEpisode(episode: Episode) {
+    fun setEpisode(episode: Episode) {
         val media = ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(episode.audio))
 
         mediaSource = ConcatenatingMediaSource(media)
@@ -141,9 +142,24 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             }
 
         }
+
+        //TODO - DB YE PLAYERIN VERILERI YAZILDI.
+
+        doAsync {
+            val player = PlayerEntity(id = 0,
+                    episodeId = viewModel.item.get()?.id,
+                    episodeTitle = viewModel.item.get()?.title,
+                    podcastTitle = viewModel.item.get()?.podcast?.title,
+                    podcastId = viewModel.item.get()?.podcast?.id,
+                    explicitContent = viewModel.item.get()?.explicitContent ?: false,
+                    audio = viewModel.item.get()?.audio,
+                    isPlaying = true)
+
+            viewModel.db.playerDao().insertPlayer(player)
+        }
     }
 
-    private fun setEpisodeInfo(episode: Episode) {
+    fun setEpisodeInfo(episode: Episode) {
         binding.textViewTrackName.text = episode.title
         binding.textViewEpisodeName.text = episode.pubDateMs.toString()
     }

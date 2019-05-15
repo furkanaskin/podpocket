@@ -122,7 +122,8 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     private fun loginClicked() {
         if (getValidationMessages()) {
             progressBarView.set(true)
-            mAuth.signInWithEmailAndPassword(userName.get()!!, password.get()!!).addOnCompleteListener { task ->
+            mAuth.signInWithEmailAndPassword(userName.get() ?: "", password.get()
+                    ?: "").addOnCompleteListener { task ->
 
                 if (task.isSuccessful) {
 

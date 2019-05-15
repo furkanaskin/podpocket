@@ -12,10 +12,11 @@ import com.furkanaskin.app.podpocket.service.response.EpisodesItem
 class QueueListItemViewModel(app: Application) : BaseViewModel(app) {
     var item: ObservableField<EpisodesItem> = ObservableField()
     var position = -1
+    var isSelected: Boolean = false
 
-    fun setModel(item: EpisodesItem, position: Int) {
+    fun setModel(item: EpisodesItem, position: Int, isSelected: Boolean) {
         this.item.set(item)
         this.position = position
-
+        item.isSelected = isSelected
     }
 }
