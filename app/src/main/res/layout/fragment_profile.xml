@@ -26,7 +26,8 @@
             android:orientation="vertical"
             android:padding="@dimen/margin_8_dp">
 
-            <com.mikhaellopez.circularimageview.CircularImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewProfilePicture"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
@@ -38,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
                 android:textColorHint="@color/colorCyan"
+                android:layout_marginTop="@dimen/margin_16_dp"
                 app:boxStrokeColor="@color/colorCyan">
 
                 <com.google.android.material.textfield.TextInputEditText
