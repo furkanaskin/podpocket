@@ -1,7 +1,7 @@
 package com.furkanaskin.app.podpocket.di.module
 
-import androidx.room.Room
 import android.content.Context
+import androidx.room.Room
 import com.furkanaskin.app.podpocket.db.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -15,7 +15,7 @@ class DatabaseModule {
     @Provides
     fun getDatabase(context: Context): AppDatabase {
         return Room.databaseBuilder(context,
-                AppDatabase::class.java, "example-db").build()
+                AppDatabase::class.java, "Podpocket-DB").build()
     }
 
 }

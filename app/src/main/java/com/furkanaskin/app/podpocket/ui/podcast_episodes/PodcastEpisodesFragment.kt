@@ -6,6 +6,7 @@ import android.view.View
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentPodcastEpisodesBinding
+import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.ui.podcast_episodes.episodes.EpisodesAdapter
@@ -13,6 +14,7 @@ import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.jetbrains.anko.doAsync
 import java.util.*
 
 /**
@@ -43,6 +45,12 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
 
         }
 
+        // Delete previous episodes.
+
+        doAsync {
+            viewModel.db.episodesDao().deleteAllEpisodes()
+        }
+
         disposable.add(viewModel.getEpisodes(getPodcastId()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
@@ -51,6 +59,12 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                         (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t.episodes)
                         podcastTitle = t.title!!
 
+                        doAsync {
+                            viewModel.podcast.get()?.episodes?.forEachIndexed { _, episode ->
+                                val episodesItem = episode?.let { EpisodeEntity(it) }
+                                episodesItem?.let { viewModel.db.episodesDao().insertEpisode(it) }
+                            }
+                        }
                     }
 
                 }))

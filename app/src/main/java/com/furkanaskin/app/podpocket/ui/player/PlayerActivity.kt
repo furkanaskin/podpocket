@@ -6,7 +6,6 @@ import android.os.Handler
 import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
-import androidx.core.view.isNotEmpty
 import androidx.fragment.app.FragmentTransaction
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
@@ -101,8 +100,15 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
     fun getEpisodeDetail(episodeId: String) {
 
-        if (::player.isInitialized)
+        doAsync {
+            val playingEpisodeEntity = viewModel.db.episodesDao().getPlayingEpisode()
+            playingEpisodeEntity.isSelected = false
+            viewModel.db.episodesDao().insertEpisode(playingEpisodeEntity)
+        }
+
+        if (::player.isInitialized) {
             player.release()
+        }
 
         dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoPlayerSample"), BANDWIDTH_METER)
 
@@ -111,11 +117,23 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : CallbackWrapper<Episode>(viewModel.getApplication()) {
                     override fun onSuccess(t: Episode) {
+                        t.isPlaying = true
                         viewModel.item.set(t)
                     }
 
                     override fun onComplete() {
                         super.onComplete()
+
+                        doAsync {
+
+                            // Set isSelected true for current episode
+
+                            val episodeEntity = viewModel.item.get()?.id?.let {
+                                viewModel.db.episodesDao().getEpisode(it)
+                            }
+                            episodeEntity?.isSelected = true
+                            viewModel.db.episodesDao().insertEpisode(episodeEntity)
+                        }
 
                         viewModel.item.get()?.let { setEpisode(it) }
                         viewModel.item.get()?.let { setEpisodeInfo(it) }
@@ -147,7 +165,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         }
 
-        //TODO - DB YE PLAYERIN VERILERI YAZILDI.
+        // Save current player values to db.
 
         doAsync {
             val player = PlayerEntity(id = 0,
@@ -211,14 +229,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 getEpisodeDetail(episodes.get(currentPosition - 1))
                 currentPosition -= 1
 
-                if (fragmentLayoutQueue.isNotEmpty()) {
-                    val playerQueueFragment = PlayerQueueFragment.newInstance(viewModel.item.get()?.podcast?.id
-                            ?: "", currentPosition)
-                    val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.fragmentLayoutQueue, playerQueueFragment, "playerQueueFragment")
-                            .commitNow()
-                }
-
             } else {
                 Toast.makeText(this, "Yeni bölüm bulunmamaktadır.", Toast.LENGTH_SHORT).show()
             }
@@ -232,15 +242,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 player.stop()
                 getEpisodeDetail(episodes[currentPosition + 1])
                 currentPosition += 1
-
-                if (fragmentLayoutQueue.isNotEmpty()) {
-                    val playerQueueFragment = PlayerQueueFragment.newInstance(viewModel.item.get()?.podcast?.id
-                            ?: "", currentPosition)
-                    val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                    transaction.replace(R.id.fragmentLayoutQueue, playerQueueFragment, "playerQueueFragment")
-                            .commitNow()
-                }
 
             } else {
                 Toast.makeText(this, "İlk bölümdesiniz.", Toast.LENGTH_SHORT).show()

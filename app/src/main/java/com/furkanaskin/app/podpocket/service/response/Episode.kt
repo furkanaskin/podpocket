@@ -43,7 +43,9 @@ data class Episode(
         val pubDateMs: Long? = null,
 
         @field:SerializedName("maybe_audio_invalid")
-        val maybeAudioInvalid: Boolean? = null
+        val maybeAudioInvalid: Boolean? = null,
+
+        var isPlaying: Boolean? = null
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -59,6 +61,7 @@ data class Episode(
             parcel.readString(),
             parcel.readString(),
             parcel.readValue(Long::class.java.classLoader) as? Long,
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -75,6 +78,7 @@ data class Episode(
         parcel.writeString(id)
         parcel.writeValue(pubDateMs)
         parcel.writeValue(maybeAudioInvalid)
+        parcel.writeValue(isPlaying)
     }
 
     override fun describeContents(): Int {
