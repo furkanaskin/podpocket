@@ -15,14 +15,14 @@ import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 @Dao
 interface EpisodesDao {
 
-    @Query("SELECT * FROM Episode order by pubDateMs asc")
+    @Query("SELECT * FROM Episode ORDER BY pubDateMs DESC")
     fun getEpisodes(): LiveData<List<EpisodeEntity>>
 
     @Query("SELECT * FROM Episode WHERE id = :episodeId")
     fun getEpisode(episodeId: String): EpisodeEntity
 
     @Query("SELECT * FROM Episode WHERE isSelected = 1")
-    fun getPlayingEpisode(): EpisodeEntity
+    fun getPlayingEpisode(): List<EpisodeEntity>
 
     @Insert(onConflict = REPLACE)
     fun insertEpisode(episode: EpisodeEntity?)

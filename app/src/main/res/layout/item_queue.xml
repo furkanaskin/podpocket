@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_8_dp"
         android:layout_marginEnd="@dimen/margin_8_dp"
-        android:background="@color/mainBackgroundColor"
+        android:background="@color/transparent"
         android:paddingTop="@dimen/margin_8_dp"
         android:paddingBottom="@dimen/margin_8_dp">
 
@@ -25,8 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/margin_8_dp"
-            app:isPlayingIcon="@{viewModel.item.isSelected()}"
-            android:src="@drawable/ic_unplayed_episode_disc" />
+            android:src="@drawable/ic_unplayed_episode_disc"
+            app:isPlayingIcon="@{viewModel.item.isSelected()}" />
 
         <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
             android:id="@+id/textViewPodcastTitle"
@@ -37,8 +37,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
             android:layout_toEndOf="@id/imageViewDisc"
-            app:isPlayingTitle="@{viewModel.item.isSelected()}"
             android:text="@{viewModel.item.getTitle()}"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:isPlayingTitle="@{viewModel.item.isSelected()}" />
     </RelativeLayout>
 </layout>

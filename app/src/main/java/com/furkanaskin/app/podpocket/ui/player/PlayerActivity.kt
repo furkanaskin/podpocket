@@ -2,6 +2,7 @@ package com.furkanaskin.app.podpocket.ui.player
 
 import android.net.Uri
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.view.View
 import android.widget.SeekBar
@@ -79,6 +80,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             transaction.add(R.id.fragmentLayoutQueue, playerQueueFragment, "playerQueueFragment")
                     .commitNow()
 
+            binding.relativeLayoutNowPlaying.visibility = View.GONE
         }
 
         binding.imageButtonCloseQueue.setOnClickListener {
@@ -90,9 +92,10 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
             val queueFragment = supportFragmentManager.findFragmentByTag("playerQueueFragment")
 
-            queueFragment?.let { it -> transaction.remove(it) }
+            queueFragment?.let { it -> transaction.remove(it) }?.commit()
 
             fragmentLayoutQueue.visibility = View.GONE
+            binding.relativeLayoutNowPlaying.visibility = View.VISIBLE
 
         }
 
@@ -102,8 +105,11 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         doAsync {
             val playingEpisodeEntity = viewModel.db.episodesDao().getPlayingEpisode()
-            playingEpisodeEntity.isSelected = false
-            viewModel.db.episodesDao().insertEpisode(playingEpisodeEntity)
+            playingEpisodeEntity.forEachIndexed { index, episode ->
+                episode.isSelected = false
+                viewModel.db.episodesDao().insertEpisode(episode)
+            }
+
         }
 
         if (::player.isInitialized) {
@@ -228,6 +234,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 player.stop()
                 getEpisodeDetail(episodes.get(currentPosition - 1))
                 currentPosition -= 1
+                disableButtons()
+
 
             } else {
                 Toast.makeText(this, "Yeni bölüm bulunmamaktadır.", Toast.LENGTH_SHORT).show()
@@ -242,6 +250,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 player.stop()
                 getEpisodeDetail(episodes[currentPosition + 1])
                 currentPosition += 1
+                disableButtons()
 
             } else {
                 Toast.makeText(this, "İlk bölümdesiniz.", Toast.LENGTH_SHORT).show()
@@ -320,6 +329,23 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             user?.let { viewModel.db.userDao().updateUser(it) }
         }
         super.onDestroy()
+    }
+
+    fun disableButtons() {
+        object : CountDownTimer(700, 100) {
+            override fun onFinish() {
+                imageViewPreviousButton.isEnabled = true
+                imageViewNextButton.isEnabled = true
+                imageViewPlayButton.isEnabled = true
+                cancel()
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                imageViewPreviousButton.isEnabled = false
+                imageViewNextButton.isEnabled = false
+                imageViewPlayButton.isEnabled = false
+            }
+        }.start()
     }
 }
 

@@ -159,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margin_16_dp"
-                android:text="Bilgilerimi Güncelle"
+                android:text="@string/update_profie_details"
                 android:textColor="@color/colorCyan" />
         </LinearLayout>
 

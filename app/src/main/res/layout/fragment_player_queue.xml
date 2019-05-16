@@ -14,7 +14,7 @@
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_app_bg"
+        android:background="#D92C2939"
         android:descendantFocusability="blocksDescendants"
         android:fitsSystemWindows="true"
         tools:context=".ui.player.PlayerQueueFragment">
@@ -29,10 +29,60 @@
             app:mpb_useIntrinsicPadding="false"
             app:visibility="@{viewModel.progressBarView}" />
 
+        <LinearLayout
+            android:id="@+id/linearLayoutAppLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_24_dp"
+            android:layout_marginTop="@dimen/margin_48_dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageViewAppLogoSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/app_logo_white" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/margin_16_dp"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutNowPlaying"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayoutAppLogo"
+            android:layout_marginTop="@dimen/margin_24_dp"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_now_playing" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
+                android:id="@+id/textViewIsPlaying"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/all_episodes"
+                android:textAllCaps="true"
+                android:textColor="@color/colorCyan" />
+        </RelativeLayout>
+
+
         <com.furkanaskin.app.podpocket.utils.ui.PodPocketRecyclerView
             android:id="@+id/recyclerViewQueueEpisodes"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relativeLayoutNowPlaying"
             android:layout_marginStart="@dimen/margin_8_dp"
             android:layout_marginTop="@dimen/margin_24_dp"
             android:layout_marginEnd="@dimen/margin_8_dp"
