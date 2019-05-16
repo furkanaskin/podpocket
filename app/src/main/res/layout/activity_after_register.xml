@@ -38,13 +38,17 @@
             android:text="@string/know_you_closely"
             android:textColor="@color/colorPrettyOrange" />
 
-        <ImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/imageViewUser"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
-            android:src="@drawable/ic_dummy_user" />
+            android:src="@drawable/ic_dummy_user"
+            app:civ_background_color="@color/mainBackgroundColor"
+            app:civ_border="true"
+            app:civ_border_color="@color/colorCyan"
+            app:civ_shadow="true" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabChangeImage"

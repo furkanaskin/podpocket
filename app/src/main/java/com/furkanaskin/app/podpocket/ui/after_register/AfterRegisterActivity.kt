@@ -1,29 +1,24 @@
 package com.furkanaskin.app.podpocket.ui.after_register
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.Observable
+import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityAfterRegisterBinding
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
-import org.jetbrains.anko.doAsync
-import android.provider.MediaStore
-import android.app.Activity
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import com.google.android.gms.tasks.OnSuccessListener
-import java.io.ByteArrayOutputStream
 import com.google.firebase.storage.FirebaseStorage
-import com.squareup.picasso.Picasso
-import androidx.core.os.HandlerCompat.postDelayed
-import android.os.Handler
-import android.util.Log
-import android.widget.Toast
-import com.furkanaskin.app.podpocket.R
+import org.jetbrains.anko.doAsync
+import java.io.ByteArrayOutputStream
 
 
 /**

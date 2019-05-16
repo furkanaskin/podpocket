@@ -39,7 +39,7 @@ object BindingAdapter {
 
         if (explicitContent) {
             view.strokeColor = ContextCompat.getColor(view.context, R.color.colorCyan)
-            view.strokeWidth = 4
+            view.strokeWidth = 8
         }
     }
 

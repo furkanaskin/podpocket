@@ -26,21 +26,26 @@
             android:orientation="vertical"
             android:padding="@dimen/margin_8_dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/imageViewProfilePicture"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_16_dp" />
+                android:layout_marginTop="@dimen/margin_16_dp"
+                android:src="@drawable/ic_dummy_user"
+                app:civ_background_color="@color/mainBackgroundColor"
+                app:civ_border="true"
+                app:civ_border_color="@color/colorCyan"
+                app:civ_shadow="true" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/name"
-                android:textColorHint="@color/colorCyan"
                 android:layout_marginTop="@dimen/margin_16_dp"
-                app:boxStrokeColor="@color/colorCyan">
+                android:hint="@string/name"
+                android:textColorHint="@color/colorPrettyOrange"
+                app:boxStrokeColor="@color/colorPrettyPurple">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextName"
@@ -49,7 +54,7 @@
                     android:layout_marginTop="@dimen/margin_16_dp"
                     android:inputType="textPersonName"
                     android:text="@{viewModel.getName()}"
-                    android:textColor="@color/colorPrettyOrange" />
+                    android:textColor="@color/colorPrettyPurple" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,8 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/surname"
-                android:textColorHint="@color/colorCyan"
-                app:boxStrokeColor="@color/colorCyan">
+                android:textColorHint="@color/colorPrettyOrange"
+                app:boxStrokeColor="@color/colorPrettyPurple">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextSurname"
@@ -68,7 +73,7 @@
                     android:layout_marginTop="@dimen/margin_16_dp"
                     android:inputType="textPersonName"
                     android:text="@{viewModel.getSurname()}"
-                    android:textColor="@color/colorPrettyOrange" />
+                    android:textColor="@color/colorPrettyPurple" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,8 +83,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/e_mail"
-                android:textColorHint="@color/colorCyan"
-                app:boxStrokeColor="@color/colorCyan">
+                android:textColorHint="@color/colorPrettyOrange"
+                app:boxStrokeColor="@color/colorPrettyPurple">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextEmail"
@@ -88,7 +93,7 @@
                     android:layout_marginTop="@dimen/margin_16_dp"
                     android:inputType="textEmailAddress"
                     android:text="@{viewModel.userData.email}"
-                    android:textColor="@color/colorPrettyOrange" />
+                    android:textColor="@color/colorPrettyPurple" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,9 +102,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/profile_birthday"
-                android:textColor="@color/colorPrettyOrange"
-                android:textColorHint="@color/colorCyan"
-                app:boxStrokeColor="@color/colorCyan">
+                android:textColorHint="@color/colorPrettyOrange"
+                app:boxStrokeColor="@color/colorPrettyPurple">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etBirthday"
@@ -108,7 +112,7 @@
                     android:layout_marginTop="@dimen/margin_16_dp"
                     android:inputType="date"
                     android:text="@{viewModel.userData.birthday}"
-                    android:textColor="@color/colorPrettyOrange" />
+                    android:textColor="@color/colorPrettyPurple" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,8 +122,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/profile_favourite_category"
-                android:textColorHint="@color/colorCyan"
-                app:boxStrokeColor="@color/colorCyan">
+                android:textColorHint="@color/colorPrettyOrange"
+                app:boxStrokeColor="@color/colorPrettyPurple">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextMostLovedCategory"
@@ -128,28 +132,36 @@
                     android:layout_marginTop="@dimen/margin_16_dp"
                     android:inputType="textAutoComplete"
                     android:text="@{viewModel.userData.mostLovedCategory}"
-                    android:textColor="@color/colorPrettyOrange" />
+                    android:textColor="@color/colorPrettyPurple" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <LinearLayout
             android:id="@+id/buttonSave"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/linearLayoutInfoContainer"
-            android:layout_marginStart="@dimen/margin_8_dp"
-            android:layout_marginTop="@dimen/margin_48_dp"
-            android:layout_marginEnd="@dimen/margin_8_dp"
-            android:gravity="center"
-            android:text="@string/save"
-            android:textColor="@color/colorCyan"
-            app:backgroundTint="@android:color/transparent"
-            app:rippleColor="@color/colorCyan"
-            app:strokeColor="@color/colorCyan"
-            app:strokeWidth="2dp" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_32_dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/btn_submit" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_16_dp"
+                android:text="Bilgilerimi Güncelle"
+                android:textColor="@color/colorCyan" />
+        </LinearLayout>
+
     </RelativeLayout>
 </layout>
