@@ -28,7 +28,7 @@
             app:mpb_useIntrinsicPadding="false"
             app:visibility="@{viewModel.progressBarView}" />
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketRecyclerView
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketRecyclerView
             android:id="@+id/recyclerViewQueueEpisodes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

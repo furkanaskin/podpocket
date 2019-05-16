@@ -31,7 +31,7 @@
             android:src="@drawable/app_logo_small" />
 
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/imageViewAppLogo"
@@ -43,7 +43,7 @@
             android:textColor="@android:color/white"
             android:textSize="32sp" />
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hello"

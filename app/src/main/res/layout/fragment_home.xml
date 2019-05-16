@@ -65,7 +65,7 @@
                 android:layout_marginEnd="35dp"
                 android:src="@drawable/ic_gradient_search" />
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/imageViewAppLogoSmall"
@@ -76,7 +76,7 @@
                 android:text="@string/app_name"
                 android:textColor="@color/white" />
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
                 android:id="@+id/textViewMainHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketLightTextView
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
                 android:id="@+id/textViewTagLine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
                 android:textColorHint="@color/textColor"
                 android:textSize="14sp" />
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
                 android:id="@+id/textViewBestPodcasts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                 android:textSize="16sp" />
 
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketRecyclerView
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketRecyclerView
                 android:id="@+id/recyclerViewBestPodcasts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
                 android:layout_marginTop="@dimen/margin_16_dp"
                 android:clipToPadding="false" />
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
                 android:id="@+id/textViewRecommendedPodcasts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
                 android:textSize="16sp" />
 
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketRecyclerView
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketRecyclerView
                 android:id="@+id/recyclerViewRecommendedPodcasts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                 android:clipToPadding="false"
                 android:orientation="horizontal" />
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
                 android:id="@+id/textViewRecommendedEpisodes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
                 android:textSize="16sp" />
 
 
-            <com.furkanaskin.app.podpocket.ui.PodPocketRecyclerView
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketRecyclerView
                 android:id="@+id/recyclerViewRecommendedEpisodes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

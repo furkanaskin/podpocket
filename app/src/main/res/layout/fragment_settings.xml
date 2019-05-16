@@ -27,7 +27,7 @@
             app:mpb_useIntrinsicPadding="false"
             app:visibility="@{viewModel.progressBarView}" />
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

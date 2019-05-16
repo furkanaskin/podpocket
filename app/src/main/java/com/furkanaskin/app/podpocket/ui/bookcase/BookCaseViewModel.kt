@@ -11,6 +11,7 @@ import com.furkanaskin.app.podpocket.core.BaseViewModel
 
 class BookCaseViewModel(app: Application) : BaseViewModel(app) {
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
+    var item: ObservableField<String> = ObservableField("")
 
     init {
         (app as? Podpocket)?.component?.inject(this)

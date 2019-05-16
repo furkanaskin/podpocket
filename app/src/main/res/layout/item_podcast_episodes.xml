@@ -33,7 +33,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_card_play_button" />
 
-                <com.furkanaskin.app.podpocket.ui.PodPocketSemiBoldTextView
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketSemiBoldTextView
                     android:id="@+id/textViewPodcastTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/dimen_16_sp" />
 
-                <com.furkanaskin.app.podpocket.ui.PodPocketLightTextView
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textViewPodcastTitle"

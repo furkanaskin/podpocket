@@ -23,7 +23,11 @@
         android:id="@+id/bookCaseFragment"
         android:name="com.furkanaskin.app.podpocket.ui.bookcase.BookCaseFragment"
         android:label="KITAPLIK"
-        tools:layout="@layout/fragment_book_case" />
+        tools:layout="@layout/fragment_book_case">
+        <action
+            android:id="@+id/action_bookCaseFragment_to_testFragment"
+            app:destination="@id/testFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.furkanaskin.app.podpocket.ui.profile.ProfileFragment"
@@ -43,4 +47,8 @@
             android:defaultValue="hello2"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.home.TestFragment"
+        android:label="TestFragment" />
 </navigation>
