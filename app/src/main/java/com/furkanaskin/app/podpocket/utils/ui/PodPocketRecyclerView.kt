@@ -1,4 +1,4 @@
-package com.furkanaskin.app.podpocket.ui
+package com.furkanaskin.app.podpocket.utils.ui
 
 import android.app.Activity
 import android.content.Context
@@ -37,9 +37,9 @@ class PodPocketRecyclerView : RecyclerView {
         }
     }
 
-    constructor(context: Context) : super(context) {}
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {}
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     private fun checkIfEmpty() {
         if (context is Activity)

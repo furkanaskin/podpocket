@@ -34,7 +34,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketBoldTextView
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
             android:id="@+id/textViewPodcastTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

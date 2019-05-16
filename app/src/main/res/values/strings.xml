@@ -42,4 +42,7 @@
     <string name="profile_birthday">Doğum Tarihi</string>
     <string name="profile_favourite_category">En Çok Dinlediğin Kategori</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

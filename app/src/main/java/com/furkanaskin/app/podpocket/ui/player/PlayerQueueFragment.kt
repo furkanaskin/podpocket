@@ -71,6 +71,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
                 prevPos = position
                 (activity as PlayerActivity).getEpisodeDetail(item.id ?: "")
                 (activity as PlayerActivity).currentPosition = position
+                mBinding.recyclerViewQueueEpisodes.smoothScrollToPosition(position)
                 updateData()
             } else {
                 queue[prevPos]?.isSelected = false
@@ -78,6 +79,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
                 prevPos = position
                 (activity as PlayerActivity).getEpisodeDetail(item.id ?: "")
                 (activity as PlayerActivity).currentPosition = position
+                mBinding.recyclerViewQueueEpisodes.smoothScrollToPosition(position)
                 updateData()
             }
 

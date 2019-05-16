@@ -29,7 +29,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/app_logo" />
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

@@ -1,4 +1,4 @@
-package com.furkanaskin.app.podpocket.ui
+package com.furkanaskin.app.podpocket.utils.ui
 
 import android.content.Context
 import android.graphics.*
@@ -63,7 +63,7 @@ class PodPocketCircleImageView : AppCompatImageView {
             }
 
             mBorderColor = borderColor
-            mBorderPaint.setColor(mBorderColor)
+            mBorderPaint.color = mBorderColor
             invalidate()
         }
 
@@ -75,7 +75,7 @@ class PodPocketCircleImageView : AppCompatImageView {
             }
 
             mCircleBackgroundColor = circleBackgroundColor
-            mCircleBackgroundPaint.setColor(circleBackgroundColor)
+            mCircleBackgroundPaint.color = circleBackgroundColor
             invalidate()
         }
 
@@ -266,7 +266,7 @@ class PodPocketCircleImageView : AppCompatImageView {
     }
 
     private fun applyColorFilter() {
-        mBitmapPaint.setColorFilter(mColorFilter)
+        mBitmapPaint.colorFilter = mColorFilter
     }
 
     private fun getBitmapFromDrawable(drawable: Drawable?): Bitmap? {
@@ -324,17 +324,17 @@ class PodPocketCircleImageView : AppCompatImageView {
 
         mBitmapShader = BitmapShader(mBitmap!!, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
 
-        mBitmapPaint.setAntiAlias(true)
-        mBitmapPaint.setShader(mBitmapShader)
+        mBitmapPaint.isAntiAlias = true
+        mBitmapPaint.shader = mBitmapShader
 
-        mBorderPaint.setStyle(Paint.Style.STROKE)
-        mBorderPaint.setAntiAlias(true)
-        mBorderPaint.setColor(mBorderColor)
-        mBorderPaint.setStrokeWidth(mBorderWidth)
+        mBorderPaint.style = Paint.Style.STROKE
+        mBorderPaint.isAntiAlias = true
+        mBorderPaint.color = mBorderColor
+        mBorderPaint.strokeWidth = mBorderWidth
 
-        mCircleBackgroundPaint.setStyle(Paint.Style.FILL)
-        mCircleBackgroundPaint.setAntiAlias(true)
-        mCircleBackgroundPaint.setColor(mCircleBackgroundColor)
+        mCircleBackgroundPaint.style = Paint.Style.FILL
+        mCircleBackgroundPaint.isAntiAlias = true
+        mCircleBackgroundPaint.color = mCircleBackgroundColor
 
         mBitmapHeight = mBitmap!!.height
         mBitmapWidth = mBitmap!!.width
