@@ -40,11 +40,10 @@
 
         <ImageView
             android:id="@+id/imageViewUser"
-            android:layout_width="175dp"
-            android:layout_height="175dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
-            android:scaleType="fitCenter"
             android:src="@drawable/ic_dummy_user" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -53,8 +52,6 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@id/imageViewUser"
             android:layout_alignBottom="@id/imageViewUser"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="20dp"
             android:backgroundTint="@color/colorPrettyPurple"
             android:src="@android:drawable/ic_menu_camera" />
 
@@ -137,8 +134,8 @@
             android:id="@+id/buttonDone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/tilBirthday"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:src="@drawable/btn_submit" />
 

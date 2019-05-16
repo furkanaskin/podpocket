@@ -1,5 +1,6 @@
 package com.furkanaskin.app.podpocket.core
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -7,8 +8,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProviders
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
+import com.furkanaskin.app.podpocket.utils.PodPocketProgressDialog
 import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.runOnUiThread
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : AppCompatActivity() {
 
@@ -17,6 +20,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
 
     lateinit var mAuth: FirebaseAuth
     var user: UserEntity? = null
+    var dialog: Dialog? = null
 
     val binding by lazy {
         DataBindingUtil.setContentView(this, getLayoutRes()) as DB
@@ -35,7 +39,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel(viewModel)
-
+        initDialog()
         onInject()
 
         initFirebase()
@@ -55,6 +59,25 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
 
     }
 
+    private fun initDialog() {
+        dialog = PodPocketProgressDialog.progressDialog(this)
+    }
+
+    fun isShow(): Boolean? {
+        return dialog?.isShowing
+    }
+
+    fun showProgress() {
+        runOnUiThread {
+            dialog?.show()
+        }
+    }
+
+    fun hideProgress() {
+        runOnUiThread {
+            dialog?.dismiss()
+        }
+    }
     fun getUser() {
         doAsync {
             user = viewModel.mAuth.currentUser?.uid?.let { viewModel.db.userDao().getUser(it) }!!

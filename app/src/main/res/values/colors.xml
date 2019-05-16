@@ -19,6 +19,7 @@
     <color name="colorCyan">#50E3C2</color>
     <color name="profileHeaderGray">#333333</color>
     <color name="grey_transperent">#80979797</color>
+    <color name="transparent">#00000000</color>
 
 
     <color name="white">#FFFFFF</color>

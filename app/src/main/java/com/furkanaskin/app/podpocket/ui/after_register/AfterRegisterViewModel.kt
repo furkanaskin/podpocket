@@ -16,6 +16,7 @@ class AfterRegisterViewModel(app: Application) : BaseViewModel(app) {
     var userName: ObservableField<String> = ObservableField("")
     var userSurname: ObservableField<String> = ObservableField("")
     var userBirthDay: ObservableField<String> = ObservableField("")
+    var profileImageUrl: ObservableField<String> = ObservableField("")
     var saveSuccess: ObservableField<Boolean> = ObservableField(false)
     var userID: ObservableField<Int> = ObservableField(0)
 

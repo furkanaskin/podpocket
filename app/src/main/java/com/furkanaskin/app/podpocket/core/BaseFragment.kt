@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.runOnUiThread
 
 abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : Fragment() {
     lateinit var viewModel: VM
@@ -56,7 +57,21 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
         }
     }
 
+    fun showProgress() {
+        runOnUiThread {
+            if (activity != null)
+                if ((activity as BaseActivity<*, *>).isShow() == false)
+                    (activity as BaseActivity<*, *>).dialog?.show()
+        }
+    }
 
+
+    fun hideProgress() {
+        runOnUiThread {
+            if (activity != null)
+                (activity as BaseActivity<*, *>).dialog?.dismiss()
+        }
+    }
     private fun initFirebase() {
         mAuth = FirebaseAuth.getInstance()
 
