@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentHomeBinding
+import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.response.BestPodcasts
-import com.furkanaskin.app.podpocket.service.response.Episode
 import com.furkanaskin.app.podpocket.service.response.EpisodeRecommendations
 import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
+import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.home.best_podcasts.BestPodcastsAdapter
 import com.furkanaskin.app.podpocket.ui.home.recommended_episodes.RecommendedEpisodesAdapter
 import com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPodcastsAdapter
@@ -18,6 +19,7 @@ import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.jetbrains.anko.doAsync
 
 /**
  * Created by Furkan on 16.04.2019
@@ -29,7 +31,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
     }
 
     private val disposable = CompositeDisposable()
-    var data: Episode? = null
+    var ids: ArrayList<String> = ArrayList()
 
 
     override fun getLayoutRes(): Int = R.layout.fragment_home
@@ -81,24 +83,36 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
     private fun initRecommendedEpisodesAdapter() {
         val adapter = RecommendedEpisodesAdapter { item ->
 
-            disposable.add(viewModel.getEpisodeDetails(item.id ?: "").subscribeOn(Schedulers.io())
+            disposable.add(viewModel.getEpisodes(item.podcastId ?: "").subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(object : CallbackWrapper<Episode>(viewModel.getApplication()) {
+                    .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
 
-                        override fun onSuccess(t: Episode) {
-                            data = t
+                        override fun onSuccess(t: Podcasts) {
+                            t.episodes?.forEachIndexed { _, episodesItem ->
+                                ids.add(episodesItem?.id ?: "")
+                            }
+
+                            doAsync {
+                                viewModel.db.episodesDao().deleteAllEpisodes()
+                                t.episodes?.forEachIndexed { _, episode ->
+                                    val episodesItem = episode.let { EpisodeEntity(it!!) }
+                                    episodesItem.let { viewModel.db.episodesDao().insertEpisode(it) }
+                                }
+                            }
                         }
 
                         override fun onComplete() {
                             super.onComplete()
 
                             val intent = Intent(activity, PlayerActivity::class.java)
-                            intent.putExtra("pod", data)
+                            intent.putStringArrayListExtra("allPodIds", ids)
+                            intent.putExtra("position", item.id)
                             startActivity(intent)
 
                         }
 
                     }))
+
         }
 
         mBinding.recyclerViewRecommendedEpisodes.adapter = adapter

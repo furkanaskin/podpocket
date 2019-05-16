@@ -60,6 +60,7 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                         podcastTitle = t.title!!
 
                         doAsync {
+                            viewModel.db.episodesDao().deleteAllEpisodes()
                             viewModel.podcast.get()?.episodes?.forEachIndexed { _, episode ->
                                 val episodesItem = episode?.let { EpisodeEntity(it) }
                                 episodesItem?.let { viewModel.db.episodesDao().insertEpisode(it) }

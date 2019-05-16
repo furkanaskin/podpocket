@@ -62,9 +62,14 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        currentPosition = intent.getStringExtra("position").toInt()
         episodes = intent.getStringArrayListExtra("allPodIds")
-        getEpisodeDetail(episodes[currentPosition])
+
+        if (intent.getStringExtra("position").length > 4) {
+            getEpisodeDetail(intent.getStringExtra("position"))
+        } else {
+            currentPosition = intent.getStringExtra("position").toInt()
+            getEpisodeDetail(episodes[currentPosition])
+        }
 
 
         binding.imageButtonQueue.setOnClickListener {
