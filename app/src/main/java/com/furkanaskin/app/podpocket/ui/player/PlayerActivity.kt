@@ -73,6 +73,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             imageButtonQueue.visibility = View.GONE
             imageViewTrackDisk.visibility = View.GONE
             textViewTrackName.visibility = View.GONE
+            linearLayoutAppLogo.visibility = View.GONE
 
             val playerQueueFragment = PlayerQueueFragment.newInstance(viewModel.item.get()?.podcast?.id
                     ?: "", currentPosition)
@@ -88,6 +89,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             imageViewTrackDisk.visibility = View.VISIBLE
             imageButtonQueue.visibility = View.VISIBLE
             imageButtonCloseQueue.visibility = View.GONE
+            linearLayoutAppLogo.visibility = View.VISIBLE
 
             val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
             val queueFragment = supportFragmentManager.findFragmentByTag("playerQueueFragment")

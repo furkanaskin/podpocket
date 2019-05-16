@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/colorPrimaryDark"
-            app:elevation="8dp"
+            app:elevation="@dimen/margin_16_dp"
             app:itemIconTint="@color/colorCyan"
             app:itemTextColor="@color/colorCyan"
             app:menu="@menu/navigation_menu" />
