@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class DashboardViewModel(app: Application) : BaseViewModel(app) {
 
-    private lateinit var mAuth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
 
 
     init {
@@ -22,9 +22,9 @@ class DashboardViewModel(app: Application) : BaseViewModel(app) {
 
 
     fun initFirebase() {
-        mAuth = FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
 
-        if (mAuth == null)
+        if (firebaseAuth == null)
             try {
                 initFirebase()
                 Thread.sleep(500)

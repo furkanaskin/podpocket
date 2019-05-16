@@ -35,8 +35,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel(viewModel)
-
-        initViewModel(viewModel)
         onInject()
 
         initFirebase()

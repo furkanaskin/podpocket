@@ -130,8 +130,6 @@
                 android:id="@+id/relativeLayoutNameAndEpisode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/relativeLayoutNameAndEpisode"
-                android:layout_alignParentBottom="true"
                 android:layout_marginStart="@dimen/margin_16_dp"
                 android:layout_marginEnd="@dimen/margin_16_dp">
 
@@ -139,7 +137,6 @@
                     android:id="@+id/textViewPodcastTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewAlbumName"
                     android:layout_marginTop="@dimen/margin_8_dp"
                     android:textColor="@color/grayTextColor"
                     android:textSize="@dimen/episodeTextSize"
@@ -150,8 +147,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/margin_8_dp"
                     android:layout_marginTop="@dimen/margin_8_dp"
+                    android:layout_marginEnd="@dimen/margin_8_dp"
                     android:src="@drawable/ic_more" />
 
             </RelativeLayout>

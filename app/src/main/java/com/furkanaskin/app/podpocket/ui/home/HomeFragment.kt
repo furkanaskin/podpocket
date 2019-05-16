@@ -1,8 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.home
 
 import android.content.Intent
-import android.os.Bundle
-import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.furkanaskin.app.podpocket.R
@@ -31,18 +29,13 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         mBinding.viewModel = viewModel
     }
 
-    val disposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
     var data: Episode? = null
 
 
     override fun getLayoutRes(): Int = R.layout.fragment_home
 
     override fun init() {
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         buttonLogout.setOnClickListener {
             mAuth.signOut()
@@ -56,8 +49,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
         initRecommendedEpisodesAdapter()
         initRecommendedEpisodes()
-
     }
+
 
     private fun initBestPodcastsAdapter() {
         val adapter = BestPodcastsAdapter { item ->
