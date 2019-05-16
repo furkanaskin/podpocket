@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 open class BaseViewModel(app: Application) : AndroidViewModel(app) {
 
-    @field:[Inject]
-    lateinit var api: PodpocketAPI
+    @Inject
+    lateinit var baseApi: PodpocketAPI
 
     @Inject
     lateinit var db: AppDatabase

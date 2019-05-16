@@ -16,7 +16,7 @@
         app:scrubber_color="@color/colorCyan"
         app:unplayed_color="#575461" />
 
-    <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+    <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
         android:id="@+id/textViewCurrentTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:textSize="@dimen/dimen_12_sp"
         tools:text="01:02:52" />
 
-    <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+    <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
         android:id="@+id/textViewEndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

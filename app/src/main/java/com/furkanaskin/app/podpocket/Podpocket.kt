@@ -1,9 +1,11 @@
 package com.furkanaskin.app.podpocket
 
 import android.app.Application
-import com.facebook.stetho.Stetho
+import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.core.CrashlyticsCore
 import com.furkanaskin.app.podpocket.di.component.DaggerApplicationComponent
 import com.furkanaskin.app.podpocket.di.module.ApplicationModule
+import io.fabric.sdk.android.Fabric
 
 class Podpocket : Application() {
 
@@ -15,8 +17,17 @@ class Podpocket : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Stetho.initializeWithDefaults(this)
+        initFabric()
+    }
 
+
+    private fun initFabric() {
+
+        val core = CrashlyticsCore.Builder()
+                .disabled(BuildConfig.DEBUG)
+                .build()
+
+        Fabric.with(this, Crashlytics.Builder().core(core).build())
     }
 }
 

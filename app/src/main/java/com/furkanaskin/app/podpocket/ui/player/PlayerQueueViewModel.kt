@@ -20,7 +20,7 @@ class PlayerQueueViewModel(app: Application) : BaseViewModel(app) {
 
     fun getEpisodes(id: String): Observable<Podcasts> {
 
-        return api.getPodcastById(id)
+        return baseApi.getPodcastById(id)
     }
 
 }

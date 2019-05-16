@@ -1,4 +1,4 @@
-package com.furkanaskin.app.podpocket.ui
+package com.furkanaskin.app.podpocket.utils.ui
 
 import android.graphics.Rect
 import android.view.View

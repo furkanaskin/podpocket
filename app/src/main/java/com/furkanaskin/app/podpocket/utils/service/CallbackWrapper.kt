@@ -12,8 +12,8 @@ import java.io.IOException
 import java.lang.ref.WeakReference
 import java.net.SocketTimeoutException
 
-abstract class CallbackWrapper<T : Any>(application: Application) : DisposableObserver<T>() {
-    var weakReference: WeakReference<Application>? = WeakReference(application)
+abstract class CallbackWrapper<T : Any>(application: Application?) : DisposableObserver<T>() {
+    var weakReference: WeakReference<Application?>? = WeakReference(application)
     protected abstract fun onSuccess(t: T)
     override fun onNext(t: T) {
         onSuccess(t)

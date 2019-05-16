@@ -15,8 +15,21 @@
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/ic_app_bg"
         android:fitsSystemWindows="true"
         tools:context=".ui.search.SearchFragment">
+
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_edittext"
+            app:defaultQueryHint="@string/search_placeholder"
+            app:searchIcon="@drawable/ic_search">
+
+        </androidx.appcompat.widget.SearchView>
+
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:id="@+id/progressBar"
@@ -27,12 +40,6 @@
             app:mpb_progressStyle="horizontal"
             app:mpb_useIntrinsicPadding="false"
             app:visibility="@{viewModel.progressBarView}" />
-
-        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Search Fragment" />
 
 
     </RelativeLayout>

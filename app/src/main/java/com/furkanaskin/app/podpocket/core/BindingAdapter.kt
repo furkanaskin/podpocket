@@ -44,13 +44,23 @@ object BindingAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("app:setTextColor")
-    fun setTextColor(view: TextView, isSelected: Boolean) {
+    @BindingAdapter("app:isPlayingTitle")
+    fun isPlayingTitle(view: TextView, isSelected: Boolean) {
         if (isSelected)
             view.setTextColor(ContextCompat.getColor(view.context, R.color.colorCyan))
         else
             view.setTextColor(ContextCompat.getColor(view.context, R.color.white))
 
+
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:isPlayingIcon")
+    fun isPlayingIcon(view: ImageView, isSelected: Boolean) {
+        if (isSelected)
+            view.setImageResource(R.drawable.ic_track_disk)
+        else
+            view.setImageResource(R.drawable.ic_unplayed_episode_disc)
 
     }
 }

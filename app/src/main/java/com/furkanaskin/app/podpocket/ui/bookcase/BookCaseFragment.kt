@@ -14,6 +14,12 @@ class BookCaseFragment : BaseFragment<BookCaseViewModel, FragmentBookCaseBinding
     }
 
     override fun getLayoutRes(): Int = R.layout.fragment_book_case
+
+
     override fun init() {
+
     }
+
+
+
 }

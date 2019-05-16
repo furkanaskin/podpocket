@@ -33,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/relativeLayoutContainer"
+            android:animateLayoutChanges="true"
             android:visibility="gone" />
 
 
@@ -52,8 +53,7 @@
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
                 android:paddingTop="@dimen/margin_16_dp"
-                android:paddingEnd="@dimen/margin_16_dp"
-                android:paddingBottom="@dimen/margin_16_dp">
+                android:paddingEnd="@dimen/margin_16_dp">
 
                 <RelativeLayout
                     android:id="@+id/relativeLayoutNowPlaying"
@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/bg_now_playing" />
 
-                    <com.furkanaskin.app.podpocket.ui.PodPocketLightTextView
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
                         android:id="@+id/textViewIsPlaying"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -130,24 +130,13 @@
                 android:id="@+id/relativeLayoutNameAndEpisode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/relativeLayoutNameAndEpisode"
-                android:layout_alignParentBottom="true"
                 android:layout_marginStart="@dimen/margin_16_dp"
                 android:layout_marginEnd="@dimen/margin_16_dp">
 
-                <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-                    android:id="@+id/textViewAlbumName"
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                    android:id="@+id/textViewPodcastTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/albumTextSize"
-                    tools:text="MARTIN GARRIX SHOW" />
-
-                <com.furkanaskin.app.podpocket.ui.PodPocketTextView
-                    android:id="@+id/textViewEpisodeName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewAlbumName"
                     android:layout_marginTop="@dimen/margin_8_dp"
                     android:textColor="@color/grayTextColor"
                     android:textSize="@dimen/episodeTextSize"
@@ -159,6 +148,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/margin_8_dp"
+                    android:layout_marginEnd="@dimen/margin_8_dp"
                     android:src="@drawable/ic_more" />
 
             </RelativeLayout>

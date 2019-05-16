@@ -39,7 +39,7 @@
             android:layout_marginBottom="150dp"
             android:src="@drawable/app_logo_small" />
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/imageViewAppLogoSmall"
@@ -51,7 +51,7 @@
             android:textColor="@android:color/white"
             android:textSize="32sp" />
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/tilEmail"
@@ -125,7 +125,7 @@
             android:textColor="@color/white"
             app:visibility="@{viewModel.agreementView}" />
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
             android:id="@+id/textViewAgreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
             android:textColor="@color/colorPrettyPurple"
             app:visibility="@{viewModel.agreementView}" />
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketTextView
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
             android:id="@+id/textViewForgetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -147,7 +147,7 @@
             app:visibility="@{viewModel.forgetPasswordView}" />
 
 
-        <com.furkanaskin.app.podpocket.ui.PodPocketLightTextView
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

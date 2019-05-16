@@ -19,11 +19,6 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>(Ma
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val core = CrashlyticsCore.Builder()
-                .disabled(BuildConfig.DEBUG)
-                .build()
-
-        Fabric.with(this, Crashlytics.Builder().core(core).build())
     }
 
 }
