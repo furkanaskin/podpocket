@@ -23,12 +23,12 @@ class PodcastEpisodesViewModel(app: Application) : BaseViewModel(app) {
 
     fun getEpisodes(id: String): Observable<Podcasts> {
 
-        return api.getPodcastById(id)
+        return baseApi.getPodcastById(id)
     }
 
 
     fun getEpisodeDetails(id: String): Observable<Episode> {
-        return api.getEpisodeById(id)
+        return baseApi.getEpisodeById(id)
     }
 
     fun getAllIds(position: Int): List<String> {

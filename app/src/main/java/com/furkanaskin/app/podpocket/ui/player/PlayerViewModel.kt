@@ -23,7 +23,7 @@ class PlayerViewModel(app: Application) : BaseViewModel(app) {
 
 
     fun getEpisodeDetails(id: String): Observable<Episode> {
-        return api.getEpisodeById(id)
+        return baseApi.getEpisodeById(id)
     }
 
     fun stringForTime(timeMs: Int): String {

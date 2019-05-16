@@ -22,19 +22,19 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun getBestPodcasts(region: String, explicitContent: Int): Observable<BestPodcasts> {
-        return api.getBestPodcasts(region, explicitContent)
+        return baseApi.getBestPodcasts(region, explicitContent)
     }
 
     fun getPodcastRecommendations(podcastId: String, explicitContent: Int): Observable<PodcastRecommendations> {
-        return api.getPodcastRecommendations(podcastId, explicitContent)
+        return baseApi.getPodcastRecommendations(podcastId, explicitContent)
     }
 
     fun getEpisodeRecommendations(podcastId: String, explicitContent: Int): Observable<EpisodeRecommendations> {
-        return api.getEpisodeRecommendations(podcastId, explicitContent)
+        return baseApi.getEpisodeRecommendations(podcastId, explicitContent)
     }
 
     fun getEpisodeDetails(id: String): Observable<Episode> {
 
-        return api.getEpisodeById(id)
+        return baseApi.getEpisodeById(id)
     }
 }

@@ -18,7 +18,6 @@ import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * Created by Furkan on 16.04.2019
@@ -37,7 +36,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     override fun init() {
 
-        buttonLogout.setOnClickListener {
+        mBinding.buttonLogout.setOnClickListener {
             mAuth.signOut()
         }
 
