@@ -13,6 +13,7 @@ import org.jetbrains.anko.doAsync
 class SplashActivityViewModel(app: Application) : BaseViewModel(app) {
 
     var loginSuccess: ObservableField<Boolean> = ObservableField(false)
+    var afterRegisterSuccess: ObservableField<Boolean> = ObservableField(false)
 
     init {
         (app as? Podpocket)?.component?.inject(this)
@@ -26,7 +27,10 @@ class SplashActivityViewModel(app: Application) : BaseViewModel(app) {
 
             if (user != null) {
                 loginSuccess.set(true)
+            }
 
+            if (!user?.surname.isNullOrEmpty()) {
+                afterRegisterSuccess.set(true)
             }
         }
     }

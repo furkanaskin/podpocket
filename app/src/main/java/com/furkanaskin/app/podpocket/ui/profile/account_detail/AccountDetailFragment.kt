@@ -39,16 +39,16 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
 
         mBinding.viewModel?.userData = user
         if (user!!.profilePictureUrl.isNullOrEmpty()) {
-
+            mBinding.fabChangeImage.visibility = View.VISIBLE
         } else {
             isUserHavePicture = true
+            mBinding.fabChangeImage.visibility = View.GONE
             profileImageUrl.set(user!!.profilePictureUrl.toString())
             Glide.with(this.activity!!).load(user!!.profilePictureUrl).into(mBinding.imageViewProfilePicture)
         }
 
         mBinding.imageViewProfilePicture.setOnClickListener {
             showAddAvatarDialog()
-
         }
 
         mBinding.buttonSave.setOnClickListener {

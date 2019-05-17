@@ -29,44 +29,53 @@
             app:mpb_useIntrinsicPadding="false"
             app:visibility="@{viewModel.progressBarView}" />
 
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
-            android:id="@+id/textViewKnowYouClosely"
+        <RelativeLayout
+            android:id="@+id/relativeLayoutImageContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:text="@string/know_you_closely"
-            android:textColor="@color/colorPrettyOrange" />
+            android:layout_centerHorizontal="true">
 
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/imageViewUser"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
-            android:src="@drawable/ic_dummy_user"
-            app:civ_background_color="@color/mainBackgroundColor"
-            app:civ_border="true"
-            app:civ_border_color="@color/colorCyan"
-            app:civ_shadow="true" />
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                android:id="@+id/textViewKnowYouClosely"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:text="@string/know_you_closely"
+                android:textColor="@color/colorPrettyOrange" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabChangeImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/imageViewUser"
-            android:layout_alignBottom="@id/imageViewUser"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/colorPrettyPurple"
-            android:src="@android:drawable/ic_menu_camera" />
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/imageViewUser"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/ic_dummy_user"
+                app:civ_background_color="@color/mainBackgroundColor"
+                app:civ_border="true"
+                app:civ_border_color="@color/colorCyan"
+                app:civ_shadow="true" />
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/fabChangeImage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignEnd="@id/imageViewUser"
+                android:layout_alignBottom="@id/imageViewUser"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/ic_add"
+                app:civ_border_color="@color/mainBackgroundColor"
+                app:civ_border_width="@dimen/margin_2_dp" />
+        </RelativeLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilName"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageViewUser"
+            android:layout_below="@id/relativeLayoutImageContainer"
             android:layout_marginStart="32dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="32dp"

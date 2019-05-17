@@ -29,24 +29,46 @@
             app:mpb_useIntrinsicPadding="false"
             app:visibility="@{viewModel.progressBarView}" />
 
-        <LinearLayout
-            android:id="@+id/linearLayoutInfoContainer"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/relativeLayoutImageContainer"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/margin_8_dp">
+            android:layout_centerHorizontal="true">
+
 
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/imageViewProfilePicture"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_16_dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
                 android:src="@drawable/ic_dummy_user"
                 app:civ_background_color="@color/mainBackgroundColor"
                 app:civ_border="true"
                 app:civ_border_color="@color/colorCyan"
                 app:civ_shadow="true" />
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/fabChangeImage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignEnd="@id/imageViewProfilePicture"
+                android:layout_alignBottom="@id/imageViewProfilePicture"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/ic_add"
+                app:civ_border_color="@color/mainBackgroundColor"
+                app:civ_border_width="@dimen/margin_2_dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutInfoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relativeLayoutImageContainer"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_8_dp">
+
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
