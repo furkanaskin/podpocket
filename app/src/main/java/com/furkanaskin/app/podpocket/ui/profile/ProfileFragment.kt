@@ -1,10 +1,12 @@
 package com.furkanaskin.app.podpocket.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentProfileBinding
+import com.furkanaskin.app.podpocket.ui.main.MainActivity
 
 /**
  * Created by Furkan on 16.04.2019
@@ -27,6 +29,12 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
 
         mBinding.buttonRecentlyPlayed.setOnClickListener {
             navigateRecentlyPlayedScreen()
+        }
+
+        mBinding.buttonLogout.setOnClickListener {
+            mAuth.signOut()
+            val intent = Intent(activity, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 

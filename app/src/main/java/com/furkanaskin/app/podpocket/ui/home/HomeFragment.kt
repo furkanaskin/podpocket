@@ -38,9 +38,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     override fun init() {
 
-        mBinding.buttonLogout.setOnClickListener {
-            mAuth.signOut()
-        }
 
         initBestPodcastsAdapter()
         initBestPodcasts()

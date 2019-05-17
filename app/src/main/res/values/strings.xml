@@ -53,5 +53,6 @@
     <string name="recently_played_podcast">Son Dinlediğin Podcast</string>
     <string name="recently_played_episode">Son Dinlediğin Bölüm</string>
     <string name="listen_episode">Bölümü Dinle</string>
+    <string name="logout">ÇIKIŞ YAP</string>
 
 </resources>

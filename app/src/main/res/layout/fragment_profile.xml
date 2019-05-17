@@ -56,5 +56,17 @@
                 app:strokeWidth="@dimen/margin_2_dp" />
 
         </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/margin_16_dp"
+            android:layout_marginEnd="@dimen/margin_16_dp"
+            android:layout_marginBottom="?attr/actionBarSize"
+            android:backgroundTint="@color/colorPrettyPurple"
+            android:hint="@string/logout"
+            android:textColorHint="@color/white" />
     </RelativeLayout>
 </layout>

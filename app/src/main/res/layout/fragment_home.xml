@@ -184,16 +184,6 @@
                 android:orientation="horizontal"
                 app:layoutManager="LinearLayoutManager" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonLogout"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_below="@id/recyclerViewRecommendedEpisodes"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="?attr/actionBarSize"
-                android:text="Log out" />
-
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>
