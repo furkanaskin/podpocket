@@ -8,7 +8,7 @@
 
 This project is an Podcast app like Spotify, Spreaker or SoundCloud but we has one difference from other apps: This app not only for listenin podcast episodes, you can talk about podcasts in feed or if you are podcaster you can claim podcast and directly send push notification to your subscribers. The project created for improving skills as team. If you have good ideas about that project, you can open PR or issue!
 
-![coinstalker](https://user-images.githubusercontent.com/22769589/50541103-6ac52c80-0baf-11e9-821e-6f57f15d4862.png)
+![Podpocket](https://user-images.githubusercontent.com/22769589/57935127-c75c8600-78c9-11e9-97dd-1440d0c0a768.png)
 
 ## Based On
 - [General Mobile Kotlin-Android MVVM Starter](https://github.com/general-mobile/kotlin-android-mvvm-starter)
