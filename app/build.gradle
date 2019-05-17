@@ -108,7 +108,6 @@ dependencies {
     }
 
     //navigation
-
     implementation rootProject.ext.navigationFragment
     implementation rootProject.ext.navigationUI
 
@@ -151,9 +150,11 @@ dependencies {
     //arch-comp Lifecycles, LiveData, and ViewModel
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
+
     //arch-comp Room
     implementation "android.arch.persistence.room:runtime:$room_version"
     kapt "android.arch.persistence.room:compiler:$room_version"
+
     //Paging
     implementation "android.arch.paging:runtime:$paging_version"
 

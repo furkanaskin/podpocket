@@ -30,6 +30,8 @@ This project is an Podcast app like Spotify, Spreaker or SoundCloud but we has o
  - [OkHttp](https://github.com/square/okhttp)
  - [Gson](https://github.com/google/gson)
  - [Paging](https://developer.android.com/topic/libraries/architecture/paging)
+ - [ExoPlayer](https://github.com/google/ExoPlayer)
+ - [Stetho](https://github.com/facebook/stetho)
  - [Fabric](https://fabric.io/kits/android/crashlytics)
  - [Anko](https://github.com/Kotlin/anko)
  - [Picasso](https://github.com/square/picasso)
