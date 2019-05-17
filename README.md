@@ -1,0 +1,2 @@
+# podpocket
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a328b149c95d4c03a8ff247c12e8dcca)](https://app.codacy.com/app/furkanaskin/podpocket?utm_source=github.com&utm_medium=referral&utm_content=furkanaskin/podpocket&utm_campaign=Badge_Grade_Dashboard)
