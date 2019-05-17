@@ -46,4 +46,4 @@ This project is an Podcast app like Spotify, Spreaker or SoundCloud but we has o
 
 ## License
 
-[MIT](https://github.com/furkanaskin/CoinStalker/blob/master/LICENSE)
+[MIT](https://github.com/furkanaskin/podpocket/blob/master/LICENSE)
