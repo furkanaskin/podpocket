@@ -93,6 +93,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.firebaseui:firebase-ui-storage:3.2.1'
 
+    //lottie
+    implementation rootProject.ext.lottie
 
     //circular ImageView
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
@@ -130,7 +132,7 @@ dependencies {
     implementation rootProject.ext.gson
     implementation rootProject.ext.rxJavaAdapter
     implementation rootProject.ext.gsonConverter
-    
+
     //material progressbar
     implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
 

@@ -61,5 +61,8 @@
         <action
             android:id="@+id/action_recentlyPlayedFragment_to_podcastEpisodesFragment"
             app:destination="@id/podcastEpisodesFragment" />
+        <action
+            android:id="@+id/action_recentlyPlayedFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

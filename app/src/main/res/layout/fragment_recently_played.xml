@@ -26,6 +26,43 @@
             android:paddingBottom="?attr/actionBarSize"
             tools:context=".ui.profile.recently_played.RecentlyPlayedFragment">
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieAnimationView"
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="not_found.json"
+                app:lottie_loop="true" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                android:id="@+id/textViewDummyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lottieAnimationView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_16_dp"
+                android:gravity="center"
+                android:lines="3"
+                android:maxWidth="210dp"
+                android:text="@string/recently_played_dummy_text"
+                android:textColor="@color/colorPrettyPurple"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/buttonNavigateHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_8_dp"
+                android:layout_marginBottom="@dimen/margin_8_dp"
+                android:background="@color/mainBackgroundColor"
+                android:src="@drawable/ic_card_play_button"
+                android:visibility="gone" />
+
             <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
                 android:id="@+id/textViewMainHeading"
                 android:layout_width="wrap_content"

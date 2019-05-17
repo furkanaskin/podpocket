@@ -41,7 +41,7 @@
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="@dimen/margin_16_dp"
                 android:src="@drawable/ic_dummy_user"
                 app:civ_background_color="@color/mainBackgroundColor"
                 app:civ_border="true"
@@ -178,6 +178,7 @@
             android:layout_below="@id/linearLayoutInfoContainer"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_32_dp"
+            android:layout_marginBottom="?attr/actionBarSize"
             android:orientation="vertical">
 
             <ImageView

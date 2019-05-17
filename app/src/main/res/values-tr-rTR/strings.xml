@@ -54,5 +54,6 @@
     <string name="recently_played_episode">Son Dinlediğin Bölüm</string>
     <string name="listen_episode">Bölümü Dinle</string>
     <string name="logout">ÇIKIŞ YAP</string>
+    <string name="recently_played_dummy_text">Sanırım buralarda yenisin... Hadi gel keşife çıkalım!</string>
 
 </resources>

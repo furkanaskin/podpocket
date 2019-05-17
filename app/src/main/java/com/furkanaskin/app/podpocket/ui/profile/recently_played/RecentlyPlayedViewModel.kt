@@ -16,6 +16,7 @@ class RecentlyPlayedViewModel(app: Application) : BaseViewModel(app) {
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
     var podcastItem: ObservableField<Podcasts> = ObservableField()
     var episodeItem: ObservableField<Episode> = ObservableField()
+    var recentlyPlayedSomething: ObservableField<Boolean> = ObservableField(false)
 
     init {
         (app as? Podpocket)?.component?.inject(this)

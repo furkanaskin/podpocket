@@ -55,6 +55,10 @@ ext {
     coroutines_version = "1.2.0"
     anko_version = "0.10.8"
     navigationVersion = "1.0.0-rc02"
+    lottieVersion = "3.0.2"
+
+    //lottie
+    lottie = "com.airbnb.android:lottie:$lottieVersion"
 
     //navigation
     navigationFragment = "android.arch.navigation:navigation-fragment-ktx:$navigationVersion"
