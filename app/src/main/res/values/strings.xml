@@ -47,5 +47,11 @@
     <string name="search_placeholder">Search for Podcast, Episodes, Genres</string>
     <string name="update_profie_details">Bilgilerimi Güncelle</string>
     <string name="all_episodes">Tüm Bölümler</string>
+    <string name="account_details">Hesap Detayları</string>
+    <string name="recently_played">Son Dinlediklerim</string>
+    <string name="list_all_episodes">Tüm Bölümleri Listele</string>
+    <string name="recently_played_podcast">Son Dinlediğin Podcast</string>
+    <string name="recently_played_episode">Son Dinlediğin Bölüm</string>
+    <string name="listen_episode">Bölümü Dinle</string>
 
 </resources>

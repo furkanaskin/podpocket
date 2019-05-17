@@ -1,5 +1,6 @@
 package com.furkanaskin.app.podpocket.core
 
+import android.text.Html
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -38,7 +39,7 @@ object BindingAdapter {
     fun explicitContent(view: MaterialCardView, explicitContent: Boolean) {
 
         if (explicitContent) {
-            view.strokeColor = ContextCompat.getColor(view.context, R.color.colorCyan)
+            view.strokeColor = ContextCompat.getColor(view.context, R.color.explicitContent)
             view.strokeWidth = 8
         }
     }
@@ -52,6 +53,14 @@ object BindingAdapter {
             view.setTextColor(ContextCompat.getColor(view.context, R.color.white))
 
 
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:setHtmlText")
+    fun setHtml(view: TextView, html: String?) {
+        html?.let {
+            view.text = Html.fromHtml(html)
+        }
     }
 
     @JvmStatic

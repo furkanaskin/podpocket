@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <data>
@@ -16,8 +16,8 @@
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:background="@drawable/ic_app_bg"
+        android:fitsSystemWindows="true"
         tools:context=".ui.main.MainActivity">
 
 
@@ -44,49 +44,49 @@
             android:textSize="32sp" />
 
         <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+            android:id="@+id/textViewHello"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello"
-            android:id="@+id/textViewHello"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:textSize="24sp"
+            android:text="@string/hello"
             android:textAllCaps="true"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonLogin"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sign_in"
-            android:elevation="2dp"
+            android:layout_above="@id/buttonRegister"
             android:layout_marginStart="30dp"
-            android:onClick="@{() -> viewModel.loginClick()}"
             android:layout_marginEnd="30dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:elevation="2dp"
+            android:onClick="@{() -> viewModel.loginClick()}"
+            android:text="@string/sign_in"
             android:textColor="@color/colorPrettyPurple"
             android:textColorHint="@color/colorPrettyPurple"
-            app:strokeWidth="2dp"
-            app:cornerRadius="50dp"
+            app:cornerRadius="@dimen/margin_64_dp"
             app:strokeColor="@color/colorPrettyPurple"
-            android:layout_above="@id/buttonRegister" />
+            app:strokeWidth="2dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/register"
-            android:textColor="@android:color/white"
+            android:layout_alignParentBottom="true"
             android:layout_marginStart="30dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="30dp"
-            android:layout_alignParentBottom="true"
             android:layout_marginBottom="30dp"
+            android:backgroundTint="@color/colorPrettyPurple"
             android:onClick="@{() -> viewModel.registerClick()}"
+            android:text="@string/register"
+            android:textColor="@android:color/white"
+            app:cornerRadius="@dimen/margin_64_dp"
             app:strokeColor="@android:color/white"
-            app:cornerRadius="50dp"
-            app:strokeWidth="2dp"
-            android:backgroundTint="@color/colorPrettyPurple" />
+            app:strokeWidth="2dp" />
 
     </RelativeLayout>
 </layout>

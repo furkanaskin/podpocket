@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.furkanaskin.app.podpocket.ui.profile.recently_played.RecentlyPlayedViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
+
+        <RelativeLayout
+            android:id="@+id/rootView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/mainBackgroundColor"
+            android:fitsSystemWindows="true"
+            android:paddingBottom="?attr/actionBarSize"
+            tools:context=".ui.profile.recently_played.RecentlyPlayedFragment">
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                android:id="@+id/textViewMainHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="48dp"
+                android:text="@string/recently_played_podcast"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <!-- PODCAST CARDVIEW STARTS HERE -->
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewMainHeading"
+                android:layout_margin="@dimen/margin_24_dp"
+                android:backgroundTint="@android:color/transparent"
+                app:cardCornerRadius="@dimen/margin_6_dp"
+                app:explicitContent="@{viewModel.podcastItem.getExplicitContent()}"
+                app:strokeColor="@color/colorPrettyPurple"
+                app:strokeWidth="@dimen/margin_2_dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/imageViewPodcastCover"
+                        android:layout_width="144dp"
+                        android:layout_height="144dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/margin_16_dp"
+                        android:layout_marginTop="@dimen/margin_24_dp"
+                        android:layout_marginEnd="@dimen/margin_16_dp"
+                        android:scaleType="centerCrop"
+                        app:civ_border_color="@color/colorCyan"
+                        app:civ_border_width="@dimen/margin_2_dp"
+                        app:setDrawableLink="@{viewModel.podcastItem.getImage()}" />
+
+                    <View
+                        android:id="@+id/viewSeperator"
+                        android:layout_width="@dimen/margin_2_dp"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/secondViewSeperator"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@id/imageViewPodcastCover"
+                        android:background="@color/colorPrettyPurple" />
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewPodcastTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@id/viewSeperator"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="@dimen/margin_8_dp"
+                        android:layout_marginEnd="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_8_dp"
+                        android:lines="2"
+                        android:minLines="1"
+                        android:singleLine="false"
+                        android:text="@{viewModel.podcastItem.getTitle()}"
+                        android:textColor="@color/colorPrettyPurple"
+                        android:textSize="14sp" />
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewPodcastLanguage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewPodcastTitle"
+                        android:layout_alignStart="@id/viewSeperator"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="@dimen/margin_8_dp"
+                        android:layout_marginEnd="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_8_dp"
+                        android:lines="2"
+                        android:minLines="1"
+                        android:singleLine="false"
+                        android:text="@{viewModel.podcastItem.getPodcastLanguage()}"
+                        android:textColor="@color/colorPrettyOrange"
+                        android:textSize="14sp" />
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewPodcastPublisher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewPodcastLanguage"
+                        android:layout_alignStart="@id/viewSeperator"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="@dimen/margin_8_dp"
+                        android:layout_marginEnd="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_8_dp"
+                        android:lines="2"
+                        android:minLines="1"
+                        android:singleLine="false"
+                        android:text="@{viewModel.podcastItem.getPodcastPublisher()}"
+                        android:textColor="@color/colorPrettyOrange"
+                        android:textSize="14sp" />
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewPodcastEarliestPubDateMs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewPodcastPublisher"
+                        android:layout_alignStart="@id/viewSeperator"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="@dimen/margin_8_dp"
+                        android:layout_marginEnd="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_8_dp"
+                        android:lines="2"
+                        android:minLines="1"
+                        android:singleLine="false"
+                        android:text="@{viewModel.podcastItem.getPubDateMs()}"
+                        android:textColor="@color/colorPrettyOrange"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:id="@+id/secondViewSeperator"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_2_dp"
+                        android:layout_above="@id/textViewPodcastDescription"
+                        android:background="@color/colorPrettyPurple" />
+
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewPodcastDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewPodcastTotalEpisodes"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="@dimen/margin_8_dp"
+                        android:layout_marginEnd="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_8_dp"
+                        android:singleLine="false"
+                        android:text="@{viewModel.podcastItem.getDescription()}"
+                        android:textColor="@color/colorLoginText"
+                        android:textSize="14sp" />
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewListAllEpisodes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewPodcastDescription"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_16_dp"
+                        android:drawableStart="@drawable/ic_right_arrow"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="@string/list_all_episodes"
+                        android:textColor="@color/colorCyan"
+                        android:textSize="@dimen/dimen_16_sp" />
+
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewPodcastTotalEpisodes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imageViewPodcastCover"
+                        android:layout_alignStart="@id/imageViewPodcastCover"
+                        android:layout_alignEnd="@id/imageViewPodcastCover"
+                        android:layout_marginTop="@dimen/margin_8_dp"
+                        android:layout_marginBottom="@dimen/margin_8_dp"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="@{viewModel.podcastItem.getTotalEpisodes()}"
+                        android:textColor="@color/colorCyan"
+                        android:textSize="@dimen/dimen_8_sp" />
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- PODCAST CARDVIEW ENDS HERE -->
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                android:id="@+id/textViewSecondMainHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cardView"
+                android:layout_marginStart="24dp"
+                android:text="@string/recently_played_episode"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <!-- EPISODE CARDVIEW STARTS HERE -->
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/episodeCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewSecondMainHeading"
+                android:layout_margin="@dimen/margin_24_dp"
+                android:backgroundTint="@android:color/transparent"
+                app:cardCornerRadius="@dimen/margin_6_dp"
+                app:explicitContent="@{viewModel.episodeItem.getExplicitContent()}"
+                app:strokeColor="@color/colorPrettyPurple"
+                app:strokeWidth="@dimen/margin_2_dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/imageViewEpisodeCover"
+                        android:layout_width="144dp"
+                        android:layout_height="144dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/margin_16_dp"
+                        android:layout_marginTop="@dimen/margin_24_dp"
+                        android:layout_marginEnd="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_16_dp"
+                        android:scaleType="centerCrop"
+                        app:civ_border_color="@color/colorCyan"
+                        app:civ_border_width="@dimen/margin_2_dp"
+                        app:setDrawableLink="@{viewModel.episodeItem.getImage()}" />
+
+                    <View
+                        android:id="@+id/episodeViewSeparator"
+                        android:layout_width="@dimen/margin_2_dp"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/episodeSecondViewSeparator"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@id/imageViewEpisodeCover"
+                        android:background="@color/colorPrettyPurple" />
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewEpisodeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@id/episodeViewSeparator"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="@dimen/margin_8_dp"
+                        android:layout_marginEnd="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_8_dp"
+                        android:lines="2"
+                        android:minLines="1"
+                        android:singleLine="false"
+                        android:text="@{viewModel.episodeItem.getTitle()}"
+                        android:textColor="@color/colorPrettyPurple"
+                        android:textSize="14sp" />
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewEpisodeLanguage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewEpisodeTitle"
+                        android:layout_alignStart="@id/episodeViewSeparator"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="@dimen/margin_8_dp"
+                        android:layout_marginEnd="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_8_dp"
+                        android:lines="2"
+                        android:minLines="1"
+                        android:singleLine="false"
+                        android:text="@{viewModel.episodeItem.getPodcastLanguage()}"
+                        android:textColor="@color/colorPrettyOrange"
+                        android:textSize="14sp" />
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewEpisodePublisher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewEpisodeLanguage"
+                        android:layout_alignStart="@id/episodeViewSeparator"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="@dimen/margin_8_dp"
+                        android:layout_marginEnd="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_8_dp"
+                        android:lines="2"
+                        android:minLines="1"
+                        android:singleLine="false"
+                        android:text="@{viewModel.episodeItem.getPodcast()}"
+                        android:textColor="@color/colorPrettyOrange"
+                        android:textSize="14sp" />
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewEpisodePubDateMs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewEpisodePublisher"
+                        android:layout_alignStart="@id/episodeViewSeparator"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="@dimen/margin_8_dp"
+                        android:layout_marginEnd="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_8_dp"
+                        android:lines="2"
+                        android:minLines="1"
+                        android:singleLine="false"
+                        android:text="@{viewModel.episodeItem.getPubDateMs()}"
+                        android:textColor="@color/colorPrettyOrange"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:id="@+id/episodeSecondViewSeparator"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_2_dp"
+                        android:layout_below="@id/imageViewEpisodeCover"
+                        android:background="@color/colorPrettyPurple" />
+
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewEpisodeDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/episodeSecondViewSeparator"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="@dimen/margin_8_dp"
+                        android:layout_marginEnd="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_8_dp"
+                        android:singleLine="false"
+                        android:textColor="@color/colorLoginText"
+                        android:textSize="14sp"
+                        app:setHtmlText="@{viewModel.episodeItem.getDescription()}" />
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewListenEpisode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewEpisodeDescription"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/margin_16_dp"
+                        android:layout_marginBottom="@dimen/margin_16_dp"
+                        android:drawableStart="@drawable/ic_right_arrow"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="@string/listen_episode"
+                        android:textColor="@color/colorCyan"
+                        android:textSize="@dimen/dimen_16_sp" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

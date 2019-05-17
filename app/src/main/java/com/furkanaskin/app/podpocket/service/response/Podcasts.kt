@@ -1,6 +1,8 @@
 package com.furkanaskin.app.podpocket.service.response
 
 import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class Podcasts(
 
@@ -76,4 +78,28 @@ data class Podcasts(
     fun getTotalEpisodes(): String? {
         return "$totalEpisodes Bölüm"
     }
+
+    fun getPodcastLanguage(): String? {
+        return "Yayın Dili : $language"
+    }
+
+    fun getPodcastPublisher(): String? {
+        return "Yayıncı : $publisher"
+    }
+
+    fun getPubDateMs(): String {
+        return """İlk Yayın Tarihi :
+            |${getDateTime(earliestPubDateMs ?: 0)}""".trimMargin()
+    }
+
+    private fun getDateTime(s: Long): String? {
+        return try {
+            val sdf = SimpleDateFormat("MM/dd/yyyy")
+            val netDate = Date(s)
+            sdf.format(netDate)
+        } catch (e: Exception) {
+            e.toString()
+        }
+    }
+
 }

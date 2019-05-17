@@ -28,7 +28,14 @@
         android:id="@+id/profileFragment"
         android:name="com.furkanaskin.app.podpocket.ui.profile.ProfileFragment"
         android:label="PROFIL"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_accountDetailFragment"
+            app:destination="@id/accountDetailFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_recentlyPlayedFragment"
+            app:destination="@id/recentlyPlayedFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.furkanaskin.app.podpocket.ui.search.SearchFragment"
@@ -42,5 +49,17 @@
             android:name="podcastID"
             android:defaultValue="hello2"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountDetailFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.profile.account_detail.AccountDetailFragment"
+        android:label="AccountDetailFragment" />
+    <fragment
+        android:id="@+id/recentlyPlayedFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.profile.recently_played.RecentlyPlayedFragment"
+        android:label="RecentlyPlayedFragment">
+        <action
+            android:id="@+id/action_recentlyPlayedFragment_to_podcastEpisodesFragment"
+            app:destination="@id/podcastEpisodesFragment" />
     </fragment>
 </navigation>

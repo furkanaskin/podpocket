@@ -5,12 +5,15 @@
     <dimen name="fab_margin">16dp</dimen>
 
 
+    <dimen name="margin_2_dp">2dp</dimen>
     <dimen name="margin_4_dp">4dp</dimen>
+    <dimen name="margin_6_dp">6dp</dimen>
     <dimen name="margin_8_dp">8dp</dimen>
     <dimen name="margin_16_dp">16dp</dimen>
     <dimen name="margin_24_dp">24dp</dimen>
     <dimen name="margin_32_dp">32dp</dimen>
     <dimen name="margin_48_dp">48dp</dimen>
+    <dimen name="margin_64_dp">64dp</dimen>
 
    <dimen name="dimen_4_sp">4sp</dimen>
     <dimen name="dimen_8_sp">8sp</dimen>

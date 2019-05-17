@@ -3,6 +3,8 @@ package com.furkanaskin.app.podpocket.service.response
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class Episode(
 
@@ -94,4 +96,32 @@ data class Episode(
             return arrayOfNulls(size)
         }
     }
+
+    fun getTotalEpisodes(): String? {
+        return "${podcast?.totalEpisodes} Bölüm"
+    }
+
+    fun getPodcastLanguage(): String? {
+        return "Yayın Dili : ${podcast?.language}"
+    }
+
+    fun getPodcast(): String? {
+        return "Podcast : ${podcast?.title}"
+    }
+
+    fun getPubDateMs(): String {
+        return """Yayınlanma Tarihi :
+            |${getDateTime(pubDateMs ?: 0)}""".trimMargin()
+    }
+
+    private fun getDateTime(s: Long): String? {
+        return try {
+            val sdf = SimpleDateFormat("MM/dd/yyyy")
+            val netDate = Date(s)
+            sdf.format(netDate)
+        } catch (e: Exception) {
+            e.toString()
+        }
+    }
+
 }

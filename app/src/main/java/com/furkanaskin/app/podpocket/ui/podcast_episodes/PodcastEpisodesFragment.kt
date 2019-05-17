@@ -77,4 +77,9 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
         return PodcastEpisodesFragmentArgs.fromBundle(this.arguments!!).podcastID
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.clear()
+    }
+
 }
