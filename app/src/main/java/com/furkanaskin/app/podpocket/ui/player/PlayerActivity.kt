@@ -201,7 +201,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 episode.isSelected = false
                 viewModel.db.episodesDao().insertEpisode(episode)
             }
-
         }
 
         // if player already initialized (already playing some episode) release it.
@@ -378,9 +377,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             override fun onStopTrackingTouch(p0: SeekBar?) {
                 player.seekTo((p0?.progress ?: 0) * 1000L)
             }
-
         }
-
     }
 
     private val eventListener = object : ExoPlayer.EventListener {
