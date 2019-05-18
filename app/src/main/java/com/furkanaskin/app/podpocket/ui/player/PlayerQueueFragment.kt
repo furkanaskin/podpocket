@@ -44,8 +44,13 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
         val adapter = QueueAdapter { item, position, _ ->
 
-            (activity as PlayerActivity).getEpisodeDetail(item.id)
-            (activity as PlayerActivity).currentPosition = position
+            // Update playerActivity's currentPosition and EpisodeId then getEpisodeDetail
+
+            val playerActivity = (activity as PlayerActivity)
+
+            playerActivity.currentPosition = position
+            playerActivity.episodeId = playerActivity.episodes[position]
+            playerActivity.getEpisodeDetail(playerActivity.episodeId)
             mBinding.recyclerViewQueueEpisodes.smoothScrollToPosition(position)
         }
 

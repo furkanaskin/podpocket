@@ -38,13 +38,13 @@
             android:visibility="gone" />
 
 
-        <LinearLayout
-            android:id="@+id/linearLayoutAppLogo"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/relativeLayoutHeader"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_24_dp"
             android:layout_marginTop="@dimen/margin_48_dp"
-            android:orientation="horizontal">
+            android:layout_marginEnd="@dimen/dimen_24_sp">
 
             <ImageView
                 android:id="@+id/imageViewAppLogoSmall"
@@ -55,12 +55,22 @@
             <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/margin_16_dp"
+                android:layout_toEndOf="@id/imageViewAppLogoSmall"
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="@color/white" />
-        </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imageButtonFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_favorite_disabled" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
