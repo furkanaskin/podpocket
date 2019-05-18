@@ -69,7 +69,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         if (intent.getStringExtra("position").length > 4) {
 
-            // User coming from homeFragment recommendations, just try to get episode detail.
+            // User coming from homeFragment recommendations or favorites fragment, just try to get episode detail.
             episodeId = intent.getStringExtra("position")
             getEpisodeDetail(episodeId)
 

@@ -55,5 +55,8 @@
     <string name="listen_episode">Bölümü Dinle</string>
     <string name="logout">ÇIKIŞ YAP</string>
     <string name="recently_played_dummy_text">Sanırım buralarda yenisin... Hadi gel keşife çıkalım!</string>
+    <string name="favorites">Favoriler</string>
+    <string name="all_favorites_under_one_roof">Tüm favori podcastlerin tek bir çatı altında!</string>
+    <string name="my_favorites">Favorilerim</string>
 
 </resources>

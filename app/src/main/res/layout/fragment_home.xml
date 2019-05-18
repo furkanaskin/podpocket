@@ -30,11 +30,11 @@
 
             <me.zhanghai.android.materialprogressbar.MaterialProgressBar
                 android:id="@+id/progressBar"
-                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:indeterminate="true"
-                app:mpb_progressStyle="horizontal"
+                app:mpb_progressStyle="circular"
                 app:mpb_useIntrinsicPadding="false"
                 app:visibility="@{viewModel.progressBarView}" />
 
@@ -51,7 +51,6 @@
                 android:id="@+id/imageViewAppLogoSmall"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_below="@id/textViewHello"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="57dp"
                 android:src="@drawable/app_logo_small" />
@@ -97,7 +96,7 @@
                 android:layout_marginTop="12dp"
                 android:lines="2"
                 android:maxWidth="140dp"
-                android:text="Tüm favori podcastlerin tek bir çatı altında!"
+                android:text="@string/all_favorites_under_one_roof"
                 android:textColor="@color/colorHomeText"
                 android:textSize="12sp" />
 

@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.player
 
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.furkanaskin.app.podpocket.R
@@ -39,8 +38,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
     override fun init() {
 
-
-        mBinding.progressBar.visibility = View.VISIBLE
+        viewModel.progressBarView.set(true)
 
         val adapter = QueueAdapter { item, position, _ ->
 
@@ -63,8 +61,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
             }
         })
 
-
-        mBinding.progressBar.visibility = View.GONE
+        viewModel.progressBarView.set(false)
     }
 
 }

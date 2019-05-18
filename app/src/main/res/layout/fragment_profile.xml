@@ -55,6 +55,20 @@
                 app:strokeColor="@color/colorPrettyPurple"
                 app:strokeWidth="@dimen/margin_2_dp" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonFavorites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:hint="@string/my_favorites"
+                android:textColorHint="@color/white"
+                app:backgroundTint="@android:color/transparent"
+                app:cornerRadius="@dimen/margin_6_dp"
+                app:icon="@drawable/ic_right_arrow"
+                app:iconTint="@color/colorCyan"
+                app:strokeColor="@color/colorPrettyPurple"
+                app:strokeWidth="@dimen/margin_2_dp" />
+
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton

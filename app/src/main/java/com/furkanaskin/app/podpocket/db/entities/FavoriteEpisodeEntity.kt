@@ -6,6 +6,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.furkanaskin.app.podpocket.service.response.Episode
 import com.furkanaskin.app.podpocket.service.response.EpisodesItem
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by Furkan on 2019-05-18
@@ -19,6 +21,7 @@ data class FavoriteEpisodeEntity(
         var image: String?,
         var thumbnail: String?,
         var explicitContent: Boolean?,
+        var podcastId: String?,
         var listennotesEditUrl: String?,
         var audioLength: Int?,
         var description: String?,
@@ -35,6 +38,7 @@ data class FavoriteEpisodeEntity(
             parcel.readString(),
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
             parcel.readString(),
+            parcel.readString(),
             parcel.readValue(Int::class.java.classLoader) as? Int,
             parcel.readString(),
             parcel.readString(),
@@ -50,6 +54,7 @@ data class FavoriteEpisodeEntity(
             thumbnail = item.thumbnail,
             explicitContent = item.explicitContent,
             listennotesEditUrl = item.listennotesEditUrl,
+            podcastId = "",
             audioLength = item.audioLength,
             description = item.description,
             audio = item.audio,
@@ -64,6 +69,7 @@ data class FavoriteEpisodeEntity(
             image = item.id,
             thumbnail = item.thumbnail,
             explicitContent = item.explicitContent,
+            podcastId = item.podcast?.id,
             listennotesEditUrl = item.listennotesEditUrl,
             audioLength = item.audioLength,
             description = item.description,
@@ -79,6 +85,7 @@ data class FavoriteEpisodeEntity(
         parcel.writeString(image)
         parcel.writeString(thumbnail)
         parcel.writeValue(explicitContent)
+        parcel.writeString(podcastId)
         parcel.writeString(listennotesEditUrl)
         parcel.writeValue(audioLength)
         parcel.writeString(description)
@@ -103,5 +110,18 @@ data class FavoriteEpisodeEntity(
         }
     }
 
+    fun formatPubDateMs(): String {
+        return getDateTime(pubDateMs ?: 0) ?: ""
+    }
+
+    private fun getDateTime(s: Long): String? {
+        return try {
+            val sdf = SimpleDateFormat("MM/dd/yyyy")
+            val netDate = Date(s)
+            sdf.format(netDate)
+        } catch (e: Exception) {
+            e.toString()
+        }
+    }
 
 }

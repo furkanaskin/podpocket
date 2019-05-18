@@ -18,6 +18,7 @@ import com.furkanaskin.app.podpocket.ui.player.PlayerViewModel
 import com.furkanaskin.app.podpocket.ui.podcast_episodes.PodcastEpisodesViewModel
 import com.furkanaskin.app.podpocket.ui.profile.ProfileViewModel
 import com.furkanaskin.app.podpocket.ui.profile.account_detail.AccountDetailViewModel
+import com.furkanaskin.app.podpocket.ui.profile.favorites.FavoritesViewModel
 import com.furkanaskin.app.podpocket.ui.profile.recently_played.RecentlyPlayedViewModel
 import com.furkanaskin.app.podpocket.ui.search.SearchViewModel
 import com.furkanaskin.app.podpocket.ui.settings.SettingsViewModel
@@ -70,4 +71,6 @@ interface ApplicationComponent {
     fun inject(accountDetailViewModel: AccountDetailViewModel)
 
     fun inject(recentlyPlayedViewModel: RecentlyPlayedViewModel)
+
+    fun inject(favoritesViewModel: FavoritesViewModel)
 }

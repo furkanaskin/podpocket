@@ -31,6 +31,10 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
             navigateRecentlyPlayedScreen()
         }
 
+        mBinding.buttonFavorites.setOnClickListener {
+            navigateFavoritesScreen()
+        }
+
         mBinding.buttonLogout.setOnClickListener {
             mAuth.signOut()
             val intent = Intent(activity, MainActivity::class.java)
@@ -46,4 +50,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
         navigate(R.id.action_profileFragment_to_recentlyPlayedFragment)
     }
 
+    fun navigateFavoritesScreen() {
+        navigate(R.id.action_profileFragment_to_favoritesFragment)
+    }
 }
