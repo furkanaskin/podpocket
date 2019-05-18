@@ -24,6 +24,7 @@ This project is an Podcast app like Spotify, Spreaker or SoundCloud but we has o
  - [Data Binding](https://developer.android.com/topic/libraries/data-binding)
  - [RoomDB](https://developer.android.com/topic/libraries/architecture/room)
  - [RxJava](https://github.com/ReactiveX/RxJava)
+ - [RxAndroid](https://github.com/ReactiveX/RxAndroid)
  - [RxKotlin](https://github.com/ReactiveX/RxKotlin)
  - [Dagger 2](https://github.com/google/dagger)
  - [Retrofit](https://square.github.io/retrofit/)
