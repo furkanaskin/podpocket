@@ -1,6 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.home
 
 import android.content.Intent
+import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.furkanaskin.app.podpocket.R
@@ -65,6 +66,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
     }
 
     private fun initRecommendedPodcastsAdapter() {
+
         val adapter = RecommendedPodcastsAdapter { item ->
             val podcastId = item.id
             val action = HomeFragmentDirections.actionHomeFragmentToPodcastEpisodesFragment()
@@ -74,7 +76,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
         mBinding.recyclerViewRecommendedPodcasts.adapter = adapter
         mBinding.recyclerViewRecommendedPodcasts.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
-
     }
 
     private fun initRecommendedEpisodesAdapter() {
@@ -117,17 +118,21 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     private fun initBestPodcasts() {
 
-        disposable.add(viewModel.getBestPodcasts("tr", 0)
+        viewModel.progressBarView.set(true)
+        hideTitles()
+
+        disposable.add(viewModel.getBestPodcasts(viewModel.currentLocation, 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : CallbackWrapper<BestPodcasts>(viewModel.getApplication()) {
                     override fun onSuccess(t: BestPodcasts) {
                         (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(t.channels)
-
+                        viewModel.progressBarView.set(false)
+                        showTitles()
                     }
 
                     override fun onError(e: Throwable) {
-
+                        viewModel.progressBarView.set(false)
                     }
 
                 }))
@@ -136,6 +141,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     private fun initRecommendedPodcasts() {
 
+        viewModel.progressBarView.set(true)
+        hideTitles()
+
         disposable.add(viewModel.getPodcastRecommendations(user?.lastPlayedPodcast
                 ?: "1c8374ef2e8c41928010347f66401e56", 0)
                 .subscribeOn(Schedulers.io())
@@ -143,12 +151,18 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
                 .subscribeWith(object : CallbackWrapper<PodcastRecommendations>(viewModel.getApplication()) {
                     override fun onSuccess(t: PodcastRecommendations) {
                         (mBinding.recyclerViewRecommendedPodcasts.adapter as RecommendedPodcastsAdapter).submitList(t.recommendations)
+                        viewModel.progressBarView.set(false)
+                        showTitles()
                     }
 
                 }))
     }
 
     private fun initRecommendedEpisodes() {
+
+        viewModel.progressBarView.set(true)
+        hideTitles()
+
         disposable.add(viewModel.getEpisodeRecommendations(user?.lastPlayedEpisode
                 ?: "53fd8c1a373b46888638cbeb14b571d1", 0)
                 .subscribeOn(Schedulers.io())
@@ -156,9 +170,23 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
                 .subscribeWith(object : CallbackWrapper<EpisodeRecommendations>(viewModel.getApplication()) {
                     override fun onSuccess(t: EpisodeRecommendations) {
                         (mBinding.recyclerViewRecommendedEpisodes.adapter as RecommendedEpisodesAdapter).submitList(t.recommendations)
+                        viewModel.progressBarView.set(false)
+                        showTitles()
                     }
 
                 }))
+    }
+
+    fun hideTitles() {
+        mBinding.textViewBestPodcasts.visibility = View.GONE
+        mBinding.textViewRecommendedEpisodes.visibility = View.GONE
+        mBinding.textViewRecommendedPodcasts.visibility = View.GONE
+    }
+
+    fun showTitles() {
+        mBinding.textViewBestPodcasts.visibility = View.VISIBLE
+        mBinding.textViewRecommendedEpisodes.visibility = View.VISIBLE
+        mBinding.textViewRecommendedPodcasts.visibility = View.VISIBLE
     }
 
     override fun onDestroy() {

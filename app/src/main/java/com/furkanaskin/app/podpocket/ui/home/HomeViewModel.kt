@@ -6,6 +6,7 @@ import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.service.response.*
 import io.reactivex.Observable
+import java.util.*
 
 /**
  * Created by Furkan on 16.04.2019
@@ -14,8 +15,11 @@ import io.reactivex.Observable
 class HomeViewModel(app: Application) : BaseViewModel(app) {
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
 
+    lateinit var currentLocation: String
+
     init {
         (app as? Podpocket)?.component?.inject(this)
+        getUserLocation()
     }
 
     fun getBestPodcasts(region: String, explicitContent: Int): Observable<BestPodcasts> {
@@ -35,9 +39,15 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         return baseApi.getEpisodeById(id)
     }
 
-
     fun getEpisodes(id: String): Observable<Podcasts> {
 
         return baseApi.getPodcastById(id)
+    }
+
+    private fun getUserLocation() {
+        currentLocation = Locale.getDefault().country.toLowerCase()
+
+        if (currentLocation.isNullOrEmpty())
+            currentLocation = "us"
     }
 }
