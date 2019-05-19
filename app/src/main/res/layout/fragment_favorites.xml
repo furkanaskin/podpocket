@@ -23,7 +23,9 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="?attr/actionBarSize"
             android:background="@color/mainBackgroundColor"
+            android:descendantFocusability="afterDescendants"
             android:fitsSystemWindows="true"
+            android:focusable="true"
             tools:context=".ui.profile.favorites.FavoritesFragment">
 
             <me.zhanghai.android.materialprogressbar.MaterialProgressBar
@@ -53,16 +55,9 @@
                 android:layout_marginTop="57dp"
                 android:src="@drawable/app_logo_white" />
 
-            <ImageView
-                android:id="@+id/buttonSearch"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="57dp"
-                android:layout_marginEnd="35dp"
-                android:src="@drawable/ic_gradient_search" />
 
             <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                android:id="@+id/textViewAppName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/imageViewAppLogoSmall"
@@ -72,6 +67,48 @@
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="@color/white" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="57dp" />
+
+            <iammert.com.view.scalinglib.ScalingLayout
+                android:id="@+id/scalingLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/view"
+                android:stateListAnimator="@animator/sl_state_animator">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/buttonSearch"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="35dp"
+                        android:src="@drawable/ic_gradient_search" />
+
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/searchView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="-45dp"
+                        android:layout_marginEnd="35dp"
+                        android:background="@drawable/gradient_edittext"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:paddingStart="45dp"
+                        android:visibility="visible"
+                        app:defaultQueryHint="@string/search_favorites_placeholder">
+
+                    </androidx.appcompat.widget.SearchView>
+                </RelativeLayout>
+            </iammert.com.view.scalinglib.ScalingLayout>
 
             <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
                 android:id="@+id/textViewMainHeading"

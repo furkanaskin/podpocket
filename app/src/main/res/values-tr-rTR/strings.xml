@@ -41,10 +41,9 @@
     <string name="e_mail">E-mail</string>
     <string name="profile_birthday">Doğum Tarihi</string>
     <string name="profile_favourite_category">En Çok Dinlediğin Kategori</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_placeholder">Bölüm, Podcast veya Kategori Ara</string>
+    <string name="search_favorites_placeholder">Favorileri Ara</string>
     <string name="update_profie_details">Bilgilerimi Güncelle</string>
     <string name="all_episodes">Tüm Bölümler</string>
     <string name="account_details">Hesap Detayları</string>
@@ -54,7 +53,7 @@
     <string name="recently_played_episode">Son Dinlediğin Bölüm</string>
     <string name="listen_episode">Bölümü Dinle</string>
     <string name="logout">ÇIKIŞ YAP</string>
-    <string name="recently_played_dummy_text">Sanırım buralarda yenisin... Hadi gel keşife çıkalım!</string>
+    <string name="recently_played_dummy_text">Sanırım buralarda yenisin… Hadi gel keşife çıkalım!</string>
     <string name="favorites">Favoriler</string>
     <string name="all_favorites_under_one_roof">Tüm favori podcastlerin tek bir çatı altında!</string>
     <string name="my_favorites">Favorilerim</string>

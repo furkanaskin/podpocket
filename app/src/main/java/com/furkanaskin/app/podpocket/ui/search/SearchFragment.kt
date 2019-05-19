@@ -1,6 +1,9 @@
 package com.furkanaskin.app.podpocket.ui.search
 
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import com.furkanaskin.app.podpocket.R
@@ -31,6 +34,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
     override fun init() {
         getGenres()
         initSearchView()
+
     }
 
 
@@ -47,13 +51,6 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
                     }
 
-                    override fun onError(e: Throwable) {
-                        super.onError(e)
-                    }
-
-                    override fun onComplete() {
-                        super.onComplete()
-                    }
                 }))
 
 
@@ -65,18 +62,27 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.white) }?.let { searchEditText.setTextColor(it) }
         activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.grayTextColor) }?.let { searchEditText.setHintTextColor(it) }
         mBinding.searchView.isActivated = true
-        mBinding.searchView.onActionViewExpanded()
         mBinding.searchView.setIconifiedByDefault(false)
+        mBinding.searchView.isIconified = false
+        val searchViewSearchIcon = mBinding.searchView.findViewById<ImageView>(R.id.search_mag_icon)
+        val searchViewCloseIcon = mBinding.searchView.findViewById<ImageView>(R.id.search_close_btn)
+        searchViewSearchIcon.setImageResource(R.drawable.ic_search)
+        val linearLayoutSearchView: ViewGroup = searchViewSearchIcon.parent as ViewGroup
+        linearLayoutSearchView.removeView(searchViewSearchIcon)
+        linearLayoutSearchView.addView(searchViewSearchIcon)
+
         mBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                searchViewCloseIcon.visibility = View.GONE
                 return true
             }
 
         })
     }
+
 
 }

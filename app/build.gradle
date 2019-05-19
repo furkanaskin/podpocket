@@ -22,6 +22,7 @@ def BUILD_TIME = 'BUILD_TIME'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://jitpack.io' }
 }
 
 android {
@@ -95,6 +96,9 @@ dependencies {
 
     //lottie
     implementation rootProject.ext.lottie
+
+    //scaling layout
+    implementation 'com.github.iammert:ScalingLayout:1.2.1'
 
     //circular ImageView
     implementation 'com.mikhaellopez:circularimageview:3.2.0'

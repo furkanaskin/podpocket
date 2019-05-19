@@ -24,7 +24,6 @@
         <item name="strokeWidth">@dimen/mtrl_btn_stroke_size</item>
     </style>
 
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

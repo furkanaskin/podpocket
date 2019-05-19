@@ -45,8 +45,8 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
                               savedInstanceState: Bundle?): View {
         init(inflater, container!!)
         initViewModel()
-        super.onCreateView(inflater, container, savedInstanceState)
         init()
+        super.onCreateView(inflater, container, savedInstanceState)
         return mBinding.root
     }
 
@@ -73,6 +73,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
                 (activity as BaseActivity<*, *>).dialog?.dismiss()
         }
     }
+
     private fun initFirebase() {
         mAuth = FirebaseAuth.getInstance()
 
