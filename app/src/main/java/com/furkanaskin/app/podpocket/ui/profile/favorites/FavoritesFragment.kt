@@ -17,8 +17,10 @@ import com.furkanaskin.app.podpocket.databinding.FragmentFavoritesBinding
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.db.entities.FavoriteEpisodeEntity
 import com.furkanaskin.app.podpocket.service.response.Podcasts
+import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.ui.profile.favorites.favorite_episodes.FavoriteEpisodesAdapter
+import com.furkanaskin.app.podpocket.utils.extensions.showKeyboard
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import iammert.com.view.scalinglib.ScalingLayoutListener
 import iammert.com.view.scalinglib.State
@@ -45,6 +47,9 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
 
         mBinding.searchView.visibility = View.INVISIBLE
         initSearchView()
+
+        //Scaling Layout stuffs starts here..
+
         mBinding.scalingLayout.setListener(object : ScalingLayoutListener {
 
             override fun onProgress(progress: Float) {
@@ -93,14 +98,19 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
         })
 
         mBinding.scalingLayout.setOnClickListener {
-            if (mBinding.scalingLayout.state == State.COLLAPSED)
+            if (mBinding.scalingLayout.state == State.COLLAPSED) {
                 mBinding.scalingLayout.expand()
+                mBinding.searchView.showKeyboard((activity as DashboardActivity))
+                mBinding.searchView.requestFocus()
+            }
         }
 
         mBinding.rootView.setOnClickListener {
             if (mBinding.scalingLayout.state == State.EXPANDED)
                 mBinding.scalingLayout.collapse()
         }
+
+        //Scaling Layout stuffs ends here..
 
     }
 
@@ -163,16 +173,19 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
         val searchEditText: EditText = mBinding.searchView.findViewById(R.id.search_src_text)
         activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.white) }?.let { searchEditText.setTextColor(it) }
         activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.grayTextColor) }?.let { searchEditText.setHintTextColor(it) }
+        searchEditText.clearFocus()
         mBinding.searchView.isActivated = true
-        mBinding.searchView.onActionViewExpanded()
         mBinding.searchView.setIconifiedByDefault(false)
         mBinding.searchView.isIconified = false
         val searchViewSearchIcon = mBinding.searchView.findViewById<ImageView>(R.id.search_mag_icon)
         val searchViewCloseIcon = mBinding.searchView.findViewById<ImageView>(R.id.search_close_btn)
         searchViewSearchIcon.setImageResource(R.drawable.ic_search)
+        searchViewCloseIcon.setBackgroundResource(R.color.mainBackgroundColor)
         val linearLayoutSearchView: ViewGroup = searchViewSearchIcon.parent as ViewGroup
         linearLayoutSearchView.removeView(searchViewSearchIcon)
         linearLayoutSearchView.addView(searchViewSearchIcon)
+        mBinding.searchView.clearFocus()
+        mBinding.fakeFocus.requestFocus()
 
         mBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -180,7 +193,15 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                searchViewCloseIcon.visibility = View.GONE
+
+                if (newText?.length ?: 0 > 1) {
+                    searchViewCloseIcon.visibility = View.GONE
+                    viewModel.db.favoritesDao().getFavoriteEpisodes(newText).observe(this@FavoritesFragment, Observer<List<FavoriteEpisodeEntity>> {
+                        (mBinding.recyclerViewFavoriteEpisodes.adapter as FavoriteEpisodesAdapter).submitList(it)
+                    })
+                } else {
+                    searchViewCloseIcon.visibility = View.GONE
+                }
                 return true
             }
 

@@ -14,6 +14,9 @@ interface FavoritesDao {
     @Query("SELECT * FROM Favorites ORDER BY pubDateMs DESC")
     fun getFavoriteEpisodes(): LiveData<List<FavoriteEpisodeEntity>>
 
+    @Query("SELECT * FROM Favorites WHERE title like '%' || :query || '%'|| '%' ORDER BY pubDateMs DESC")
+    fun getFavoriteEpisodes(query: String? = ""): LiveData<List<FavoriteEpisodeEntity>>
+
     @Query("SELECT * FROM Favorites WHERE id = :episodeId")
     fun getFavoriteEpisode(episodeId: String): FavoriteEpisodeEntity
 
