@@ -28,6 +28,8 @@ import com.google.android.exoplayer2.trackselection.TrackSelector
 import com.google.android.exoplayer2.ui.TimeBar
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -44,6 +46,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     private lateinit var player: SimpleExoPlayer
     private lateinit var mediaSource: ConcatenatingMediaSource
     private lateinit var dataSourceFactory: DefaultDataSourceFactory
+    private lateinit var httpDataSourceFactory: DefaultHttpDataSourceFactory
     private val BANDWIDTH_METER = DefaultBandwidthMeter()
     private var isPlaying = false
     lateinit var episodes: ArrayList<String>
@@ -211,8 +214,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         // Prepare dataSource
 
-        dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "Podpocket"), BANDWIDTH_METER)
-
+        httpDataSourceFactory = DefaultHttpDataSourceFactory(Util.getUserAgent(this, "Podpocket"), null, DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS, DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS, true)
+        dataSourceFactory = DefaultDataSourceFactory(this, null, httpDataSourceFactory)
 
         disposable.add(viewModel.getEpisodeDetails(episodeId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
