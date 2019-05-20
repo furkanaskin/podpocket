@@ -180,7 +180,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
         val searchViewSearchIcon = mBinding.searchView.findViewById<ImageView>(R.id.search_mag_icon)
         val searchViewCloseIcon = mBinding.searchView.findViewById<ImageView>(R.id.search_close_btn)
         searchViewSearchIcon.setImageResource(R.drawable.ic_search)
-        searchViewCloseIcon.setBackgroundResource(R.color.mainBackgroundColor)
+        searchViewCloseIcon.setImageResource(R.color.mainBackgroundColor)
         val linearLayoutSearchView: ViewGroup = searchViewSearchIcon.parent as ViewGroup
         linearLayoutSearchView.removeView(searchViewSearchIcon)
         linearLayoutSearchView.addView(searchViewSearchIcon)
@@ -195,13 +195,15 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
             override fun onQueryTextChange(newText: String?): Boolean {
 
                 if (newText?.length ?: 0 > 1) {
-                    searchViewCloseIcon.visibility = View.GONE
                     viewModel.db.favoritesDao().getFavoriteEpisodes(newText).observe(this@FavoritesFragment, Observer<List<FavoriteEpisodeEntity>> {
                         (mBinding.recyclerViewFavoriteEpisodes.adapter as FavoriteEpisodesAdapter).submitList(it)
                     })
-                } else {
-                    searchViewCloseIcon.visibility = View.GONE
+                } else if (newText?.length == 0) {
+                    viewModel.db.favoritesDao().getFavoriteEpisodes().observe(this@FavoritesFragment, Observer<List<FavoriteEpisodeEntity>> {
+                        (mBinding.recyclerViewFavoriteEpisodes.adapter as FavoriteEpisodesAdapter).submitList(it)
+                    })
                 }
+
                 return true
             }
 
