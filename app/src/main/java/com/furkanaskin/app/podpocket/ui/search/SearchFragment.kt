@@ -1,6 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.search
 
-import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Handler
 import android.view.View
 import android.view.ViewGroup
@@ -8,18 +8,26 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentSearchBinding
+import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.response.Genres
 import com.furkanaskin.app.podpocket.service.response.GenresItem
+import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.service.response.Search
+import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
+import com.furkanaskin.app.podpocket.ui.search.episode_search.SearchResultAdapter
+import com.furkanaskin.app.podpocket.ui.search.podcast_search.PodcastSearchResultAdapter
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.jetbrains.anko.doAsync
 
 /**
  * Created by Furkan on 16.04.2019
@@ -28,6 +36,7 @@ import io.reactivex.schedulers.Schedulers
 class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(SearchViewModel::class.java) {
     private val disposable = CompositeDisposable()
     private val genreList = mutableListOf<GenresItem?>()
+    var ids: ArrayList<String> = ArrayList()
 
     override fun initViewModel() {
         mBinding.viewModel = viewModel
@@ -37,24 +46,61 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
 
     override fun init() {
-        getGenres()
+        // getGenres() - To be added later.
         initSearchView()
         initSearchAdapter()
 
     }
 
-    @SuppressLint("WrongConstant")
     private fun initSearchAdapter() {
-        val SearchEpisodeAdapter = SearchResultAdapter { item ->
 
+        // -- EPISODE --
+        val searchEpisodeAdapter = SearchResultAdapter { item ->
+
+            disposable.add(viewModel.getEpisodes(item.podcastId ?: "")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
+
+                        override fun onSuccess(t: Podcasts) {
+                            t.episodes?.forEachIndexed { _, episodesItem ->
+                                ids.add(episodesItem?.id ?: "")
+                            }
+
+                            doAsync {
+                                viewModel.db.episodesDao().deleteAllEpisodes()
+                                t.episodes?.forEachIndexed { _, episode ->
+                                    val episodesItem = episode.let { EpisodeEntity(it!!) }
+                                    episodesItem.let { viewModel.db.episodesDao().insertEpisode(it) }
+                                }
+                            }
+                        }
+
+                        override fun onComplete() {
+                            super.onComplete()
+
+                            val intent = Intent(activity, PlayerActivity::class.java)
+                            intent.putStringArrayListExtra("allPodIds", ids)
+                            intent.putExtra("position", item.id)
+                            startActivity(intent)
+
+                        }
+                    }))
         }
-        mBinding.recyclerViewEpisodeSearchResult.adapter = SearchEpisodeAdapter
-        mBinding.recyclerViewEpisodeSearchResult.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        mBinding.recyclerViewEpisodeSearchResult.adapter = searchEpisodeAdapter
+        mBinding.recyclerViewEpisodeSearchResult.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
-        val SearchPodcastAdapter = PodcastSearchResultAdapter { item ->
+
+        // -- PODCAST --
+        val searchPodcastAdapter = PodcastSearchResultAdapter { item ->
+
+            val podcastId = item.id
+            val action = SearchFragmentDirections.actionSearchFragmentToPodcastEpisodesFragment()
+            action.podcastID = podcastId ?: ""
+            findNavController().navigate(action)
         }
 
-        mBinding.recyclerViewPodcastSearchResult.adapter = SearchPodcastAdapter
+        mBinding.recyclerViewPodcastSearchResult.adapter = searchPodcastAdapter
         mBinding.recyclerViewPodcastSearchResult.layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
 
     }

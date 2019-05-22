@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.furkanaskin.app.podpocket.ui.search.SearchResultViewModel" />
+            type="com.furkanaskin.app.podpocket.ui.search.episode_search.EpisodeSearchResultViewModel" />
     </data>
 
     <RelativeLayout
@@ -14,6 +14,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_16_dp"

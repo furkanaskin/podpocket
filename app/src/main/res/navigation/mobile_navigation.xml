@@ -43,7 +43,11 @@
         android:id="@+id/searchFragment"
         android:name="com.furkanaskin.app.podpocket.ui.search.SearchFragment"
         android:label="ARA"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_podcastEpisodesFragment"
+            app:destination="@id/podcastEpisodesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/podcastEpisodesFragment"
         android:name="com.furkanaskin.app.podpocket.ui.podcast_episodes.PodcastEpisodesFragment"

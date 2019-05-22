@@ -6,6 +6,7 @@ import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.service.PodpocketAPI
 import com.furkanaskin.app.podpocket.service.response.Genres
+import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.service.response.Search
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -33,6 +34,11 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
 
     fun getSearchResult(searchText: String, type: String): Observable<Search> {
         return api.fullTextSearch(searchText, type)
+    }
+
+    fun getEpisodes(id: String): Observable<Podcasts> {
+
+        return baseApi.getPodcastById(id)
     }
 
 
