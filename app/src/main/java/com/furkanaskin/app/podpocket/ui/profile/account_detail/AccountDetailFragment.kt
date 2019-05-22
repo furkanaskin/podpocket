@@ -28,11 +28,11 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         mBinding.viewModel = viewModel
     }
 
-    val storage = FirebaseStorage.getInstance()
-    val storageRef = storage.reference
-    var isUserHavePicture = false
-    var isUserChangePicture = false
-    var profileImageUrl: ObservableField<String> = ObservableField("")
+    private val storage = FirebaseStorage.getInstance()
+    private val storageRef = storage.reference
+    private var isUserHavePicture = false
+    private var isUserChangePicture = false
+    private var profileImageUrl: ObservableField<String> = ObservableField("")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -158,6 +158,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
                 id = user?.id ?: 0,
                 uniqueId = user?.uniqueId ?: "",
                 name = mBinding.editTextName.text?.toString(),
+                userName = mBinding.editTextUserName.text?.toString(),
                 surname = mBinding.editTextSurname.text?.toString(),
                 birthday = mBinding.etBirthday.text?.toString(),
                 profilePictureUrl = profileImageUrl.get(),

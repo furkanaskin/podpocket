@@ -35,6 +35,12 @@ object BindingAdapter {
     }
 
     @JvmStatic
+    @BindingAdapter("app:setDrawable")
+    fun setDrawable(view: ImageView, drawable: Int) {
+        view.setImageResource(drawable)
+    }
+
+    @JvmStatic
     @BindingAdapter("app:explicitContent")
     fun explicitContent(view: MaterialCardView, explicitContent: Boolean) {
 

@@ -11,76 +11,63 @@
             type="com.furkanaskin.app.podpocket.ui.profile.ProfileViewModel" />
     </data>
 
-    <RelativeLayout
-        android:id="@+id/rootView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/mainBackgroundColor"
-        android:fitsSystemWindows="true"
-        tools:context=".ui.profile.ProfileFragment">
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/rootView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_16_dp"
-            android:layout_marginTop="@dimen/margin_64_dp"
-            android:layout_marginEnd="@dimen/margin_16_dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:background="@color/mainBackgroundColor"
+            android:fitsSystemWindows="true"
+            tools:context=".ui.profile.ProfileFragment">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonActionDetail"
-                android:layout_width="match_parent"
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/imageViewProfilePicture"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/margin_24_dp"
+                android:layout_marginTop="@dimen/margin_32_dp"
+                android:src="@drawable/ic_dummy_user"
+                app:civ_background_color="@color/mainBackgroundColor"
+                app:civ_border="true"
+                app:civ_border_color="@color/colorCyan"
+                app:civ_shadow="true" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketSemiBoldTextView
+                android:id="@+id/textViewUserName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="left|center_vertical"
-                android:hint="@string/account_details"
-                android:textColorHint="@color/white"
-                app:backgroundTint="@android:color/transparent"
-                app:cornerRadius="@dimen/margin_6_dp"
-                app:icon="@drawable/ic_right_arrow"
-                app:iconTint="@color/colorCyan"
-                app:strokeColor="@color/colorPrettyPurple"
-                app:strokeWidth="@dimen/margin_2_dp" />
+                android:layout_below="@id/imageViewProfilePicture"
+                android:layout_marginStart="@dimen/margin_32_dp"
+                android:text="@={viewModel.userName}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_24_sp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonRecentlyPlayed"
-                android:layout_width="match_parent"
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                android:id="@+id/textViewUserEmail"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="left|center_vertical"
-                android:hint="@string/recently_played"
-                android:textColorHint="@color/white"
-                app:backgroundTint="@android:color/transparent"
-                app:cornerRadius="@dimen/margin_6_dp"
-                app:icon="@drawable/ic_right_arrow"
-                app:iconTint="@color/colorCyan"
-                app:strokeColor="@color/colorPrettyPurple"
-                app:strokeWidth="@dimen/margin_2_dp" />
+                android:layout_below="@id/textViewUserName"
+                android:layout_marginStart="@dimen/margin_32_dp"
+                android:layout_marginTop="@dimen/margin_8_dp"
+                android:text="@={viewModel.userEmail}"
+                android:textColor="@color/colorLoginText"
+                android:textSize="@dimen/dimen_16_sp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonFavorites"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewProfile"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left|center_vertical"
-                android:hint="@string/my_favorites"
-                android:textColorHint="@color/white"
-                app:backgroundTint="@android:color/transparent"
-                app:cornerRadius="@dimen/margin_6_dp"
-                app:icon="@drawable/ic_right_arrow"
-                app:iconTint="@color/colorCyan"
-                app:strokeColor="@color/colorPrettyPurple"
-                app:strokeWidth="@dimen/margin_2_dp" />
+                android:layout_height="match_parent"
+                android:layout_below="@id/textViewUserEmail"
+                android:layout_marginTop="@dimen/margin_24_dp"
+                android:layout_marginBottom="@dimen/margin_8_dp" />
 
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/margin_16_dp"
-            android:layout_marginEnd="@dimen/margin_16_dp"
-            android:layout_marginBottom="?attr/actionBarSize"
-            android:backgroundTint="@color/colorPrettyPurple"
-            android:hint="@string/logout"
-            android:textColorHint="@color/white" />
-    </RelativeLayout>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

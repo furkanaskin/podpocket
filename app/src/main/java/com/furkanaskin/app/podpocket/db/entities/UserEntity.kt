@@ -15,6 +15,7 @@ data class UserEntity(
         @PrimaryKey(autoGenerate = true)
         var id: Int = 0,
         var uniqueId: String? = null,
+        var userName: String? = null,
         var email: String? = null,
         var name: String? = null,
         var surname: String? = null,
@@ -34,12 +35,14 @@ data class UserEntity(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
+            parcel.readString(),
             parcel.readString())
 
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(id)
         parcel.writeString(uniqueId)
+        parcel.writeString(userName)
         parcel.writeString(email)
         parcel.writeString(name)
         parcel.writeString(surname)

@@ -11,148 +11,178 @@
             type="com.furkanaskin.app.podpocket.ui.after_register.AfterRegisterViewModel" />
     </data>
 
-    <RelativeLayout
-        android:id="@+id/rootView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_app_bg"
-        android:fitsSystemWindows="true"
-        tools:context=".ui.after_register.AfterRegisterActivity">
-
-        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-            android:id="@+id/progressBar"
-            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            app:mpb_progressStyle="horizontal"
-            app:mpb_useIntrinsicPadding="false"
-            app:visibility="@{viewModel.progressBarView}" />
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
 
         <RelativeLayout
-            android:id="@+id/relativeLayoutImageContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true">
+            android:id="@+id/rootView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_app_bg"
+            android:fitsSystemWindows="true"
+            tools:context=".ui.after_register.AfterRegisterActivity">
 
-            <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
-                android:id="@+id/textViewKnowYouClosely"
+            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                android:id="@+id/progressBar"
+                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:mpb_progressStyle="horizontal"
+                app:mpb_useIntrinsicPadding="false"
+                app:visibility="@{viewModel.progressBarView}" />
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutImageContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_centerHorizontal="true">
+
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                    android:id="@+id/textViewKnowYouClosely"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/know_you_closely"
+                    android:textColor="@color/colorPrettyOrange" />
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/imageViewUser"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="100dp"
+                    android:src="@drawable/ic_dummy_user"
+                    app:civ_background_color="@color/mainBackgroundColor"
+                    app:civ_border="true"
+                    app:civ_border_color="@color/colorCyan"
+                    app:civ_shadow="true" />
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/fabChangeImage"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignEnd="@id/imageViewUser"
+                    android:layout_alignBottom="@id/imageViewUser"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:src="@drawable/ic_add"
+                    app:civ_border_color="@color/mainBackgroundColor"
+                    app:civ_border_width="@dimen/margin_2_dp" />
+            </RelativeLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilUserName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/relativeLayoutImageContainer"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="30dp"
-                android:text="@string/know_you_closely"
-                android:textColor="@color/colorPrettyOrange" />
+                android:layout_marginEnd="32dp"
+                android:hint="@string/userName"
+                android:textColorHint="@color/textColor"
+                app:boxStrokeColor="@color/colorPrettyPurple"
+                app:boxStrokeWidth="2dp">
 
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/imageViewUser"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:text="@={viewModel.userName}"
+                    android:textColor="@color/colorPrettyPurple" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tilUserName"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="32dp"
+                android:hint="@string/name"
+                android:textColorHint="@color/textColor"
+                app:boxStrokeColor="@color/colorPrettyPurple"
+                app:boxStrokeWidth="2dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:text="@={viewModel.name}"
+                    android:textColor="@color/colorPrettyPurple" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSurname"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tilName"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="32dp"
+                android:hint="@string/surname"
+                android:textColorHint="@color/textColor"
+                app:boxStrokeColor="@color/colorPrettyPurple"
+                app:boxStrokeWidth="2dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextSurname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:text="@={viewModel.surname}"
+                    android:textColor="@color/colorPrettyPurple" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilBirthday"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tilSurname"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="32dp"
+                android:hint="@string/birthday"
+                android:textColorHint="@color/textColor"
+                app:boxStrokeColor="@color/colorPrettyPurple"
+                app:boxStrokeWidth="2dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextBirthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:maxLines="1"
+                    android:text="@={viewModel.userBirthDay}"
+                    android:textColor="@color/colorPrettyPurple" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/buttonDone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tilBirthday"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp"
-                android:src="@drawable/ic_dummy_user"
-                app:civ_background_color="@color/mainBackgroundColor"
-                app:civ_border="true"
-                app:civ_border_color="@color/colorCyan"
-                app:civ_shadow="true" />
+                android:layout_marginTop="16dp"
+                android:src="@drawable/btn_submit" />
 
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/fabChangeImage"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignEnd="@id/imageViewUser"
-                android:layout_alignBottom="@id/imageViewUser"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="12dp"
-                android:src="@drawable/ic_add"
-                app:civ_border_color="@color/mainBackgroundColor"
-                app:civ_border_width="@dimen/margin_2_dp" />
         </RelativeLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilName"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/relativeLayoutImageContainer"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/name"
-            android:textColorHint="@color/textColor"
-            app:boxStrokeColor="@color/colorPrettyPurple"
-            app:boxStrokeWidth="2dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="1"
-                android:text="@={viewModel.userName}"
-                android:textColor="@color/colorPrettyPurple" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilSurname"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tilName"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/surname"
-            android:textColorHint="@color/textColor"
-            app:boxStrokeColor="@color/colorPrettyPurple"
-            app:boxStrokeWidth="2dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextSurname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="1"
-                android:text="@={viewModel.userSurname}"
-                android:textColor="@color/colorPrettyPurple" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilBirthday"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tilSurname"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/birthday"
-            android:textColorHint="@color/textColor"
-            app:boxStrokeColor="@color/colorPrettyPurple"
-            app:boxStrokeWidth="2dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextBirthday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:maxLines="1"
-                android:text="@={viewModel.userBirthDay}"
-                android:textColor="@color/colorPrettyPurple" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageView
-            android:id="@+id/buttonDone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tilBirthday"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/btn_submit" />
-
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.Observable
@@ -56,15 +55,11 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
                         id = user?.id ?: 0,
                         uniqueId = user?.uniqueId ?: "",
                         email = user?.email,
-                        name = viewModel.userName.get(),
-                        surname = viewModel.userSurname.get(),
+                        userName = viewModel.userName.get(),
+                        name = viewModel.name.get(),
+                        surname = viewModel.surname.get(),
                         birthday = viewModel.userBirthDay.get(),
                         profilePictureUrl = viewModel.profileImageUrl.get())
-
-
-
-
-                Log.e("profileImageUrl", viewModel.profileImageUrl.get())
 
                 doAsync {
 

@@ -143,6 +143,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 setFavorite()
             }
         })
+
     }
 
     fun favoriteVisibility() {

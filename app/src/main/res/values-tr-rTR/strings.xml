@@ -57,5 +57,8 @@
     <string name="favorites">Favoriler</string>
     <string name="all_favorites_under_one_roof">Tüm favori podcastlerin tek bir çatı altında!</string>
     <string name="my_favorites">Favorilerim</string>
+    <string name="userName">Kullanıcı Adınız</string>
+    <string name="rate_us">Bizi Değerlendir</string>
+    <string name="give_feedback">Geri Bildirimde Bulun</string>
 
 </resources>

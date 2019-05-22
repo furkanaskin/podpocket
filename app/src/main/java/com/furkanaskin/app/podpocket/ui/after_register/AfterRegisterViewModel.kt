@@ -13,8 +13,9 @@ import com.furkanaskin.app.podpocket.core.BaseViewModel
 class AfterRegisterViewModel(app: Application) : BaseViewModel(app) {
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
 
+    var name: ObservableField<String> = ObservableField("")
     var userName: ObservableField<String> = ObservableField("")
-    var userSurname: ObservableField<String> = ObservableField("")
+    var surname: ObservableField<String> = ObservableField("")
     var userBirthDay: ObservableField<String> = ObservableField("")
     var profileImageUrl: ObservableField<String> = ObservableField("")
     var saveSuccess: ObservableField<Boolean> = ObservableField(false)
@@ -28,10 +29,10 @@ class AfterRegisterViewModel(app: Application) : BaseViewModel(app) {
     fun getValidationMessages(): Boolean {
         var result = true
         var message = ""
-        if (userName.get().isNullOrEmpty()) {
+        if (name.get().isNullOrEmpty()) {
             result = false
             message = "Lütfen isim alanını boş bırakmayınız."
-        } else if (userSurname.get().isNullOrEmpty()) {
+        } else if (surname.get().isNullOrEmpty()) {
             result = false
             message = "Lütfen soyadı alanını boş bırakmayınız."
         }

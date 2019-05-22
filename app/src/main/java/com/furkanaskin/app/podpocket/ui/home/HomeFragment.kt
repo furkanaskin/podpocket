@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.home
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -49,6 +48,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
         initRecommendedEpisodesAdapter()
         initRecommendedEpisodes()
+
 
     }
 
@@ -147,7 +147,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
                     }))
         } else {
-            Log.v("qqq", viewModel.bestPodcastsList.toString())
             (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(viewModel.bestPodcastsList)
             Timber.tag("Force Init").i("Best podcasts force initialized.")
         }

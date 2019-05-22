@@ -21,6 +21,11 @@ class AccountDetailViewModel(app: Application) : BaseViewModel(app) {
 
     var userData: UserEntity? = null
 
+    fun getUserName(): String {
+
+        return userData?.userName ?: ""
+    }
+
     fun getName(): String {
 
         return userData?.name ?: ""
