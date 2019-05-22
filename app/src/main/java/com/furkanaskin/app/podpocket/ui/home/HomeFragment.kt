@@ -21,6 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
+import timber.log.Timber
 
 /**
  * Created by Furkan on 16.04.2019
@@ -39,15 +40,14 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     override fun init() {
 
-
-        initBestPodcastsAdapter()
         initBestPodcasts()
+        initBestPodcastsAdapter()
 
-        initRecommendedPodcastsAdapter()
         initRecommendedPodcasts()
+        initRecommendedPodcastsAdapter()
 
-        initRecommendedEpisodesAdapter()
         initRecommendedEpisodes()
+        initRecommendedEpisodesAdapter()
     }
 
 
@@ -118,25 +118,36 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     private fun initBestPodcasts() {
 
-        viewModel.progressBarView.set(true)
-        hideTitles()
+        //If block written for just reduce the number of request
+        //Current free request limit is 10k
+        //One-time data is enough for us
 
-        disposable.add(viewModel.getBestPodcasts(viewModel.currentLocation, 0)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<BestPodcasts>(viewModel.getApplication()) {
-                    override fun onSuccess(t: BestPodcasts) {
-                        (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(t.channels)
-                        viewModel.progressBarView.set(false)
-                        showTitles()
-                    }
+        if (viewModel.forceInitBestPodcasts.get() != true) {
 
-                    override fun onError(e: Throwable) {
-                        viewModel.progressBarView.set(false)
-                    }
+            viewModel.progressBarView.set(true)
+            hideTitles()
 
-                }))
+            disposable.add(viewModel.getBestPodcasts(viewModel.currentLocation, 0)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(object : CallbackWrapper<BestPodcasts>(viewModel.getApplication()) {
+                        override fun onSuccess(t: BestPodcasts) {
+                            (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(t.channels)
+                            viewModel.progressBarView.set(false)
+                            viewModel.bestPodcastsList = t.channels
+                            viewModel.forceInitBestPodcasts.set(true)
+                            showTitles()
+                        }
 
+                        override fun onError(e: Throwable) {
+                            viewModel.progressBarView.set(false)
+                        }
+
+                    }))
+        } else {
+            (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(viewModel.bestPodcastsList)
+            Timber.tag("Force Init").i("Best podcasts force initialized.")
+        }
     }
 
     private fun initRecommendedPodcasts() {
