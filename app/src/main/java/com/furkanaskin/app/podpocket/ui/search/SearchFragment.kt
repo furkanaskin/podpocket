@@ -134,6 +134,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         val searchViewSearchIcon = mBinding.searchView.findViewById<ImageView>(R.id.search_mag_icon)
         val searchViewCloseIcon = mBinding.searchView.findViewById<ImageView>(R.id.search_close_btn)
         searchViewSearchIcon.setImageResource(R.drawable.ic_search)
+        searchViewCloseIcon.setImageResource(R.color.mainBackgroundColor)
         val linearLayoutSearchView: ViewGroup = searchViewSearchIcon.parent as ViewGroup
         linearLayoutSearchView.removeView(searchViewSearchIcon)
         linearLayoutSearchView.addView(searchViewSearchIcon)

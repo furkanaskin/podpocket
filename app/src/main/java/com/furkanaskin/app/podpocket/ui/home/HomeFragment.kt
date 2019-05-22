@@ -1,6 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.home
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -40,14 +41,15 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     override fun init() {
 
-        initBestPodcasts()
         initBestPodcastsAdapter()
+        initBestPodcasts()
 
-        initRecommendedPodcasts()
         initRecommendedPodcastsAdapter()
+        initRecommendedPodcasts()
 
-        initRecommendedEpisodes()
         initRecommendedEpisodesAdapter()
+        initRecommendedEpisodes()
+
     }
 
 
@@ -122,7 +124,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         //Current free request limit is 10k
         //One-time data is enough for us
 
-        if (viewModel.forceInitBestPodcasts.get() != true) {
+        if (viewModel.forceInitBestPodcasts.get() != true && viewModel.bestPodcastsList.isNullOrEmpty()) {
 
             viewModel.progressBarView.set(true)
             hideTitles()
@@ -145,6 +147,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
                     }))
         } else {
+            Log.v("qqq", viewModel.bestPodcastsList.toString())
             (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(viewModel.bestPodcastsList)
             Timber.tag("Force Init").i("Best podcasts force initialized.")
         }
