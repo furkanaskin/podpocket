@@ -49,6 +49,16 @@
 
         </androidx.appcompat.widget.SearchView>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSearchResult"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/searchView"
+            android:layout_marginTop="@dimen/margin_16_dp"
+            android:layout_marginBottom="@dimen/margin_64_dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:id="@+id/progressBar"

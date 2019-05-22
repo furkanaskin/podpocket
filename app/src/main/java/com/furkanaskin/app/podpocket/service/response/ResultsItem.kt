@@ -1,5 +1,7 @@
 package com.furkanaskin.app.podpocket.service.response
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class ResultsItem(
@@ -69,4 +71,66 @@ data class ResultsItem(
 
         @field:SerializedName("transcripts_highlighted")
         val transcriptsHighlighted: List<Any?>? = null
-)
+) : Parcelable {
+        constructor(parcel: Parcel) : this(
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readValue(Int::class.java.classLoader) as? Int,
+                parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readArrayList(Int::class.java.classLoader) as? List<Int?>,
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readValue(Long::class.java.classLoader) as? Long,
+                parcel.readArrayList(Any::class.java.classLoader) as? List<Any?>
+        )
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {
+                parcel.writeString(image)
+                parcel.writeString(podcastTitleOriginal)
+                parcel.writeString(thumbnail)
+                parcel.writeString(descriptionOriginal)
+                parcel.writeValue(itunesId)
+                parcel.writeValue(explicitContent)
+                parcel.writeString(publisherHighlighted)
+                parcel.writeString(podcastId)
+                parcel.writeString(listennotesUrl)
+                parcel.writeString(titleHighlighted)
+                parcel.writeString(titleOriginal)
+                parcel.writeString(podcastTitleHighlighted)
+                parcel.writeString(rss)
+                parcel.writeString(podcastListennotesUrl)
+                parcel.writeString(descriptionHighlighted)
+                parcel.writeString(publisherOriginal)
+                parcel.writeString(audioLength)
+                parcel.writeString(audio)
+                parcel.writeString(id)
+                parcel.writeValue(pubDateMs)
+        }
+
+        override fun describeContents(): Int {
+                return 0
+        }
+
+        companion object CREATOR : Parcelable.Creator<ResultsItem> {
+                override fun createFromParcel(parcel: Parcel): ResultsItem {
+                        return ResultsItem(parcel)
+                }
+
+                override fun newArray(size: Int): Array<ResultsItem?> {
+                        return arrayOfNulls(size)
+                }
+        }
+}

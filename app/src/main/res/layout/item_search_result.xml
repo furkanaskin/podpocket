@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.furkanaskin.app.podpocket.ui.search.SearchResultViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16_dp"
+            android:backgroundTint="@android:color/transparent"
+            app:cardCornerRadius="6dp"
+            app:strokeColor="@color/colorAccent"
+            app:strokeWidth="1dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/circularImageView"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:civ_border="true"
+                    app:civ_border_color="@color/colorCyan"
+                    app:civ_border_width="2dp"
+                    app:civ_shadow="true"
+                    app:setDrawableLink="@{viewModel.item.getImage}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/margin_16_dp"
+                    android:layout_toRightOf="@id/circularImageView">
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                        android:id="@+id/textViewPodcastName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_16_sp"
+                        android:text="@{viewModel.item.getTitleOriginal()}" />
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                        android:id="@+id/textViewPodcastDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/bottomNavBackgroundColor"
+                        android:textSize="@dimen/dimen_12_sp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </RelativeLayout>
+</layout>

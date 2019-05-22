@@ -41,4 +41,11 @@
     <style name="AppTheme.RoundedCornerMaterialButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/play_button</item>
     </style>
+
+    <style name="BorderCardView" parent="Widget.MaterialComponents.CardView">
+
+        <item name="android:background">@drawable/search_result_item_background</item>
+
+    </style>
+
 </resources>

@@ -1,16 +1,28 @@
 package com.furkanaskin.app.podpocket.ui.search
 
+import android.annotation.SuppressLint
+import android.os.Handler
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentSearchBinding
 import com.furkanaskin.app.podpocket.service.response.Genres
 import com.furkanaskin.app.podpocket.service.response.GenresItem
+import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
+import com.furkanaskin.app.podpocket.service.response.Search
+import com.furkanaskin.app.podpocket.ui.home.HomeFragmentDirections
+import com.furkanaskin.app.podpocket.ui.home.best_podcasts.BestPodcastsAdapter
+import com.furkanaskin.app.podpocket.ui.home.recommended_episodes.RecommendedEpisodesAdapter
+import com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPodcastsAdapter
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -34,9 +46,20 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
     override fun init() {
         getGenres()
         initSearchView()
+        initSearchAdapter()
 
     }
 
+    @SuppressLint("WrongConstant")
+    private fun initSearchAdapter() {
+        val adapter = SearchResultAdapter { item ->
+
+        }
+
+        mBinding.recyclerViewSearchResult.adapter = adapter
+        mBinding.recyclerViewSearchResult.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+    }
 
     private fun getGenres() {
         disposable.add(viewModel.getGenres()
@@ -78,10 +101,31 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 searchViewCloseIcon.visibility = View.GONE
+                if (newText?.length!! % 3 == 0)
+                    Handler().postDelayed({
+                        getSearchResult(newText.toString(), "podcast")
+
+                    }, 1000)
                 return true
             }
 
         })
+    }
+
+    private fun getSearchResult(searchText: String, type: String) {
+
+        showProgress()
+        disposable.add(viewModel.getSearchResult(searchText, type)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
+                    override fun onSuccess(t: Search) {
+                        hideProgress()
+                        (mBinding.recyclerViewSearchResult.adapter as SearchResultAdapter).submitList(t.results)
+
+                    }
+
+                }))
     }
 
 
