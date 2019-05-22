@@ -49,11 +49,21 @@
 
         </androidx.appcompat.widget.SearchView>
 
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewSearchResult"
+            android:id="@+id/recyclerViewPodcastSearchResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/searchView"
+            android:layout_marginTop="@dimen/margin_16_dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewEpisodeSearchResult"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/searchView"
+            android:layout_below="@id/recyclerViewPodcastSearchResult"
             android:layout_marginTop="@dimen/margin_16_dp"
             android:layout_marginBottom="@dimen/margin_64_dp">
 

@@ -12,7 +12,7 @@ interface PodpocketAPI {
 
     // Get Requests
 
-    @Headers("X-ListenAPI-Key: 82e6628b74404fb9a26a934b7d1adfa0")
+    @Headers("X-ListenAPI-Key: 584c564aa88a4bcda3f79c50ed50ca31")
     @GET("search")
     fun fullTextSearch(@Query("q") searchTerm: String, @Query("type") type: String): Observable<Search>
 

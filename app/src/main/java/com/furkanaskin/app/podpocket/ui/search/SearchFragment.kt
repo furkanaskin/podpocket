@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.furkanaskin.app.podpocket.R
@@ -17,12 +15,7 @@ import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentSearchBinding
 import com.furkanaskin.app.podpocket.service.response.Genres
 import com.furkanaskin.app.podpocket.service.response.GenresItem
-import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
 import com.furkanaskin.app.podpocket.service.response.Search
-import com.furkanaskin.app.podpocket.ui.home.HomeFragmentDirections
-import com.furkanaskin.app.podpocket.ui.home.best_podcasts.BestPodcastsAdapter
-import com.furkanaskin.app.podpocket.ui.home.recommended_episodes.RecommendedEpisodesAdapter
-import com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPodcastsAdapter
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -52,12 +45,17 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
     @SuppressLint("WrongConstant")
     private fun initSearchAdapter() {
-        val adapter = SearchResultAdapter { item ->
+        val SearchEpisodeAdapter = SearchResultAdapter { item ->
 
         }
+        mBinding.recyclerViewEpisodeSearchResult.adapter = SearchEpisodeAdapter
+        mBinding.recyclerViewEpisodeSearchResult.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        mBinding.recyclerViewSearchResult.adapter = adapter
-        mBinding.recyclerViewSearchResult.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        val SearchPodcastAdapter = PodcastSearchResultAdapter { item ->
+        }
+
+        mBinding.recyclerViewPodcastSearchResult.adapter = SearchPodcastAdapter
+        mBinding.recyclerViewPodcastSearchResult.layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
 
     }
 
@@ -103,6 +101,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                 searchViewCloseIcon.visibility = View.GONE
                 if (newText?.length!! % 3 == 0)
                     Handler().postDelayed({
+                        getSearchResult(newText.toString(), "episode")
                         getSearchResult(newText.toString(), "podcast")
 
                     }, 1000)
@@ -121,7 +120,12 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                 .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
                     override fun onSuccess(t: Search) {
                         hideProgress()
-                        (mBinding.recyclerViewSearchResult.adapter as SearchResultAdapter).submitList(t.results)
+                        if (type.equals("episode")) {
+                            (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(t.results)
+                        } else {
+                            (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(t.results)
+
+                        }
 
                     }
 
