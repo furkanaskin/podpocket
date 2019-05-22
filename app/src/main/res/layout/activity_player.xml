@@ -172,7 +172,9 @@
                     android:id="@+id/textViewPodcastTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:layout_marginTop="@dimen/margin_8_dp"
+                    android:layout_toStartOf="@id/imageViewShare"
                     android:textColor="@color/grayTextColor"
                     android:textSize="@dimen/episodeTextSize"
                     tools:text="EPISODE - 147" />
@@ -202,14 +204,14 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_Queue"
+                android:id="@+id/buttonQueue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/player_container"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/margin_16_dp"
                 android:backgroundTint="@color/grayAddQueue"
-                android:text="@string/player_queue"
+                android:text="@string/all_episodes"
                 android:textSize="@dimen/dimen_16_sp"
                 app:cornerRadius="100dp"
                 app:icon="@drawable/ic_arrow_up_android"

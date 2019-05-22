@@ -26,7 +26,6 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelection
 import com.google.android.exoplayer2.trackselection.TrackSelector
 import com.google.android.exoplayer2.ui.TimeBar
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
@@ -47,7 +46,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     private lateinit var mediaSource: ConcatenatingMediaSource
     private lateinit var dataSourceFactory: DefaultDataSourceFactory
     private lateinit var httpDataSourceFactory: DefaultHttpDataSourceFactory
-    private val BANDWIDTH_METER = DefaultBandwidthMeter()
     private var isPlaying = false
     lateinit var episodes: ArrayList<String>
     lateinit var episodeId: String
@@ -85,7 +83,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         }
 
 
-        binding.imageButtonQueue.setOnClickListener {
+        binding.buttonQueue.setOnClickListener {
             fragmentLayoutQueue.visibility = View.VISIBLE
             imageButtonCloseQueue.visibility = View.VISIBLE
             imageButtonQueue.visibility = View.GONE
@@ -300,7 +298,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             binding.textViewIsPlaying.setText(R.string.paused)
         } else {
             setProgress()
-            imageViewPlayButton.setImageResource(R.drawable.pause)
+            imageViewPlayButton.setImageResource(R.drawable.ic_pause)
             binding.textViewIsPlaying.setText(R.string.now_playing)
         }
     }
