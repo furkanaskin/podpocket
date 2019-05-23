@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.DiffUtil
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseAdapter
 import com.furkanaskin.app.podpocket.databinding.ItemPodcastEpisodesBinding
-import com.furkanaskin.app.podpocket.service.response.EpisodesItem
+import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 
 /**
  * Created by Furkan on 29.04.2019
  */
 
-class EpisodesAdapter(private val callBack: (EpisodesItem, Int) -> Unit) : BaseAdapter<EpisodesItem>(episodeDiffCallback) {
+class EpisodesAdapter(private val callBack: (EpisodeEntity, Int) -> Unit) : BaseAdapter<EpisodeEntity>(episodeDiffCallback) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemPodcastEpisodesBinding>(
                 LayoutInflater.from(parent.context),
@@ -41,11 +41,11 @@ class EpisodesAdapter(private val callBack: (EpisodesItem, Int) -> Unit) : BaseA
     }
 }
 
-val episodeDiffCallback = object : DiffUtil.ItemCallback<EpisodesItem>() {
-    override fun areContentsTheSame(oldItem: EpisodesItem, newItem: EpisodesItem): Boolean =
+val episodeDiffCallback = object : DiffUtil.ItemCallback<EpisodeEntity>() {
+    override fun areContentsTheSame(oldItem: EpisodeEntity, newItem: EpisodeEntity): Boolean =
             oldItem == newItem
 
-    override fun areItemsTheSame(oldItem: EpisodesItem, newItem: EpisodesItem): Boolean =
+    override fun areItemsTheSame(oldItem: EpisodeEntity, newItem: EpisodeEntity): Boolean =
             oldItem.id == newItem.id
 
 

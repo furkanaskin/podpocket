@@ -5,6 +5,8 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.furkanaskin.app.podpocket.service.response.EpisodesItem
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by Furkan on 16.05.2019
@@ -24,6 +26,7 @@ data class EpisodeEntity(
         var title: String?,
         var pubDateMs: Long?,
         var listennotesUrl: String?,
+        var nextEpisodePubDate: Long?,
         var maybeAudioInvalid: Boolean?,
         var isSelected: Boolean?
 
@@ -40,6 +43,7 @@ data class EpisodeEntity(
             parcel.readString(),
             parcel.readValue(Long::class.java.classLoader) as? Long,
             parcel.readString(),
+            parcel.readValue(Long::class.java.classLoader) as? Long,
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean)
 
@@ -55,6 +59,7 @@ data class EpisodeEntity(
             audio = item.audio,
             title = item.title,
             pubDateMs = item.pubDateMs,
+            nextEpisodePubDate = null,
             listennotesUrl = item.listennotesUrl,
             maybeAudioInvalid = item.maybeAudioInvalid,
             isSelected = item.isSelected
@@ -72,6 +77,7 @@ data class EpisodeEntity(
         parcel.writeString(title)
         parcel.writeValue(pubDateMs)
         parcel.writeString(listennotesUrl)
+        parcel.writeValue(nextEpisodePubDate)
         parcel.writeValue(maybeAudioInvalid)
         parcel.writeValue(isSelected)
     }
@@ -87,6 +93,20 @@ data class EpisodeEntity(
 
         override fun newArray(size: Int): Array<EpisodeEntity?> {
             return arrayOfNulls(size)
+        }
+    }
+
+    fun formatPubDateMs(): String {
+        return getDateTime(pubDateMs ?: 0) ?: ""
+    }
+
+    private fun getDateTime(s: Long): String? {
+        return try {
+            val sdf = SimpleDateFormat("MM/dd/yyyy")
+            val netDate = Date(s)
+            sdf.format(netDate)
+        } catch (e: Exception) {
+            e.toString()
         }
     }
 

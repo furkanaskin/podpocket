@@ -3,6 +3,7 @@ package com.furkanaskin.app.podpocket.ui.podcast_episodes
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentPodcastEpisodesBinding
@@ -24,6 +25,7 @@ import java.util.*
 class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentPodcastEpisodesBinding>(PodcastEpisodesViewModel::class.java) {
     val disposable = CompositeDisposable()
     lateinit var podcastTitle: String
+    private var totalPage: Int? = 0
 
 
     override fun getLayoutRes(): Int = R.layout.fragment_podcast_episodes
@@ -56,11 +58,17 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                 .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
                     override fun onSuccess(t: Podcasts) {
                         viewModel.podcast.set(t)
-                        (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t.episodes)
+
                         podcastTitle = t.title!!
 
+                        val remaining = t.totalEpisodes?.rem(10) ?: 0
+                        totalPage = if (remaining > 0) {
+                            t.totalEpisodes?.div(10)?.plus(1) // +1 for remaining items
+                        } else {
+                            t.totalEpisodes?.div(10)
+                        }
+
                         doAsync {
-                            viewModel.db.episodesDao().deleteAllEpisodes()
                             viewModel.podcast.get()?.episodes?.forEachIndexed { _, episode ->
                                 val episodesItem = episode?.let { EpisodeEntity(it) }
                                 episodesItem?.let { viewModel.db.episodesDao().insertEpisode(it) }
@@ -68,9 +76,21 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                         }
                     }
 
+                    override fun onComplete() {
+                        super.onComplete()
+
+                        viewModel.db.episodesDao().getEpisodes().observe(this@PodcastEpisodesFragment, object : Observer<List<EpisodeEntity>> {
+                            override fun onChanged(t: List<EpisodeEntity>?) {
+                                (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
+                            }
+                        })
+
+                    }
+
                 }))
 
         mBinding.recyclerViewPodcastEpisodes.adapter = adapter
+
     }
 
     fun getPodcastId(): String {

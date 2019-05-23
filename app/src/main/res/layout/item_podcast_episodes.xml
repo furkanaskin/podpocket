@@ -54,7 +54,7 @@
                     android:layout_alignStart="@id/textViewPodcastTitle"
                     android:layout_marginTop="@dimen/margin_4_dp"
                     android:layout_toEndOf="@id/imageViewPodcastCover"
-                    android:text="@{viewModel.item.getPubDateMs()}"
+                    android:text="@{viewModel.item.formatPubDateMs()}"
                     android:textColor="@color/colorLoginText"
                     android:textSize="@dimen/dimen_12_sp" />
 

@@ -14,7 +14,6 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize"
         android:fillViewport="true"
         android:fitsSystemWindows="true">
 
@@ -105,7 +104,6 @@
                 android:clipToPadding="false"
                 android:orientation="vertical"
                 app:layoutManager="LinearLayoutManager" />
-
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

@@ -56,11 +56,11 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/tilEmail"
             android:layout_alignStart="@id/tilEmail"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/margin_8_dp"
             android:text="@{viewModel.buttonText}"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:textSize="@dimen/dimen_16_sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEmail"
@@ -68,8 +68,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="@dimen/margin_32_dp"
+            android:layout_marginEnd="@dimen/margin_32_dp"
             android:hint="@string/email"
             android:textColorHint="@color/textColor"
             app:boxStrokeColor="@color/colorPrettyPurple"
@@ -79,9 +79,9 @@
                 android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:fontFamily="@font/montserrat_regular"
                 android:text="@={viewModel.userName}"
                 android:textColor="@color/colorPrettyPurple" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -94,12 +94,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tilEmail"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginTop="@dimen/margin_16_dp"
+            android:layout_marginEnd="@dimen/margin_32_dp"
             android:hint="@string/password"
             android:textColorHint="@color/textColor"
             app:boxStrokeColor="@color/colorPrettyPurple"
-            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidth="@dimen/margin_2_dp"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/colorPrettyPurple">
 
@@ -107,9 +107,9 @@
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:fontFamily="@font/montserrat_regular"
                 android:text="@={viewModel.password}"
                 android:textColor="@color/colorPrettyPurple" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -119,8 +119,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tilPassword"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="@dimen/margin_32_dp"
+            android:layout_marginTop="@dimen/margin_24_dp"
             android:checked="@={viewModel.agreement}"
             android:textColor="@color/white"
             app:visibility="@{viewModel.agreementView}" />
@@ -152,8 +152,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginTop="@dimen/margin_24_dp"
+            android:layout_marginBottom="@dimen/margin_32_dp"
             android:fontFamily="@font/montserrat_regular"
             android:onClick="@{() -> viewModel.alreadyHasAccount()}"
             android:text="@{viewModel.summaryText}"
@@ -163,8 +163,8 @@
             android:id="@+id/imageViewDone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/tilPassword"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="75dp"
             android:onClick="@{() -> viewModel.buttonClick()}"
             android:src="@drawable/btn_submit" />
