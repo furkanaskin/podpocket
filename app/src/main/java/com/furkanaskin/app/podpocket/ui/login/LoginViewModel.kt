@@ -36,6 +36,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     var loginSuccess: ObservableField<Boolean> = ObservableField(false)
     var registerSuccess: ObservableField<Boolean> = ObservableField(false)
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
+    var verifySuccess: ObservableField<Boolean> = ObservableField()
 
     private val disposables = CompositeDisposable()
 
@@ -127,6 +128,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
                 if (task.isSuccessful && mAuth.currentUser?.isEmailVerified!!) {
 
+                    verifySuccess.set(true)
                     doAsync {
                         val user = UserEntity(
                                 uniqueId = mAuth.currentUser?.uid ?: "",
@@ -140,6 +142,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                     progressBarView.set(false)
 
                 } else {
+                    verifySuccess.set(false)
                     checkFirebaseCredentials(task)
                     progressBarView.set(false)
                 }
@@ -183,7 +186,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
             else -> {
                 Timber.e(errorType.toString())
-                errorMessage = "Lütfen e-mailinizi onayladığınızdan ve bilgilerinizi doğru girdiğinizden emin olun."
+                errorMessage = "Beklenmedik bir hata oluştu."
                 progressBarView.set(false)
             }
         }
@@ -194,12 +197,31 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
+
     fun forgetPasswordClicked() {
 
-        val intent = Intent(getApplication(), ForgetPasswordActivity::class.java)
+        when (verifySuccess.get()) {
+            null -> {
+                val intent = Intent(getApplication(), ForgetPasswordActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.putExtra("TYPE", Constants.LoginActivityType.FORGOT_PASS)
+                getApplication<Application>().startActivity(intent)
+            }
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        getApplication<Application>().startActivity(intent)
+            false -> {
+                val intent = Intent(getApplication(), ForgetPasswordActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.putExtra("TYPE", Constants.LoginActivityType.EMAIL_VERIFY)
+                getApplication<Application>().startActivity(intent)
+            }
+
+            true -> {
+                val intent = Intent(getApplication(), ForgetPasswordActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.putExtra("TYPE", Constants.LoginActivityType.EMAIL_VERIFY)
+                getApplication<Application>().startActivity(intent)
+            }
+        }
 
     }
 

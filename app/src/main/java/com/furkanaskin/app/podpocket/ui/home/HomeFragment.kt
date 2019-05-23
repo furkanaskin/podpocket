@@ -12,6 +12,7 @@ import com.furkanaskin.app.podpocket.service.response.BestPodcasts
 import com.furkanaskin.app.podpocket.service.response.EpisodeRecommendations
 import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
 import com.furkanaskin.app.podpocket.service.response.Podcasts
+import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.home.best_podcasts.BestPodcastsAdapter
 import com.furkanaskin.app.podpocket.ui.home.recommended_episodes.RecommendedEpisodesAdapter
 import com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPodcastsAdapter
@@ -49,6 +50,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         initRecommendedEpisodesAdapter()
         initRecommendedEpisodes()
 
+
+        mBinding.buttonSearch.setOnClickListener {
+            navigate(R.id.action_homeFragment_to_searchFragment)
+            val search = (activity as DashboardActivity).binding.bottomNavigation.menu.getItem(1)
+            (activity as DashboardActivity).binding.bottomNavigation.selectedItemId = search.itemId
+        }
 
     }
 

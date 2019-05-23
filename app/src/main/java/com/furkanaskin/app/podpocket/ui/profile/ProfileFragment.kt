@@ -90,7 +90,12 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
         val profilePicturePath = mAuth.currentUser?.uid + "_" + "profile_picture.jpg"
         storageRef.child(profilePicturePath).downloadUrl.addOnSuccessListener {
             profileImageUrl.set(it.toString())
-            Glide.with(this.activity!!).load(user!!.profilePictureUrl).into(mBinding.imageViewProfilePicture)
+            try {
+                Glide.with(this.activity!!).load(user!!.profilePictureUrl).into(mBinding.imageViewProfilePicture)
+
+            } catch (e: NullPointerException) {
+                Glide.with(this.activity!!).load(R.drawable.ic_dummy_user).into(mBinding.imageViewProfilePicture)
+            }
             hideProgress()
         }
     }

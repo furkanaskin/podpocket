@@ -14,10 +14,10 @@
         android:title="@string/search" />
 
     <item
-        android:id="@+id/bookCaseFragment"
+        android:id="@+id/feedFragment"
         android:icon="@drawable/app_logo_white"
         android:orderInCategory="3"
-        android:title="@string/bookcase" />
+        android:title="@string/feed" />
 
     <item
         android:id="@+id/profileFragment"

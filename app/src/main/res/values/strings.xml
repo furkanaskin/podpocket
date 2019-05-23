@@ -61,5 +61,9 @@
     <string name="rate_us">Bizi Değerlendir</string>
     <string name="give_feedback">Geri Bildirimde Bulun</string>
     <string name="no_favorites_yet">Henüz hiç favorin yok…</string>
+    <string name="feed">Akış</string>
+    <string name="verify_email">Doğrulama mailinin gelmesi biraz süre alabilir.</string>
+    <string name="verify_email_dialog">Doğrulama mailinin gönderildi.</string>
+    <string name="working_for_you">Bu sayfayı sana en iyi şekilde hazırlamak için çalışmalarımız devam ediyor. Bittiğinde seni haberdar edeceğiz!</string>
 
 </resources>

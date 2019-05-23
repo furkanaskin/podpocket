@@ -12,6 +12,8 @@ object Constants {
     object LoginActivityType {
         val LOGIN_TYPE = 0
         val REGISTER_TYPE = 1
+        val EMAIL_VERIFY = 2
+        val FORGOT_PASS = 3
     }
 
     object NetworkService {

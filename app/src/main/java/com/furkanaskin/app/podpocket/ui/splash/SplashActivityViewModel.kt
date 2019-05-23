@@ -25,7 +25,7 @@ class SplashActivityViewModel(app: Application) : BaseViewModel(app) {
             val firebaseID = mAuth.currentUser?.uid
             val user = firebaseID?.let { db.userDao().getUser(it) }
 
-            if (user != null) {
+            if (user != null && mAuth.currentUser?.isEmailVerified == true) {
                 loginSuccess.set(true)
             }
 

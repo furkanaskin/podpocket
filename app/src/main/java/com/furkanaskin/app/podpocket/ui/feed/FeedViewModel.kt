@@ -1,4 +1,4 @@
-package com.furkanaskin.app.podpocket.ui.bookcase
+package com.furkanaskin.app.podpocket.ui.feed
 
 import android.app.Application
 import androidx.databinding.ObservableField
@@ -9,7 +9,7 @@ import com.furkanaskin.app.podpocket.core.BaseViewModel
  * Created by Furkan on 16.04.2019
  */
 
-class BookCaseViewModel(app: Application) : BaseViewModel(app) {
+class FeedViewModel(app: Application) : BaseViewModel(app) {
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
     var item: ObservableField<String> = ObservableField("")
 

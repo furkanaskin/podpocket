@@ -7,8 +7,8 @@ import com.furkanaskin.app.podpocket.di.module.ApplicationModule
 import com.furkanaskin.app.podpocket.di.module.DatabaseModule
 import com.furkanaskin.app.podpocket.di.module.NetModule
 import com.furkanaskin.app.podpocket.ui.after_register.AfterRegisterViewModel
-import com.furkanaskin.app.podpocket.ui.bookcase.BookCaseViewModel
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardViewModel
+import com.furkanaskin.app.podpocket.ui.feed.FeedViewModel
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordViewModel
 import com.furkanaskin.app.podpocket.ui.home.HomeViewModel
 import com.furkanaskin.app.podpocket.ui.login.LoginViewModel
@@ -54,7 +54,7 @@ interface ApplicationComponent {
 
     fun inject(searchViewModel: SearchViewModel)
 
-    fun inject(bookCaseViewModel: BookCaseViewModel)
+    fun inject(feedViewModel: FeedViewModel)
 
     fun inject(profileViewModel: ProfileViewModel)
 

@@ -67,6 +67,15 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
 
         })
 
+        viewModel.verifySuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                if (viewModel.verifySuccess.get() == false) {
+                    showVerifyEmailDialog()
+                }
+            }
+
+        })
+
         viewModel.loginSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
 
@@ -122,5 +131,31 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
                 .create()
                 .show()
     }
+
+    private fun showVerifyEmailDialog() {
+
+        val builder = AlertDialog.Builder(this)
+        // Display a message on alert dialog
+        builder.setMessage("E-posta doğrulamasının tekrar gönderilmesini ister misiniz?")
+        // Set a positive button and its click listener on alert dialog
+        builder.setPositiveButton("Evet") { dialog, which ->
+            // Do something when user press the positive button
+            viewModel.forgetPasswordClicked()
+        }
+        // Display a negative button on alert dialog
+        builder.setNegativeButton("Hayır") { dialog, which ->
+            dialog.dismiss()
+        }
+        // Display a neutral button on alert dialog
+        builder.setNeutralButton("Vazgeç") { _, _ ->
+            dialog?.dismiss()
+        }
+        // Finally, make the alert dialog using builder
+        val dialog: AlertDialog = builder.create()
+
+        // Display the alert dialog on app interface
+        dialog.show()
+    }
+
 
 }

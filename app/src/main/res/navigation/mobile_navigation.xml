@@ -18,12 +18,10 @@
         <action
             android:id="@+id/action_homeFragment_to_podcastEpisodesFragment"
             app:destination="@id/podcastEpisodesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/bookCaseFragment"
-        android:name="com.furkanaskin.app.podpocket.ui.bookcase.BookCaseFragment"
-        android:label="KITAPLIK"
-        tools:layout="@layout/fragment_book_case" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.furkanaskin.app.podpocket.ui.profile.ProfileFragment"
@@ -76,4 +74,8 @@
         android:id="@+id/favoritesFragment"
         android:name="com.furkanaskin.app.podpocket.ui.profile.favorites.FavoritesFragment"
         android:label="FavoritesFragment" />
+    <fragment
+        android:id="@+id/feedFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.feed.FeedFragment"
+        android:label="FeedFragment" />
 </navigation>
