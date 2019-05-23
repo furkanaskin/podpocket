@@ -99,7 +99,6 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_16_dp"
                     android:hint="@string/name"
                     android:textColorHint="@color/colorPrettyOrange"
                     app:boxStrokeColor="@color/colorPrettyPurple">
