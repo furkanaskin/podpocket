@@ -159,11 +159,14 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
                     }))
         }
 
-        viewModel.db.favoritesDao().getFavoriteEpisodes().observe(this@FavoritesFragment, object : Observer<List<FavoriteEpisodeEntity>> {
-            override fun onChanged(t: List<FavoriteEpisodeEntity>?) {
+        viewModel.db.favoritesDao().getFavoriteEpisodes().observe(this@FavoritesFragment, Observer<List<FavoriteEpisodeEntity>> { t ->
+
+            if (t.isNotEmpty()) {
+                hideAnimation()
                 mBinding.recyclerViewFavoriteEpisodes.adapter = adapter
                 (mBinding.recyclerViewFavoriteEpisodes.adapter as FavoriteEpisodesAdapter).submitList(t)
-
+            } else {
+                showAnimation()
             }
         })
 
@@ -208,6 +211,26 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
             }
 
         })
+    }
+
+    fun showAnimation() {
+        mBinding.scalingLayout.visibility = View.GONE
+        mBinding.textViewMainHeading.visibility = View.GONE
+        mBinding.textViewTagLine.visibility = View.GONE
+        mBinding.recyclerViewFavoriteEpisodes.visibility = View.GONE
+
+        mBinding.lottieAnimationView.visibility = View.VISIBLE
+        mBinding.textViewDummyText.visibility = View.VISIBLE
+    }
+
+    fun hideAnimation() {
+        mBinding.scalingLayout.visibility = View.VISIBLE
+        mBinding.textViewMainHeading.visibility = View.VISIBLE
+        mBinding.textViewTagLine.visibility = View.VISIBLE
+        mBinding.recyclerViewFavoriteEpisodes.visibility = View.VISIBLE
+
+        mBinding.lottieAnimationView.visibility = View.GONE
+        mBinding.textViewDummyText.visibility = View.GONE
     }
 
     override fun onDestroy() {

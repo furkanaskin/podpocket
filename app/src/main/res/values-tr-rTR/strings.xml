@@ -60,5 +60,6 @@
     <string name="userName">Kullanıcı Adınız</string>
     <string name="rate_us">Bizi Değerlendir</string>
     <string name="give_feedback">Geri Bildirimde Bulun</string>
+    <string name="no_favorites_yet">Henüz hiç favorin yok…</string>
 
 </resources>

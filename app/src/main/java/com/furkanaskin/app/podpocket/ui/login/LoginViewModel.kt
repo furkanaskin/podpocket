@@ -125,7 +125,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
             mAuth.signInWithEmailAndPassword(userName.get() ?: "", password.get()
                     ?: "").addOnCompleteListener { task ->
 
-                if (task.isSuccessful) {
+                if (task.isSuccessful && mAuth.currentUser?.isEmailVerified!!) {
 
                     doAsync {
                         val user = UserEntity(
@@ -180,9 +180,10 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                 errorMessage = "Böyle bir kullanıcı bulunamadı."
                 progressBarView.set(false)
             }
+
             else -> {
-                Timber.v(errorType.toString())
-                errorMessage = "Beklenmedik bir hata oluştu.."
+                Timber.e(errorType.toString())
+                errorMessage = "Lütfen e-mailinizi onayladığınızdan ve bilgilerinizi doğru girdiğinizden emin olun."
                 progressBarView.set(false)
             }
         }

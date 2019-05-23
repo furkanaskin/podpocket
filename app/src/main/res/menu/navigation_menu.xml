@@ -15,7 +15,7 @@
 
     <item
         android:id="@+id/bookCaseFragment"
-        android:icon="@drawable/ic_music_bookcase"
+        android:icon="@drawable/app_logo_white"
         android:orderInCategory="3"
         android:title="@string/bookcase" />
 

@@ -11,95 +11,102 @@
             type="com.furkanaskin.app.podpocket.ui.podcast_episodes.PodcastEpisodesViewModel" />
     </data>
 
-    <RelativeLayout
-        android:id="@+id/rootView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="?attr/actionBarSize"
-        android:background="@drawable/ic_app_bg"
-        android:fitsSystemWindows="true"
-        tools:context=".ui.podcast_episodes.PodcastEpisodesFragment">
-
-        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-            android:id="@+id/progressBar"
-            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            app:mpb_progressStyle="horizontal"
-            app:mpb_useIntrinsicPadding="false"
-            app:visibility="@{viewModel.progressBarView}" />
-
-
-        <ImageView
-            android:id="@+id/imageViewPodcastCover"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:adjustViewBounds="true"
-            android:fitsSystemWindows="true"
-            android:scaleType="centerCrop"
-            app:setDrawableLink="@{viewModel.podcast.getImage()}" />
-
-        <ImageView
-            android:id="@+id/imageViewAppLogoSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_24_dp"
-            android:layout_marginTop="@dimen/margin_48_dp"
-            android:layout_marginEnd="@dimen/margin_16_dp"
-            android:src="@drawable/app_logo_white" />
-
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/imageViewAppLogoSmall"
-            android:layout_alignBottom="@id/imageViewAppLogoSmall"
-            android:layout_toEndOf="@id/imageViewAppLogoSmall"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textColor="@color/white" />
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
 
         <RelativeLayout
+            android:id="@+id/rootView"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_alignBottom="@id/imageViewPodcastCover"
-            android:background="@drawable/gradient_cover">
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_app_bg"
+            android:fitsSystemWindows="true"
+            tools:context=".ui.podcast_episodes.PodcastEpisodesFragment">
 
-            <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
-                android:id="@+id/textViewPodcastTitle"
+            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                android:id="@+id/progressBar"
+                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/margin_32_dp"
-                android:text="@{viewModel.podcast.getTitle()}"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dimen_24_sp" />
+                android:indeterminate="true"
+                app:mpb_progressStyle="horizontal"
+                app:mpb_useIntrinsicPadding="false"
+                app:visibility="@{viewModel.progressBarView}" />
 
-            <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
-                android:id="@+id/textViewPodcastTotalEpisodes"
+
+            <ImageView
+                android:id="@+id/imageViewPodcastCover"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:adjustViewBounds="true"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                app:setDrawableLink="@{viewModel.podcast.getImage()}" />
+
+            <ImageView
+                android:id="@+id/imageViewAppLogoSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_24_dp"
+                android:layout_marginTop="@dimen/margin_48_dp"
+                android:layout_marginEnd="@dimen/margin_16_dp"
+                android:src="@drawable/app_logo_white" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/imageViewAppLogoSmall"
+                android:layout_alignBottom="@id/imageViewAppLogoSmall"
+                android:layout_toEndOf="@id/imageViewAppLogoSmall"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/white" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_alignBottom="@id/imageViewPodcastCover"
+                android:background="@drawable/gradient_cover">
+
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                    android:id="@+id/textViewPodcastTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin_32_dp"
+                    android:text="@{viewModel.podcast.getTitle()}"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_24_sp" />
+
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
+                    android:id="@+id/textViewPodcastTotalEpisodes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewPodcastTitle"
+                    android:layout_marginStart="@dimen/margin_32_dp"
+                    android:layout_marginTop="@dimen/margin_8_dp"
+                    android:layout_marginBottom="@dimen/margin_8_dp"
+                    android:text="@{viewModel.podcast.getTotalEpisodes()}"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorLoginText"
+                    android:textSize="@dimen/dimen_16_sp" />
+            </RelativeLayout>
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketRecyclerView
+                android:id="@+id/recyclerViewPodcastEpisodes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textViewPodcastTitle"
-                android:layout_marginStart="@dimen/margin_32_dp"
-                android:layout_marginTop="@dimen/margin_8_dp"
-                android:layout_marginBottom="@dimen/margin_8_dp"
-                android:text="@{viewModel.podcast.getTotalEpisodes()}"
-                android:textAllCaps="true"
-                android:textColor="@color/colorLoginText"
-                android:textSize="@dimen/dimen_16_sp" />
+                android:layout_below="@id/imageViewPodcastCover"
+                android:layout_marginTop="@dimen/margin_24_dp"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                app:layoutManager="LinearLayoutManager" />
+
+
         </RelativeLayout>
-
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketRecyclerView
-            android:id="@+id/recyclerViewPodcastEpisodes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imageViewPodcastCover"
-            android:layout_marginTop="@dimen/margin_24_dp"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            app:layoutManager="LinearLayoutManager" />
-
-
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
