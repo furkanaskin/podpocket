@@ -119,7 +119,7 @@ data class FavoriteEpisodeEntity(
             val sdf = SimpleDateFormat("MM/dd/yyyy")
             val netDate = Date(s)
             sdf.format(netDate)
-        } catch (e: Exception) {
+        } catch (e: TypeCastException) {
             e.toString()
         }
     }

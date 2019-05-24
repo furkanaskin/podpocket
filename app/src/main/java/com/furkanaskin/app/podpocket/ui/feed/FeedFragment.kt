@@ -10,6 +10,7 @@ import com.furkanaskin.app.podpocket.databinding.FragmentFeedBinding
  */
 
 class FeedFragment : BaseFragment<FeedViewModel, FragmentFeedBinding>(FeedViewModel::class.java) {
+
     override fun initViewModel() {
         mBinding.viewModel = viewModel
     }

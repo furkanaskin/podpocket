@@ -16,6 +16,7 @@ import com.furkanaskin.app.podpocket.service.response.RecommendationsItem
  */
 
 class RecommendedEpisodesAdapter(private val callBack: (RecommendationsItem) -> Unit) : BaseAdapter<RecommendationsItem>(diffCallback) {
+
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemRecommendedEpisodesBinding>(
                 LayoutInflater.from(parent.context),
@@ -35,7 +36,7 @@ class RecommendedEpisodesAdapter(private val callBack: (RecommendationsItem) -> 
     }
 
     override fun bind(binding: ViewDataBinding, position: Int) {
-        (binding as ItemRecommendedEpisodesBinding).viewModel?.item?.set(getItem(position))
+        (binding as? ItemRecommendedEpisodesBinding)?.viewModel?.item?.set(getItem(position))
         binding.executePendingBindings()
     }
 }

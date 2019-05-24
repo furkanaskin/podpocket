@@ -16,6 +16,7 @@ import com.furkanaskin.app.podpocket.service.response.ChannelsItem
  */
 
 class BestPodcastsAdapter(private val callBack: (ChannelsItem) -> Unit) : BaseAdapter<ChannelsItem>(diffCallback) {
+
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemBestPodcastsBinding>(
                 LayoutInflater.from(parent.context),

@@ -13,6 +13,7 @@ import java.util.*
  */
 
 class HomeViewModel(app: Application) : BaseViewModel(app) {
+
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
     var bestPodcastsList: List<ChannelsItem?>? = null
     var forceInitBestPodcasts: ObservableField<Boolean> = ObservableField(false)
@@ -34,11 +35,6 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 
     fun getEpisodeRecommendations(podcastId: String, explicitContent: Int): Observable<EpisodeRecommendations> {
         return baseApi.getEpisodeRecommendations(podcastId, explicitContent)
-    }
-
-    fun getEpisodeDetails(id: String): Observable<Episode> {
-
-        return baseApi.getEpisodeById(id)
     }
 
     fun getEpisodes(id: String): Observable<Podcasts> {

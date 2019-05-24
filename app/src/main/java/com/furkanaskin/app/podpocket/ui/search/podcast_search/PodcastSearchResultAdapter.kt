@@ -24,7 +24,6 @@ class PodcastSearchResultAdapter(private val callBack: (ResultsItem) -> Unit) : 
                 false
         )
 
-
         val viewModel = PodcastSearchResultViewModel((parent.context as Activity).application)
         mBinding.viewModel = viewModel
 
@@ -49,6 +48,4 @@ val diffCallbackForPodcast = object : DiffUtil.ItemCallback<ResultsItem>() {
 
     override fun areItemsTheSame(oldItem: ResultsItem, newItem: ResultsItem): Boolean =
             oldItem == newItem
-
-
 }

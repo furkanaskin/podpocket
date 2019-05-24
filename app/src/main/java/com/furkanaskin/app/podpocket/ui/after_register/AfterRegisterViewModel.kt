@@ -11,8 +11,8 @@ import com.furkanaskin.app.podpocket.core.BaseViewModel
  */
 
 class AfterRegisterViewModel(app: Application) : BaseViewModel(app) {
-    var progressBarView: ObservableField<Boolean> = ObservableField(false)
 
+    var progressBarView: ObservableField<Boolean> = ObservableField(false)
     var name: ObservableField<String> = ObservableField("")
     var userName: ObservableField<String> = ObservableField("")
     var surname: ObservableField<String> = ObservableField("")
@@ -20,7 +20,6 @@ class AfterRegisterViewModel(app: Application) : BaseViewModel(app) {
     var profileImageUrl: ObservableField<String> = ObservableField("")
     var saveSuccess: ObservableField<Boolean> = ObservableField(false)
     var userID: ObservableField<Int> = ObservableField(0)
-
 
     init {
         (app as? Podpocket)?.component?.inject(this)

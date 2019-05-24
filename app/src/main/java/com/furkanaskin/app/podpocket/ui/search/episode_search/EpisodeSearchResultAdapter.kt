@@ -24,7 +24,6 @@ class SearchResultAdapter(private val callBack: (ResultsItem) -> Unit) : BaseAda
                 false
         )
 
-
         val viewModel = EpisodeSearchResultViewModel((parent.context as Activity).application)
         mBinding.viewModel = viewModel
 

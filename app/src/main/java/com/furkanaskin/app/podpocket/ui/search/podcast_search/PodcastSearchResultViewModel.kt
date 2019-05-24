@@ -7,5 +7,4 @@ import com.furkanaskin.app.podpocket.service.response.ResultsItem
 
 class PodcastSearchResultViewModel(app: Application) : BaseViewModel(app) {
     var item = ObservableField<ResultsItem>()
-
 }

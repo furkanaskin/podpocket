@@ -16,6 +16,7 @@ import com.furkanaskin.app.podpocket.service.response.RecommendationsItem
  */
 
 class RecommendedPodcastsAdapter(private val callBack: (RecommendationsItem) -> Unit) : BaseAdapter<RecommendationsItem>(diffCallback) {
+
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemRecommendedPodcastsBinding>(
                 LayoutInflater.from(parent.context),
@@ -46,6 +47,4 @@ val diffCallback = object : DiffUtil.ItemCallback<RecommendationsItem>() {
 
     override fun areItemsTheSame(oldItem: RecommendationsItem, newItem: RecommendationsItem): Boolean =
             oldItem.id == newItem.id
-
-
 }

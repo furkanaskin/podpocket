@@ -13,7 +13,6 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
 
     var userName: ObservableField<String> = ObservableField("")
     var userEmail: ObservableField<String> = ObservableField("")
-
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
 
     init {

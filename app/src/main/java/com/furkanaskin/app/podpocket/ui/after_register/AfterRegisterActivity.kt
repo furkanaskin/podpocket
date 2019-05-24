@@ -128,7 +128,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            0 -> if (resultCode === Activity.RESULT_OK) {
+            0 -> if (resultCode == Activity.RESULT_OK) {
 
                 val selectedImage = data?.extras?.get("data")
 
@@ -136,7 +136,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
                 binding.fabChangeImage.visibility = View.GONE
                 updateProfilePicture(mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
             }
-            1 -> if (resultCode === Activity.RESULT_OK) {
+            1 -> if (resultCode == Activity.RESULT_OK) {
                 val selectedImage = data?.data
                 binding.imageViewUser.setImageURI(selectedImage)
                 binding.fabChangeImage.visibility = View.GONE

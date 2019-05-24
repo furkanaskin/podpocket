@@ -12,9 +12,9 @@ import io.reactivex.Observable
  */
 
 class PodcastEpisodesViewModel(app: Application) : BaseViewModel(app) {
+
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
     var podcast: ObservableField<Podcasts> = ObservableField()
-
 
     init {
         (app as? Podpocket)?.component?.inject(this)
@@ -25,9 +25,8 @@ class PodcastEpisodesViewModel(app: Application) : BaseViewModel(app) {
         return baseApi.getPodcastById(id)
     }
 
-
     fun getAllIds(position: Int): List<String> {
-        var ids: ArrayList<String> = ArrayList()
+        val ids: ArrayList<String> = ArrayList()
         for (i in podcast.get()?.episodes?.indices!!) {
             podcast.get()?.episodes!![i]?.id?.let { ids.add(it) }
 

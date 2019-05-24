@@ -80,7 +80,7 @@ data class Podcast(
             parcel.readValue(Long::class.java.classLoader) as? Long,
             parcel.readString(),
             parcel.readString(),
-            parcel.readArrayList(Int::class.java.classLoader) as ArrayList<Int>,
+            parcel.readArrayList(Int::class.java.classLoader) as? ArrayList<Int>,
             parcel.readString(),
             parcel.readValue(Int::class.java.classLoader) as? Int,
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean,

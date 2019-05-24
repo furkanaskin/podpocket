@@ -23,6 +23,7 @@ import java.util.*
  */
 
 class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentPodcastEpisodesBinding>(PodcastEpisodesViewModel::class.java) {
+
     val disposable = CompositeDisposable()
     lateinit var podcastTitle: String
     private var totalPage: Int? = 0

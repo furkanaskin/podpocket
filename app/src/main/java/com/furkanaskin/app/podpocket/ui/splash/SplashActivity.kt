@@ -53,6 +53,4 @@ class SplashActivity : BaseActivity<SplashActivityViewModel, ActivitySplashBindi
 
         countDownTimer?.cancel()
     }
-
-
 }

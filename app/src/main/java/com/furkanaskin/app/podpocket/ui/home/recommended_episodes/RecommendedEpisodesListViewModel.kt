@@ -10,6 +10,6 @@ import com.furkanaskin.app.podpocket.service.response.RecommendationsItem
  */
 
 class RecommendedEpisodesListViewModel(app: Application) : BaseViewModel(app) {
-    var item = ObservableField<RecommendationsItem>()
 
+    var item = ObservableField<RecommendationsItem>()
 }

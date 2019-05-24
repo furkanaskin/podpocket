@@ -19,11 +19,9 @@ class ForgetPasswordViewModel(app: Application) : BaseViewModel(app) {
     var sendVerifyMailSucces: ObservableField<Boolean> = ObservableField(false)
     var type: ObservableField<Int> = ObservableField(0)
 
-
     init {
         (app as? Podpocket)?.component?.inject(this)
     }
-
 
     fun buttonClick() {
         progressBarView.set(true)

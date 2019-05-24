@@ -156,6 +156,4 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
         // Display the alert dialog on app interface
         dialog.show()
     }
-
-
 }

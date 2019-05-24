@@ -10,6 +10,7 @@ import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
  */
 
 class QueueListItemViewModel(app: Application) : BaseViewModel(app) {
+
     var item: ObservableField<EpisodeEntity> = ObservableField()
     var position = -1
     var isSelected: Boolean = false

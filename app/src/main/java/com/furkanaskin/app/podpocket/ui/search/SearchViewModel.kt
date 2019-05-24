@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 class SearchViewModel(app: Application) : BaseViewModel(app) {
 
-
     @Inject
     lateinit var api: PodpocketAPI
 
@@ -40,6 +39,5 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
 
         return baseApi.getPodcastById(id)
     }
-
 
 }

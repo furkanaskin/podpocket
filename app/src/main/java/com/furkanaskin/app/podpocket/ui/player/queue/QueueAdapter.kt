@@ -16,6 +16,7 @@ import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
  */
 
 class QueueAdapter(private val callBack: (EpisodeEntity, Int, Boolean) -> Unit) : BaseAdapter<EpisodeEntity>(queueDiffCallback) {
+
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemQueueBinding>(
                 LayoutInflater.from(parent.context),

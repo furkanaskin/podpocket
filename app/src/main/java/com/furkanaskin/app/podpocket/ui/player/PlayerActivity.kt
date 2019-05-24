@@ -42,6 +42,7 @@ import org.jetbrains.anko.doAsync
  */
 
 class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(PlayerViewModel::class.java) {
+
     private lateinit var player: SimpleExoPlayer
     private lateinit var mediaSource: ConcatenatingMediaSource
     private lateinit var dataSourceFactory: DefaultDataSourceFactory
@@ -408,7 +409,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         }
 
     }
-
 
     override fun onBackPressed() {
         player.stop()

@@ -31,7 +31,6 @@ class AccountDetailViewModel(app: Application) : BaseViewModel(app) {
         return userData?.name ?: ""
     }
 
-
     fun getSurname(): String {
 
         return userData?.surname ?: ""

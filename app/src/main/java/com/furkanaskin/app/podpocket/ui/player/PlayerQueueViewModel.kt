@@ -12,6 +12,7 @@ import io.reactivex.Observable
  */
 
 class PlayerQueueViewModel(app: Application) : BaseViewModel(app) {
+
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
 
     init {

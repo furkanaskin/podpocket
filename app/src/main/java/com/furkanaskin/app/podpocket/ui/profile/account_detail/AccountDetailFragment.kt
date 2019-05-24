@@ -133,7 +133,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
 
-        var uploadTask = pathRef.putBytes(data)
+        val uploadTask = pathRef.putBytes(data)
         uploadTask.addOnFailureListener {
             // Handle unsuccessful uploads
         }.addOnSuccessListener {

@@ -10,5 +10,6 @@ import com.furkanaskin.app.podpocket.service.response.ChannelsItem
  */
 
 class BestPodcastsListItemViewModel(app: Application) : BaseViewModel(app) {
+
     var item = ObservableField<ChannelsItem>()
 }

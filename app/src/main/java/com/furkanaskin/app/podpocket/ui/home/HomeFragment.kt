@@ -29,6 +29,7 @@ import timber.log.Timber
  */
 
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewModel::class.java) {
+
     override fun initViewModel() {
         mBinding.viewModel = viewModel
     }
@@ -197,7 +198,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
                 }))
     }
 
-    fun hideTitles() {
+    private fun hideTitles() {
         mBinding.textViewBestPodcasts.visibility = View.GONE
         mBinding.textViewRecommendedEpisodes.visibility = View.GONE
         mBinding.textViewRecommendedPodcasts.visibility = View.GONE

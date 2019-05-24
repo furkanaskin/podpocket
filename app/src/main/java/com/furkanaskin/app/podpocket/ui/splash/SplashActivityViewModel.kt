@@ -34,5 +34,4 @@ class SplashActivityViewModel(app: Application) : BaseViewModel(app) {
             }
         }
     }
-
 }
