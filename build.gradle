@@ -56,6 +56,10 @@ ext {
     anko_version = "0.10.8"
     navigationVersion = "1.0.0-rc02"
     lottieVersion = "3.0.2"
+    threetenabpVersion = "1.2.0"
+
+    //threetenabp
+    threetenabp = "com.jakewharton.threetenabp:threetenabp:$threetenabpVersion"
 
     //lottie
     lottie = "com.airbnb.android:lottie:$lottieVersion"

@@ -5,6 +5,8 @@ import android.widget.Toast
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
+import com.furkanaskin.app.podpocket.model.User
+import com.google.firebase.database.FirebaseDatabase
 
 /**
  * Created by Furkan on 21.04.2019
@@ -41,6 +43,10 @@ class AfterRegisterViewModel(app: Application) : BaseViewModel(app) {
         }
 
         return result
+    }
+
+    fun updateFirebaseUser(user: User, uniqueId: String) {
+        FirebaseDatabase.getInstance().reference.child("users").child(uniqueId).child("userName").setValue(user.userName)
     }
 
 }

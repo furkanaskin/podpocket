@@ -94,6 +94,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.firebaseui:firebase-ui-storage:3.2.1'
 
+    //threetenabp
+    implementation rootProject.ext.threetenabp
+
     //lottie
     implementation rootProject.ext.lottie
 

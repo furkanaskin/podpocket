@@ -6,6 +6,7 @@ import com.crashlytics.android.core.CrashlyticsCore
 import com.facebook.stetho.Stetho
 import com.furkanaskin.app.podpocket.di.component.DaggerApplicationComponent
 import com.furkanaskin.app.podpocket.di.module.ApplicationModule
+import com.jakewharton.threetenabp.AndroidThreeTen
 import io.fabric.sdk.android.Fabric
 
 class Podpocket : Application() {
@@ -18,6 +19,7 @@ class Podpocket : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        AndroidThreeTen.init(this)
         initFabric()
         Stetho.initializeWithDefaults(this)
     }

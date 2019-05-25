@@ -10,11 +10,15 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
+import com.furkanaskin.app.podpocket.model.User
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordActivity
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
+import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.disposables.CompositeDisposable
 import org.jetbrains.anko.doAsync
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
 
 /**
@@ -100,6 +104,14 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                     registerSuccess.set(true)
                     verifyEmail()
 
+                    val firebaseUser = User(
+                            accountCreatedAt = convertDate(LocalDate.now()),
+                            email = userName.get() ?: "",
+                            podcaster = false,
+                            verifiedUser = false,
+                            userName = "")
+
+                    insertUserToFirebase(firebaseUser, mAuth.currentUser?.uid ?: "")
 
                     doAsync {
 
@@ -129,6 +141,16 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                 if (task.isSuccessful && mAuth.currentUser?.isEmailVerified!!) {
 
                     verifySuccess.set(true)
+
+                    val firebaseUser = User(
+                            accountCreatedAt = convertDate(LocalDate.now()),
+                            email = userName.get() ?: "",
+                            podcaster = false,
+                            verifiedUser = true,
+                            userName = "")
+
+                    insertUserToFirebase(firebaseUser, mAuth.currentUser?.uid ?: "")
+
                     doAsync {
                         val user = UserEntity(
                                 uniqueId = mAuth.currentUser?.uid ?: "",
@@ -224,6 +246,13 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         }
 
     }
+
+    fun insertUserToFirebase(user: User, uniqueId: String) {
+        FirebaseDatabase.getInstance().reference.child("users").child(uniqueId).setValue(user)
+    }
+
+    private fun convertDate(date: LocalDate) =
+            "${date.format(DateTimeFormatter.ISO_DATE)}"
 
     override fun onCleared() {
         super.onCleared()

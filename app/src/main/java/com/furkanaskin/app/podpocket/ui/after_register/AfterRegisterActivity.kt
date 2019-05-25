@@ -14,6 +14,7 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityAfterRegisterBinding
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
+import com.furkanaskin.app.podpocket.model.User
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.google.firebase.storage.FirebaseStorage
 import org.jetbrains.anko.doAsync
@@ -49,6 +50,10 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         binding.buttonDone.setOnClickListener {
             if (viewModel.getValidationMessages() && viewModel.userID.get() != null) {
                 viewModel.progressBarView.set(true)
+
+                val firebaseUser = User("", false, "", true, viewModel.userName.get() ?: "")
+
+                viewModel.updateFirebaseUser(firebaseUser, user?.uniqueId ?: "")
 
 
                 val willBeUpdated = UserEntity(
