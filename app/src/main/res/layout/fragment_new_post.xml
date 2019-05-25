@@ -3,21 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <data>
 
         <variable
             name="viewModel"
-            type="com.furkanaskin.app.podpocket.ui.feed.FeedViewModel" />
+            type="com.furkanaskin.app.podpocket.ui.feed.new_post.NewPostViewModel" />
     </data>
 
     <RelativeLayout
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/mainBackgroundColor"
         android:fitsSystemWindows="true"
-        tools:context=".ui.feed.FeedFragment">
+        tools:context=".ui.feed.new_post.NewPostFragment">
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:id="@+id/progressBar"
@@ -29,21 +27,12 @@
             app:mpb_useIntrinsicPadding="false"
             app:visibility="@{viewModel.progressBarView}" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/mainBackgroundColor"
-            android:elevation="@dimen/margin_8_dp"
-            app:tabIndicatorColor="@color/colorCyan"
-            app:tabMode="fixed"
-            app:tabTextColor="@color/colorCyan" />
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tab_layout" />
+            android:layout_centerInParent="true"
+            android:text="New Post Fragment"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 </layout>

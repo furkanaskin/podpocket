@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.feed
 
-import android.view.animation.AnimationUtils
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentFeedBinding
@@ -17,16 +16,19 @@ class FeedFragment : BaseFragment<FeedViewModel, FragmentFeedBinding>(FeedViewMo
 
     override fun getLayoutRes(): Int = R.layout.fragment_feed
 
-    private val animationFadein by lazy {
-        AnimationUtils.loadAnimation(
-                this.context,
-                R.anim.fade_in
-        )
+    override fun init() {
+        initAdapter()
     }
 
-    override fun init() {
+    private fun initAdapter() {
+        fragmentManager?.let { fragmentManager ->
 
-        mBinding.textViewMainHeading.startAnimation(animationFadein)
+            FeedFragmentPagerAdapter(context, fragmentManager).also {
+                mBinding.viewPager.adapter = it
+            }
+        }
+
+        mBinding.tabLayout.setupWithViewPager(mBinding.viewPager)
     }
 
 }

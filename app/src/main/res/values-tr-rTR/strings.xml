@@ -65,5 +65,12 @@
     <string name="verify_email">Doğrulama mailinin gelmesi biraz süre alabilir.</string>
     <string name="verify_email_dialog">Doğrulama mailinin gönderildi.</string>
     <string name="working_for_you">Bu sayfayı sana en iyi şekilde hazırlamak için çalışmalarımız devam ediyor. Bittiğinde seni haberdar edeceğiz!</string>
-
+    <string name="locale_feed_fragment">Yerel</string>
+    <string name="global_feed_fragment">Dünya</string>
+    <string name="feed_search_fragment">Ara</string>
+    <string-array name="feed_fragment_titles">
+        <item>@string/locale_feed_fragment</item>
+        <item>@string/global_feed_fragment</item>
+        <item>@string/feed_search_fragment</item>
+    </string-array>
 </resources>

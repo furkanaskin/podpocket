@@ -9,6 +9,11 @@ import com.furkanaskin.app.podpocket.di.module.NetModule
 import com.furkanaskin.app.podpocket.ui.after_register.AfterRegisterViewModel
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardViewModel
 import com.furkanaskin.app.podpocket.ui.feed.FeedViewModel
+import com.furkanaskin.app.podpocket.ui.feed.feed_search.FeedSearchViewModel
+import com.furkanaskin.app.podpocket.ui.feed.global_feed.GlobalFeedViewModel
+import com.furkanaskin.app.podpocket.ui.feed.locale_feed.LocaleFeedViewModel
+import com.furkanaskin.app.podpocket.ui.feed.new_post.NewPostViewModel
+import com.furkanaskin.app.podpocket.ui.feed.post_detail.PostDetailViewModel
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordViewModel
 import com.furkanaskin.app.podpocket.ui.home.HomeViewModel
 import com.furkanaskin.app.podpocket.ui.login.LoginViewModel
@@ -73,4 +78,14 @@ interface ApplicationComponent {
     fun inject(recentlyPlayedViewModel: RecentlyPlayedViewModel)
 
     fun inject(favoritesViewModel: FavoritesViewModel)
+
+    fun inject(postDetailViewModel: PostDetailViewModel)
+
+    fun inject(newPostViewModel: NewPostViewModel)
+
+    fun inject(localeFeedViewModel: LocaleFeedViewModel)
+
+    fun inject(globalFeedViewModel: GlobalFeedViewModel)
+
+    fun inject(feedSearchViewModel: FeedSearchViewModel)
 }
