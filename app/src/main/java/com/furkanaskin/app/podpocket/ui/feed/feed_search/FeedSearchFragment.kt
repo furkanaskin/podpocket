@@ -1,5 +1,8 @@
 package com.furkanaskin.app.podpocket.ui.feed.feed_search
 
+import android.os.Bundle
+import android.view.View
+import androidx.navigation.Navigation
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentFeedSearchBinding
@@ -15,4 +18,13 @@ class FeedSearchFragment : BaseFragment<FeedSearchViewModel, FragmentFeedSearchB
         mBinding.viewModel = viewModel
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val nestedNavController = Navigation.findNavController(view)
+
+        mBinding.button.setOnClickListener {
+            nestedNavController.navigate(R.id.action_feedSearchFragment_to_newPostFragment)
+        }
+    }
 }

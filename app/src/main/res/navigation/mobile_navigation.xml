@@ -75,23 +75,46 @@
         android:name="com.furkanaskin.app.podpocket.ui.profile.favorites.FavoritesFragment"
         android:label="FavoritesFragment" />
     <fragment
+        android:id="@+id/localeFeedContainerFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.feed.locale_feed.LocaleFeedContainerFragment"
+        android:label="LocaleFeedContainerFragment">
+        <action
+            android:id="@+id/action_localeFeedContainerFragment_to_locale_feed_navigation"
+            app:destination="@id/locale_feed_navigation" />
+    </fragment>
+    <fragment
         android:id="@+id/feedFragment"
         android:name="com.furkanaskin.app.podpocket.ui.feed.FeedFragment"
-        android:label="FeedFragment" />
+        android:label="FeedFragment">
+        <action
+            android:id="@+id/action_feedFragment_to_localeFeedContainerFragment"
+            app:destination="@id/localeFeedContainerFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_globalFeedContainerFragment"
+            app:destination="@id/globalFeedContainerFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_feedSearchContainerFragment"
+            app:destination="@id/feedSearchContainerFragment" />
+    </fragment>
+
+    <include app:graph="@navigation/locale_feed_navigation" />
+    <include app:graph="@navigation/global_feed_navigation" />
+    <include app:graph="@navigation/feed_search_fragment" />
     <fragment
-        android:id="@+id/feedSearchFragment"
-        android:name="com.furkanaskin.app.podpocket.ui.feed.feed_search.FeedSearchFragment"
-        android:label="FeedSearchFragment" />
+        android:id="@+id/globalFeedContainerFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.feed.global_feed.GlobalFeedContainerFragment"
+        android:label="GlobalFeedContainerFragment">
+        <action
+            android:id="@+id/action_globalFeedContainerFragment_to_global_feed_navigation"
+            app:destination="@id/global_feed_navigation" />
+    </fragment>
     <fragment
-        android:id="@+id/globalFeedFragment"
-        android:name="com.furkanaskin.app.podpocket.ui.feed.global_feed.GlobalFeedFragment"
-        android:label="GlobalFeedFragment" />
-    <fragment
-        android:id="@+id/newPostFragment"
-        android:name="com.furkanaskin.app.podpocket.ui.feed.new_post.NewPostFragment"
-        android:label="NewPostFragment" />
-    <fragment
-        android:id="@+id/localeFeedFragment"
-        android:name="com.furkanaskin.app.podpocket.ui.feed.locale_feed.LocaleFeedFragment"
-        android:label="LocaleFeedFragment" />
+        android:id="@+id/feedSearchContainerFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.feed.feed_search.FeedSearchContainerFragment"
+        android:label="FeedSearchContainerFragment">
+        <action
+            android:id="@+id/action_feedSearchContainerFragment_to_feed_search_fragment"
+            app:destination="@id/feed_search_fragment" />
+    </fragment>
+
 </navigation>

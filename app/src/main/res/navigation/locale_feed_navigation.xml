@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/locale_feed_navigation"
+    app:startDestination="@id/localeFeedFragment">
+
+    <fragment
+        android:id="@+id/localeFeedFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.feed.locale_feed.LocaleFeedFragment"
+        android:label="LocaleFeedFragment">
+        <action
+            android:id="@+id/action_localeFeedFragment_to_newPostFragment"
+            app:destination="@id/newPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPostFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.feed.new_post.NewPostFragment"
+        android:label="NewPostFragment" />
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.feed.post_detail.PostDetailFragment"
+        android:label="PostDetailFragment" />
+</navigation>
