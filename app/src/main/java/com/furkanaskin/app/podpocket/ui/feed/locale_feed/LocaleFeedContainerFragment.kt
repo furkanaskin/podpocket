@@ -20,6 +20,16 @@ class LocaleFeedContainerFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_locale_feed_container, container, false)
     }
 
+    override fun setMenuVisibility(menuVisible: Boolean) {
+        super.setMenuVisibility(menuVisible)
+
+        if (menuVisible) {
+            // This routes the system back button to this Fragment
+            requireFragmentManager().beginTransaction()
+                    .setPrimaryNavigationFragment(this)
+                    .commit()
+        }
+    }
 /*
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

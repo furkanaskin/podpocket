@@ -20,4 +20,15 @@ class FeedSearchContainerFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_feed_search_container, container, false)
     }
 
+    override fun setMenuVisibility(menuVisible: Boolean) {
+        super.setMenuVisibility(menuVisible)
+
+        if (menuVisible) {
+            // This routes the system back button to this Fragment
+            requireFragmentManager().beginTransaction()
+                    .setPrimaryNavigationFragment(this)
+                    .commit()
+        }
+    }
+
 }
