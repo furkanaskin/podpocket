@@ -97,8 +97,13 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             val playerQueueFragment = PlayerQueueFragment.newInstance(viewModel.item.get()?.podcast?.id
                     ?: "", currentPosition)
             val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-            transaction.add(R.id.fragmentLayoutQueue, playerQueueFragment, "playerQueueFragment")
-                    .commitNow()
+            val queueFragment = supportFragmentManager.findFragmentByTag("playerQueueFragment")
+            if (queueFragment != null) {
+                // If is already committed, don't commit again.
+            } else {
+                transaction.add(R.id.fragmentLayoutQueue, playerQueueFragment, "playerQueueFragment")
+                        .commitNow()
+            }
 
             binding.relativeLayoutNowPlaying.visibility = View.GONE
         }
