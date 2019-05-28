@@ -57,6 +57,12 @@ ext {
     navigationVersion = "1.0.0-rc02"
     lottieVersion = "3.0.2"
     threetenabpVersion = "1.2.0"
+    watchTowerVersion = "1.0.0"
+
+    //watchTower
+    watchTower = "com.snakyapps.watchtower:core:$watchTowerVersion"
+    watchTowerDebug = "com.snakyapps.watchtower:interceptor-okhttp:$watchTowerVersion"
+    watchTowerRelease = "com.snakyapps.watchtower:interceptor-okhttp-no-op:$watchTowerVersion"
 
     //threetenabp
     threetenabp = "com.jakewharton.threetenabp:threetenabp:$threetenabpVersion"

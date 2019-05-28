@@ -6,6 +6,7 @@ import com.furkanaskin.app.podpocket.service.PodpocketAPI
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.snakydesign.watchtower.interceptor.WatchTowerInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -26,6 +27,7 @@ class NetModule {
     fun provideOkHttpClient(): OkHttpClient {
         val cache = Cache(Environment.getDownloadCacheDirectory(), 10 * 1024 * 1024)
         return OkHttpClient.Builder()
+                .addInterceptor(WatchTowerInterceptor())
                 .readTimeout(1, TimeUnit.MINUTES)
                 .writeTimeout(1, TimeUnit.MINUTES)
                 .cache(cache)

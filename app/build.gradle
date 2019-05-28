@@ -94,6 +94,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.firebaseui:firebase-ui-storage:3.2.1'
 
+    //watchTower
+    implementation rootProject.ext.watchTower
+    debugImplementation rootProject.ext.watchTowerDebug
+    releaseImplementation rootProject.ext.watchTowerRelease
+
     //threetenabp
     implementation rootProject.ext.threetenabp
 

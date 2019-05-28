@@ -29,6 +29,7 @@ This project is an Podcast app like Spotify, Spreaker or SoundCloud but we has o
  - [Dagger 2](https://github.com/google/dagger)
  - [Retrofit](https://square.github.io/retrofit/)
  - [OkHttp](https://github.com/square/okhttp)
+ - [WatchTower](https://github.com/adibfara/WatchTower)
  - [Gson](https://github.com/google/gson)
  - [Paging](https://developer.android.com/topic/libraries/architecture/paging)
  - [ExoPlayer](https://github.com/google/ExoPlayer)
