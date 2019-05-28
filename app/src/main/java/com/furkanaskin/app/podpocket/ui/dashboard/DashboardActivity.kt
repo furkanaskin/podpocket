@@ -2,12 +2,17 @@ package com.furkanaskin.app.podpocket.ui.dashboard
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityDashboardBinding
+import com.google.android.material.bottomnavigation.BottomNavigationMenu
+import com.viniciusmo.keyboardvisibility.keyboard
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.support.v4.alert
 
 
 /**
@@ -26,7 +31,7 @@ class DashboardActivity : BaseActivity<DashboardViewModel, ActivityDashboardBind
         super.onCreate(savedInstanceState)
 
         setupNavigation()
-
+        setKeyboardVisibilityListener()
     }
 
     private fun setupNavigation() {
@@ -41,5 +46,16 @@ class DashboardActivity : BaseActivity<DashboardViewModel, ActivityDashboardBind
     }
 
     override fun onSupportNavigateUp(): Boolean = findNavController(R.id.container_fragment).navigateUp()
+
+    private fun setKeyboardVisibilityListener() {
+        keyboard {
+            onOpened {
+                binding.bottomNavigation.visibility = View.GONE
+            }
+            onClosed {
+                binding.bottomNavigation.visibility = View.VISIBLE
+            }
+        }
+    }
 
 }

@@ -180,6 +180,9 @@ dependencies {
     //exo player
     implementation 'com.google.android.exoplayer:exoplayer:2.9.6'
 
+    //utils
+    implementation 'com.github.viniciusmo:keyboard-visibility-event-android:1.0.4'
+
     //test
     testImplementation 'junit:junit:4.12'
     testImplementation "android.arch.core:core-testing:$lifecycle_version"
