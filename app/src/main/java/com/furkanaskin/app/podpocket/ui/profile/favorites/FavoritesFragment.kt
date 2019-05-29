@@ -237,5 +237,4 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
         super.onDestroy()
         disposable.clear()
     }
-
 }

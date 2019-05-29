@@ -20,17 +20,14 @@ import com.furkanaskin.app.podpocket.service.response.Genres
 import com.furkanaskin.app.podpocket.service.response.GenresItem
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.service.response.Search
-import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.ui.search.episode_search.SearchResultAdapter
 import com.furkanaskin.app.podpocket.ui.search.podcast_search.PodcastSearchResultAdapter
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
-import com.viniciusmo.keyboardvisibility.keyboard
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.support.v4.alert
 
 /**
  * Created by Furkan on 16.04.2019
@@ -178,4 +175,5 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
                 }))
     }
+
 }

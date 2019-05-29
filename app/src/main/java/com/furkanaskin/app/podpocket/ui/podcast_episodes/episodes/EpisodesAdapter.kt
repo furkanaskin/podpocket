@@ -29,7 +29,7 @@ class EpisodesAdapter(private val callBack: (EpisodeEntity, Int) -> Unit) : Base
 
         mBinding.cardView.setOnClickListener {
             mBinding.viewModel?.item?.get()?.let {
-                callBack(it, mBinding.viewModel!!.position)
+                callBack.invoke(it, mBinding.viewModel!!.position)
             }
         }
         return mBinding
