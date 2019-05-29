@@ -57,12 +57,12 @@ ext {
     navigationVersion = "1.0.0-rc02"
     lottieVersion = "3.0.2"
     threetenabpVersion = "1.2.0"
-    watchTowerVersion = "1.0.0"
+    stethoVersion = "1.5.1"
 
-    //watchTower
-    watchTower = "com.snakyapps.watchtower:core:$watchTowerVersion"
-    watchTowerDebug = "com.snakyapps.watchtower:interceptor-okhttp:$watchTowerVersion"
-    watchTowerRelease = "com.snakyapps.watchtower:interceptor-okhttp-no-op:$watchTowerVersion"
+    //stetho
+    stethoCore = "com.facebook.stetho:stetho:1.5.1"
+    stethoOkHttp = "com.facebook.stetho:stetho-okhttp3:1.5.1"
+    stethoUrlConnection = "com.facebook.stetho:stetho-urlconnection:1.5.1"
 
     //threetenabp
     threetenabp = "com.jakewharton.threetenabp:threetenabp:$threetenabpVersion"

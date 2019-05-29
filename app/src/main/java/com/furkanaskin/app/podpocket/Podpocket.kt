@@ -7,8 +7,6 @@ import com.facebook.stetho.Stetho
 import com.furkanaskin.app.podpocket.di.component.DaggerApplicationComponent
 import com.furkanaskin.app.podpocket.di.module.ApplicationModule
 import com.jakewharton.threetenabp.AndroidThreeTen
-import com.snakydesign.watchtower.WatchTower
-import com.snakydesign.watchtower.interceptor.WebWatchTowerObserver
 import io.fabric.sdk.android.Fabric
 
 class Podpocket : Application() {
@@ -24,7 +22,6 @@ class Podpocket : Application() {
         AndroidThreeTen.init(this)
         initFabric()
         Stetho.initializeWithDefaults(this)
-        WatchTower.start(WebWatchTowerObserver(port = 8085))
     }
 
 

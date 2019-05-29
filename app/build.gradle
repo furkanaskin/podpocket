@@ -94,11 +94,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.firebaseui:firebase-ui-storage:3.2.1'
 
-    //watchTower
-    implementation rootProject.ext.watchTower
-    debugImplementation rootProject.ext.watchTowerDebug
-    releaseImplementation rootProject.ext.watchTowerRelease
-
     //threetenabp
     implementation rootProject.ext.threetenabp
 
@@ -174,8 +169,10 @@ dependencies {
     kapt "com.android.databinding:compiler:3.1.4"
     annotationProcessor "com.android.databinding:compiler:3.1.4"
 
-    //android debug database
-    implementation 'com.facebook.stetho:stetho:1.5.1'
+    //stetho
+    implementation rootProject.ext.stethoCore
+    implementation rootProject.ext.stethoOkHttp
+    implementation rootProject.ext.stethoUrlConnection
 
     //exo player
     implementation 'com.google.android.exoplayer:exoplayer:2.9.6'

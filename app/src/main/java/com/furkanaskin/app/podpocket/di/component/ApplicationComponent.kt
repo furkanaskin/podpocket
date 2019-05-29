@@ -40,7 +40,6 @@ import javax.inject.Singleton
 interface ApplicationComponent {
     fun app(): Podpocket
 
-
     fun context(): Context
 
     fun preferences(): SharedPreferences
