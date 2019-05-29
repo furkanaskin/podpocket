@@ -68,6 +68,8 @@
     <string name="locale_feed_fragment">Yerel</string>
     <string name="global_feed_fragment">Dünya</string>
     <string name="feed_search_fragment">Ara</string>
+    <string name="share">Paylaş</string>
+    <string name="whats_going_on">Neler oluyor?</string>
     <string-array name="feed_fragment_titles">
         <item>@string/locale_feed_fragment</item>
         <item>@string/global_feed_fragment</item>

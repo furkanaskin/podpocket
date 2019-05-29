@@ -14,6 +14,7 @@
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/mainBackgroundColor"
         android:fitsSystemWindows="true"
         tools:context=".ui.feed.new_post.NewPostFragment">
 
@@ -27,12 +28,46 @@
             app:mpb_useIntrinsicPadding="false"
             app:visibility="@{viewModel.progressBarView}" />
 
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
-            android:layout_width="wrap_content"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPost"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="New Post Fragment"
-            android:textColor="@color/white" />
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/margin_8_dp"
+            android:layout_marginEnd="@dimen/margin_8_dp"
+            android:hint="@string/whats_going_on"
+            android:textColorHint="@color/textColor"
+            app:boxStrokeColor="@color/colorPrettyPurple"
+            app:boxStrokeWidth="2dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:inputType="textAutoComplete"
+                android:singleLine="false"
+                android:text="@={viewModel.postText}"
+                android:textColor="@color/colorPrettyPurple" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonShare"
+            style="@style/AppTheme.RoundedCornerMaterialButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tilPost"
+            android:layout_marginStart="@dimen/margin_8_dp"
+            android:layout_marginTop="@dimen/margin_16_dp"
+            android:layout_marginEnd="@dimen/margin_8_dp"
+            android:onClick="@{() -> viewModel.shareClicked()}"
+            android:text="@string/share"
+            android:textColor="@color/colorCyan"
+            app:backgroundTint="@color/transparent"
+            app:strokeColor="@color/colorCyan"
+            app:strokeWidth="@dimen/margin_2_dp" />
 
     </RelativeLayout>
 </layout>

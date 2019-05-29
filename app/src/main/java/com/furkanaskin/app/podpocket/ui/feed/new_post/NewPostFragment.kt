@@ -15,4 +15,5 @@ class NewPostFragment : BaseFragment<NewPostViewModel, FragmentNewPostBinding>(N
         mBinding.viewModel = viewModel
     }
 
+
 }

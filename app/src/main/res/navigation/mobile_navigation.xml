@@ -52,7 +52,7 @@
         android:label="PodcastEpisodesFragment">
         <argument
             android:name="podcastID"
-            android:defaultValue="hello2"
+            android:defaultValue="hello"
             app:argType="string" />
     </fragment>
     <fragment
@@ -77,6 +77,14 @@
     <fragment
         android:id="@+id/feedFragment"
         android:name="com.furkanaskin.app.podpocket.ui.feed.FeedFragment"
-        android:label="FeedFragment" />
+        android:label="FeedFragment">
+        <action
+            android:id="@+id/action_feedFragment_to_newPostFragment"
+            app:destination="@id/newPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPostFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.feed.new_post.NewPostFragment"
+        android:label="NewPostFragment" />
 
 </navigation>

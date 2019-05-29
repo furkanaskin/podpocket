@@ -39,6 +39,15 @@
             app:tabMode="fixed"
             app:tabTextColor="@color/colorCyan" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonNewPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/margin_24_dp"
+            android:src="@drawable/ic_next" />
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"

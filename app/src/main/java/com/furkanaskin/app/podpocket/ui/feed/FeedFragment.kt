@@ -1,5 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.feed
 
+import android.os.Bundle
+import android.view.View
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentFeedBinding
@@ -30,6 +32,15 @@ class FeedFragment : BaseFragment<FeedViewModel, FragmentFeedBinding>(FeedViewMo
         }
 
         mBinding.tabLayout.setupWithViewPager(mBinding.viewPager)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mBinding.buttonNewPost.setOnClickListener {
+            navigate(R.id.action_feedFragment_to_newPostFragment)
+        }
+
     }
 
 }
