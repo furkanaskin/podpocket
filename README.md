@@ -50,9 +50,8 @@ This project is an Podcast app like Spotify, Spreaker or SoundCloud but we has o
 
  - TDD with UI/Unit tests
  
-## Design
-[Adroit Grafik](https://www.uplabs.com/adroitgrafik)
-![image](https://user-images.githubusercontent.com/22769589/58383537-d2599980-7fe0-11e9-8e21-ddcbeaba6db9.png)
+## Special Thanks
+Thanks to [Adroit Grafik](https://www.uplabs.com/adroitgrafik) for app design.
 
 ## License
 
