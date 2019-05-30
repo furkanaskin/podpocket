@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.feed.new_post
 
 import android.app.Application
-import android.widget.Toast
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
@@ -19,6 +18,7 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
     var progressBarView: ObservableField<Boolean> = ObservableField(false)
     lateinit var currentUser: User
     var postText: ObservableField<String> = ObservableField("")
+    var pushPostSuccess: ObservableField<Boolean> = ObservableField(false)
 
     var databaseReference: DatabaseReference? = null
 
@@ -40,27 +40,33 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
                     postText.get(),
                     user?.uniqueId,
                     currentLocation)
-
             insertPostToFirebase(newPost)
-            Toast.makeText(getApplication(), "Post başarı ile paylaşıldı!", Toast.LENGTH_SHORT).show()
         }
     }
 
 
     fun insertPostToFirebase(post: Post) {
-        databaseReference?.child("posts")?.child(post.userUniqueId ?: "")?.setValue(post)
+        //databaseReference?.child("posts")?.child(post.userUniqueId ?: "")?.setValue(post)
+        databaseReference?.child("posts")?.push()?.setValue(post)?.addOnCompleteListener { task ->
+
+            if (task.isSuccessful) {
+                pushPostSuccess.set(true)
+            } else {
+                pushPostSuccess.set(false)
+            }
+        }
 
     }
 
     private fun createFirebaseListener() {
         val usersRef = FirebaseDatabase.getInstance().getReference("users")
         usersRef.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
+            override fun onCancelled(error: DatabaseError) {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                var userList = snapshot.children
-                userList.forEachIndexed { index, dataSnapshot ->
+                val userList = snapshot.children
+                userList.forEachIndexed { _, dataSnapshot ->
                     if (dataSnapshot.key == user?.uniqueId) {
                         currentUser = dataSnapshot.getValue(User::class.java)!!
                     }

@@ -2,13 +2,14 @@ package com.furkanaskin.app.podpocket.ui.forget_password
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.Observable
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.ActivityForgetPasswordBinding
+import com.furkanaskin.app.podpocket.utils.extensions.hide
+import com.furkanaskin.app.podpocket.utils.extensions.show
 
 /**
  * Created by Furkan on 15.04.2019
@@ -43,12 +44,12 @@ class ForgetPasswordActivity : BaseActivity<ForgetPasswordViewModel, ActivityFor
 
         when (viewType) {
             Constants.LoginActivityType.EMAIL_VERIFY -> {
-                binding.textViewForgetPassword.visibility = View.GONE
-                binding.textViewVerifyEmail.visibility = View.VISIBLE
+                binding.textViewForgetPassword.hide()
+                binding.textViewVerifyEmail.show()
             }
             Constants.LoginActivityType.FORGOT_PASS -> {
-                binding.textViewVerifyEmail.visibility = View.GONE
-                binding.textViewForgetPassword.visibility = View.VISIBLE
+                binding.textViewVerifyEmail.hide()
+                binding.textViewForgetPassword.show()
             }
         }
     }

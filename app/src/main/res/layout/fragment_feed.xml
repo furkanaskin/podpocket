@@ -46,7 +46,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/margin_24_dp"
-            android:src="@drawable/ic_next" />
+            android:src="@drawable/ic_pencil"
+            app:backgroundTint="@color/colorPrettyPurple" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"

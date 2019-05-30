@@ -13,6 +13,8 @@ import com.furkanaskin.app.podpocket.service.response.Episode
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
+import com.furkanaskin.app.podpocket.utils.extensions.hide
+import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -118,27 +120,26 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
     }
 
     private fun showAnimation() {
-        mBinding.cardView.visibility = View.GONE
-        mBinding.episodeCardView.visibility = View.GONE
-        mBinding.textViewMainHeading.visibility = View.GONE
-        mBinding.textViewSecondMainHeading.visibility = View.GONE
+        mBinding.cardView.hide()
+        mBinding.episodeCardView.hide()
+        mBinding.textViewMainHeading.hide()
+        mBinding.textViewSecondMainHeading.hide()
 
-        mBinding.lottieAnimationView.visibility = View.VISIBLE
-        mBinding.textViewDummyText.visibility = View.VISIBLE
-        mBinding.buttonNavigateHome.visibility = View.VISIBLE
+        mBinding.lottieAnimationView.show()
+        mBinding.textViewDummyText.show()
+        mBinding.buttonNavigateHome.show()
     }
 
     private fun hideAnimation() {
-        mBinding.cardView.visibility = View.VISIBLE
-        mBinding.episodeCardView.visibility = View.VISIBLE
-        mBinding.textViewMainHeading.visibility = View.VISIBLE
-        mBinding.textViewSecondMainHeading.visibility = View.VISIBLE
+        mBinding.cardView.show()
+        mBinding.episodeCardView.show()
+        mBinding.textViewMainHeading.show()
+        mBinding.textViewSecondMainHeading.show()
 
-        mBinding.lottieAnimationView.visibility = View.GONE
-        mBinding.textViewDummyText.visibility = View.GONE
-        mBinding.buttonNavigateHome.visibility = View.GONE
+        mBinding.lottieAnimationView.hide()
+        mBinding.textViewDummyText.hide()
+        mBinding.buttonNavigateHome.hide()
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

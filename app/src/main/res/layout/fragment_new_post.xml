@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/margin_8_dp"
+            android:layout_marginTop="@dimen/margin_48_dp"
             android:layout_marginEnd="@dimen/margin_8_dp"
             android:hint="@string/whats_going_on"
             android:textColorHint="@color/textColor"
@@ -47,7 +48,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
-                android:inputType="textAutoComplete"
+                android:gravity="top"
+                android:inputType="textCapSentences|textMultiLine"
+                android:minLines="5"
                 android:singleLine="false"
                 android:text="@={viewModel.postText}"
                 android:textColor="@color/colorPrettyPurple" />

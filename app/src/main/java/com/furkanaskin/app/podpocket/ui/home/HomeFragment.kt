@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.home
 
 import android.content.Intent
-import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.furkanaskin.app.podpocket.R
@@ -18,6 +17,8 @@ import com.furkanaskin.app.podpocket.ui.home.best_podcasts.BestPodcastsAdapter
 import com.furkanaskin.app.podpocket.ui.home.recommended_episodes.RecommendedEpisodesAdapter
 import com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPodcastsAdapter
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
+import com.furkanaskin.app.podpocket.utils.extensions.hide
+import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -200,15 +201,15 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
     }
 
     private fun hideTitles() {
-        mBinding.textViewBestPodcasts.visibility = View.GONE
-        mBinding.textViewRecommendedEpisodes.visibility = View.GONE
-        mBinding.textViewRecommendedPodcasts.visibility = View.GONE
+        mBinding.textViewBestPodcasts.hide()
+        mBinding.textViewRecommendedEpisodes.hide()
+        mBinding.textViewRecommendedPodcasts.hide()
     }
 
     fun showTitles() {
-        mBinding.textViewBestPodcasts.visibility = View.VISIBLE
-        mBinding.textViewRecommendedEpisodes.visibility = View.VISIBLE
-        mBinding.textViewRecommendedPodcasts.visibility = View.VISIBLE
+        mBinding.textViewBestPodcasts.show()
+        mBinding.textViewRecommendedEpisodes.show()
+        mBinding.textViewRecommendedPodcasts.show()
     }
 
     override fun onDestroy() {

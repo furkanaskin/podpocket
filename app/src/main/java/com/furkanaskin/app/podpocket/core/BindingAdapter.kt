@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.furkanaskin.app.podpocket.R
+import com.furkanaskin.app.podpocket.utils.extensions.hide
+import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
 
@@ -17,11 +19,11 @@ object BindingAdapter {
     @JvmStatic
     @BindingAdapter("app:visibility")
     fun setVisibilty(view: View, isVisible: Boolean) {
-        view.visibility = View.GONE
+        view.hide()
         if (isVisible) {
-            view.visibility = View.VISIBLE
+            view.show()
         } else {
-            view.visibility = View.GONE
+            view.hide()
         }
     }
 

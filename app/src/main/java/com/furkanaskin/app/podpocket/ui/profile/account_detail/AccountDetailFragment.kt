@@ -16,6 +16,8 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentAccountDetailBinding
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
+import com.furkanaskin.app.podpocket.utils.extensions.hide
+import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.firebase.storage.FirebaseStorage
 import org.jetbrains.anko.support.v4.runOnUiThread
 import java.io.ByteArrayOutputStream
@@ -39,12 +41,12 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
 
         mBinding.viewModel?.userData = user
         if (user!!.profilePictureUrl.isNullOrEmpty()) {
-            mBinding.fabChangeImage.visibility = View.VISIBLE
+            mBinding.fabChangeImage.show()
         } else {
             isUserHavePicture = true
-            mBinding.fabChangeImage.visibility = View.GONE
-            profileImageUrl.set(user!!.profilePictureUrl.toString())
-            Glide.with(this.activity!!).load(user!!.profilePictureUrl).into(mBinding.imageViewProfilePicture)
+            mBinding.fabChangeImage.hide()
+            profileImageUrl.set(user?.profilePictureUrl.toString())
+            Glide.with(this.activity!!).load(user?.profilePictureUrl).into(mBinding.imageViewProfilePicture)
         }
 
         mBinding.imageViewProfilePicture.setOnClickListener {

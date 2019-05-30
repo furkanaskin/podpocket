@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.Observable
 import com.furkanaskin.app.podpocket.R
@@ -16,6 +15,8 @@ import com.furkanaskin.app.podpocket.databinding.ActivityAfterRegisterBinding
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.model.User
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
+import com.furkanaskin.app.podpocket.utils.extensions.hide
+import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.firebase.storage.FirebaseStorage
 import org.jetbrains.anko.doAsync
 import java.io.ByteArrayOutputStream
@@ -41,8 +42,8 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         super.onCreate(savedInstanceState)
 
         when (isCurrentUserIDAvailable()) {
-            true -> binding.buttonDone.visibility = View.VISIBLE
-            false -> binding.buttonDone.visibility = View.GONE
+            true -> binding.buttonDone.show()
+            false -> binding.buttonDone.hide()
         }
 
 
@@ -138,13 +139,13 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
                 val selectedImage = data?.extras?.get("data")
 
                 binding.imageViewUser.setImageBitmap(selectedImage as Bitmap?)
-                binding.fabChangeImage.visibility = View.GONE
+                binding.fabChangeImage.hide()
                 updateProfilePicture(mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
             }
             1 -> if (resultCode == Activity.RESULT_OK) {
                 val selectedImage = data?.data
                 binding.imageViewUser.setImageURI(selectedImage)
-                binding.fabChangeImage.visibility = View.GONE
+                binding.fabChangeImage.hide()
                 updateProfilePicture(mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
 
             }

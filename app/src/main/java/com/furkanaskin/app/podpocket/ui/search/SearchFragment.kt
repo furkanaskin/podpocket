@@ -2,7 +2,6 @@ package com.furkanaskin.app.podpocket.ui.search
 
 import android.content.Intent
 import android.os.Handler
-import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
@@ -23,6 +22,7 @@ import com.furkanaskin.app.podpocket.service.response.Search
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.ui.search.episode_search.SearchResultAdapter
 import com.furkanaskin.app.podpocket.ui.search.podcast_search.PodcastSearchResultAdapter
+import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -125,7 +125,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                searchViewCloseIcon.visibility = View.GONE
+                searchViewCloseIcon.hide()
                 if (newText?.length!! % 3 == 0)
                     Handler().postDelayed({
                         getSearchResult(newText.toString(), Constants.SearchQuery.EPISODE)

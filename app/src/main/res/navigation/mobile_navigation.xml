@@ -85,6 +85,10 @@
     <fragment
         android:id="@+id/newPostFragment"
         android:name="com.furkanaskin.app.podpocket.ui.feed.new_post.NewPostFragment"
-        android:label="NewPostFragment" />
+        android:label="NewPostFragment">
+        <action
+            android:id="@+id/action_newPostFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
+    </fragment>
 
 </navigation>

@@ -16,6 +16,8 @@ import com.furkanaskin.app.podpocket.databinding.ActivityPlayerBinding
 import com.furkanaskin.app.podpocket.db.entities.FavoriteEpisodeEntity
 import com.furkanaskin.app.podpocket.db.entities.PlayerEntity
 import com.furkanaskin.app.podpocket.service.response.Episode
+import com.furkanaskin.app.podpocket.utils.extensions.hide
+import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -86,12 +88,12 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
 
         binding.buttonQueue.setOnClickListener {
-            fragmentLayoutQueue.visibility = View.VISIBLE
-            imageButtonCloseQueue.visibility = View.VISIBLE
-            imageButtonQueue.visibility = View.GONE
-            imageViewTrackDisk.visibility = View.GONE
-            textViewTrackName.visibility = View.GONE
-            relativeLayoutHeader.visibility = View.GONE
+            fragmentLayoutQueue.show()
+            imageButtonCloseQueue.show()
+            imageButtonQueue.hide()
+            imageViewTrackDisk.hide()
+            textViewTrackName.hide()
+            relativeLayoutHeader.hide()
 
             // After making visibility settings we can add Player Queue
 
@@ -106,15 +108,15 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                         .commitNow()
             }
 
-            binding.relativeLayoutNowPlaying.visibility = View.GONE
+            binding.relativeLayoutNowPlaying.hide()
         }
 
         binding.imageButtonCloseQueue.setOnClickListener {
-            textViewTrackName.visibility = View.VISIBLE
-            imageViewTrackDisk.visibility = View.VISIBLE
-            imageButtonQueue.visibility = View.VISIBLE
-            imageButtonCloseQueue.visibility = View.GONE
-            relativeLayoutHeader.visibility = View.VISIBLE
+            textViewTrackName.show()
+            imageViewTrackDisk.show()
+            imageButtonQueue.show()
+            imageButtonCloseQueue.hide()
+            relativeLayoutHeader.show()
 
             // After making visibility settings we can remove Player Queue
 
@@ -123,8 +125,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
             queueFragment?.let { it -> transaction.remove(it) }?.commit()
 
-            fragmentLayoutQueue.visibility = View.GONE
-            binding.relativeLayoutNowPlaying.visibility = View.VISIBLE
+            fragmentLayoutQueue.hide()
+            binding.relativeLayoutNowPlaying.show()
 
         }
 

@@ -21,6 +21,8 @@ import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.ui.profile.favorites.favorite_episodes.FavoriteEpisodesAdapter
+import com.furkanaskin.app.podpocket.utils.extensions.hide
+import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.furkanaskin.app.podpocket.utils.extensions.showKeyboard
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import iammert.com.view.scalinglib.ScalingLayoutListener
@@ -215,23 +217,23 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
     }
 
     private fun showAnimation() {
-        mBinding.scalingLayout.visibility = View.GONE
-        mBinding.textViewMainHeading.visibility = View.GONE
-        mBinding.textViewTagLine.visibility = View.GONE
-        mBinding.recyclerViewFavoriteEpisodes.visibility = View.GONE
+        mBinding.scalingLayout.hide()
+        mBinding.textViewMainHeading.hide()
+        mBinding.textViewTagLine.hide()
+        mBinding.recyclerViewFavoriteEpisodes.hide()
 
-        mBinding.lottieAnimationView.visibility = View.VISIBLE
-        mBinding.textViewDummyText.visibility = View.VISIBLE
+        mBinding.lottieAnimationView.show()
+        mBinding.textViewDummyText.show()
     }
 
     private fun hideAnimation() {
-        mBinding.scalingLayout.visibility = View.VISIBLE
-        mBinding.textViewMainHeading.visibility = View.VISIBLE
-        mBinding.textViewTagLine.visibility = View.VISIBLE
-        mBinding.recyclerViewFavoriteEpisodes.visibility = View.VISIBLE
+        mBinding.scalingLayout.show()
+        mBinding.textViewMainHeading.show()
+        mBinding.textViewTagLine.show()
+        mBinding.recyclerViewFavoriteEpisodes.show()
 
-        mBinding.lottieAnimationView.visibility = View.GONE
-        mBinding.textViewDummyText.visibility = View.GONE
+        mBinding.lottieAnimationView.hide()
+        mBinding.textViewDummyText.hide()
     }
 
     override fun onDestroy() {

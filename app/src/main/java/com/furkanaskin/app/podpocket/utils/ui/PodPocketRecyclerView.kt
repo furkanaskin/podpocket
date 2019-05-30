@@ -6,6 +6,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.furkanaskin.app.podpocket.utils.extensions.hide
+import com.furkanaskin.app.podpocket.utils.extensions.show
 
 
 class PodPocketRecyclerView : RecyclerView {
@@ -47,7 +49,7 @@ class PodPocketRecyclerView : RecyclerView {
                 val count: Int
                 if (adapter != null && isLoadingFinished) {
                     if (loadingView != null)
-                        loadingView!!.visibility = View.GONE
+                        loadingView!!.hide()
                     count = adapter!!.itemCount
                     if (this@PodPocketRecyclerView.countTextView != null) {
                         if (isCountTextAdd) {
@@ -58,14 +60,14 @@ class PodPocketRecyclerView : RecyclerView {
                     }
                     val emptyViewVisible = count < 1
                     emptyView?.visibility = if (emptyViewVisible) View.VISIBLE else View.GONE
-                    if (!emptyViewVisible) {
-                        visibility = View.VISIBLE
+                    visibility = if (!emptyViewVisible) {
+                        View.VISIBLE
                     } else
-                        visibility = View.GONE
+                        View.GONE
 
                 } else if (loadingView != null) {
-                    loadingView!!.visibility = View.VISIBLE
-                    emptyView?.visibility = View.GONE
+                    loadingView!!.show()
+                    emptyView?.hide()
                     visibility = View.GONE
                 }
             }
