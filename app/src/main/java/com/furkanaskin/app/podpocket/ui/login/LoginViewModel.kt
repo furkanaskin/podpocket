@@ -252,7 +252,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     }
 
     private fun convertDate(date: LocalDate) =
-            "${date.format(DateTimeFormatter.ISO_DATE)}"
+            date.format(DateTimeFormatter.ISO_DATE)
 
     override fun onCleared() {
         super.onCleared()

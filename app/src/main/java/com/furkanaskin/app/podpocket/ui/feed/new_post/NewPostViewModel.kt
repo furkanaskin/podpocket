@@ -1,6 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.feed.new_post
 
 import android.app.Application
+import android.widget.Toast
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
@@ -41,6 +42,7 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
                     currentLocation)
 
             insertPostToFirebase(newPost)
+            Toast.makeText(getApplication(), "Post başarı ile paylaşıldı!", Toast.LENGTH_SHORT).show()
         }
     }
 

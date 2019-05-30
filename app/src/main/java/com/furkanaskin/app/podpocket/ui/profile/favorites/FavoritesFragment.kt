@@ -13,6 +13,7 @@ import androidx.core.view.ViewPropertyAnimatorListener
 import androidx.lifecycle.Observer
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
+import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.FragmentFavoritesBinding
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.db.entities.FavoriteEpisodeEntity
@@ -150,8 +151,8 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
                             viewModel.progressBarView.set(false)
 
                             val intent = Intent(activity, PlayerActivity::class.java)
-                            intent.putStringArrayListExtra("allPodIds", ids)
-                            intent.putExtra("position", item.id)
+                            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, ids)
+                            intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)
                             startActivity(intent)
 
                         }
@@ -213,7 +214,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
         })
     }
 
-    fun showAnimation() {
+    private fun showAnimation() {
         mBinding.scalingLayout.visibility = View.GONE
         mBinding.textViewMainHeading.visibility = View.GONE
         mBinding.textViewTagLine.visibility = View.GONE
@@ -223,7 +224,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
         mBinding.textViewDummyText.visibility = View.VISIBLE
     }
 
-    fun hideAnimation() {
+    private fun hideAnimation() {
         mBinding.scalingLayout.visibility = View.VISIBLE
         mBinding.textViewMainHeading.visibility = View.VISIBLE
         mBinding.textViewTagLine.visibility = View.VISIBLE

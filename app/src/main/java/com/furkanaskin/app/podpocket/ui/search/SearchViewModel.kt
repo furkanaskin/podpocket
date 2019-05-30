@@ -5,7 +5,6 @@ import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.service.PodpocketAPI
-import com.furkanaskin.app.podpocket.service.response.Genres
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.service.response.Search
 import io.reactivex.Observable
@@ -26,11 +25,6 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
         (app as? Podpocket)?.component?.inject(this)
     }
 
-
-    fun getGenres(): Observable<Genres> {
-        return api.getGenres()
-    }
-
     fun getSearchResult(searchText: String, type: String): Observable<Search> {
         return api.fullTextSearch(searchText, type)
     }
@@ -39,5 +33,4 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
 
         return baseApi.getPodcastById(id)
     }
-
 }

@@ -30,7 +30,7 @@ class QueueAdapter(private val callBack: (EpisodeEntity, Int, Boolean) -> Unit) 
 
         mBinding.relativeLayoutItemContainer.setOnClickListener {
             mBinding.viewModel?.item?.get()?.let {
-                callBack.invoke(it, mBinding.viewModel!!.position, mBinding.viewModel!!.isSelected)
+                callBack(it, mBinding.viewModel!!.position, mBinding.viewModel!!.isSelected)
             }
         }
 

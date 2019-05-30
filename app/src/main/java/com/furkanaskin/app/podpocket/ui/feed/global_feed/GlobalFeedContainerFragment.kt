@@ -30,5 +30,4 @@ class GlobalFeedContainerFragment : Fragment() {
                     .commit()
         }
     }
-
 }

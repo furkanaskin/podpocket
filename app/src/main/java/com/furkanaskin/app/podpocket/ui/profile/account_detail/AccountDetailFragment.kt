@@ -174,6 +174,4 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         }
 
     }
-
-
 }

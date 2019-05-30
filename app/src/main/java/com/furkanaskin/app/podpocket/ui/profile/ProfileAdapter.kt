@@ -28,7 +28,7 @@ class ProfileAdapter(private val callBack: (ProfileSettingsEntity, Int) -> Unit)
         mBinding.viewModel = viewModel
         mBinding.cardView.setOnClickListener {
             mBinding.viewModel?.item?.get()?.let {
-                callBack.invoke(it, mBinding.viewModel!!.position)
+                callBack(it, mBinding.viewModel!!.position)
             }
         }
         return mBinding

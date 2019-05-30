@@ -30,5 +30,4 @@ class FeedSearchContainerFragment : Fragment() {
                     .commit()
         }
     }
-
 }

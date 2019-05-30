@@ -7,6 +7,9 @@ package com.furkanaskin.app.podpocket.core
 object Constants {
     object IntentName {
         val LOGIN_ACTIVITY_TYPE = "login_activity_type"
+        val PLAYER_ACTIVITY_ALL_IDS = "allPodIds"
+        val PLAYER_ACTIVITY_POSITION = "position"
+        val PLAYER_ACTIVITY_ITEM = "pod"
     }
 
     object LoginActivityType {
@@ -23,5 +26,10 @@ object Constants {
     object BundleArguments {
         val PODCAST_ID = "podcastId"
         val CURRENT_EPISODE = "currentEpisode"
+    }
+
+    object SearchQuery {
+        val EPISODE = "episode"
+        val PODCAST = "podcast"
     }
 }

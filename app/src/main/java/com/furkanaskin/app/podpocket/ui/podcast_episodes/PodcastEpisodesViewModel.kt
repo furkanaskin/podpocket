@@ -25,7 +25,7 @@ class PodcastEpisodesViewModel(app: Application) : BaseViewModel(app) {
         return baseApi.getPodcastById(id)
     }
 
-    fun getAllIds(position: Int): List<String> {
+    fun getAllIds(): List<String> {
         val ids: ArrayList<String> = ArrayList()
         for (i in podcast.get()?.episodes?.indices!!) {
             podcast.get()?.episodes!![i]?.id?.let { ids.add(it) }

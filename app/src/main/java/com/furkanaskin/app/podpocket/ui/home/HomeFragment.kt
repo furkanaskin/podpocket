@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
+import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.FragmentHomeBinding
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.response.BestPodcasts
@@ -113,8 +114,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
                             super.onComplete()
 
                             val intent = Intent(activity, PlayerActivity::class.java)
-                            intent.putStringArrayListExtra("allPodIds", ids)
-                            intent.putExtra("position", item.id)
+                            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, ids)
+                            intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)
                             startActivity(intent)
 
                         }

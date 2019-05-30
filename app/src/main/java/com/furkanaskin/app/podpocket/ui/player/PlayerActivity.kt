@@ -11,6 +11,7 @@ import androidx.databinding.Observable
 import androidx.fragment.app.FragmentTransaction
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
+import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.ActivityPlayerBinding
 import com.furkanaskin.app.podpocket.db.entities.FavoriteEpisodeEntity
 import com.furkanaskin.app.podpocket.db.entities.PlayerEntity
@@ -67,18 +68,18 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        episodes = intent.getStringArrayListExtra("allPodIds")
+        episodes = intent.getStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS)
 
-        if (intent.getStringExtra("position").length > 4) {
+        if (intent.getStringExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION).length > 4) {
 
             // User coming from homeFragment recommendations or favorites fragment, just try to get episode detail.
-            episodeId = intent.getStringExtra("position")
+            episodeId = intent.getStringExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION)
             getEpisodeDetail(episodeId)
 
         } else {
 
-            // User coming from Podcast Episodes fragment. First we need the find whic position clicked then we can get episode detail.
-            currentPosition = intent.getStringExtra("position").toInt()
+            // User coming from Podcast Episodes fragment. First we need the find which position clicked then we can get episode detail.
+            currentPosition = intent.getStringExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION).toInt()
             episodeId = episodes[currentPosition]
             getEpisodeDetail(episodeId)
         }
@@ -341,7 +342,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 disableButtons()
 
             } else {
-                Toast.makeText(this, "Yeni bölüm bulunmamaktadır.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.no_more_new_episodes), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -359,7 +360,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 disableButtons()
 
             } else {
-                Toast.makeText(this, "İlk bölümdesiniz.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.you_are_in_first_episode), Toast.LENGTH_SHORT).show()
             }
         }
     }

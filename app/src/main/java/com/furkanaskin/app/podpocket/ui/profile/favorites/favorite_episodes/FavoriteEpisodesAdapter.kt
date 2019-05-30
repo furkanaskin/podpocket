@@ -28,7 +28,7 @@ class FavoriteEpisodesAdapter(private val callBack: (FavoriteEpisodeEntity, Int)
         mBinding.viewModel = viewModel
         mBinding.cardView.setOnClickListener {
             mBinding.viewModel?.item?.get()?.let {
-                callBack.invoke(it, mBinding.viewModel!!.position)
+                callBack(it, mBinding.viewModel!!.position)
             }
         }
         return mBinding
@@ -46,6 +46,4 @@ val favoriteEpisodeDiffCallback = object : DiffUtil.ItemCallback<FavoriteEpisode
 
     override fun areItemsTheSame(oldItem: FavoriteEpisodeEntity, newItem: FavoriteEpisodeEntity): Boolean =
             oldItem.id == newItem.id
-
-
 }

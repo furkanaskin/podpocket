@@ -57,7 +57,7 @@ class ForgetPasswordActivity : BaseActivity<ForgetPasswordViewModel, ActivityFor
         AlertDialog.Builder(this)
                 .setMessage(R.string.reset_password_dialog)
                 .setNeutralButton("Tamam"
-                ) { dialogInterface: DialogInterface, i: Int ->
+                ) { dialogInterface: DialogInterface, _: Int ->
                     dialogInterface.cancel()
                 }
                 .create()
@@ -68,7 +68,7 @@ class ForgetPasswordActivity : BaseActivity<ForgetPasswordViewModel, ActivityFor
         AlertDialog.Builder(this)
                 .setMessage(R.string.verify_email_dialog)
                 .setNeutralButton("Tamam"
-                ) { dialogInterface: DialogInterface, i: Int ->
+                ) { dialogInterface: DialogInterface, _: Int ->
                     dialogInterface.cancel()
                 }
                 .create()

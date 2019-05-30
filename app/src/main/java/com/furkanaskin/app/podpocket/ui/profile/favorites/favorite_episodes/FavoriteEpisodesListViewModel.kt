@@ -19,5 +19,4 @@ class FavoriteEpisodesListViewModel(app: Application) : BaseViewModel(app) {
         this.position = position
 
     }
-
 }

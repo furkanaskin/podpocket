@@ -6,6 +6,7 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
+import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.FragmentRecentlyPlayedBinding
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.response.Episode
@@ -63,8 +64,8 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
 
         mBinding.textViewListenEpisode.setOnClickListener {
             val intent = Intent(activity, PlayerActivity::class.java)
-            intent.putStringArrayListExtra("allPodIds", ids)
-            intent.putExtra("position", viewModel.episodeItem.get()?.id)
+            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, ids)
+            intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, viewModel.episodeItem.get()?.id)
             startActivity(intent)
         }
 
@@ -106,7 +107,7 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
                         doAsync {
                             viewModel.db.episodesDao().deleteAllEpisodes()
                             t.episodes?.forEachIndexed { _, episode ->
-                                val episodesItem = episode.let { EpisodeEntity(it!!) }
+                                val episodesItem = EpisodeEntity(episode!!)
                                 episodesItem.let { viewModel.db.episodesDao().insertEpisode(it) }
                             }
                         }
@@ -116,7 +117,7 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
                 }))
     }
 
-    fun showAnimation() {
+    private fun showAnimation() {
         mBinding.cardView.visibility = View.GONE
         mBinding.episodeCardView.visibility = View.GONE
         mBinding.textViewMainHeading.visibility = View.GONE
@@ -127,7 +128,7 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
         mBinding.buttonNavigateHome.visibility = View.VISIBLE
     }
 
-    fun hideAnimation() {
+    private fun hideAnimation() {
         mBinding.cardView.visibility = View.VISIBLE
         mBinding.episodeCardView.visibility = View.VISIBLE
         mBinding.textViewMainHeading.visibility = View.VISIBLE

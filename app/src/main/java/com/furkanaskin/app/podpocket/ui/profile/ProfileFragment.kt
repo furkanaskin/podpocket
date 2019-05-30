@@ -45,8 +45,8 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
 
     }
 
-    fun prepareProfileItems() {
-        var itemList = ArrayList<ProfileSettingsEntity>()
+    private fun prepareProfileItems() {
+        val itemList = ArrayList<ProfileSettingsEntity>()
         itemList.add(ProfileSettingsEntity(resources.getString(R.string.favorites), R.drawable.ic_favorites))
         itemList.add(ProfileSettingsEntity(resources.getString(R.string.recently_played), R.drawable.ic_recently_plays))
         itemList.add(ProfileSettingsEntity(resources.getString(R.string.account_details), R.drawable.ic_account_settings))
@@ -59,7 +59,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
 
 
     private fun initProfileItemsAdapter() {
-        val adapter = ProfileAdapter { item, position ->
+        val adapter = ProfileAdapter { _, position ->
 
             when (position) {
                 0 -> navigateFavoritesScreen()
@@ -80,7 +80,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
         viewModel.userEmail.set(user?.email ?: "")
     }
 
-    fun logout() {
+    private fun logout() {
         mAuth.signOut()
         val intent = Intent(activity, MainActivity::class.java)
         startActivity(intent)
@@ -100,24 +100,24 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
         }
     }
 
-    fun sendFeedback() {
+    private fun sendFeedback() {
         val intent = Intent(Intent.ACTION_SENDTO)
         intent.data = Uri.parse("mailto:askinn.furkan@gmail.com") // only email apps should handle this
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Thanks for sharing your experience with Podpocket Developers!")
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.thanks_for_sharing_expreience))
         if (intent.resolveActivity((activity as DashboardActivity).packageManager) != null) {
             startActivity(intent)
         }
     }
 
-    fun navigateAccountDetailScreen() {
+    private fun navigateAccountDetailScreen() {
         navigate(R.id.action_profileFragment_to_accountDetailFragment)
     }
 
-    fun navigateRecentlyPlayedScreen() {
+    private fun navigateRecentlyPlayedScreen() {
         navigate(R.id.action_profileFragment_to_recentlyPlayedFragment)
     }
 
-    fun navigateFavoritesScreen() {
+    private fun navigateFavoritesScreen() {
         navigate(R.id.action_profileFragment_to_favoritesFragment)
     }
 }

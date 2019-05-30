@@ -29,7 +29,7 @@ class SearchResultAdapter(private val callBack: (ResultsItem) -> Unit) : BaseAda
 
         mBinding.cardView.setOnClickListener {
             mBinding.viewModel?.item?.get()?.let {
-                callBack.invoke(it)
+                callBack(it)
             }
         }
 

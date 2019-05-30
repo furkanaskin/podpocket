@@ -70,6 +70,14 @@
     <string name="feed_search_fragment">Ara</string>
     <string name="share">Paylaş</string>
     <string name="whats_going_on">Neler oluyor?</string>
+    <string name="send_verify_mail_again">E-posta doğrulamasının tekrar gönderilmesini ister misiniz?</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+    <string name="cancel">Vazgeç</string>
+    <string name="okey">Tamam</string>
+    <string name="no_more_new_episodes">Yeni bölüm bulunmamaktadır.</string>
+    <string name="you_are_in_first_episode">İlk bölümdesiniz.</string>
+    <string name="thanks_for_sharing_expreience">Thanks for sharing your experience with Podpocket Developers!</string>
     <string-array name="feed_fragment_titles">
         <item>@string/locale_feed_fragment</item>
         <item>@string/global_feed_fragment</item>

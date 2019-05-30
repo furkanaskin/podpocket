@@ -18,5 +18,4 @@ class ProfileItemViewModel(app: Application) : BaseViewModel(app) {
         this.position = position
 
     }
-
 }

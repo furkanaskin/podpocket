@@ -42,5 +42,4 @@ class AccountDetailViewModel(app: Application) : BaseViewModel(app) {
             db.userDao().updateUser(user)
         }
     }
-
 }

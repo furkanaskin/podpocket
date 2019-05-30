@@ -6,6 +6,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
+import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.FragmentPodcastEpisodesBinding
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.response.Podcasts
@@ -41,9 +42,9 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
         val adapter = EpisodesAdapter { item, position ->
 
             val intent = Intent(activity, PlayerActivity::class.java)
-            intent.putExtra("pod", item)
-            intent.putExtra("position", position.toString())
-            intent.putStringArrayListExtra("allPodIds", viewModel.getAllIds(position) as ArrayList<String>?)
+            intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_ITEM, item)
+            intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, position.toString())
+            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, viewModel.getAllIds() as ArrayList<String>?)
             startActivity(intent)
 
         }
@@ -80,11 +81,7 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                     override fun onComplete() {
                         super.onComplete()
 
-                        viewModel.db.episodesDao().getEpisodes().observe(this@PodcastEpisodesFragment, object : Observer<List<EpisodeEntity>> {
-                            override fun onChanged(t: List<EpisodeEntity>?) {
-                                (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
-                            }
-                        })
+                        viewModel.db.episodesDao().getEpisodes().observe(this@PodcastEpisodesFragment, Observer<List<EpisodeEntity>> { t -> (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t) })
 
                     }
 

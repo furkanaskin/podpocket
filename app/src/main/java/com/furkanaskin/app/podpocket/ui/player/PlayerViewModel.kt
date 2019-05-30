@@ -44,5 +44,4 @@ class PlayerViewModel(app: Application) : BaseViewModel(app) {
             mFormatter.format("%02d:%02d", minutes, seconds).toString()
         }
     }
-
 }

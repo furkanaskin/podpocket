@@ -53,15 +53,11 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
         }
 
         // Add episodes to queue.
-        viewModel.db.episodesDao().getEpisodes().observe(this@PlayerQueueFragment, object : Observer<List<EpisodeEntity>> {
-            override fun onChanged(t: List<EpisodeEntity>?) {
-                mBinding.recyclerViewQueueEpisodes.adapter = adapter
-                (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(t)
-
-            }
+        viewModel.db.episodesDao().getEpisodes().observe(this@PlayerQueueFragment, Observer<List<EpisodeEntity>> { t ->
+            mBinding.recyclerViewQueueEpisodes.adapter = adapter
+            (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(t)
         })
 
         viewModel.progressBarView.set(false)
     }
-
 }

@@ -113,8 +113,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
     private fun showAgreementDialog() {
         AlertDialog.Builder(this)
                 .setMessage(R.string.agreement_message)
-                .setNeutralButton("Tamam"
-                ) { dialogInterface: DialogInterface, i: Int ->
+                .setNeutralButton(getString(R.string.okey)) { dialogInterface: DialogInterface, _: Int ->
                     dialogInterface.cancel()
                 }
                 .create()
@@ -124,8 +123,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
     private fun showRegisterSuccessDialog() {
         AlertDialog.Builder(this)
                 .setMessage(R.string.register_success_dialog)
-                .setNeutralButton("Tamam"
-                ) { dialogInterface: DialogInterface, i: Int ->
+                .setNeutralButton(getString(R.string.okey)) { dialogInterface: DialogInterface, _: Int ->
                     dialogInterface.cancel()
                 }
                 .create()
@@ -136,18 +134,18 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
 
         val builder = AlertDialog.Builder(this)
         // Display a message on alert dialog
-        builder.setMessage("E-posta doğrulamasının tekrar gönderilmesini ister misiniz?")
+        builder.setMessage(getString(R.string.send_verify_mail_again))
         // Set a positive button and its click listener on alert dialog
-        builder.setPositiveButton("Evet") { dialog, which ->
+        builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
             // Do something when user press the positive button
             viewModel.forgetPasswordClicked()
         }
         // Display a negative button on alert dialog
-        builder.setNegativeButton("Hayır") { dialog, which ->
+        builder.setNegativeButton(getString(R.string.no)) { dialog, _ ->
             dialog.dismiss()
         }
         // Display a neutral button on alert dialog
-        builder.setNeutralButton("Vazgeç") { _, _ ->
+        builder.setNeutralButton(getString(R.string.cancel)) { _, _ ->
             dialog?.dismiss()
         }
         // Finally, make the alert dialog using builder

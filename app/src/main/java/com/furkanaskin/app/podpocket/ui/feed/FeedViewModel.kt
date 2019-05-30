@@ -17,5 +17,4 @@ class FeedViewModel(app: Application) : BaseViewModel(app) {
     init {
         (app as? Podpocket)?.component?.inject(this)
     }
-
 }

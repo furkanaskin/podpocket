@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
+import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.FragmentSearchBinding
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
-import com.furkanaskin.app.podpocket.service.response.Genres
 import com.furkanaskin.app.podpocket.service.response.GenresItem
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.service.response.Search
@@ -69,7 +69,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                             doAsync {
                                 viewModel.db.episodesDao().deleteAllEpisodes()
                                 t.episodes?.forEachIndexed { _, episode ->
-                                    val episodesItem = episode.let { EpisodeEntity(it!!) }
+                                    val episodesItem = episode?.let { EpisodeEntity(it) }
                                     episodesItem.let { viewModel.db.episodesDao().insertEpisode(it) }
                                 }
                             }
@@ -79,8 +79,8 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                             super.onComplete()
 
                             val intent = Intent(activity, PlayerActivity::class.java)
-                            intent.putStringArrayListExtra("allPodIds", ids)
-                            intent.putExtra("position", item.id)
+                            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, ids)
+                            intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)
                             startActivity(intent)
 
                         }
@@ -103,23 +103,6 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         mBinding.recyclerViewPodcastSearchResult.layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
 
     }
-
-    private fun getGenres() {
-        disposable.add(viewModel.getGenres()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<Genres>(activity?.application) {
-                    override fun onSuccess(t: Genres) {
-                        t.genres?.forEach {
-                            genreList.add(it)
-                        }
-
-
-                    }
-
-                }))
-    }
-
 
     private fun initSearchView() {
         val searchEditText: EditText = mBinding.searchView.findViewById(R.id.search_src_text)
@@ -145,8 +128,8 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                 searchViewCloseIcon.visibility = View.GONE
                 if (newText?.length!! % 3 == 0)
                     Handler().postDelayed({
-                        getSearchResult(newText.toString(), "episode")
-                        getSearchResult(newText.toString(), "podcast")
+                        getSearchResult(newText.toString(), Constants.SearchQuery.EPISODE)
+                        getSearchResult(newText.toString(), Constants.SearchQuery.PODCAST)
 
                     }, 1000)
                 return true
@@ -164,7 +147,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                 .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
                     override fun onSuccess(t: Search) {
                         hideProgress()
-                        if (type.equals("episode")) {
+                        if (type == Constants.SearchQuery.EPISODE) {
                             (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(t.results)
                         } else {
                             (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(t.results)

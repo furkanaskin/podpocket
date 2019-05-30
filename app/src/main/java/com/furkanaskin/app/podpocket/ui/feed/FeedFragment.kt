@@ -42,5 +42,4 @@ class FeedFragment : BaseFragment<FeedViewModel, FragmentFeedBinding>(FeedViewMo
         }
 
     }
-
 }

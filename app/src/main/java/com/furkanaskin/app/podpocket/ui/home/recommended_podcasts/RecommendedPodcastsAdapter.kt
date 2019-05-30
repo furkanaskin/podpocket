@@ -29,7 +29,7 @@ class RecommendedPodcastsAdapter(private val callBack: (RecommendationsItem) -> 
 
         mBinding.cardView.setOnClickListener {
             mBinding.viewModel?.item?.get()?.let {
-                callBack.invoke(it)
+                callBack(it)
             }
         }
         return mBinding

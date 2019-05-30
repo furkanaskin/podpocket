@@ -23,5 +23,4 @@ class PlayerQueueViewModel(app: Application) : BaseViewModel(app) {
 
         return baseApi.getPodcastById(id)
     }
-
 }
