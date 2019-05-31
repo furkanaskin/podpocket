@@ -9,6 +9,7 @@ import com.furkanaskin.app.podpocket.model.User
 import com.google.firebase.database.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by Furkan on 2019-05-26
@@ -38,6 +39,7 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
                     currentUser.verifiedUser,
                     currentUser.userName,
                     postText.get(),
+                    createUniquePostId(),
                     user?.uniqueId,
                     currentLocation)
             insertPostToFirebase(newPost)
@@ -45,9 +47,9 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
     }
 
 
-    fun insertPostToFirebase(post: Post) {
-        //databaseReference?.child("posts")?.child(post.userUniqueId ?: "")?.setValue(post)
-        databaseReference?.child("posts")?.push()?.setValue(post)?.addOnCompleteListener { task ->
+    private fun insertPostToFirebase(post: Post) {
+        databaseReference?.child("posts")?.child(post.postId
+                ?: "")?.setValue(post)?.addOnCompleteListener { task ->
 
             if (task.isSuccessful) {
                 pushPostSuccess.set(true)
@@ -76,6 +78,9 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
         })
     }
 
-    private fun convertDate(date: LocalDate) =
-            date.format(DateTimeFormatter.ISO_DATE)
+    private fun convertDate(date: LocalDate) = date.format(DateTimeFormatter.ISO_DATE)
+
+    private fun createUniquePostId(): String {
+        return "${(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()))}${user?.uniqueId}"
+    }
 }

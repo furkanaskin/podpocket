@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.furkanaskin.app.podpocket.ui.feed.global_feed.global_posts.GlobalPostsItemViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainBackgroundColor">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mainBackgroundColor"
+            android:backgroundTint="@android:color/transparent">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_24_dp">
+
+                <ImageView
+                    android:id="@+id/imageViewPlayButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_card_play_button" />
+
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketSemiBoldTextView
+                    android:id="@+id/textViewPodcastTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/imageViewPlayButton"
+                    android:layout_marginStart="@dimen/margin_16_dp"
+                    android:layout_marginTop="@dimen/margin_8_dp"
+                    android:layout_toStartOf="@id/imageViewShare"
+                    android:layout_toEndOf="@id/imageViewPlayButton"
+                    android:maxLines="2"
+                    android:text="@{viewModel.item.userName}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_16_sp" />
+
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
+                    android:id="@+id/textViewPubDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewPodcastTitle"
+                    android:layout_alignStart="@id/textViewPodcastTitle"
+                    android:layout_marginTop="@dimen/margin_4_dp"
+                    android:layout_toEndOf="@id/imageViewPlayButton"
+                    android:text="@{viewModel.item.getPubDate()}"
+                    android:textColor="@color/colorLoginText"
+                    android:textSize="@dimen/dimen_12_sp" />
+
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewPubDate"
+                    android:layout_alignStart="@id/textViewPodcastTitle"
+                    android:layout_marginTop="@dimen/margin_4_dp"
+                    android:layout_toEndOf="@id/imageViewPlayButton"
+                    android:text="@{viewModel.item.post}"
+                    android:textColor="@color/colorLoginText"
+                    android:textSize="@dimen/dimen_12_sp" />
+
+                <ImageView
+                    android:id="@+id/imageViewShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin_24_dp"
+                    android:layout_marginEnd="@dimen/margin_24_dp"
+                    android:src="@drawable/ic_more" />
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+</layout>

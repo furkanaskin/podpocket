@@ -28,21 +28,12 @@
             app:mpb_useIntrinsicPadding="false"
             app:visibility="@{viewModel.progressBarView}" />
 
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
-            android:id="@+id/textViewFragmentLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Global Feed Fragment"
-            android:textColor="@color/white" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewGlobalPosts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_24_dp"
+            android:layout_marginBottom="@dimen/margin_8_dp" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewFragmentLabel"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_48_dp"
-            android:text="Navigate" />
     </RelativeLayout>
 </layout>

@@ -155,7 +155,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         }
     }
 
-    fun editProfile() {
+    private fun editProfile() {
         val user = UserEntity(
                 id = user?.id ?: 0,
                 uniqueId = user?.uniqueId ?: "",

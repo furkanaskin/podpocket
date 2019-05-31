@@ -9,5 +9,6 @@ data class Post(val podcaster: Boolean? = null,
                 val verifiedUser: Boolean? = false,
                 val userName: String? = "",
                 val post: String? = "",
+                val postId: String? = "",
                 val userUniqueId: String? = "",
                 val region: String? = "")
