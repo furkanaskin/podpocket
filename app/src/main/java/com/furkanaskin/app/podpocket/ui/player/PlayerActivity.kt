@@ -425,14 +425,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
     override fun onDestroy() {
         player.stop()
-        doAsync {
-            // Save last played podcast and episode to DB
-            user?.lastPlayedPodcast = viewModel.item.get()?.podcast?.id
-            user?.lastPlayedEpisode = viewModel.item.get()?.id
-            user?.let { viewModel.db.userDao().updateUser(it) }
-        }
-
         disposable.clear()
+        viewModel.saveRecentlyPlayed()
         super.onDestroy()
     }
 

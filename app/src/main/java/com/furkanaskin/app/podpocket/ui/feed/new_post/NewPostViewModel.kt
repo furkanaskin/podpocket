@@ -34,7 +34,7 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
         if (postText.get() != null && postText.get()!!.length > 5 && databaseReference != null) {
             val newPost = Post(
                     user?.podcaster,
-                    convertDate(LocalDate.now()).reversed(),
+                    convertDate(LocalDate.now()),
                     user?.verifiedUser,
                     user?.userName,
                     postText.get(),
@@ -77,7 +77,7 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
         })
     }
 
-    private fun convertDate(date: LocalDate) = date.format(DateTimeFormatter.ISO_DATE)
+    private fun convertDate(date: LocalDate) = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
     private fun createUniquePostId(): String {
         return "${(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()))}${user?.uniqueId}"

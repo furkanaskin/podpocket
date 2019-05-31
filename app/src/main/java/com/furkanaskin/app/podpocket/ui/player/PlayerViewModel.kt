@@ -6,6 +6,7 @@ import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.service.response.Episode
 import io.reactivex.Observable
+import org.jetbrains.anko.doAsync
 import java.util.*
 
 /**
@@ -42,5 +43,15 @@ class PlayerViewModel(app: Application) : BaseViewModel(app) {
         } else {
             mFormatter.format("%02d:%02d", minutes, seconds).toString()
         }
+    }
+
+    fun saveRecentlyPlayed() {
+        doAsync {
+            // Save last played podcast and episode to DB
+            user?.lastPlayedPodcast = item.get()?.podcast?.id
+            user?.lastPlayedEpisode = item.get()?.id
+            user?.let { db.userDao().updateUser(it) }
+        }
+
     }
 }

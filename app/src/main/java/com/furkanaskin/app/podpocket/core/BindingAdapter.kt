@@ -10,6 +10,10 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.android.material.card.MaterialCardView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 
 /**
@@ -34,6 +38,32 @@ object BindingAdapter {
             return
         Picasso.get().cancelRequest(view)
         Picasso.get().load(link).into(view)
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:setProfilePicture")
+    fun setProfilePicture(view: ImageView, userUniqueId: String?) {
+        if (userUniqueId.isNullOrEmpty()) {
+            return
+        } else {
+            val usersRef = FirebaseDatabase.getInstance().getReference("users")
+            usersRef.addValueEventListener(object : ValueEventListener {
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val allPosts = snapshot.children
+
+                    allPosts.forEachIndexed { _, dataSnapshot ->
+                        if (dataSnapshot.key == userUniqueId) {
+                            Picasso.get().cancelRequest(view)
+                            Picasso.get().load(dataSnapshot.child("profilePictureUrl").value.toString()).into(view)
+                        }
+                    }
+                }
+            })
+        }
     }
 
     @JvmStatic

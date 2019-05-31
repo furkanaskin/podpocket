@@ -109,7 +109,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                         val user = UserEntity(
                                 uniqueId = mAuth.currentUser?.uid ?: "",
                                 email = userName.get() ?: "",
-                                accountCreatedAt = convertDate(LocalDate.now()).reversed())
+                                accountCreatedAt = convertDate(LocalDate.now()))
 
                         db.userDao().insertUser(user)
                     }
@@ -237,7 +237,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     }
 
     private fun convertDate(date: LocalDate) =
-            date.format(DateTimeFormatter.ISO_DATE)
+            date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
     override fun onCleared() {
         super.onCleared()
