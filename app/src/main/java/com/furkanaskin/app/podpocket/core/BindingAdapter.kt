@@ -53,12 +53,16 @@ object BindingAdapter {
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val allPosts = snapshot.children
+                    val allUsers = snapshot.children
 
-                    allPosts.forEachIndexed { _, dataSnapshot ->
+                    allUsers.forEachIndexed { _, dataSnapshot ->
                         if (dataSnapshot.key == userUniqueId) {
-                            Picasso.get().cancelRequest(view)
-                            Picasso.get().load(dataSnapshot.child("profilePictureUrl").value.toString()).into(view)
+                            try {
+                                Picasso.get().cancelRequest(view)
+                                Picasso.get().load(dataSnapshot.child("profilePictureUrl").value.toString()).into(view)
+                            } catch (e: IllegalArgumentException) {
+                                view.setImageResource(R.drawable.ic_dummy_user)
+                            }
                         }
                     }
                 }

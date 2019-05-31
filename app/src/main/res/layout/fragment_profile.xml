@@ -36,7 +36,8 @@
                 app:civ_background_color="@color/mainBackgroundColor"
                 app:civ_border="true"
                 app:civ_border_color="@color/colorCyan"
-                app:civ_shadow="true" />
+                app:civ_shadow="true"
+                app:setProfilePicture="@{viewModel.user.uniqueId}" />
 
             <com.furkanaskin.app.podpocket.utils.ui.PodPocketSemiBoldTextView
                 android:id="@+id/textViewUserName"

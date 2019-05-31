@@ -33,7 +33,7 @@ class GlobalFeedViewModel(app: Application) : BaseViewModel(app) {
                 val allPosts = snapshot.children
                 posts.clear()
 
-                allPosts.forEachIndexed { _, dataSnapshot ->
+                allPosts.reversed().forEachIndexed { _, dataSnapshot ->
                     posts.add(dataSnapshot.getValue(Post::class.java))
                     // Write all post data to HashMap
                 }

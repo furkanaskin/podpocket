@@ -142,16 +142,6 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
             // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
             // ...
             isUserChangePicture = true
-            getProfilePicture()
-
-        }
-    }
-
-    private fun getProfilePicture() {
-        val profilePicturePath = mAuth.currentUser?.uid + "_" + "profile_picture.jpg"
-        storageRef.child(profilePicturePath).downloadUrl.addOnSuccessListener {
-            profileImageUrl.set(it.toString())
-            hideProgress()
         }
     }
 

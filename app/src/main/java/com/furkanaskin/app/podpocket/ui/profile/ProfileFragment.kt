@@ -4,17 +4,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.databinding.ObservableField
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentProfileBinding
 import com.furkanaskin.app.podpocket.db.entities.ProfileSettingsEntity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.main.MainActivity
-import com.google.firebase.storage.FirebaseStorage
 
 /**
  * Created by Furkan on 16.04.2019
@@ -27,17 +24,12 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
 
     override fun getLayoutRes(): Int = R.layout.fragment_profile
 
-    private val storage = FirebaseStorage.getInstance()
-    private val storageRef = storage.reference
-    var profileImageUrl: ObservableField<String> = ObservableField("")
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initUserDetails()
         initProfileItemsAdapter()
         prepareProfileItems()
-        getProfilePicture()
 
         mBinding.imageViewProfilePicture.setOnClickListener {
             navigateAccountDetailScreen()
@@ -84,20 +76,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
         mAuth.signOut()
         val intent = Intent(activity, MainActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun getProfilePicture() {
-        val profilePicturePath = mAuth.currentUser?.uid + "_" + "profile_picture.jpg"
-        storageRef.child(profilePicturePath).downloadUrl.addOnSuccessListener {
-            profileImageUrl.set(it.toString())
-            try {
-                Glide.with(this.activity!!).load(user!!.profilePictureUrl).into(mBinding.imageViewProfilePicture)
-
-            } catch (e: NullPointerException) {
-                Glide.with(this.activity!!).load(R.drawable.ic_dummy_user).into(mBinding.imageViewProfilePicture)
-            }
-            hideProgress()
-        }
     }
 
     private fun sendFeedback() {
