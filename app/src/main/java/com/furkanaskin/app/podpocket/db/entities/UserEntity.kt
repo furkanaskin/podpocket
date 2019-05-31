@@ -14,6 +14,9 @@ import com.furkanaskin.app.podpocket.core.BaseEntity
 data class UserEntity(
         @PrimaryKey(autoGenerate = true)
         var id: Int = 0,
+        val podcaster: Boolean? = null,
+        val verifiedUser: Boolean? = null,
+        val accountCreatedAt: String? = null,
         var uniqueId: String? = null,
         var userName: String? = null,
         var email: String? = null,
@@ -27,6 +30,9 @@ data class UserEntity(
 
     constructor(parcel: Parcel) : this(
             parcel.readValue(Int::class.java.classLoader) as Int,
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -41,6 +47,9 @@ data class UserEntity(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(id)
+        parcel.writeValue(podcaster)
+        parcel.writeValue(verifiedUser)
+        parcel.writeString(accountCreatedAt)
         parcel.writeString(uniqueId)
         parcel.writeString(userName)
         parcel.writeString(email)

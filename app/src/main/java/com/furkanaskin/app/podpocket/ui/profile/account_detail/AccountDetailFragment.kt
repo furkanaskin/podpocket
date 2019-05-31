@@ -158,7 +158,10 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
     private fun editProfile() {
         val user = UserEntity(
                 id = user?.id ?: 0,
+                podcaster = user?.podcaster,
+                verifiedUser = user?.verifiedUser,
                 uniqueId = user?.uniqueId ?: "",
+                accountCreatedAt = user?.accountCreatedAt,
                 name = mBinding.editTextName.text?.toString(),
                 userName = mBinding.editTextUserName.text?.toString(),
                 surname = mBinding.editTextSurname.text?.toString(),
@@ -170,10 +173,10 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
                 lastPlayedEpisode = user?.lastPlayedEpisode)
 
         viewModel.changeUserData(user)
+        viewModel.equalizeFirebase(user)
 
         runOnUiThread {
             activity?.onBackPressed()
         }
-
     }
 }

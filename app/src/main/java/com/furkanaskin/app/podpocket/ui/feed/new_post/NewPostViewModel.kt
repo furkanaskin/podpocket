@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
+import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.model.Post
-import com.furkanaskin.app.podpocket.model.User
 import com.google.firebase.database.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
@@ -16,11 +16,11 @@ import java.util.concurrent.TimeUnit
  */
 
 class NewPostViewModel(app: Application) : BaseViewModel(app) {
-    lateinit var currentUser: User
     var postText: ObservableField<String> = ObservableField("")
     var pushPostSuccess: ObservableField<Boolean> = ObservableField(false)
 
     var databaseReference: DatabaseReference? = null
+    var currentUser: UserEntity? = null
 
     init {
         (app as? Podpocket)?.component?.inject(this)
@@ -33,10 +33,10 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
     fun shareClicked() {
         if (postText.get() != null && postText.get()!!.length > 5 && databaseReference != null) {
             val newPost = Post(
-                    currentUser.podcaster,
+                    user?.podcaster,
                     convertDate(LocalDate.now()),
-                    currentUser.verifiedUser,
-                    currentUser.userName,
+                    user?.verifiedUser,
+                    user?.userName,
                     postText.get(),
                     createUniquePostId(),
                     user?.uniqueId,
@@ -69,7 +69,7 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
                 val userList = snapshot.children
                 userList.forEachIndexed { _, dataSnapshot ->
                     if (dataSnapshot.key == user?.uniqueId) {
-                        currentUser = dataSnapshot.getValue(User::class.java)!!
+                        currentUser = dataSnapshot.getValue(UserEntity::class.java)!!
                     }
                 }
             }

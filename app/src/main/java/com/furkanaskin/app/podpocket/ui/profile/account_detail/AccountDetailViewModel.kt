@@ -5,6 +5,7 @@ import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
+import com.google.firebase.database.FirebaseDatabase
 import org.jetbrains.anko.doAsync
 
 /**
@@ -40,5 +41,10 @@ class AccountDetailViewModel(app: Application) : BaseViewModel(app) {
         doAsync {
             db.userDao().updateUser(user)
         }
+    }
+
+    fun equalizeFirebase(updateUser: UserEntity) {
+        val usersRef = FirebaseDatabase.getInstance().getReference("users")
+        usersRef.child(user?.uniqueId ?: mAuth.currentUser?.uid ?: "").setValue(updateUser)
     }
 }

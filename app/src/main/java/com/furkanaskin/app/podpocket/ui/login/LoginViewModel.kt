@@ -10,7 +10,6 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
-import com.furkanaskin.app.podpocket.model.User
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordActivity
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
@@ -103,20 +102,14 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                     registerSuccess.set(true)
                     verifyEmail()
 
-                    val firebaseUser = User(
-                            accountCreatedAt = convertDate(LocalDate.now()),
-                            email = userName.get() ?: "",
-                            podcaster = false,
-                            verifiedUser = false,
-                            userName = "")
-
-                    insertUserToFirebase(firebaseUser, mAuth.currentUser?.uid ?: "")
+                    insertUserToFirebase()
 
                     doAsync {
 
                         val user = UserEntity(
                                 uniqueId = mAuth.currentUser?.uid ?: "",
-                                email = userName.get() ?: "")
+                                email = userName.get() ?: "",
+                                accountCreatedAt = convertDate(LocalDate.now()))
 
                         db.userDao().insertUser(user)
                     }
@@ -140,14 +133,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
                     verifySuccess.set(true)
 
-                    val firebaseUser = User(
-                            accountCreatedAt = convertDate(LocalDate.now()),
-                            email = userName.get() ?: "",
-                            podcaster = false,
-                            verifiedUser = true,
-                            userName = "")
-
-                    insertUserToFirebase(firebaseUser, mAuth.currentUser?.uid ?: "")
+                    insertUserToFirebase() // Save user to firebase.
 
                     doAsync {
                         val user = UserEntity(
@@ -244,8 +230,10 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
-    fun insertUserToFirebase(user: User, uniqueId: String) {
-        FirebaseDatabase.getInstance().reference.child("users").child(uniqueId).setValue(user)
+    private fun insertUserToFirebase() {
+        getUser()
+        FirebaseDatabase.getInstance().reference.child("users").child(mAuth.currentUser?.uid
+                ?: "").setValue(user)
     }
 
     private fun convertDate(date: LocalDate) =

@@ -13,7 +13,6 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityAfterRegisterBinding
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
-import com.furkanaskin.app.podpocket.model.User
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
@@ -51,13 +50,12 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         binding.buttonDone.setOnClickListener {
             if (viewModel.getValidationMessages() && viewModel.userID.get() != null) {
                 showProgress()
-                val firebaseUser = User("", false, "", true, viewModel.userName.get() ?: "")
-
-                viewModel.updateFirebaseUser(firebaseUser, user?.uniqueId ?: "")
-
 
                 val willBeUpdated = UserEntity(
                         id = user?.id ?: 0,
+                        podcaster = user?.podcaster,
+                        verifiedUser = user?.verifiedUser,
+                        accountCreatedAt = user?.accountCreatedAt,
                         uniqueId = user?.uniqueId ?: "",
                         email = user?.email,
                         userName = viewModel.userName.get(),
@@ -70,8 +68,10 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
 
                     viewModel.db.userDao().updateUser(willBeUpdated)
                     viewModel.saveSuccess.set(true)
-
                 }
+
+                viewModel.insertUserToFirebase(willBeUpdated)
+
                 hideProgress()
             }
         }

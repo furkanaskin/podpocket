@@ -5,7 +5,9 @@ import android.widget.Toast
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
-import com.furkanaskin.app.podpocket.model.User
+import com.furkanaskin.app.podpocket.db.entities.UserEntity
+import com.furkanaskin.app.podpocket.utils.extensions.logE
+import com.furkanaskin.app.podpocket.utils.extensions.logV
 import com.google.firebase.database.FirebaseDatabase
 
 /**
@@ -44,8 +46,14 @@ class AfterRegisterViewModel(app: Application) : BaseViewModel(app) {
         return result
     }
 
-    fun updateFirebaseUser(user: User, uniqueId: String) {
-        FirebaseDatabase.getInstance().reference.child("users").child(uniqueId).child("userName").setValue(user.userName)
+    fun insertUserToFirebase(updateUser: UserEntity) {
+        FirebaseDatabase.getInstance().reference.child("users").child(mAuth.currentUser?.uid
+                ?: "").setValue(updateUser).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                logV("user save succes")
+            } else {
+                logE(task.exception?.printStackTrace().toString())
+            }
+        }
     }
-
 }
