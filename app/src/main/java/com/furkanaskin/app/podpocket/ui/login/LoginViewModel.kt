@@ -109,7 +109,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                         val user = UserEntity(
                                 uniqueId = mAuth.currentUser?.uid ?: "",
                                 email = userName.get() ?: "",
-                                accountCreatedAt = convertDate(LocalDate.now()))
+                                accountCreatedAt = convertDate(LocalDate.now()).reversed())
 
                         db.userDao().insertUser(user)
                     }

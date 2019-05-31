@@ -94,7 +94,7 @@ data class Podcasts(
 
     private fun getDateTime(s: Long): String? {
         return try {
-            val sdf = SimpleDateFormat("MM/dd/yyyy")
+            val sdf = SimpleDateFormat("dd/MM/yyyy")
             val netDate = Date(s)
             sdf.format(netDate)
         } catch (e: Exception) {

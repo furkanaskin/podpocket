@@ -34,7 +34,7 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
         if (postText.get() != null && postText.get()!!.length > 5 && databaseReference != null) {
             val newPost = Post(
                     user?.podcaster,
-                    convertDate(LocalDate.now()),
+                    convertDate(LocalDate.now()).reversed(),
                     user?.verifiedUser,
                     user?.userName,
                     postText.get(),
