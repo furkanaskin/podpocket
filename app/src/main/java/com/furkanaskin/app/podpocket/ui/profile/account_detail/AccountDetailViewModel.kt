@@ -12,7 +12,6 @@ import org.jetbrains.anko.doAsync
  */
 
 class AccountDetailViewModel(app: Application) : BaseViewModel(app) {
-    var progressBarView: ObservableField<Boolean> = ObservableField(false)
     var item: ObservableField<String> = ObservableField("")
 
     init {

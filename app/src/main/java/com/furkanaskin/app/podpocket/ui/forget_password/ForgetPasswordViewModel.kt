@@ -15,7 +15,6 @@ class ForgetPasswordViewModel(app: Application) : BaseViewModel(app) {
 
     var userName: ObservableField<String> = ObservableField("")
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
-    var progressBarView: ObservableField<Boolean> = ObservableField(false)
     var sendVerifyMailSucces: ObservableField<Boolean> = ObservableField(false)
     var type: ObservableField<Int> = ObservableField(0)
 
@@ -24,7 +23,7 @@ class ForgetPasswordViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun buttonClick() {
-        progressBarView.set(true)
+        showProgress()
         when (type.get()) {
             Constants.LoginActivityType.FORGOT_PASS -> forgetPassword()
             Constants.LoginActivityType.EMAIL_VERIFY -> verifyEmail()
@@ -38,12 +37,12 @@ class ForgetPasswordViewModel(app: Application) : BaseViewModel(app) {
                 mAuth.sendPasswordResetEmail(it).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         sendMailSuccess.set(true)
-                        progressBarView.set(false)
+                        hideProgress()
                     }
                 }
             }?.addOnFailureListener {
                 Timber.e(it.toString())
-                progressBarView.set(false)
+                hideProgress()
             }
         }
     }
@@ -53,9 +52,9 @@ class ForgetPasswordViewModel(app: Application) : BaseViewModel(app) {
         mUser!!.sendEmailVerification().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 sendVerifyMailSucces.set(true)
-                progressBarView.set(false)
+                hideProgress()
             } else {
-                progressBarView.set(false)
+                hideProgress()
             }
         }
     }

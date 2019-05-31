@@ -11,7 +11,6 @@ import com.furkanaskin.app.podpocket.core.BaseViewModel
 
 class FeedViewModel(app: Application) : BaseViewModel(app) {
 
-    var progressBarView: ObservableField<Boolean> = ObservableField(false)
     var item: ObservableField<String> = ObservableField("")
 
     init {

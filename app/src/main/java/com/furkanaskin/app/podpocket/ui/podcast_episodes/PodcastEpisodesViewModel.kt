@@ -13,7 +13,6 @@ import io.reactivex.Observable
 
 class PodcastEpisodesViewModel(app: Application) : BaseViewModel(app) {
 
-    var progressBarView: ObservableField<Boolean> = ObservableField(false)
     var podcast: ObservableField<Podcasts> = ObservableField()
 
     init {

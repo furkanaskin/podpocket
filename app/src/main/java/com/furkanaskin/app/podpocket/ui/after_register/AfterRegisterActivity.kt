@@ -50,8 +50,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
 
         binding.buttonDone.setOnClickListener {
             if (viewModel.getValidationMessages() && viewModel.userID.get() != null) {
-                viewModel.progressBarView.set(true)
-
+                showProgress()
                 val firebaseUser = User("", false, "", true, viewModel.userName.get() ?: "")
 
                 viewModel.updateFirebaseUser(firebaseUser, user?.uniqueId ?: "")
@@ -73,8 +72,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
                     viewModel.saveSuccess.set(true)
 
                 }
-                viewModel.progressBarView.set(false)
-
+                hideProgress()
             }
         }
 

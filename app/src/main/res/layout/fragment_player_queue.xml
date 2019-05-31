@@ -19,16 +19,6 @@
         android:fitsSystemWindows="true"
         tools:context=".ui.player.PlayerQueueFragment">
 
-        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:indeterminate="true"
-            app:mpb_progressStyle="circular"
-            app:mpb_useIntrinsicPadding="false"
-            app:visibility="@{viewModel.progressBarView}" />
-
         <LinearLayout
             android:id="@+id/relativeLayoutHeader"
             android:layout_width="wrap_content"

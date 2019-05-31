@@ -136,7 +136,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
         if (viewModel.forceInitBestPodcasts.get() != true && viewModel.bestPodcastsList.isNullOrEmpty()) {
 
-            viewModel.progressBarView.set(true)
+            showProgress()
             hideTitles()
 
             disposable.add(viewModel.getBestPodcasts(viewModel.currentLocation, 0)
@@ -145,14 +145,14 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
                     .subscribeWith(object : CallbackWrapper<BestPodcasts>(viewModel.getApplication()) {
                         override fun onSuccess(t: BestPodcasts) {
                             (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(t.channels)
-                            viewModel.progressBarView.set(false)
+                            hideProgress()
                             viewModel.bestPodcastsList = t.channels
                             viewModel.forceInitBestPodcasts.set(true)
                             showTitles()
                         }
 
                         override fun onError(e: Throwable) {
-                            viewModel.progressBarView.set(false)
+                            hideProgress()
                         }
 
                     }))
@@ -164,7 +164,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     private fun initRecommendedPodcasts() {
 
-        viewModel.progressBarView.set(true)
+        showProgress()
         hideTitles()
 
         disposable.add(viewModel.getPodcastRecommendations(user?.lastPlayedPodcast
@@ -174,7 +174,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
                 .subscribeWith(object : CallbackWrapper<PodcastRecommendations>(viewModel.getApplication()) {
                     override fun onSuccess(t: PodcastRecommendations) {
                         (mBinding.recyclerViewRecommendedPodcasts.adapter as RecommendedPodcastsAdapter).submitList(t.recommendations)
-                        viewModel.progressBarView.set(false)
+                        hideProgress()
                         showTitles()
                     }
 
@@ -183,7 +183,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     private fun initRecommendedEpisodes() {
 
-        viewModel.progressBarView.set(true)
+        showProgress()
         hideTitles()
 
         disposable.add(viewModel.getEpisodeRecommendations(user?.lastPlayedEpisode
@@ -193,7 +193,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
                 .subscribeWith(object : CallbackWrapper<EpisodeRecommendations>(viewModel.getApplication()) {
                     override fun onSuccess(t: EpisodeRecommendations) {
                         (mBinding.recyclerViewRecommendedEpisodes.adapter as RecommendedEpisodesAdapter).submitList(t.recommendations)
-                        viewModel.progressBarView.set(false)
+                        hideProgress()
                         showTitles()
                     }
 

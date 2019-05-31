@@ -25,17 +25,6 @@
             android:fitsSystemWindows="true"
             tools:context=".ui.podcast_episodes.PodcastEpisodesFragment">
 
-            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-                android:id="@+id/progressBar"
-                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                app:mpb_progressStyle="horizontal"
-                app:mpb_useIntrinsicPadding="false"
-                app:visibility="@{viewModel.progressBarView}" />
-
-
             <ImageView
                 android:id="@+id/imageViewPodcastCover"
                 android:layout_width="match_parent"

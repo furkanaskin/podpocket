@@ -2,7 +2,6 @@ package com.furkanaskin.app.podpocket.ui.feed.global_feed
 
 import android.app.Application
 import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.model.Post
@@ -16,7 +15,6 @@ import com.google.firebase.database.ValueEventListener
  */
 
 class GlobalFeedViewModel(app: Application) : BaseViewModel(app) {
-    var progressBarView: ObservableField<Boolean> = ObservableField(false)
     var posts: ObservableArrayList<Post?> = ObservableArrayList()
 
     init {

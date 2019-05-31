@@ -18,17 +18,6 @@
         android:fitsSystemWindows="true"
         tools:context=".ui.feed.new_post.NewPostFragment">
 
-        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-            android:id="@+id/progressBar"
-            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            app:mpb_progressStyle="horizontal"
-            app:mpb_useIntrinsicPadding="false"
-            app:visibility="@{viewModel.progressBarView}" />
-
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilPost"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

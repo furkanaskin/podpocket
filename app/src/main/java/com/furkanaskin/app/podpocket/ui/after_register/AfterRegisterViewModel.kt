@@ -14,7 +14,6 @@ import com.google.firebase.database.FirebaseDatabase
 
 class AfterRegisterViewModel(app: Application) : BaseViewModel(app) {
 
-    var progressBarView: ObservableField<Boolean> = ObservableField(false)
     var name: ObservableField<String> = ObservableField("")
     var userName: ObservableField<String> = ObservableField("")
     var surname: ObservableField<String> = ObservableField("")

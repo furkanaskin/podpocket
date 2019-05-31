@@ -38,8 +38,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
     override fun init() {
 
-        viewModel.progressBarView.set(true)
-
+        showProgress()
         val adapter = QueueAdapter { item, position, _ ->
 
             // Update playerActivity's currentPosition and EpisodeId then getEpisodeDetail
@@ -58,6 +57,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
             (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(t)
         })
 
-        viewModel.progressBarView.set(false)
+        hideProgress()
+
     }
 }

@@ -13,7 +13,6 @@ import io.reactivex.Observable
 
 class HomeViewModel(app: Application) : BaseViewModel(app) {
 
-    var progressBarView: ObservableField<Boolean> = ObservableField(false)
     var bestPodcastsList: List<ChannelsItem?>? = null
     var forceInitBestPodcasts: ObservableField<Boolean> = ObservableField(false)
 

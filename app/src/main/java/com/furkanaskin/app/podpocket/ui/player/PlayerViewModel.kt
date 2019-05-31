@@ -14,7 +14,6 @@ import java.util.*
 
 class PlayerViewModel(app: Application) : BaseViewModel(app) {
 
-    var progressBarView: ObservableField<Boolean> = ObservableField(false)
     val item: ObservableField<Episode> = ObservableField()
     val isFavorite: ObservableField<Boolean> = ObservableField()
 

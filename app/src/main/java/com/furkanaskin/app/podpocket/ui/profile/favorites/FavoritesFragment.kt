@@ -124,8 +124,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
 
             // Get podcastId and collect all episode Ids then navigate PlayerActivity
 
-            viewModel.progressBarView.set(true)
-
+            showProgress()
             disposable.add(viewModel.getEpisodes(item.podcastId ?: "").subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
@@ -143,15 +142,12 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
                                 }
                             }
 
-                            viewModel.progressBarView.set(false)
-
+                            hideProgress()
                         }
 
                         override fun onComplete() {
                             super.onComplete()
-
-                            viewModel.progressBarView.set(false)
-
+                            hideProgress()
                             val intent = Intent(activity, PlayerActivity::class.java)
                             intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, ids)
                             intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)

@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit
  */
 
 class NewPostViewModel(app: Application) : BaseViewModel(app) {
-    var progressBarView: ObservableField<Boolean> = ObservableField(false)
     lateinit var currentUser: User
     var postText: ObservableField<String> = ObservableField("")
     var pushPostSuccess: ObservableField<Boolean> = ObservableField(false)
