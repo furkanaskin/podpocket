@@ -122,6 +122,8 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
             updateProfilePicture(mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
         }.addOnFailureListener {
             // Uh-oh, an error occurred!
+        }.addOnSuccessListener {
+            hideProgress()
         }
     }
 
@@ -141,12 +143,13 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         }.addOnSuccessListener {
             // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
             // ...
+            getProfilePicture()
             isUserChangePicture = true
         }
     }
 
     private fun editProfile() {
-        val user = UserEntity(
+        val updateUser = UserEntity(
                 id = user?.id ?: 0,
                 podcaster = user?.podcaster,
                 verifiedUser = user?.verifiedUser,
@@ -162,11 +165,20 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
                 lastPlayedPodcast = user?.lastPlayedPodcast,
                 lastPlayedEpisode = user?.lastPlayedEpisode)
 
-        viewModel.changeUserData(user)
-        viewModel.equalizeFirebase(user)
+        viewModel.changeUserData(updateUser)
 
         runOnUiThread {
+            viewModel.equalizeFirebase(updateUser)
             activity?.onBackPressed()
+        }
+    }
+
+    private fun getProfilePicture() {
+        val profilePicturePath = mAuth.currentUser?.uid + "_" + "profile_picture.jpg"
+        storageRef.child(profilePicturePath).downloadUrl.addOnSuccessListener {
+            profileImageUrl.set(it.toString())
+            hideProgress()
+
         }
     }
 }

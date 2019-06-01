@@ -49,9 +49,9 @@
                     android:layout_toEndOf="@id/imageViewUser"
                     android:gravity="center_vertical"
                     android:maxLines="2"
-                    android:text="@{viewModel.item.userName}"
                     android:textColor="@color/colorCyan"
-                    android:textSize="@dimen/dimen_16_sp" />
+                    android:textSize="@dimen/dimen_16_sp"
+                    app:setUserName="@{viewModel.item.userUniqueId}" />
 
                 <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
                     android:id="@+id/textViewPost"

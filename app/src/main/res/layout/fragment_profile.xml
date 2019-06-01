@@ -45,9 +45,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageViewProfilePicture"
                 android:layout_marginStart="@dimen/margin_32_dp"
-                android:text="@={viewModel.userName}"
+                android:animateLayoutChanges="true"
+                android:text="@{viewModel.userName}"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dimen_24_sp" />
+                android:textSize="@dimen/dimen_24_sp"
+                app:setUserName="@{viewModel.user.uniqueId}" />
 
             <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
                 android:id="@+id/textViewUserEmail"

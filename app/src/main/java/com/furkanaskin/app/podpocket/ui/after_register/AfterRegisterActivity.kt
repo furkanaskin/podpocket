@@ -151,15 +151,6 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         }
     }
 
-
-    private fun removeProfilePicture(profilePicturePath: String) {
-        storageRef.child(profilePicturePath).delete().addOnSuccessListener {
-            // File deleted successfully
-        }.addOnFailureListener {
-            // Uh-oh, an error occurred!
-        }
-    }
-
     private fun updateProfilePicture(profilePicturePath: String) {
         showProgress()
         val pathRef = storageRef.child(profilePicturePath)

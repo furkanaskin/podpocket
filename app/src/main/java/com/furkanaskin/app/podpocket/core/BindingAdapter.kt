@@ -71,6 +71,35 @@ object BindingAdapter {
     }
 
     @JvmStatic
+    @BindingAdapter("app:setUserName")
+    fun setUserName(view: TextView, userUniqueId: String?) {
+        if (userUniqueId.isNullOrEmpty()) {
+            return
+        } else {
+            val usersRef = FirebaseDatabase.getInstance().getReference("users")
+            usersRef.addValueEventListener(object : ValueEventListener {
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val allUsers = snapshot.children
+
+                    allUsers.forEachIndexed { _, dataSnapshot ->
+                        if (dataSnapshot.key == userUniqueId) {
+                            try {
+                                view.text = dataSnapshot.child("userName").value.toString()
+                            } catch (e: IllegalArgumentException) {
+                                view.text = "ERROR!"
+                            }
+                        }
+                    }
+                }
+            })
+        }
+    }
+
+    @JvmStatic
     @BindingAdapter("app:setDrawable")
     fun setDrawable(view: ImageView, drawable: Int) {
         view.setImageResource(drawable)
