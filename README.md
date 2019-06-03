@@ -13,6 +13,7 @@ This project is an Podcast app like Spotify, Spreaker or SoundCloud but we has o
 ## Based On
 - [General Mobile Kotlin-Android MVVM Starter](https://github.com/general-mobile/kotlin-android-mvvm-starter)
 - [Listen Notes API](https://www.listennotes.com/api/)
+- [Firebase Realtime Database](https://firebase.google.com/docs/database)
 
 ## Libraries Used
   
