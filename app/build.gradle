@@ -12,7 +12,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.28.1'
+        classpath 'io.fabric.tools:gradle:1.29.0'
     }
 }
 
@@ -36,7 +36,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "0.0.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField STRING, BUILD_TIME, "\"${rootProject.ext.buildTime}\""
     }
     buildTypes {
@@ -84,7 +84,7 @@ dependencies {
     implementation "com.google.android.material:material:$support_version"
     implementation "androidx.recyclerview:recyclerview:$support_version"
     implementation "androidx.cardview:cardview:$support_version"
-    implementation 'androidx.core:core-ktx:1.1.0-alpha04'
+    implementation 'androidx.core:core-ktx:1.2.0-alpha01'
 
     //firebase
     implementation 'com.google.firebase:firebase-core:16.0.9'
@@ -155,19 +155,19 @@ dependencies {
     implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
 
     //arch-comp Lifecycles, LiveData, and ViewModel
-    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.0.0'
 
     //arch-comp Room
-    implementation "android.arch.persistence.room:runtime:$room_version"
-    kapt "android.arch.persistence.room:compiler:$room_version"
+    implementation 'androidx.room:room-runtime:2.0.0'
+    kapt 'androidx.room:room-compiler:2.0.0'
 
     //Paging
-    implementation "android.arch.paging:runtime:$paging_version"
+    implementation 'androidx.paging:paging-runtime:2.1.0'
 
     // data binding
-    kapt "com.android.databinding:compiler:3.1.4"
-    annotationProcessor "com.android.databinding:compiler:3.1.4"
+    kapt 'androidx.databinding:databinding-compiler:3.4.1'
+    annotationProcessor 'androidx.databinding:databinding-compiler:3.4.1'
 
     //stetho
     implementation rootProject.ext.stethoCore
@@ -179,11 +179,11 @@ dependencies {
 
     //test
     testImplementation 'junit:junit:4.12'
-    testImplementation "android.arch.core:core-testing:$lifecycle_version"
-    testImplementation "android.arch.persistence.room:testing:$room_version"
-    testImplementation "android.arch.paging:common:$paging_version"
+    testImplementation 'androidx.arch.core:core-testing:2.0.1'
+    testImplementation 'androidx.room:room-testing:2.0.0'
+    testImplementation 'androidx.paging:paging-common:2.1.0'
 
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs'
     })
