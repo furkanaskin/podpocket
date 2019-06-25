@@ -47,6 +47,4 @@ val diffCallback = object : DiffUtil.ItemCallback<ChannelsItem>() {
 
     override fun areItemsTheSame(oldItem: ChannelsItem, newItem: ChannelsItem): Boolean =
             oldItem.id == newItem.id
-
-
 }

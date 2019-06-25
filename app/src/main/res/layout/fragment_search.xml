@@ -64,8 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/recyclerViewPodcastSearchResult"
-            android:layout_marginTop="@dimen/margin_16_dp"
-            android:layout_marginBottom="@dimen/margin_64_dp">
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/margin_16_dp">
 
         </androidx.recyclerview.widget.RecyclerView>
     </RelativeLayout>

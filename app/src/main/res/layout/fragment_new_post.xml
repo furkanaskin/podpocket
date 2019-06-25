@@ -18,15 +18,48 @@
         android:fitsSystemWindows="true"
         tools:context=".ui.feed.new_post.NewPostFragment">
 
+        <ImageView
+            android:layout_width="256dp"
+            android:layout_height="266dp"
+            android:layout_alignParentEnd="true"
+            android:adjustViewBounds="true"
+            android:fitsSystemWindows="true"
+            android:src="@drawable/ic_home_bg" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="57dp" />
+
+        <ImageView
+            android:id="@+id/imageViewAppLogoSmall"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="57dp"
+            android:src="@drawable/app_logo_white" />
+
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/imageViewAppLogoSmall"
+            android:layout_alignBottom="@id/imageViewAppLogoSmall"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/imageViewAppLogoSmall"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/white" />
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilPost"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="@dimen/margin_8_dp"
+            android:layout_below="@id/imageViewAppLogoSmall"
+            android:layout_marginStart="@dimen/margin_24_dp"
             android:layout_marginTop="@dimen/margin_48_dp"
-            android:layout_marginEnd="@dimen/margin_8_dp"
+            android:layout_marginEnd="@dimen/margin_24_dp"
             android:hint="@string/whats_going_on"
             android:textColorHint="@color/textColor"
             app:boxStrokeColor="@color/colorPrettyPurple"
@@ -51,9 +84,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tilPost"
-            android:layout_marginStart="@dimen/margin_8_dp"
+            android:layout_marginStart="@dimen/margin_24_dp"
             android:layout_marginTop="@dimen/margin_16_dp"
-            android:layout_marginEnd="@dimen/margin_8_dp"
+            android:layout_marginEnd="@dimen/margin_24_dp"
             android:onClick="@{() -> viewModel.shareClicked()}"
             android:text="@string/share"
             android:textColor="@color/colorCyan"

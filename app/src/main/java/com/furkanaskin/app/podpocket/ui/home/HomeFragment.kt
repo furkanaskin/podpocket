@@ -93,6 +93,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
     private fun initRecommendedEpisodesAdapter() {
         val adapter = RecommendedEpisodesAdapter { item ->
 
+            showProgress()
             disposable.add(viewModel.getEpisodes(item.podcastId ?: "").subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
@@ -113,6 +114,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
                         override fun onComplete() {
                             super.onComplete()
+                            hideProgress()
 
                             val intent = Intent(activity, PlayerActivity::class.java)
                             intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, ids)
@@ -156,6 +158,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
                         }
 
                     }))
+
         } else {
             (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(viewModel.bestPodcastsList)
             Timber.tag("Force Init").i("Best podcasts force initialized.")

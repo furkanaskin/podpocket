@@ -40,6 +40,5 @@ class FeedFragment : BaseFragment<FeedViewModel, FragmentFeedBinding>(FeedViewMo
         mBinding.buttonNewPost.setOnClickListener {
             navigate(R.id.action_feedFragment_to_newPostFragment)
         }
-
     }
 }

@@ -86,6 +86,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                         }
                     }))
         }
+
         mBinding.recyclerViewEpisodeSearchResult.adapter = searchEpisodeAdapter
         mBinding.recyclerViewEpisodeSearchResult.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 

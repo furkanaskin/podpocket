@@ -19,39 +19,35 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_16_dp"
             android:backgroundTint="@android:color/transparent"
-            app:cardCornerRadius="6dp"
-            app:strokeColor="@color/colorAccent"
-            app:strokeWidth="1dp">
+            app:cardCornerRadius="6dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.mikhaellopez.circularimageview.CircularImageView
+                <ImageView
                     android:id="@+id/circularImageView"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    app:civ_border="true"
-                    app:civ_border_color="@color/colorCyan"
-                    app:civ_border_width="2dp"
-                    app:civ_shadow="true"
-                    app:setDrawableLink="@{viewModel.item.getImage}" />
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerCrop"
+                    app:setDrawableLink="@{viewModel.item.getImage()}" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_centerInParent="true"
-                    android:layout_marginLeft="@dimen/margin_16_dp"
-                    android:layout_toRightOf="@id/circularImageView">
+                    android:layout_marginStart="@dimen/margin_16_dp"
+                    android:layout_toEndOf="@id/circularImageView"
+                    android:orientation="vertical">
 
                     <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
                         android:id="@+id/textViewPodcastName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{viewModel.item.getTitleOriginal()}"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_16_sp"
-                        android:text="@{viewModel.item.getTitleOriginal()}" />
+                        android:textSize="@dimen/dimen_16_sp" />
 
                     <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
                         android:id="@+id/textViewPodcastDescription"

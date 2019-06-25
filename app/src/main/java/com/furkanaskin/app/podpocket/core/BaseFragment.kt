@@ -46,6 +46,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
         init(inflater, container!!)
         initViewModel()
         init()
+
         super.onCreateView(inflater, container, savedInstanceState)
         return mBinding.root
     }

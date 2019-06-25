@@ -29,6 +29,7 @@ class GlobalFeedFragment : BaseFragment<GlobalFeedViewModel, FragmentGlobalFeedB
         // It's not used but maybe we'll need it later... Don't delete it for now.
 
         initGlobalFeedAdapter()
+        showProgress()
 
         viewModel.posts.addOnListChangedCallback(object : ObservableList.OnListChangedCallback<ObservableList<Post>>() {
             override fun onItemRangeRemoved(sender: ObservableList<Post>?, positionStart: Int, itemCount: Int) {
@@ -38,6 +39,7 @@ class GlobalFeedFragment : BaseFragment<GlobalFeedViewModel, FragmentGlobalFeedB
             }
 
             override fun onItemRangeInserted(sender: ObservableList<Post>?, positionStart: Int, itemCount: Int) {
+                hideProgress()
                 (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).submitList(viewModel.posts)
                 (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).notifyDataSetChanged()
             }
@@ -46,6 +48,7 @@ class GlobalFeedFragment : BaseFragment<GlobalFeedViewModel, FragmentGlobalFeedB
             }
 
             override fun onChanged(sender: ObservableList<Post>?) {
+                hideProgress()
                 (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).submitList(viewModel.posts)
                 (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).notifyDataSetChanged()
             }
