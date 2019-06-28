@@ -78,6 +78,8 @@
     <string name="no_more_new_episodes">Yeni bölüm bulunmamaktadır.</string>
     <string name="you_are_in_first_episode">İlk bölümdesiniz.</string>
     <string name="thanks_for_sharing_expreience">Thanks for sharing your experience with Podpocket Developers!</string>
+    <string name="episodes">Bölümler</string>
+    <string name="podcasts">Podcastler</string>
     <string-array name="feed_fragment_titles">
         <item>@string/locale_feed_fragment</item>
         <item>@string/global_feed_fragment</item>

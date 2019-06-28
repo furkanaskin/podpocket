@@ -1,6 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.search
 
 import android.app.Application
+import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.service.PodpocketAPI
@@ -18,10 +19,12 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
     @Inject
     lateinit var api: PodpocketAPI
 
-
     init {
         (app as? Podpocket)?.component?.inject(this)
     }
+
+    var searchEpisodesHeadingVisiblity: ObservableField<Boolean> = ObservableField(false)
+    var searchPodcastsHeadingVisiblity: ObservableField<Boolean> = ObservableField(false)
 
     fun getSearchResult(searchText: String, type: String): Observable<Search> {
         return api.fullTextSearch(searchText, type)

@@ -1,7 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.search
 
 import android.content.Intent
-import android.os.Handler
+import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
@@ -120,6 +120,10 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         linearLayoutSearchView.removeView(searchViewSearchIcon)
         linearLayoutSearchView.addView(searchViewSearchIcon)
 
+        // Hide headings
+        setEpisodesHeadingVisibility(false)
+        setPodcastsHeadingVisibility(false)
+
         mBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -127,12 +131,15 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 searchViewCloseIcon.hide()
-                if (newText?.length!! % 3 == 0)
-                    Handler().postDelayed({
-                        getSearchResult(newText.toString(), Constants.SearchQuery.EPISODE)
-                        getSearchResult(newText.toString(), Constants.SearchQuery.PODCAST)
+                if (newText?.length!! % 3 == 0 && newText.isNotEmpty()) {
+                    getSearchResult(newText.toString(), Constants.SearchQuery.EPISODE)
+                    getSearchResult(newText.toString(), Constants.SearchQuery.PODCAST)
+                }
 
-                    }, 1000)
+                if (newText.isEmpty()) {
+                    setEpisodesHeadingVisibility(false)
+                    setPodcastsHeadingVisibility(false)
+                }
                 return true
             }
 
@@ -148,16 +155,42 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                 .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
                     override fun onSuccess(t: Search) {
                         hideProgress()
-                        if (type == Constants.SearchQuery.EPISODE) {
+                        if (type == Constants.SearchQuery.EPISODE && t.results != null) {
+                            setEpisodesHeadingVisibility(true)
+                            setPodcastsHeadingVisibility(true)
                             (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(t.results)
-                        } else {
+                        } else if (type == Constants.SearchQuery.PODCAST && t.results != null) {
+                            setEpisodesHeadingVisibility(true)
+                            setPodcastsHeadingVisibility(true)
                             (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(t.results)
-
+                        } else {
+                            setEpisodesHeadingVisibility(false)
+                            setPodcastsHeadingVisibility(false)
                         }
 
                     }
 
                 }))
+    }
+
+    fun setEpisodesHeadingVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            mBinding.textViewSearchEpisodesHeading.visibility = View.VISIBLE
+            mBinding.recyclerViewEpisodeSearchResult.visibility = View.VISIBLE
+        } else {
+            mBinding.textViewSearchEpisodesHeading.visibility = View.GONE
+            mBinding.recyclerViewEpisodeSearchResult.visibility = View.GONE
+        }
+    }
+
+    fun setPodcastsHeadingVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            mBinding.textViewSearchPodcastsHeading.visibility = View.VISIBLE
+            mBinding.recyclerViewPodcastSearchResult.visibility = View.VISIBLE
+        } else {
+            mBinding.textViewSearchPodcastsHeading.visibility = View.GONE
+            mBinding.recyclerViewPodcastSearchResult.visibility = View.GONE
+        }
     }
 
 }

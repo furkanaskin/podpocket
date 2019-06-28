@@ -29,38 +29,22 @@
                     android:id="@+id/circularImageView"
                     android:layout_width="128dp"
                     android:layout_height="128dp"
-                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     android:scaleType="centerCrop"
                     app:setDrawableLink="@{viewModel.item.getImage()}" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                    android:id="@+id/textViewPodcastName"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginStart="@dimen/margin_16_dp"
+                    android:layout_margin="@dimen/margin_16_dp"
                     android:layout_toEndOf="@id/circularImageView"
-                    android:orientation="vertical">
-
-                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
-                        android:id="@+id/textViewPodcastName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewModel.item.getTitleOriginal()}"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_16_sp" />
-
-                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
-                        android:id="@+id/textViewPodcastDescription"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/bottomNavBackgroundColor"
-                        android:textSize="@dimen/dimen_12_sp" />
-                </LinearLayout>
+                    android:text="@{viewModel.item.getTitleOriginal()}"
+                    android:textColor="@color/colorLoginText"
+                    android:textSize="@dimen/dimen_16_sp" />
 
             </RelativeLayout>
-
         </com.google.android.material.card.MaterialCardView>
-
-
     </RelativeLayout>
 </layout>
