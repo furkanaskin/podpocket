@@ -39,6 +39,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
 
         initFirebase()
         getUser()
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

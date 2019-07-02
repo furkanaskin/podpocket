@@ -60,8 +60,17 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
             (activity as DashboardActivity).binding.bottomNavigation.selectedItemId = search.itemId
         }
 
+        mBinding.swipeRefreshLayout.setOnRefreshListener {
+            refreshData()
+        }
     }
 
+    private fun refreshData() {
+        initBestPodcasts()
+        initRecommendedPodcasts()
+        initRecommendedEpisodes()
+        mBinding.swipeRefreshLayout.isRefreshing = false
+    }
 
     private fun initBestPodcastsAdapter() {
         val adapter = BestPodcastsAdapter { item ->

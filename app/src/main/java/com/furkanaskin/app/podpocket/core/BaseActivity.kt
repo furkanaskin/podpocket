@@ -1,19 +1,28 @@
 package com.furkanaskin.app.podpocket.core
 
 import android.app.Dialog
+import android.content.IntentFilter
+import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProviders
+import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
+import com.furkanaskin.app.podpocket.utils.ConnectivityReceiver
 import com.furkanaskin.app.podpocket.utils.PodPocketProgressDialog
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.support.v4.runOnUiThread
 
-abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : AppCompatActivity() {
+abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
+
+    private var snackBar: Snackbar? = null
 
     @LayoutRes
     abstract fun getLayoutRes(): Int
@@ -44,6 +53,19 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
 
         initFirebase()
         getUser()
+
+
+        registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
+
+    override fun onNetworkConnectionChanged(isConnected: Boolean) {
+        showNetworkMessage(isConnected)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ConnectivityReceiver.connectivityReceiverListener = this
     }
 
     /**
@@ -52,7 +74,28 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
      *  And you need to set viewModel to binding: binding.viewModel = viewModel
      *
      */
+
     abstract fun initViewModel(viewModel: VM)
+
+    private fun showNetworkMessage(isConnected: Boolean) {
+        if (!isConnected) {
+            snackBar = Snackbar.make(findViewById(R.id.rootView), "Internet bağlantınızı kontrol edin.", Snackbar.LENGTH_LONG)
+            snackBar?.duration = BaseTransientBottomBar.LENGTH_INDEFINITE
+            snackBar?.view?.setBackgroundColor(Color.parseColor("#F48B8C"))
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
+
+            snackBar?.show()
+        } else {
+            window.clearFlags(
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
+
+            snackBar?.dismiss()
+        }
+    }
 
     fun initFirebase() {
         mAuth = FirebaseAuth.getInstance()
@@ -78,6 +121,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
             dialog?.dismiss()
         }
     }
+
     fun getUser() {
         doAsync {
             user = viewModel.mAuth.currentUser?.uid?.let { viewModel.db.userDao().getUser(it) }!!
