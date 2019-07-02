@@ -24,6 +24,11 @@ class PodcastEpisodesViewModel(app: Application) : BaseViewModel(app) {
         return baseApi.getPodcastById(id)
     }
 
+    fun getEpisodesWithPaging(id: String, nextEpisodePubDate: Long): Observable<Podcasts> {
+
+        return baseApi.getPodcastByIdWithPaging(id, nextEpisodePubDate)
+    }
+
     fun getAllIds(): List<String> {
         val ids: ArrayList<String> = ArrayList()
         for (i in podcast.get()?.episodes?.indices!!) {

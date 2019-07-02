@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.core.Constants
@@ -12,6 +14,7 @@ import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.ui.podcast_episodes.episodes.EpisodesAdapter
+import com.furkanaskin.app.podpocket.utils.PaginationScrollListener
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -28,7 +31,9 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
     val disposable = CompositeDisposable()
     lateinit var podcastTitle: String
     private var totalPage: Int? = 0
-
+    var isLastPage: Boolean = false
+    var isLoading: Boolean = false
+    var nextEpisodePubDate: Long? = null
 
     override fun getLayoutRes(): Int = R.layout.fragment_podcast_episodes
 
@@ -61,8 +66,9 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                 .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
                     override fun onSuccess(t: Podcasts) {
                         viewModel.podcast.set(t)
-
+                        nextEpisodePubDate = t.nextEpisodePubDate
                         podcastTitle = t.title!!
+
 
                         val remaining = t.totalEpisodes?.rem(10) ?: 0
                         totalPage = if (remaining > 0) {
@@ -82,13 +88,72 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                     override fun onComplete() {
                         super.onComplete()
                         hideProgress()
-                        viewModel.db.episodesDao().getEpisodes().observe(this@PodcastEpisodesFragment, Observer<List<EpisodeEntity>> { t -> (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t) })
+                        viewModel.db.episodesDao().getEpisodes().observe(this@PodcastEpisodesFragment, Observer<List<EpisodeEntity>> { t ->
+                            (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
+                        })
 
                     }
 
                 }))
+        val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        mBinding.recyclerViewPodcastEpisodes.layoutManager = layoutManager
+        mBinding.recyclerViewPodcastEpisodes.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
 
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+
+            override fun loadMoreItems() {
+                isLoading = true
+                getMoreItems(nextEpisodePubDate ?: 0)
+            }
+
+        })
         mBinding.recyclerViewPodcastEpisodes.adapter = adapter
+
+    }
+
+    fun getMoreItems(nextEpisodePubDate: Long) {
+        showProgress()
+        disposable.add(viewModel.getEpisodesWithPaging(getPodcastId(), nextEpisodePubDate).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
+                    override fun onSuccess(t: Podcasts) {
+                        viewModel.podcast.set(t)
+                        this@PodcastEpisodesFragment.nextEpisodePubDate = t.nextEpisodePubDate
+                        podcastTitle = t.title!!
+
+
+                        val remaining = t.totalEpisodes?.rem(10) ?: 0
+                        totalPage = if (remaining > 0) {
+                            t.totalEpisodes?.div(10)?.plus(1) // +1 for remaining items
+                        } else {
+                            t.totalEpisodes?.div(10)
+                        }
+
+                        doAsync {
+                            t.episodes?.forEachIndexed { _, episode ->
+                                val episodesItem = episode?.let { EpisodeEntity(it) }
+                                episodesItem?.let { viewModel.db.episodesDao().insertEpisode(it) }
+                            }
+                        }
+                    }
+
+                    override fun onComplete() {
+                        super.onComplete()
+                        hideProgress()
+                        isLoading = false
+                        viewModel.db.episodesDao().getEpisodes().observe(this@PodcastEpisodesFragment, Observer<List<EpisodeEntity>> { t ->
+                            (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
+                            (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).notifyDataSetChanged()
+                        })
+
+                    }
+
+                }))
 
     }
 
