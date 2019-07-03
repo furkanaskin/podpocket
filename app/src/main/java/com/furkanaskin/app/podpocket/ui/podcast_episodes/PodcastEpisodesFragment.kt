@@ -29,8 +29,6 @@ import java.util.*
 class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentPodcastEpisodesBinding>(PodcastEpisodesViewModel::class.java) {
 
     val disposable = CompositeDisposable()
-    lateinit var podcastTitle: String
-    private var totalPage: Int? = 0
     var isLastPage: Boolean = false
     var isLoading: Boolean = false
     var nextEpisodePubDate: Long? = null
@@ -54,6 +52,7 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
 
         }
 
+
         // Delete previous episodes.
 
         doAsync {
@@ -67,15 +66,6 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                     override fun onSuccess(t: Podcasts) {
                         viewModel.podcast.set(t)
                         nextEpisodePubDate = t.nextEpisodePubDate
-                        podcastTitle = t.title!!
-
-
-                        val remaining = t.totalEpisodes?.rem(10) ?: 0
-                        totalPage = if (remaining > 0) {
-                            t.totalEpisodes?.div(10)?.plus(1) // +1 for remaining items
-                        } else {
-                            t.totalEpisodes?.div(10)
-                        }
 
                         doAsync {
                             viewModel.podcast.get()?.episodes?.forEachIndexed { _, episode ->
@@ -95,6 +85,7 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                     }
 
                 }))
+
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         mBinding.recyclerViewPodcastEpisodes.layoutManager = layoutManager
         mBinding.recyclerViewPodcastEpisodes.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
@@ -116,6 +107,10 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
 
     }
 
+    fun getData() {
+
+    }
+
     fun getMoreItems(nextEpisodePubDate: Long) {
         showProgress()
         disposable.add(viewModel.getEpisodesWithPaging(getPodcastId(), nextEpisodePubDate).subscribeOn(Schedulers.io())
@@ -124,15 +119,6 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                     override fun onSuccess(t: Podcasts) {
                         viewModel.podcast.set(t)
                         this@PodcastEpisodesFragment.nextEpisodePubDate = t.nextEpisodePubDate
-                        podcastTitle = t.title!!
-
-
-                        val remaining = t.totalEpisodes?.rem(10) ?: 0
-                        totalPage = if (remaining > 0) {
-                            t.totalEpisodes?.div(10)?.plus(1) // +1 for remaining items
-                        } else {
-                            t.totalEpisodes?.div(10)
-                        }
 
                         doAsync {
                             t.episodes?.forEachIndexed { _, episode ->
