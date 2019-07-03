@@ -9,7 +9,8 @@ import com.furkanaskin.app.podpocket.db.entities.*
     UserEntity::class,
     PlayerEntity::class,
     EpisodeEntity::class,
-    FavoriteEpisodeEntity::class], version = 1)
+    FavoriteEpisodeEntity::class,
+    RecentlyPlaysEntity::class], version = 2)
 
 abstract class AppDatabase : RoomDatabase() {
     abstract fun exampleDao(): ExampleDao
@@ -17,4 +18,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun playerDao(): PlayerDao
     abstract fun episodesDao(): EpisodesDao
     abstract fun favoritesDao(): FavoritesDao
+    abstract fun recentlyPlaysDao(): RecentlyPlaysDao
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.furkanaskin.app.podpocket.ui.profile.recently_played.RecentlyEpisodesItemViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16_dp"
+            android:backgroundTint="@android:color/transparent"
+            app:cardCornerRadius="6dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/circularImageView"
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    app:setDrawableLink="@{viewModel.item.getImage()}" />
+
+
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                    android:id="@+id/textViewPodcastName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_16_dp"
+                    android:layout_toEndOf="@id/circularImageView"
+                    android:text="@{viewModel.item.getTitle()}"
+                    android:textColor="@color/colorLoginText"
+                    android:textSize="@dimen/dimen_16_sp" />
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+</layout>

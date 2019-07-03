@@ -8,18 +8,12 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.FragmentRecentlyPlayedBinding
-import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
-import com.furkanaskin.app.podpocket.service.response.Episode
-import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
-import com.furkanaskin.app.podpocket.utils.extensions.hide
-import com.furkanaskin.app.podpocket.utils.extensions.show
-import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import com.furkanaskin.app.podpocket.utils.extensions.toast
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.runOnUiThread
+import java.util.*
 
 /**
  * Created by Furkan on 17.05.2019
@@ -27,49 +21,15 @@ import org.jetbrains.anko.doAsync
 
 class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRecentlyPlayedBinding>(RecentlyPlayedViewModel::class.java) {
 
+
     override fun getLayoutRes(): Int = R.layout.fragment_recently_played
 
     override fun initViewModel() {
         mBinding.viewModel = viewModel
     }
 
-    private val disposable = CompositeDisposable()
-    var ids: ArrayList<String> = ArrayList()
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val recentlyPlayedPodcastId = user?.lastPlayedPodcast
-        val recentlyPlayedEpisodeId = user?.lastPlayedEpisode
-
-
-        // Not first join. He/she already listened something.
-        if (!recentlyPlayedEpisodeId.isNullOrEmpty() || !recentlyPlayedPodcastId.isNullOrEmpty()) {
-            viewModel.recentlyPlayedSomething.set(true)
-            hideAnimation()
-            setRecentlyPlayedPodcast(recentlyPlayedPodcastId ?: "53fd8c1a373b46888638cbeb14b571d1")
-            setRecentlyPlayedEpisode(recentlyPlayedEpisodeId ?: "")
-
-        } else { // First join.
-            showAnimation()
-        }
-
-
-
-        mBinding.cardView.setOnClickListener {
-            val podcastId = viewModel.podcastItem.get()?.id
-            val action = RecentlyPlayedFragmentDirections.actionRecentlyPlayedFragmentToPodcastEpisodesFragment()
-            action.podcastID = podcastId ?: ""
-            findNavController().navigate(action)
-        }
-
-        mBinding.textViewListenEpisode.setOnClickListener {
-            val intent = Intent(activity, PlayerActivity::class.java)
-            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, ids)
-            intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, viewModel.episodeItem.get()?.id)
-            startActivity(intent)
-        }
 
         mBinding.buttonNavigateHome.setOnClickListener {
             navigate(R.id.action_recentlyPlayedFragment_to_homeFragment)
@@ -77,72 +37,68 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
             (activity as DashboardActivity).binding.bottomNavigation.selectedItemId = home.itemId
         }
 
+        mBinding.recyclerViewRecentlyPlayedEpisodes.adapter = RecentlyEpisodesAdapter {
+            var ids: ArrayList<String> = ArrayList()
 
-    }
+            ids.add(it.id)
 
-    fun setRecentlyPlayedEpisode(recentlyPlayedEpisodeId: String) {
+            if (ids.size > 0) {
 
-        disposable.add(viewModel.getRecentlyPlayedEpisodeDetails(recentlyPlayedEpisodeId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<Episode>(viewModel.getApplication()) {
-                    override fun onSuccess(t: Episode) {
-                        viewModel.episodeItem.set(t)
-                    }
+                val intent = Intent(activity, PlayerActivity::class.java)
+                intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, ids)
+                intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, it.id)
+                startActivity(intent)
+            } else {
+                toast("Bir hata meydana geldi.")
+            }
+        }
 
-                })
-        )
-    }
+        mBinding.recyclerViewRecentlyPlayedPodcast.adapter = RecentlyPodcastsAdapter {
+            val podcastId = it.id
+            val action = RecentlyPlayedFragmentDirections.actionRecentlyPlayedFragmentToPodcastEpisodesFragment()
+            action.podcastID = podcastId
+            findNavController().navigate(action)
 
-    fun setRecentlyPlayedPodcast(recentlyPlayedPodcastId: String) {
-        disposable.add(viewModel.getRecentlyPlayedPodcastDetails(recentlyPlayedPodcastId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
-                    override fun onSuccess(t: Podcasts) {
-                        viewModel.podcastItem.set(t)
+        }
 
-                        t.episodes?.forEachIndexed { _, episodesItem ->
-                            ids.add(episodesItem?.id ?: "")
-                        }
+        doAsync {
+            val podcasts = viewModel.db.recentlyPlaysDao().getRecentlyPlayedPodcasts()
+            val episodes = viewModel.db.recentlyPlaysDao().getRecentlyPlayedEpisodes()
 
-                        doAsync {
-                            viewModel.db.episodesDao().deleteAllEpisodes()
-                            t.episodes?.forEachIndexed { _, episode ->
-                                val episodesItem = EpisodeEntity(episode!!)
-                                episodesItem.let { viewModel.db.episodesDao().insertEpisode(it) }
-                            }
-                        }
-                    }
+            (mBinding.recyclerViewRecentlyPlayedPodcast.adapter as RecentlyPodcastsAdapter).submitList(podcasts)
+            (mBinding.recyclerViewRecentlyPlayedEpisodes.adapter as RecentlyEpisodesAdapter).submitList(episodes)
 
+            runOnUiThread {
+                if (podcasts.isEmpty() && episodes.isEmpty()) {
+                    showAnimation()
+                } else {
+                    hideAnimation()
+                }
+            }
+        }
 
-                }))
     }
 
     private fun showAnimation() {
-        mBinding.cardView.hide()
-        mBinding.episodeCardView.hide()
-        mBinding.textViewMainHeading.hide()
-        mBinding.textViewSecondMainHeading.hide()
+        mBinding.textViewRecentlyPlayedEpisodesHeading.visibility = View.GONE
+        mBinding.textViewRecentlyPlayedPodcastsHeading.visibility = View.GONE
+        mBinding.recyclerViewRecentlyPlayedEpisodes.visibility = View.GONE
+        mBinding.recyclerViewRecentlyPlayedPodcast.visibility = View.GONE
+        mBinding.lottieAnimationView.visibility = View.VISIBLE
+        mBinding.buttonNavigateHome.visibility = View.VISIBLE
+        mBinding.textViewDummyText.visibility = View.VISIBLE
 
-        mBinding.lottieAnimationView.show()
-        mBinding.textViewDummyText.show()
-        mBinding.buttonNavigateHome.show()
     }
 
     private fun hideAnimation() {
-        mBinding.cardView.show()
-        mBinding.episodeCardView.show()
-        mBinding.textViewMainHeading.show()
-        mBinding.textViewSecondMainHeading.show()
+        mBinding.textViewRecentlyPlayedEpisodesHeading.visibility = View.VISIBLE
+        mBinding.textViewRecentlyPlayedPodcastsHeading.visibility = View.VISIBLE
+        mBinding.recyclerViewRecentlyPlayedEpisodes.visibility = View.VISIBLE
+        mBinding.recyclerViewRecentlyPlayedPodcast.visibility = View.VISIBLE
+        mBinding.lottieAnimationView.visibility = View.GONE
+        mBinding.buttonNavigateHome.visibility = View.GONE
+        mBinding.textViewDummyText.visibility = View.GONE
 
-        mBinding.lottieAnimationView.hide()
-        mBinding.textViewDummyText.hide()
-        mBinding.buttonNavigateHome.hide()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable.clear()
-    }
 }

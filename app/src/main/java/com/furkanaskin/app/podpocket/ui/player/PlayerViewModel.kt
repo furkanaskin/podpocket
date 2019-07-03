@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
+import com.furkanaskin.app.podpocket.db.entities.RecentlyPlaysEntity
 import com.furkanaskin.app.podpocket.service.response.Episode
 import io.reactivex.Observable
 import org.jetbrains.anko.doAsync
@@ -51,6 +52,14 @@ class PlayerViewModel(app: Application) : BaseViewModel(app) {
             user?.lastPlayedPodcast = item.get()?.podcast?.id
             user?.lastPlayedEpisode = item.get()?.id
             user?.let { db.userDao().updateUser(it) }
+        }
+
+        doAsync {
+            val recentlyPlayedPodcast: RecentlyPlaysEntity? = item.get()?.podcast?.let { RecentlyPlaysEntity(it) }
+            val recentlyPlayedEpisode: RecentlyPlaysEntity? = item.get()?.let { RecentlyPlaysEntity(it) }
+
+            recentlyPlayedEpisode?.let { db.recentlyPlaysDao().insertRecentlyPlay(it) }
+            recentlyPlayedPodcast?.let { db.recentlyPlaysDao().insertRecentlyPlay(it) }
         }
 
     }

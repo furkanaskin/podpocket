@@ -16,7 +16,6 @@ import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.FragmentSearchBinding
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
-import com.furkanaskin.app.podpocket.service.response.GenresItem
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.service.response.Search
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
@@ -35,7 +34,6 @@ import org.jetbrains.anko.doAsync
 
 class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(SearchViewModel::class.java) {
     private val disposable = CompositeDisposable()
-    private val genreList = mutableListOf<GenresItem?>()
     var ids: ArrayList<String> = ArrayList()
 
     override fun initViewModel() {

@@ -80,6 +80,7 @@
     <string name="thanks_for_sharing_expreience">Thanks for sharing your experience with Podpocket Developers!</string>
     <string name="episodes">Bölümler</string>
     <string name="podcasts">Podcastler</string>
+    <string name="clear_all">Hepsini temizle</string>
     <string-array name="feed_fragment_titles">
         <item>@string/locale_feed_fragment</item>
         <item>@string/global_feed_fragment</item>

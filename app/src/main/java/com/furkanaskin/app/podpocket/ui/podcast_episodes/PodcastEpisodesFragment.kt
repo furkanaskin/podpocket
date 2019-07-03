@@ -105,6 +105,7 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                     override fun onComplete() {
                         super.onComplete()
                         hideProgress()
+                        viewModel.db.episodesDao().getEpisodes().removeObservers(this@PodcastEpisodesFragment)
                         viewModel.db.episodesDao().getEpisodes().observe(this@PodcastEpisodesFragment, Observer<List<EpisodeEntity>> { t ->
                             (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
                         })

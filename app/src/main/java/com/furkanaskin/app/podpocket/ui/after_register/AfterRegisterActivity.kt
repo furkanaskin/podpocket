@@ -67,7 +67,10 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
                 doAsync {
 
                     viewModel.db.userDao().updateUser(willBeUpdated)
-                    viewModel.saveSuccess.set(true)
+
+                    runOnUiThread {
+                        viewModel.saveSuccess.set(true)
+                    }
                 }
 
                 viewModel.insertUserToFirebase(willBeUpdated)
