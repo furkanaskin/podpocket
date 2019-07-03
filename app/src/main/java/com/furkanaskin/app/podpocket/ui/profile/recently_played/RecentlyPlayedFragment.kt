@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.profile.recently_played
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.furkanaskin.app.podpocket.R
@@ -10,6 +9,8 @@ import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.FragmentRecentlyPlayedBinding
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
+import com.furkanaskin.app.podpocket.ui.profile.recently_played.episodes.RecentlyEpisodesAdapter
+import com.furkanaskin.app.podpocket.ui.profile.recently_played.podcasts.RecentlyPodcastsAdapter
 import com.furkanaskin.app.podpocket.utils.extensions.toast
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.runOnUiThread
@@ -28,8 +29,9 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
         mBinding.viewModel = viewModel
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun init() {
+        super.init()
+
 
         mBinding.buttonNavigateHome.setOnClickListener {
             navigate(R.id.action_recentlyPlayedFragment_to_homeFragment)
@@ -61,14 +63,19 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
 
         }
 
+        getDataFromDB()
+
+    }
+
+    fun getDataFromDB() {
         doAsync {
             val podcasts = viewModel.db.recentlyPlaysDao().getRecentlyPlayedPodcasts()
             val episodes = viewModel.db.recentlyPlaysDao().getRecentlyPlayedEpisodes()
 
-            (mBinding.recyclerViewRecentlyPlayedPodcast.adapter as RecentlyPodcastsAdapter).submitList(podcasts)
-            (mBinding.recyclerViewRecentlyPlayedEpisodes.adapter as RecentlyEpisodesAdapter).submitList(episodes)
-
             runOnUiThread {
+                (mBinding.recyclerViewRecentlyPlayedPodcast.adapter as RecentlyPodcastsAdapter).submitList(podcasts)
+                (mBinding.recyclerViewRecentlyPlayedEpisodes.adapter as RecentlyEpisodesAdapter).submitList(episodes)
+
                 if (podcasts.isEmpty() && episodes.isEmpty()) {
                     showAnimation()
                 } else {
@@ -76,7 +83,6 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
                 }
             }
         }
-
     }
 
     private fun showAnimation() {

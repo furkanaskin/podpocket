@@ -1,4 +1,4 @@
-package com.furkanaskin.app.podpocket.ui.profile.recently_played
+package com.furkanaskin.app.podpocket.ui.profile.recently_played.podcasts
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel

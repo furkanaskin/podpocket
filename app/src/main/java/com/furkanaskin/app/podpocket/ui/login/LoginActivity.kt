@@ -108,6 +108,17 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
     private fun init() {
         val viewType = intent.getIntExtra(Constants.IntentName.LOGIN_ACTIVITY_TYPE, Constants.LoginActivityType.LOGIN_TYPE)
         viewModel.setType(viewType)
+
+
+        viewModel.showProgress.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                if (viewModel.showProgress.get() == true) {
+                    showProgress()
+                } else {
+                    hideProgress()
+                }
+            }
+        })
     }
 
     private fun showAgreementDialog() {
@@ -154,4 +165,5 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
         // Display the alert dialog on app interface
         dialog.show()
     }
+
 }

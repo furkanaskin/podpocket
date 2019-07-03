@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.furkanaskin.app.podpocket.ui.profile.recently_played.RecentlyPodcastsItemViewModel" />
+            type="com.furkanaskin.app.podpocket.ui.profile.recently_played.podcasts.RecentlyPodcastsItemViewModel" />
     </data>
 
     <RelativeLayout

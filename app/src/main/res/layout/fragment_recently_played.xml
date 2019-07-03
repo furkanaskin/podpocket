@@ -36,13 +36,13 @@
             android:id="@+id/buttonNavigateHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/lottieAnimationView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_8_dp"
             android:layout_marginBottom="@dimen/margin_8_dp"
             android:background="@color/mainBackgroundColor"
             android:src="@drawable/ic_card_play_button"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
         <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
@@ -104,7 +104,8 @@
             android:text="@string/podcasts"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewRecentlyPlayedPodcast"
@@ -127,7 +128,8 @@
             android:text="@string/episodes"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewRecentlyPlayedEpisodes"

@@ -48,8 +48,9 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
 
 
         binding.buttonDone.setOnClickListener {
+            showProgress()
+
             if (viewModel.getValidationMessages() && viewModel.userID.get() != null) {
-                showProgress()
 
                 val willBeUpdated = UserEntity(
                         id = user?.id ?: 0,
@@ -70,12 +71,12 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
 
                     runOnUiThread {
                         viewModel.saveSuccess.set(true)
+                        hideProgress()
                     }
                 }
 
                 viewModel.insertUserToFirebase(willBeUpdated)
 
-                hideProgress()
             }
         }
 
@@ -98,7 +99,9 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
                 }
             }
         })
+
         getUser()
+
     }
 
     private fun isCurrentUserIDAvailable(): Boolean {

@@ -17,13 +17,14 @@ class ForgetPasswordViewModel(app: Application) : BaseViewModel(app) {
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
     var sendVerifyMailSucces: ObservableField<Boolean> = ObservableField(false)
     var type: ObservableField<Int> = ObservableField(0)
+    var showProgress: ObservableField<Boolean> = ObservableField(false)
 
     init {
         (app as? Podpocket)?.component?.inject(this)
     }
 
     fun buttonClick() {
-        showProgress()
+        showProgress.set(true)
         when (type.get()) {
             Constants.LoginActivityType.FORGOT_PASS -> forgetPassword()
             Constants.LoginActivityType.EMAIL_VERIFY -> verifyEmail()
@@ -37,12 +38,14 @@ class ForgetPasswordViewModel(app: Application) : BaseViewModel(app) {
                 mAuth.sendPasswordResetEmail(it).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         sendMailSuccess.set(true)
-                        hideProgress()
+                        showProgress.set(false)
+
                     }
                 }
             }?.addOnFailureListener {
                 Timber.e(it.toString())
-                hideProgress()
+                showProgress.set(false)
+
             }
         }
     }
@@ -52,9 +55,10 @@ class ForgetPasswordViewModel(app: Application) : BaseViewModel(app) {
         mUser!!.sendEmailVerification().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 sendVerifyMailSucces.set(true)
-                hideProgress()
+                showProgress.set(false)
             } else {
-                hideProgress()
+                showProgress.set(false)
+
             }
         }
     }

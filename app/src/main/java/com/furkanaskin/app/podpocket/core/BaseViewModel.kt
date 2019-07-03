@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.core
 
 import android.app.Application
-import android.app.Dialog
 import androidx.lifecycle.AndroidViewModel
 import com.furkanaskin.app.podpocket.db.AppDatabase
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
@@ -21,7 +20,6 @@ open class BaseViewModel(app: Application) : AndroidViewModel(app) {
 
     lateinit var mAuth: FirebaseAuth
     var user: UserEntity? = null
-    var dialog: Dialog? = null
 
     lateinit var currentLocation: String
 
@@ -49,11 +47,4 @@ open class BaseViewModel(app: Application) : AndroidViewModel(app) {
             currentLocation = "us"
     }
 
-    fun showProgress() {
-        dialog?.show()
-    }
-
-    fun hideProgress() {
-        dialog?.dismiss()
-    }
 }

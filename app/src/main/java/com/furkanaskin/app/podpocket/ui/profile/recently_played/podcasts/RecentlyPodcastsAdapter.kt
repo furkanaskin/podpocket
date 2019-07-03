@@ -1,4 +1,4 @@
-package com.furkanaskin.app.podpocket.ui.profile.recently_played
+package com.furkanaskin.app.podpocket.ui.profile.recently_played.podcasts
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

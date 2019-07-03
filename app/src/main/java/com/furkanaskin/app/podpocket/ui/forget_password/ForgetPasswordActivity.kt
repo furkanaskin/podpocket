@@ -28,6 +28,16 @@ class ForgetPasswordActivity : BaseActivity<ForgetPasswordViewModel, ActivityFor
         val viewType = intent.getIntExtra("TYPE", 0)
         viewModel.type.set(viewType)
 
+        viewModel.showProgress.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                if (viewModel.showProgress.get() == true) {
+                    showProgress()
+                } else {
+                    hideProgress()
+                }
+            }
+        })
+
         viewModel.sendMailSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
                 showResetPasswordDialog()

@@ -39,6 +39,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     var registerSuccess: ObservableField<Boolean> = ObservableField(false)
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
     var verifySuccess: ObservableField<Boolean> = ObservableField()
+    var showProgress: ObservableField<Boolean> = ObservableField()
 
     private val disposables = CompositeDisposable()
 
@@ -95,7 +96,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     private fun registerClicked() {
         if (getValidationMessages()) {
-            showProgress()
+            showProgress.set(true)
             mAuth.createUserWithEmailAndPassword(userName.get() ?: "", password.get()
                     ?: "").addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -114,7 +115,8 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                         db.userDao().insertUser(user)
                     }
 
-                    hideProgress()
+                    showProgress.set(false)
+
                 } else {
                     checkFirebaseCredentials(task)
                 }
@@ -125,7 +127,8 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     private fun loginClicked() {
         if (getValidationMessages()) {
-            showProgress()
+            showProgress.set(true)
+
             mAuth.signInWithEmailAndPassword(userName.get() ?: "", password.get()
                     ?: "").addOnCompleteListener { task ->
 
@@ -145,11 +148,13 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                     }
 
                     loginSuccess.set(true)
-                    hideProgress()
+                    showProgress.set(false)
+
                 } else {
                     verifySuccess.set(false)
                     checkFirebaseCredentials(task)
-                    hideProgress()
+                    showProgress.set(false)
+
                 }
             }
         }
@@ -166,7 +171,8 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
 
     private fun checkFirebaseCredentials(task: Task<AuthResult>) {
-        showProgress()
+        showProgress.set(true)
+
         val errorType = task.exception
         var errorMessage: String
 
@@ -174,25 +180,30 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
             is FirebaseAuthInvalidCredentialsException -> {
                 errorMessage = "Lütfen mail adresi ve şifrenizi kontrol ediniz."
-                hideProgress()
+                showProgress.set(false)
+
             }
             is FirebaseAuthWeakPasswordException -> {
                 errorMessage = "Lütfen daha güçlü bir parola deneyiniz."
-                hideProgress()
+                showProgress.set(false)
+
             }
             is FirebaseAuthUserCollisionException -> {
                 errorMessage = "Zaten böyle bir kullanıcı var."
-                hideProgress()
+                showProgress.set(false)
+
             }
             is FirebaseAuthInvalidUserException -> {
                 errorMessage = "Böyle bir kullanıcı bulunamadı."
-                hideProgress()
+                showProgress.set(false)
+
             }
 
             else -> {
                 Timber.e(errorType.toString())
                 errorMessage = "Beklenmedik bir hata oluştu."
-                hideProgress()
+                showProgress.set(false)
+
             }
         }
 
