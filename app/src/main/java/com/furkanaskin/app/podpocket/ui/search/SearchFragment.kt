@@ -125,7 +125,11 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         setPodcastsHeadingVisibility(false)
 
         mBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
+            override fun onQueryTextSubmit(newText: String): Boolean {
+                if (newText.isNotEmpty()) {
+                    getSearchResult(newText, Constants.SearchQuery.EPISODE)
+                    getSearchResult(newText, Constants.SearchQuery.PODCAST)
+                }
                 return false
             }
 
