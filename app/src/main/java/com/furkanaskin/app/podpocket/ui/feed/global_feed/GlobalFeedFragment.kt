@@ -39,18 +39,24 @@ class GlobalFeedFragment : BaseFragment<GlobalFeedViewModel, FragmentGlobalFeedB
             }
 
             override fun onItemRangeInserted(sender: ObservableList<Post>?, positionStart: Int, itemCount: Int) {
-                hideProgress()
-                (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).submitList(viewModel.posts)
-                (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).notifyDataSetChanged()
+                if (isVisible) {
+
+                    hideProgress()
+                    (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).submitList(viewModel.posts)
+                    (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).notifyDataSetChanged()
+                }
             }
 
             override fun onItemRangeChanged(sender: ObservableList<Post>?, positionStart: Int, itemCount: Int) {
             }
 
             override fun onChanged(sender: ObservableList<Post>?) {
-                hideProgress()
-                (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).submitList(viewModel.posts)
-                (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).notifyDataSetChanged()
+                if (isVisible) {
+
+                    hideProgress()
+                    (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).submitList(viewModel.posts)
+                    (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).notifyDataSetChanged()
+                }
             }
         })
     }

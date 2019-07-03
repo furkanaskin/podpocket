@@ -39,18 +39,22 @@ class LocaleFeedFragment : BaseFragment<LocaleFeedViewModel, FragmentLocaleFeedB
             }
 
             override fun onItemRangeInserted(sender: ObservableList<Post>?, positionStart: Int, itemCount: Int) {
-                hideProgress()
-                (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).submitList(viewModel.posts)
-                (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).notifyDataSetChanged()
+                if (isVisible) {
+                    hideProgress()
+                    (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).submitList(viewModel.posts)
+                    (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).notifyDataSetChanged()
+                }
             }
 
             override fun onItemRangeChanged(sender: ObservableList<Post>?, positionStart: Int, itemCount: Int) {
             }
 
             override fun onChanged(sender: ObservableList<Post>?) {
-                hideProgress()
-                (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).submitList(viewModel.posts)
-                (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).notifyDataSetChanged()
+                if (isVisible) {
+                    hideProgress()
+                    (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).submitList(viewModel.posts)
+                    (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).notifyDataSetChanged()
+                }
             }
         })
 
