@@ -47,7 +47,7 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
             val intent = Intent(activity, PlayerActivity::class.java)
             intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_ITEM, item)
             intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, position.toString())
-            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, viewModel.getAllIds() as ArrayList<String>?)
+            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, viewModel.ids as ArrayList<String>?)
             startActivity(intent)
 
         }
@@ -59,32 +59,7 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
             viewModel.db.episodesDao().deleteAllEpisodes()
         }
 
-        showProgress()
-        disposable.add(viewModel.getEpisodes(getPodcastId()).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
-                    override fun onSuccess(t: Podcasts) {
-                        viewModel.podcast.set(t)
-                        nextEpisodePubDate = t.nextEpisodePubDate
-
-                        doAsync {
-                            viewModel.podcast.get()?.episodes?.forEachIndexed { _, episode ->
-                                val episodesItem = episode?.let { EpisodeEntity(it) }
-                                episodesItem?.let { viewModel.db.episodesDao().insertEpisode(it) }
-                            }
-                        }
-                    }
-
-                    override fun onComplete() {
-                        super.onComplete()
-                        hideProgress()
-                        viewModel.db.episodesDao().getEpisodes().observe(this@PodcastEpisodesFragment, Observer<List<EpisodeEntity>> { t ->
-                            (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
-                        })
-
-                    }
-
-                }))
+        getData()
 
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         mBinding.recyclerViewPodcastEpisodes.layoutManager = layoutManager
@@ -108,6 +83,35 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
     }
 
     fun getData() {
+        showProgress()
+        disposable.add(viewModel.getEpisodes(getPodcastId()).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
+                    override fun onSuccess(t: Podcasts) {
+                        viewModel.podcast.set(t)
+                        nextEpisodePubDate = t.nextEpisodePubDate
+
+                        doAsync {
+                            viewModel.podcast.get()?.episodes?.forEachIndexed { _, episode ->
+                                val episodesItem = episode?.let { EpisodeEntity(it) }
+                                episodesItem?.let {
+                                    viewModel.db.episodesDao().insertEpisode(it)
+                                    viewModel.ids.add(episode.id ?: "")
+                                }
+                            }
+                        }
+                    }
+
+                    override fun onComplete() {
+                        super.onComplete()
+                        hideProgress()
+                        viewModel.db.episodesDao().getEpisodes().observe(this@PodcastEpisodesFragment, Observer<List<EpisodeEntity>> { t ->
+                            (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
+                        })
+
+                    }
+
+                }))
 
     }
 
@@ -123,7 +127,10 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                         doAsync {
                             t.episodes?.forEachIndexed { _, episode ->
                                 val episodesItem = episode?.let { EpisodeEntity(it) }
-                                episodesItem?.let { viewModel.db.episodesDao().insertEpisode(it) }
+                                episodesItem?.let {
+                                    viewModel.db.episodesDao().insertEpisode(it)
+                                    viewModel.ids.add(episode.id ?: "")
+                                }
                             }
                         }
                     }
@@ -132,9 +139,9 @@ class PodcastEpisodesFragment : BaseFragment<PodcastEpisodesViewModel, FragmentP
                         super.onComplete()
                         hideProgress()
                         isLoading = false
+                        viewModel.db.episodesDao().getEpisodes().removeObservers(this@PodcastEpisodesFragment)
                         viewModel.db.episodesDao().getEpisodes().observe(this@PodcastEpisodesFragment, Observer<List<EpisodeEntity>> { t ->
                             (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
-                            (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).notifyDataSetChanged()
                         })
 
                     }

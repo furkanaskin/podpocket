@@ -14,6 +14,7 @@ import io.reactivex.Observable
 class PodcastEpisodesViewModel(app: Application) : BaseViewModel(app) {
 
     var podcast: ObservableField<Podcasts> = ObservableField()
+    val ids: ArrayList<String> = ArrayList()
 
     init {
         (app as? Podpocket)?.component?.inject(this)
@@ -27,14 +28,5 @@ class PodcastEpisodesViewModel(app: Application) : BaseViewModel(app) {
     fun getEpisodesWithPaging(id: String, nextEpisodePubDate: Long): Observable<Podcasts> {
 
         return baseApi.getPodcastByIdWithPaging(id, nextEpisodePubDate)
-    }
-
-    fun getAllIds(): List<String> {
-        val ids: ArrayList<String> = ArrayList()
-        for (i in podcast.get()?.episodes?.indices!!) {
-            podcast.get()?.episodes!![i]?.id?.let { ids.add(it) }
-
-        }
-        return ids
     }
 }

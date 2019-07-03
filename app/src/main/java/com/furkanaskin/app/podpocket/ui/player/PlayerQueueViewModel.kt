@@ -21,4 +21,9 @@ class PlayerQueueViewModel(app: Application) : BaseViewModel(app) {
 
         return baseApi.getPodcastById(id)
     }
+
+    fun getEpisodesWithPaging(id: String, nextEpisodePubDate: Long): Observable<Podcasts> {
+
+        return baseApi.getPodcastByIdWithPaging(id, nextEpisodePubDate)
+    }
 }

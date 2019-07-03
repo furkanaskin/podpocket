@@ -19,6 +19,10 @@ interface EpisodesDao {
     @Query("SELECT * FROM Episode ORDER BY pubDateMs DESC")
     fun getEpisodes(): LiveData<List<EpisodeEntity>>
 
+    @Query("SELECT * FROM Episode ORDER BY pubDateMs DESC")
+    fun getEpisodesWithoutLiveData(): List<EpisodeEntity>
+
+
     @Query("SELECT * FROM Episode WHERE id = :episodeId")
     fun getEpisode(episodeId: String): EpisodeEntity
 
