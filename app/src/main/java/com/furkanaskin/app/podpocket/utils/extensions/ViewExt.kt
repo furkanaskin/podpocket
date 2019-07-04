@@ -3,6 +3,7 @@ package com.furkanaskin.app.podpocket.utils.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -67,4 +68,13 @@ fun View.hide() {
 
 fun View.show() {
     visibility = VISIBLE
+}
+
+fun Float.dpToPx(): Float =
+        this * Resources.getSystem().displayMetrics.density
+
+
+fun pixelsToDps(context: Context, pixels: Int): Int {
+    val r = context.resources
+    return Math.round(pixels / (r.displayMetrics.densityDpi / 160f))
 }

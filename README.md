@@ -28,6 +28,7 @@ This project is an Podcast app like Spotify, Spreaker or SoundCloud but we has o
  - [RxJava](https://github.com/ReactiveX/RxJava)
  - [RxAndroid](https://github.com/ReactiveX/RxAndroid)
  - [RxKotlin](https://github.com/ReactiveX/RxKotlin)
+ - [RxAnimation](https://github.com/lopspower/RxAnimation)
  - [Dagger 2](https://github.com/google/dagger)
  - [Retrofit](https://square.github.io/retrofit/)
  - [OkHttp](https://github.com/square/okhttp)
