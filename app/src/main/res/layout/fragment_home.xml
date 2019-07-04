@@ -59,6 +59,7 @@
                     android:src="@drawable/ic_gradient_search" />
 
                 <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                    android:id="@+id/textViewAppName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@id/imageViewAppLogoSmall"

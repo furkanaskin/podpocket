@@ -23,25 +23,37 @@
 
         <ImageView
             android:id="@+id/imageViewAppLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/textViewHello"
-            android:layout_marginStart="64dp"
-            android:layout_marginBottom="100dp"
-            android:src="@drawable/app_logo_small" />
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_app_logo_svg" />
 
 
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/imageViewAppLogo"
-            android:layout_alignBottom="@id/imageViewAppLogo"
-            android:layout_marginStart="24dp"
-            android:layout_toEndOf="@id/imageViewAppLogo"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textColor="@android:color/white"
-            android:textSize="32sp" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_64_dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:src="@drawable/app_logo_small"
+                android:visibility="invisible" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                android:id="@+id/textViewAppName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@android:color/white"
+                android:textSize="32sp" />
+        </LinearLayout>
+
 
         <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
             android:id="@+id/textViewHello"

@@ -42,6 +42,7 @@ ext {
     support_version = '1.0.0'
     rxJavaVersion = '2.1.14'
     rxKotlinVersion = '2.2.0'
+    rxAnimationsVersion = '0.0.3'
     timberVersion = '4.7.0'
     daggerVersion = '2.22.1'
     retrofitVersion = '2.5.0'
@@ -78,6 +79,7 @@ ext {
     rxJava = "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     rxAndroid = "io.reactivex.rxjava2:rxandroid:2.0.1"
     rxKotlin = "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion"
+    rxAnimations = "com.mikhaellopez:rxanimation:$rxAnimationsVersion"
 
     //timber
     timber = "com.jakewharton.timber:timber:$timberVersion"
