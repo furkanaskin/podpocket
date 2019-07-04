@@ -25,7 +25,7 @@ class PodPocketProgressDialog {
 
             RxAnimation.sequentially(
                     logo.rotation(360f, 350L),
-                    logo.rotation(0f, 350L))
+                    logo.rotation(0f, 0L))
                     .repeat()
                     .subscribe().addTo(composite)
 
