@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.os.Bundle
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
+import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.ActivityMainBinding
 import com.furkanaskin.app.podpocket.utils.extensions.dpToPx
 import com.furkanaskin.app.podpocket.utils.extensions.pixelsToDps
@@ -44,29 +45,29 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>(Ma
 
 
                 val moveY = textY - logoY
-                val moveX = textX - logoX - textRectf.width() / 2 - 32f.dpToPx() - 24f.dpToPx()
+                val moveX = textX - logoX - textRectf.width() / 2 - (Constants.MainAnimationConstants.LOGO_WIDTH / 2).dpToPx() - Constants.MainAnimationConstants.MARGIN_BETWEEN_LOGO_AND_APPNAME.dpToPx()
 
                 RxAnimation.together(
-                        binding.textViewAppName.fadeOut(0L),
-                        binding.textViewHello.fadeOut(0L),
-                        binding.imageViewAppLogo.fadeOut(0L),
-                        binding.buttonLogin.fadeOut(0L),
-                        binding.buttonRegister.fadeOut(0L))
+                        binding.textViewAppName.fadeOut(Constants.MainAnimationConstants.NO_DURATION),
+                        binding.textViewHello.fadeOut(Constants.MainAnimationConstants.NO_DURATION),
+                        binding.imageViewAppLogo.fadeOut(Constants.MainAnimationConstants.NO_DURATION),
+                        binding.buttonLogin.fadeOut(Constants.MainAnimationConstants.NO_DURATION),
+                        binding.buttonRegister.fadeOut(Constants.MainAnimationConstants.NO_DURATION))
                         .subscribe().addTo(composite)
 
                 RxAnimation.sequentially(
                         binding.imageViewAppLogo.resize(1, 1),
-                        binding.imageViewAppLogo.fadeIn(1000L),
+                        binding.imageViewAppLogo.fadeIn(Constants.MainAnimationConstants.LONG_DURATION),
                         binding.imageViewAppLogo.resize(300, 300),
-                        binding.imageViewAppLogo.rotation(360f, 500L),
-                        binding.imageViewAppLogo.rotation(720f, 500L),
-                        binding.imageViewAppLogo.rotation(1080f, 500L),
-                        binding.imageViewAppLogo.resize(64, 64),
+                        binding.imageViewAppLogo.rotation(360f, Constants.MainAnimationConstants.SHORT_DURATION),
+                        binding.imageViewAppLogo.rotation(720f, Constants.MainAnimationConstants.SHORT_DURATION),
+                        binding.imageViewAppLogo.rotation(1080f, Constants.MainAnimationConstants.SHORT_DURATION),
+                        binding.imageViewAppLogo.resize(Constants.MainAnimationConstants.LOGO_WIDTH_INT, Constants.MainAnimationConstants.LOGO_HEIGHT_INT),
                         binding.imageViewAppLogo.translation(pixelsToDps(this, moveX.toInt()).toFloat(), pixelsToDps(this, moveY).toFloat()),
-                        binding.textViewAppName.fadeIn(500L),
-                        binding.textViewHello.fadeIn(500L),
-                        binding.buttonLogin.fadeIn(500L),
-                        binding.buttonRegister.fadeIn(500L))
+                        binding.textViewAppName.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION),
+                        binding.textViewHello.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION),
+                        binding.buttonLogin.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION),
+                        binding.buttonRegister.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION))
                         .subscribe().addTo(composite)
 
             }

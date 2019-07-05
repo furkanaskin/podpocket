@@ -6,30 +6,41 @@ package com.furkanaskin.app.podpocket.core
 
 object Constants {
     object IntentName {
-        val LOGIN_ACTIVITY_TYPE = "login_activity_type"
-        val PLAYER_ACTIVITY_ALL_IDS = "allPodIds"
-        val PLAYER_ACTIVITY_POSITION = "position"
-        val PLAYER_ACTIVITY_ITEM = "pod"
+        const val LOGIN_ACTIVITY_TYPE = "login_activity_type"
+        const val PLAYER_ACTIVITY_ALL_IDS = "allPodIds"
+        const val PLAYER_ACTIVITY_POSITION = "position"
+        const val PLAYER_ACTIVITY_ITEM = "pod"
     }
 
     object LoginActivityType {
-        val LOGIN_TYPE = 0
-        val REGISTER_TYPE = 1
-        val EMAIL_VERIFY = 2
-        val FORGOT_PASS = 3
+        const val LOGIN_TYPE = 0
+        const val REGISTER_TYPE = 1
+        const val EMAIL_VERIFY = 2
+        const val FORGOT_PASS = 3
     }
 
     object NetworkService {
-        val BASE_URL = "https://listen-api.listennotes.com/api/v2/"
+        const val BASE_URL = "https://listen-api.listennotes.com/api/v2/"
     }
 
     object BundleArguments {
-        val PODCAST_ID = "podcastId"
-        val CURRENT_EPISODE = "currentEpisode"
+        const val PODCAST_ID = "podcastId"
+        const val CURRENT_EPISODE = "currentEpisode"
     }
 
     object SearchQuery {
-        val EPISODE = "episode"
-        val PODCAST = "podcast"
+        const val EPISODE = "episode"
+        const val PODCAST = "podcast"
+    }
+
+    object MainAnimationConstants {
+        const val LOGO_WIDTH = 64f
+        const val MARGIN_BETWEEN_LOGO_AND_APPNAME = 24f
+        const val LOGO_WIDTH_INT = 64
+        const val LOGO_HEIGHT_INT = 64
+        const val SHORT_DURATION = 500L
+        const val LONG_DURATION = 1000L
+        const val NO_DURATION = 0L
+
     }
 }
