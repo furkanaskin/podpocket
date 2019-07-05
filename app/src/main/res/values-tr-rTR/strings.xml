@@ -81,9 +81,15 @@
     <string name="episodes">Bölümler</string>
     <string name="podcasts">Podcastler</string>
     <string name="clear_all">Hepsini temizle</string>
+    <string name="details">Detaylar</string>
     <string-array name="feed_fragment_titles">
         <item>@string/locale_feed_fragment</item>
         <item>@string/global_feed_fragment</item>
         <item>@string/feed_search_fragment</item>
+    </string-array>
+
+    <string-array name="podcast_titles">
+        <item>@string/episodes</item>
+        <item>@string/details</item>
     </string-array>
 </resources>

@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/podcastEpisodesFragment"
-        android:name="com.furkanaskin.app.podpocket.ui.podcast_episodes.PodcastEpisodesFragment"
+        android:name="com.furkanaskin.app.podpocket.ui.podcast.PodcastFragment"
         android:label="PodcastEpisodesFragment">
         <argument
             android:name="podcastID"

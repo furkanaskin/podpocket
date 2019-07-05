@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.furkanaskin.app.podpocket.ui.podcast_episodes.PodcastEpisodesViewModel" />
+            type="com.furkanaskin.app.podpocket.ui.podcast.PodcastViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/ic_app_bg"
         android:fitsSystemWindows="false"
-        tools:context=".ui.podcast_episodes.PodcastEpisodesFragment">
+        tools:context=".ui.podcast.PodcastFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -101,14 +101,28 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketRecyclerView
-            android:id="@+id/recyclerViewPodcastEpisodes"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="false"
-            android:orientation="vertical"
-            app:layoutManager="LinearLayoutManager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mainBackgroundColor"
+                android:elevation="@dimen/margin_8_dp"
+                app:tabIndicatorColor="@color/colorCyan"
+                app:tabMode="fixed"
+                app:tabTextColor="@color/colorCyan" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tab_layout" />
+        </RelativeLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

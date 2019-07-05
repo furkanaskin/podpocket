@@ -1,4 +1,4 @@
-package com.furkanaskin.app.podpocket.ui.podcast_episodes.episodes
+package com.furkanaskin.app.podpocket.ui.podcast.episodes
 
 import android.app.Activity
 import android.view.LayoutInflater

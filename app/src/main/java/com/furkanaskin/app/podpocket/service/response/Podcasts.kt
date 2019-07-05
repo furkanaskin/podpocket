@@ -1,5 +1,7 @@
 package com.furkanaskin.app.podpocket.service.response
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.*
@@ -74,7 +76,72 @@ data class Podcasts(
 
         @field:SerializedName("episodes")
         val episodes: List<EpisodesItem?>? = null
-) {
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readValue(Long::class.java.classLoader) as? Long,
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readValue(Long::class.java.classLoader) as? Long,
+            parcel.readString(),
+            parcel.readValue(Long::class.java.classLoader) as? Long,
+            parcel.readParcelable(LookingFor::class.java.classLoader),
+            parcel.createStringArrayList(),
+            parcel.readParcelable(Extra::class.java.classLoader),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.createTypedArrayList(EpisodesItem))
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(country)
+        parcel.writeString(image)
+        parcel.writeString(website)
+        parcel.writeString(thumbnail)
+        parcel.writeValue(itunesId)
+        parcel.writeValue(explicitContent)
+        parcel.writeString(description)
+        parcel.writeString(language)
+        parcel.writeValue(earliestPubDateMs)
+        parcel.writeString(title)
+        parcel.writeString(listennotesUrl)
+        parcel.writeValue(totalEpisodes)
+        parcel.writeValue(isClaimed)
+        parcel.writeValue(nextEpisodePubDate)
+        parcel.writeString(rss)
+        parcel.writeValue(lastestPubDateMs)
+        parcel.writeParcelable(lookingFor, flags)
+        parcel.writeStringList(genres)
+        parcel.writeParcelable(extra, flags)
+        parcel.writeString(publisher)
+        parcel.writeString(id)
+        parcel.writeString(email)
+        parcel.writeTypedList(episodes)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Podcasts> {
+        override fun createFromParcel(parcel: Parcel): Podcasts {
+            return Podcasts(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Podcasts?> {
+            return arrayOfNulls(size)
+        }
+    }
+
     fun getTotalEpisodes(): String? {
         return "$totalEpisodes Bölüm"
     }

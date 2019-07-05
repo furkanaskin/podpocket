@@ -10,6 +10,7 @@ object Constants {
         const val PLAYER_ACTIVITY_ALL_IDS = "allPodIds"
         const val PLAYER_ACTIVITY_POSITION = "position"
         const val PLAYER_ACTIVITY_ITEM = "pod"
+        const val PODCAST_ITEM = "podcast"
     }
 
     object LoginActivityType {

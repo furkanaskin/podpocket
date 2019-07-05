@@ -120,6 +120,8 @@ dependencies {
 
     //di
     implementation rootProject.ext.dagger
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
     kapt rootProject.ext.daggerApt
     //implementation rootProject.ext.daggerSupport
     //annotationProcessor rootProject.ext.daggerAnnotation
@@ -193,5 +195,3 @@ dependencies {
 repositories {
     mavenCentral()
 }
-
-

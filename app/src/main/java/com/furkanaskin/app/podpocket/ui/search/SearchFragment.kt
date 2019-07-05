@@ -155,7 +155,6 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
     private fun getSearchResult(searchText: String, type: String) {
 
-
         if (viewModel.selectedGenres.size == 0) {
             disposable.add(viewModel.getSearchResult(searchText, type)
                     .subscribeOn(Schedulers.io())
@@ -214,8 +213,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                 .subscribeWith(object : CallbackWrapper<Genres>(viewModel.getApplication()) {
                     override fun onSuccess(t: Genres) {
                         hideProgress()
-                        val genres = t
-                        addChipToGroup(mBinding.chipGroupGenres, genres)
+                        addChipToGroup(mBinding.chipGroupGenres, t)
                     }
 
                 }))
