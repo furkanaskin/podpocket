@@ -9,6 +9,8 @@
     </style>
 
     <style name="SplashStyle" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowDisablePreview">true</item>
         <item name="android:windowBackground">@drawable/ic_app_bg</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
@@ -27,6 +29,7 @@
 
     <style name="noAnimTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowDisablePreview">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>

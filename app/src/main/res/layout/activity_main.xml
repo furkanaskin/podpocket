@@ -23,9 +23,11 @@
 
         <ImageView
             android:id="@+id/imageViewAppLogo"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:layout_marginStart="-100dp"
+            android:layout_marginEnd="-100dp"
             android:src="@drawable/ic_app_logo_svg" />
 
         <LinearLayout

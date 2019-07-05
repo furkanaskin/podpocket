@@ -1,10 +1,10 @@
 package com.furkanaskin.app.podpocket.ui.search
 
 import android.app.Application
-import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.service.PodpocketAPI
+import com.furkanaskin.app.podpocket.service.response.Genres
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.service.response.Search
 import io.reactivex.Observable
@@ -23,15 +23,23 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
         (app as? Podpocket)?.component?.inject(this)
     }
 
-    var searchEpisodesHeadingVisiblity: ObservableField<Boolean> = ObservableField(false)
-    var searchPodcastsHeadingVisiblity: ObservableField<Boolean> = ObservableField(false)
+    var selectedGenres: ArrayList<Int> = ArrayList()
 
     fun getSearchResult(searchText: String, type: String): Observable<Search> {
         return api.fullTextSearch(searchText, type)
     }
 
+    fun getSearchResultWithGenres(searchText: String, type: String, genreIds: String): Observable<Search> {
+        return api.fullTextSearchWithGenres(searchText, type, genreIds)
+    }
+
     fun getEpisodes(id: String): Observable<Podcasts> {
 
         return baseApi.getPodcastById(id)
+    }
+
+    fun getGenres(): Observable<Genres> {
+
+        return api.getGenres()
     }
 }

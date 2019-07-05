@@ -24,6 +24,16 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>(Ma
 
     override fun getLayoutRes() = R.layout.activity_main
 
+    override fun onStart() {
+        this@MainActivity.overridePendingTransition(R.anim.no_anim, R.anim.no_anim)
+        super.onStart()
+    }
+
+    override fun onPause() {
+        this@MainActivity.overridePendingTransition(R.anim.no_anim, R.anim.no_anim)
+        super.onPause()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,20 +60,20 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>(Ma
                 RxAnimation.together(
                         binding.textViewAppName.fadeOut(Constants.MainAnimationConstants.NO_DURATION),
                         binding.textViewHello.fadeOut(Constants.MainAnimationConstants.NO_DURATION),
-                        binding.imageViewAppLogo.fadeOut(Constants.MainAnimationConstants.NO_DURATION),
                         binding.buttonLogin.fadeOut(Constants.MainAnimationConstants.NO_DURATION),
                         binding.buttonRegister.fadeOut(Constants.MainAnimationConstants.NO_DURATION))
                         .subscribe().addTo(composite)
 
                 RxAnimation.sequentially(
-                        binding.imageViewAppLogo.resize(1, 1),
                         binding.imageViewAppLogo.fadeIn(Constants.MainAnimationConstants.LONG_DURATION),
                         binding.imageViewAppLogo.resize(300, 300),
                         binding.imageViewAppLogo.rotation(360f, Constants.MainAnimationConstants.SHORT_DURATION),
                         binding.imageViewAppLogo.rotation(720f, Constants.MainAnimationConstants.SHORT_DURATION),
                         binding.imageViewAppLogo.rotation(1080f, Constants.MainAnimationConstants.SHORT_DURATION),
-                        binding.imageViewAppLogo.resize(Constants.MainAnimationConstants.LOGO_WIDTH_INT, Constants.MainAnimationConstants.LOGO_HEIGHT_INT),
-                        binding.imageViewAppLogo.translation(pixelsToDps(this, moveX.toInt()).toFloat(), pixelsToDps(this, moveY).toFloat()),
+                        RxAnimation.together(
+                                binding.imageViewAppLogo.rotation(1440f, Constants.MainAnimationConstants.LONG_DURATION),
+                                binding.imageViewAppLogo.resize(Constants.MainAnimationConstants.LOGO_WIDTH_INT, Constants.MainAnimationConstants.LOGO_HEIGHT_INT),
+                                binding.imageViewAppLogo.translation(pixelsToDps(this, moveX.toInt()).toFloat(), pixelsToDps(this, moveY).toFloat())),
                         binding.textViewAppName.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION),
                         binding.textViewHello.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION),
                         binding.buttonLogin.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION),

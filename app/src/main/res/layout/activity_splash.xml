@@ -21,23 +21,12 @@
 
         <ImageView
             android:id="@+id/imageViewAppLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:src="@drawable/app_logo" />
+            android:layout_marginStart="-100dp"
+            android:layout_marginEnd="-100dp"
+            android:src="@drawable/ic_app_logo_svg" />
 
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
-            android:id="@+id/textViewAppName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="32dp"
-            android:text="@string/app_name"
-            android:textColor="@android:color/white"
-            android:textSize="30sp" />
     </RelativeLayout>
 </layout>

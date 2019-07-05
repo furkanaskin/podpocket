@@ -17,6 +17,10 @@ interface PodpocketAPI {
     fun fullTextSearch(@Query("q") searchTerm: String, @Query("type") type: String): Observable<Search>
 
     @Headers("X-ListenAPI-Key: 82e6628b74404fb9a26a934b7d1adfa0")
+    @GET("search")
+    fun fullTextSearchWithGenres(@Query("q") searchTerm: String, @Query("type") type: String, @Query("genre_ids") genreIds: String): Observable<Search>
+
+    @Headers("X-ListenAPI-Key: 82e6628b74404fb9a26a934b7d1adfa0")
     @GET("typeahead")
     fun typeAheadSearch(@Query("q") searchTerm: String, @Query("show_podcasts") showPodcasts: Int, @Query("show_genres") showGenres: Int, @Query("safe_mode") safeMode: Int): Observable<TypeAhead>
 
