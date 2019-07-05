@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.DiffUtil
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseAdapter
 import com.furkanaskin.app.podpocket.databinding.ItemGlobalPostBinding
-import com.furkanaskin.app.podpocket.model.Post
+import com.furkanaskin.app.podpocket.db.entities.PostEntity
 
 /**
  * Created by Furkan on 2019-05-31
  */
 
-class GlobalPostsAdapter(private val callBack: (Post, Int) -> Unit) : BaseAdapter<Post>(globalPostsDiffCallback) {
+class GlobalPostsAdapter(private val callBack: (PostEntity, Int) -> Unit) : BaseAdapter<PostEntity>(globalPostsDiffCallback) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemGlobalPostBinding>(
                 LayoutInflater.from(parent.context),
@@ -41,12 +41,12 @@ class GlobalPostsAdapter(private val callBack: (Post, Int) -> Unit) : BaseAdapte
     }
 }
 
-val globalPostsDiffCallback = object : DiffUtil.ItemCallback<Post>() {
-    override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
+val globalPostsDiffCallback = object : DiffUtil.ItemCallback<PostEntity>() {
+    override fun areContentsTheSame(oldItem: PostEntity, newItem: PostEntity): Boolean {
         return oldItem == newItem
     }
 
-    override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
+    override fun areItemsTheSame(oldItem: PostEntity, newItem: PostEntity): Boolean {
         return oldItem == newItem
     }
 }

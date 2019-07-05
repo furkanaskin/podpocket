@@ -4,11 +4,13 @@ import android.app.Application
 import androidx.databinding.ObservableArrayList
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
+import com.furkanaskin.app.podpocket.db.entities.PostEntity
 import com.furkanaskin.app.podpocket.model.Post
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import org.jetbrains.anko.doAsync
 
 /**
  * Created by Furkan on 2019-05-26
@@ -34,10 +36,19 @@ class GlobalFeedViewModel(app: Application) : BaseViewModel(app) {
                 posts.clear()
 
                 allPosts.reversed().forEachIndexed { _, dataSnapshot ->
-                    posts.add(dataSnapshot.getValue(Post::class.java))
-                    // Write all post data to HashMap
+                    val post = dataSnapshot.getValue(Post::class.java)
+                    posts.add(post)
+                    post?.let { writePostToDB(it) }
+
                 }
             }
         })
+    }
+
+    private fun writePostToDB(post: Post) {
+        doAsync {
+            val postEntity = PostEntity(post)
+            db.postsDao().insertPost(postEntity)
+        }
     }
 }

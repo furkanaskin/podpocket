@@ -2,13 +2,13 @@ package com.furkanaskin.app.podpocket.ui.feed.locale_feed
 
 import android.os.Bundle
 import android.view.View
-import androidx.databinding.ObservableList
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentLocaleFeedBinding
-import com.furkanaskin.app.podpocket.model.Post
+import com.furkanaskin.app.podpocket.db.entities.PostEntity
 import com.furkanaskin.app.podpocket.ui.feed.locale_feed.locale_posts.LocalePostsAdapter
 
 /**
@@ -31,33 +31,11 @@ class LocaleFeedFragment : BaseFragment<LocaleFeedViewModel, FragmentLocaleFeedB
         initLocaleFeedAdapter()
         showProgress()
 
-        viewModel.posts.addOnListChangedCallback(object : ObservableList.OnListChangedCallback<ObservableList<Post>>() {
-            override fun onItemRangeRemoved(sender: ObservableList<Post>?, positionStart: Int, itemCount: Int) {
-            }
+        viewModel.db.postsDao().getLocalePosts(viewModel.currentLocation).observe(this@LocaleFeedFragment, Observer<List<PostEntity>> {
+            hideProgress()
 
-            override fun onItemRangeMoved(sender: ObservableList<Post>?, fromPosition: Int, toPosition: Int, itemCount: Int) {
-            }
-
-            override fun onItemRangeInserted(sender: ObservableList<Post>?, positionStart: Int, itemCount: Int) {
-                if (isVisible) {
-                    hideProgress()
-                    (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).submitList(viewModel.posts)
-                    (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).notifyDataSetChanged()
-                }
-            }
-
-            override fun onItemRangeChanged(sender: ObservableList<Post>?, positionStart: Int, itemCount: Int) {
-            }
-
-            override fun onChanged(sender: ObservableList<Post>?) {
-                if (isVisible) {
-                    hideProgress()
-                    (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).submitList(viewModel.posts)
-                    (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).notifyDataSetChanged()
-                }
-            }
+            (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).submitList(it)
         })
-
     }
 
     private fun initLocaleFeedAdapter() {

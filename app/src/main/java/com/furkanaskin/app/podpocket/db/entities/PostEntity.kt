@@ -3,18 +3,18 @@ package com.furkanaskin.app.podpocket.db.entities
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.furkanaskin.app.podpocket.model.Post
 
 /**
  * Created by Furkan on 2019-07-03
  */
 
-//TODO -  Buradan devam, postlar db de tutulacak, Feed Search ekranında buradaki postlar livedata ile observe edilip search sağlanacak.
-//TODO - Model olarak kullanılan post'a artık gerek yok, Firebase'e yazarken yine bu db ile işlem yapılabilir.
-
 @Entity(tableName = "Posts")
 class PostEntity(
         var post: String? = null,
-        var postId: String? = null,
+        @PrimaryKey
+        var postId: String,
         var pubDate: String? = null,
         var region: String? = null,
         var userName: String? = null,
@@ -50,4 +50,12 @@ class PostEntity(
         }
     }
 
+    constructor(postItem: Post) : this(
+            post = postItem.post,
+            postId = postItem.postId ?: "",
+            pubDate = postItem.pubDate,
+            region = postItem.region,
+            userName = postItem.userName,
+            userUniqueId = postItem.userUniqueId
+    )
 }

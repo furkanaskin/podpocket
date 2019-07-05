@@ -30,6 +30,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
     lateinit var mAuth: FirebaseAuth
     var user: UserEntity? = null
     var dialog: Dialog? = null
+    private val connectivityReceiver = ConnectivityReceiver()
 
     val binding by lazy {
         DataBindingUtil.setContentView(this, getLayoutRes()) as DB
@@ -55,7 +56,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
         getUser()
 
 
-        registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        registerReceiver(connectivityReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -66,6 +67,11 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
     override fun onResume() {
         super.onResume()
         ConnectivityReceiver.connectivityReceiverListener = this
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(connectivityReceiver)
     }
 
     /**
