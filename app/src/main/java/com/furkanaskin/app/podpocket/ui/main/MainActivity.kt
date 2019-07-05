@@ -37,6 +37,11 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>(Ma
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // ---------------------------------------------------------------------------------------
+        // If you don't know what is going over there please don't replace this block or xml file.
+        // ---------------------------------------------------------------------------------------
+
+
         binding.imageViewAppLogo.viewTreeObserver.addOnGlobalLayoutListener {
 
             if (listenerFlag != false) {

@@ -9,14 +9,11 @@ import com.furkanaskin.app.podpocket.databinding.ActivitySplashBinding
 import com.furkanaskin.app.podpocket.ui.after_register.AfterRegisterActivity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.main.MainActivity
-import io.reactivex.disposables.CompositeDisposable
 
 
 class SplashActivity : BaseActivity<SplashActivityViewModel, ActivitySplashBinding>(SplashActivityViewModel::class.java) {
 
     private var countDownTimer: CountDownTimer? = null
-    private val composite = CompositeDisposable()
-
 
     override fun getLayoutRes() = R.layout.activity_splash
 

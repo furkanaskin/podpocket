@@ -155,7 +155,6 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
     private fun getSearchResult(searchText: String, type: String) {
 
-        showProgress()
 
         if (viewModel.selectedGenres.size == 0) {
             disposable.add(viewModel.getSearchResult(searchText, type)
@@ -163,7 +162,6 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
                         override fun onSuccess(t: Search) {
-                            hideProgress()
                             if (type == Constants.SearchQuery.EPISODE && t.results != null) {
                                 setEpisodesHeadingVisibility(true)
                                 setPodcastsHeadingVisibility(true)
@@ -181,6 +179,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
                     }))
         } else {
+
             val genresIds = viewModel.selectedGenres.joinToString(separator = ",")
 
             disposable.add(viewModel.getSearchResultWithGenres(searchText, type, genresIds)
@@ -188,7 +187,6 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
                         override fun onSuccess(t: Search) {
-                            hideProgress()
                             if (type == Constants.SearchQuery.EPISODE && t.results != null) {
                                 setEpisodesHeadingVisibility(true)
                                 setPodcastsHeadingVisibility(true)
@@ -208,7 +206,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         }
     }
 
-    fun initGenres() {
+    private fun initGenres() {
         showProgress()
         disposable.add(viewModel.getGenres()
                 .subscribeOn(Schedulers.io())
@@ -224,27 +222,35 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
     }
 
     private fun addChipToGroup(chipGroup: ChipGroup, items: Genres) {
-        items.genres?.forEachIndexed { index, genre ->
+
+        items.genres?.forEachIndexed { _, genre ->
 
             val chip = Chip(context)
             chip.text = genre?.name
+            chip.tag = genre?.id
 
             chip.isClickable = true
             chip.isCheckable = true
-            chip.isCloseIconVisible = true
+            chip.isCloseIconVisible = false
+            chip.isCheckedIconVisible = false
+            chip.setChipBackgroundColorResource(R.color.mainBackgroundColor)
+            chip.chipStrokeWidth = 1f
+            chip.setChipStrokeColorResource(R.color.colorLoginText)
+            chip.setTextColor(ContextCompat.getColor(this.context!!, R.color.white))
+
+            chip.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    viewModel.selectedGenres.add(buttonView.tag as Int)
+                    buttonView.setTextColor(ContextCompat.getColor(this.context!!, R.color.colorCyan))
+                    chip.setChipStrokeColorResource(R.color.colorCyan)
+                } else {
+                    viewModel.selectedGenres.remove(buttonView.tag as Int)
+                    buttonView.setTextColor(ContextCompat.getColor(this.context!!, R.color.white))
+                    chip.setChipStrokeColorResource(R.color.colorLoginText)
+                }
+            }
 
             chipGroup.addView(chip)
-
-            chip.setOnCloseIconClickListener {
-                chipGroup.removeView(chip)
-                genre?.id?.let { genreId -> viewModel.selectedGenres.remove(genreId) }
-            }
-
-            chip.setOnClickListener {
-                viewModel.selectedGenres.add(genre?.id ?: 0)
-                chip.isChecked = true
-                chip.isCloseIconVisible = false
-            }
         }
     }
 

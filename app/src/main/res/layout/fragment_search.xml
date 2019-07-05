@@ -51,7 +51,10 @@
             android:id="@+id/scrollViewChipGroupGenres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/searchView">
+            android:layout_below="@id/searchView"
+            android:layout_marginTop="@dimen/margin_24_dp"
+            android:layout_marginBottom="@dimen/margin_24_dp"
+            android:scrollbars="none">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroupGenres"
@@ -61,49 +64,60 @@
                 android:layout_marginEnd="@dimen/margin_16_dp"
                 app:chipSpacingHorizontal="@dimen/margin_4_dp"
                 app:singleLine="true" />
+
         </HorizontalScrollView>
 
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
-            android:id="@+id/textViewSearchPodcastsHeading"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/scrollViewChipGroupGenres"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/podcasts"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:layout_alignParentBottom="true">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewPodcastSearchResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewSearchPodcastsHeading"
-            android:layout_marginTop="@dimen/margin_16_dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        </androidx.recyclerview.widget.RecyclerView>
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                    android:id="@+id/textViewSearchPodcastsHeading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="@string/podcasts"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
 
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
-            android:id="@+id/textViewSearchEpisodesHeading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/recyclerViewPodcastSearchResult"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/episodes"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="24sp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewPodcastSearchResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewSearchPodcastsHeading"
+                    android:layout_marginTop="@dimen/margin_16_dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewEpisodeSearchResult"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/textViewSearchEpisodesHeading"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/margin_16_dp">
+                </androidx.recyclerview.widget.RecyclerView>
 
-        </androidx.recyclerview.widget.RecyclerView>
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                    android:id="@+id/textViewSearchEpisodesHeading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recyclerViewPodcastSearchResult"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/episodes"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewEpisodeSearchResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/textViewSearchEpisodesHeading"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="@dimen/margin_16_dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
 </layout>
