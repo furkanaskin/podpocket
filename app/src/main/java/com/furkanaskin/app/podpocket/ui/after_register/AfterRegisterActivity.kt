@@ -2,11 +2,14 @@ package com.furkanaskin.app.podpocket.ui.after_register
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.view.MotionEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.Observable
 import com.furkanaskin.app.podpocket.R
@@ -15,10 +18,15 @@ import com.furkanaskin.app.podpocket.databinding.ActivityAfterRegisterBinding
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.utils.extensions.hide
+import com.furkanaskin.app.podpocket.utils.extensions.hideKeyboard
 import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_after_register.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.sdk27.coroutines.onFocusChange
 import java.io.ByteArrayOutputStream
+import java.util.*
+import javax.xml.datatype.DatatypeConstants.MONTHS
 
 
 /**
@@ -45,7 +53,15 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
             false -> binding.buttonDone.hide()
         }
 
-
+        val edittextBirthday = this.editTextBirthday
+        edittextBirthday.showSoftInputOnFocus = false
+        edittextBirthday.keyListener = null
+        edittextBirthday.setOnClickListener {
+            openDatePickerDialog()
+        }
+        this.tilBirthday.setOnClickListener {
+            openDatePickerDialog()
+        }
 
         binding.buttonDone.setOnClickListener {
             showProgress()
@@ -187,5 +203,17 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
             hideProgress()
 
         }
+    }
+
+    private fun openDatePickerDialog() {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        DatePickerDialog(this@AfterRegisterActivity,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    viewModel.userBirthDay.set("$dayOfMonth/$monthOfYear/$year")
+        }, year, month, day).show()
     }
 }

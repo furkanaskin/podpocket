@@ -150,6 +150,7 @@
                 android:layout_marginEnd="32dp"
                 android:hint="@string/birthday"
                 android:textColorHint="@color/textColor"
+                android:focusableInTouchMode="false"
                 app:boxStrokeColor="@color/colorPrettyPurple"
                 app:boxStrokeWidth="2dp">
 
@@ -157,9 +158,10 @@
                     android:id="@+id/editTextBirthday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="date"
+                    android:inputType="none"
                     android:maxLines="1"
                     android:text="@={viewModel.userBirthDay}"
+                    android:focusableInTouchMode="false"
                     android:textColor="@color/colorPrettyPurple" />
 
             </com.google.android.material.textfield.TextInputLayout>

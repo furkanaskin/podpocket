@@ -16,7 +16,6 @@ import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.FragmentSearchBinding
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
-import com.furkanaskin.app.podpocket.service.response.Genres
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.service.response.Search
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
@@ -24,8 +23,6 @@ import com.furkanaskin.app.podpocket.ui.search.episode_search.SearchResultAdapte
 import com.furkanaskin.app.podpocket.ui.search.podcast_search.PodcastSearchResultAdapter
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -47,11 +44,9 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
 
     override fun init() {
-
+        // getGenres() - To be added later.
         initSearchView()
         initSearchAdapter()
-        initGenres()
-
     }
 
     private fun initSearchAdapter() {
@@ -155,101 +150,27 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
     private fun getSearchResult(searchText: String, type: String) {
 
-        if (viewModel.selectedGenres.size == 0) {
-            disposable.add(viewModel.getSearchResult(searchText, type)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
-                        override fun onSuccess(t: Search) {
-                            if (type == Constants.SearchQuery.EPISODE && t.results != null) {
-                                setEpisodesHeadingVisibility(true)
-                                setPodcastsHeadingVisibility(true)
-                                (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(t.results)
-                            } else if (type == Constants.SearchQuery.PODCAST && t.results != null) {
-                                setEpisodesHeadingVisibility(true)
-                                setPodcastsHeadingVisibility(true)
-                                (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(t.results)
-                            } else {
-                                setEpisodesHeadingVisibility(false)
-                                setPodcastsHeadingVisibility(false)
-                            }
-
-                        }
-
-                    }))
-        } else {
-
-            val genresIds = viewModel.selectedGenres.joinToString(separator = ",")
-
-            disposable.add(viewModel.getSearchResultWithGenres(searchText, type, genresIds)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
-                        override fun onSuccess(t: Search) {
-                            if (type == Constants.SearchQuery.EPISODE && t.results != null) {
-                                setEpisodesHeadingVisibility(true)
-                                setPodcastsHeadingVisibility(true)
-                                (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(t.results)
-                            } else if (type == Constants.SearchQuery.PODCAST && t.results != null) {
-                                setEpisodesHeadingVisibility(true)
-                                setPodcastsHeadingVisibility(true)
-                                (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(t.results)
-                            } else {
-                                setEpisodesHeadingVisibility(false)
-                                setPodcastsHeadingVisibility(false)
-                            }
-
-                        }
-
-                    }))
-        }
-    }
-
-    private fun initGenres() {
-        showProgress()
-        disposable.add(viewModel.getGenres()
+        disposable.add(viewModel.getSearchResult(searchText, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<Genres>(viewModel.getApplication()) {
-                    override fun onSuccess(t: Genres) {
-                        hideProgress()
-                        addChipToGroup(mBinding.chipGroupGenres, t)
+                .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
+                    override fun onSuccess(t: Search) {
+                        if (type == Constants.SearchQuery.EPISODE && t.results != null) {
+                            setEpisodesHeadingVisibility(true)
+                            setPodcastsHeadingVisibility(true)
+                            (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(t.results)
+                        } else if (type == Constants.SearchQuery.PODCAST && t.results != null) {
+                            setEpisodesHeadingVisibility(true)
+                            setPodcastsHeadingVisibility(true)
+                            (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(t.results)
+                        } else {
+                            setEpisodesHeadingVisibility(false)
+                            setPodcastsHeadingVisibility(false)
+                        }
+
                     }
 
                 }))
-    }
-
-    private fun addChipToGroup(chipGroup: ChipGroup, items: Genres) {
-
-        items.genres?.forEachIndexed { _, genre ->
-
-            val chip = Chip(context)
-            chip.text = genre?.name
-            chip.tag = genre?.id
-
-            chip.isClickable = true
-            chip.isCheckable = true
-            chip.isCloseIconVisible = false
-            chip.isCheckedIconVisible = false
-            chip.setChipBackgroundColorResource(R.color.mainBackgroundColor)
-            chip.chipStrokeWidth = 1f
-            chip.setChipStrokeColorResource(R.color.colorLoginText)
-            chip.setTextColor(ContextCompat.getColor(this.context!!, R.color.white))
-
-            chip.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked) {
-                    viewModel.selectedGenres.add(buttonView.tag as Int)
-                    buttonView.setTextColor(ContextCompat.getColor(this.context!!, R.color.colorCyan))
-                    chip.setChipStrokeColorResource(R.color.colorCyan)
-                } else {
-                    viewModel.selectedGenres.remove(buttonView.tag as Int)
-                    buttonView.setTextColor(ContextCompat.getColor(this.context!!, R.color.white))
-                    chip.setChipStrokeColorResource(R.color.colorLoginText)
-                }
-            }
-
-            chipGroup.addView(chip)
-        }
     }
 
     fun setEpisodesHeadingVisibility(isVisible: Boolean) {

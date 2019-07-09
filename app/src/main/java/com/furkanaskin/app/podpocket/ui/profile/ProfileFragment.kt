@@ -1,5 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.profile
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -12,6 +14,7 @@ import com.furkanaskin.app.podpocket.databinding.FragmentProfileBinding
 import com.furkanaskin.app.podpocket.db.entities.ProfileSettingsEntity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.main.MainActivity
+import kotlin.math.log
 
 /**
  * Created by Furkan on 16.04.2019
@@ -58,7 +61,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
                 1 -> navigateRecentlyPlayedScreen()
                 2 -> navigateAccountDetailScreen()
                 4 -> sendFeedback()
-                5 -> logout()
+                5 -> alertLogOut()
             }
         }
 
@@ -70,6 +73,17 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
     private fun initUserDetails() {
         viewModel.userName.set(user?.userName ?: "")
         viewModel.userEmail.set(user?.email ?: "")
+    }
+
+    private fun alertLogOut() {
+        AlertDialog.Builder(context)
+                .setTitle("Dikkat!")
+                .setMessage("Çıkış yapmak üzeresiniz. Devam etmek istiyor musunuz?")
+                .setPositiveButton("Evet") { dialogInterface, i ->
+                    logout()
+                }.setNegativeButton("Hayır", null)
+                .create()
+                .show()
     }
 
     private fun logout() {
