@@ -8,8 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
-import android.view.MotionEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.Observable
 import com.furkanaskin.app.podpocket.R
@@ -18,15 +16,12 @@ import com.furkanaskin.app.podpocket.databinding.ActivityAfterRegisterBinding
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.utils.extensions.hide
-import com.furkanaskin.app.podpocket.utils.extensions.hideKeyboard
 import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_after_register.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.sdk27.coroutines.onFocusChange
 import java.io.ByteArrayOutputStream
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 
 /**
@@ -212,8 +207,8 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         DatePickerDialog(this@AfterRegisterActivity,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    viewModel.userBirthDay.set("$dayOfMonth/$monthOfYear/$year")
-        }, year, month, day).show()
+                DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                    viewModel.userBirthDay.set("$day/${month + 1}/$year")
+                }, year, month, day).show()
     }
 }
