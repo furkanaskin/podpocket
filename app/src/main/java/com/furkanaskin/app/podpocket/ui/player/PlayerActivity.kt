@@ -98,7 +98,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             // After making visibility settings we can add Player Queue
 
             val playerQueueFragment = PlayerQueueFragment.newInstance(viewModel.item.get()?.podcast?.id
-                    ?: "", currentPosition)
+                    ?: "", currentPosition, viewModel.item.get()?.podcast?.totalEpisodes
+                    ?: 0)
             val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
             val queueFragment = supportFragmentManager.findFragmentByTag("playerQueueFragment")
             if (queueFragment != null) {

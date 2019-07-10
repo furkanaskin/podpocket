@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.profile
 
-import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -14,7 +13,7 @@ import com.furkanaskin.app.podpocket.databinding.FragmentProfileBinding
 import com.furkanaskin.app.podpocket.db.entities.ProfileSettingsEntity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.main.MainActivity
-import kotlin.math.log
+import org.jetbrains.anko.support.v4.alert
 
 /**
  * Created by Furkan on 16.04.2019
@@ -61,7 +60,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
                 1 -> navigateRecentlyPlayedScreen()
                 2 -> navigateAccountDetailScreen()
                 4 -> sendFeedback()
-                5 -> alertLogOut()
+                5 -> showLogOutAlertDialog()
             }
         }
 
@@ -71,23 +70,32 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
     }
 
     private fun initUserDetails() {
-        viewModel.userName.set(user?.userName ?: "")
-        viewModel.userEmail.set(user?.email ?: "")
+        viewModel.userName.set(viewModel.user?.userName ?: "")
+        viewModel.userEmail.set(viewModel.user?.email ?: "")
     }
 
-    private fun alertLogOut() {
-        AlertDialog.Builder(context)
-                .setTitle("Dikkat!")
-                .setMessage("Çıkış yapmak üzeresiniz. Devam etmek istiyor musunuz?")
-                .setPositiveButton("Evet") { dialogInterface, i ->
+    private fun showLogOutAlertDialog() {
+        alert {
+            ctx.setTheme(R.style.Theme_MaterialComponents_Light_Dialog)
+
+            message = "Gerçekten çıkış yapmak istiyor musunuz?"
+            positiveButton("Evet", object : (DialogInterface) -> Unit {
+                override fun invoke(p1: DialogInterface) {
                     logout()
-                }.setNegativeButton("Hayır", null)
-                .create()
-                .show()
+                }
+            })
+
+            negativeButton("Hayır", object : (DialogInterface) -> Unit {
+                override fun invoke(p1: DialogInterface) {
+
+                }
+
+            })
+        }.show()
     }
 
     private fun logout() {
-        mAuth.signOut()
+        viewModel.mAuth.signOut()
         val intent = Intent(activity, MainActivity::class.java)
         startActivity(intent)
     }

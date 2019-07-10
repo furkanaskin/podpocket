@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.dashboard
 
-import android.content.res.Configuration
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,12 +7,10 @@ import android.view.View
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import com.airbnb.lottie.utils.Utils
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityDashboardBinding
 import org.jetbrains.anko.contentView
-import org.jetbrains.anko.toast
 
 
 /**
@@ -49,7 +46,7 @@ class DashboardActivity : BaseActivity<DashboardViewModel, ActivityDashboardBind
 
     override fun onSupportNavigateUp(): Boolean = findNavController(R.id.container_fragment).navigateUp()
 
-    fun listenKeyboardVisibility() {
+    private fun listenKeyboardVisibility() {
         contentView?.viewTreeObserver?.addOnGlobalLayoutListener {
             val rect = Rect()
             contentView?.getWindowVisibleDisplayFrame(rect)
@@ -57,8 +54,7 @@ class DashboardActivity : BaseActivity<DashboardViewModel, ActivityDashboardBind
             if (screenHeight != null) {
                 val keypadHeight = screenHeight - rect.bottom
 
-                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
-                    // keyboard is opened
+                if (keypadHeight > screenHeight * 0.15) {
                     if (!isKeyboardShowing) {
                         isKeyboardShowing = true
                         binding.bottomNavigation.visibility = View.GONE

@@ -2,6 +2,7 @@ package com.furkanaskin.app.podpocket.ui.podcast
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.navArgs
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentPodcastBinding
@@ -18,6 +19,7 @@ import org.jetbrains.anko.doAsync
 
 class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(PodcastViewModel::class.java) {
 
+    private val podcastFragmentArgs: PodcastFragmentArgs by navArgs()
     private val disposable = CompositeDisposable()
 
     override fun getLayoutRes(): Int = R.layout.fragment_podcast
@@ -39,7 +41,7 @@ class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(P
 
     fun getData() {
         showProgress()
-        disposable.add(viewModel.getEpisodes(getPodcastId()).subscribeOn(Schedulers.io())
+        disposable.add(viewModel.getEpisodes(podcastFragmentArgs.podcastID).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
                     override fun onSuccess(t: Podcasts) {
@@ -50,28 +52,20 @@ class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(P
                         super.onComplete()
                         hideProgress()
                         initAdapter()
-
                     }
-
                 }))
-
     }
 
     private fun initAdapter() {
         fragmentManager?.let { fragmentManager ->
 
             viewModel.podcast.get()?.let { podcasts ->
-                PodcastFragmentPagerAdapter(context, fragmentManager, podcasts).also {
-                    mBinding.viewPager.adapter = it
-                }
+                PodcastFragmentPagerAdapter(context, fragmentManager, podcasts)
+                        .also { mBinding.viewPager.adapter = it }
             }
         }
 
         mBinding.tabLayout.setupWithViewPager(mBinding.viewPager)
-    }
-
-    fun getPodcastId(): String {
-        return PodcastFragmentArgs.fromBundle(this.arguments!!).podcastID
     }
 
     override fun onDestroy() {

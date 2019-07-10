@@ -25,7 +25,6 @@ open class BaseViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun initFirebase() {
         mAuth = FirebaseAuth.getInstance()
-
     }
 
     init {
@@ -36,14 +35,14 @@ open class BaseViewModel(app: Application) : AndroidViewModel(app) {
 
     fun getUser() {
         doAsync {
-            user = mAuth.currentUser?.uid?.let { db.userDao().getUser(it) }!!
+            user = mAuth.currentUser?.uid?.let { db.userDao().getUser(it) }
         }
     }
 
     private fun getUserLocation() {
         currentLocation = Locale.getDefault().country.toLowerCase()
 
-        if (currentLocation.isNullOrEmpty())
+        if (currentLocation.isEmpty())
             currentLocation = "us"
     }
 

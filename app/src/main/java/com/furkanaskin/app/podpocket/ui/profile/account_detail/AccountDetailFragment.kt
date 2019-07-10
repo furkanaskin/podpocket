@@ -21,8 +21,6 @@ import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_after_register.*
-import kotlinx.android.synthetic.main.activity_after_register.tilBirthday
 import kotlinx.android.synthetic.main.fragment_account_detail.*
 import org.jetbrains.anko.support.v4.runOnUiThread
 import java.io.ByteArrayOutputStream
@@ -45,14 +43,14 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mBinding.viewModel?.userData = user
-        if (user!!.profilePictureUrl.isNullOrEmpty()) {
+        mBinding.viewModel?.userData = viewModel.user
+        if (viewModel.user!!.profilePictureUrl.isNullOrEmpty()) {
             mBinding.fabChangeImage.show()
         } else {
             isUserHavePicture = true
             mBinding.fabChangeImage.hide()
-            profileImageUrl.set(user?.profilePictureUrl.toString())
-            Glide.with(this.activity!!).load(user?.profilePictureUrl).into(mBinding.imageViewProfilePicture)
+            profileImageUrl.set(viewModel.user?.profilePictureUrl.toString())
+            Glide.with(this.activity!!).load(viewModel.user?.profilePictureUrl).into(mBinding.imageViewProfilePicture)
         }
 
         mBinding.imageViewProfilePicture.setOnClickListener {
@@ -126,16 +124,16 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         showProgress()
 
         if (isUserHavePicture) {
-            removeProfilePicture(mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
+            removeProfilePicture(viewModel.mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
         } else {
-            updateProfilePicture(mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
+            updateProfilePicture(viewModel.mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
         }
     }
 
     private fun removeProfilePicture(profilePicturePath: String) {
         storageRef.child(profilePicturePath).delete().addOnSuccessListener {
             // File deleted successfully
-            updateProfilePicture(mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
+            updateProfilePicture(viewModel.mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
         }.addOnFailureListener {
             // Uh-oh, an error occurred!
         }.addOnSuccessListener {
@@ -166,11 +164,11 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
 
     private fun editProfile() {
         val updateUser = UserEntity(
-                id = user?.id ?: 0,
-                podcaster = user?.podcaster,
-                verifiedUser = user?.verifiedUser,
-                uniqueId = user?.uniqueId ?: "",
-                accountCreatedAt = user?.accountCreatedAt,
+                id = viewModel.user?.id ?: 0,
+                podcaster = viewModel.user?.podcaster,
+                verifiedUser = viewModel.user?.verifiedUser,
+                uniqueId = viewModel.user?.uniqueId ?: "",
+                accountCreatedAt = viewModel.user?.accountCreatedAt,
                 name = mBinding.editTextName.text?.toString(),
                 userName = mBinding.editTextUserName.text?.toString(),
                 surname = mBinding.editTextSurname.text?.toString(),
@@ -178,8 +176,8 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
                 profilePictureUrl = profileImageUrl.get(),
                 email = mBinding.editTextEmail.text?.toString(),
                 mostLovedCategory = mBinding.editTextMostLovedCategory.text?.toString(),
-                lastPlayedPodcast = user?.lastPlayedPodcast,
-                lastPlayedEpisode = user?.lastPlayedEpisode)
+                lastPlayedPodcast = viewModel.user?.lastPlayedPodcast,
+                lastPlayedEpisode = viewModel.user?.lastPlayedEpisode)
 
         viewModel.changeUserData(updateUser)
 
@@ -190,7 +188,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
     }
 
     private fun getProfilePicture() {
-        val profilePicturePath = mAuth.currentUser?.uid + "_" + "profile_picture.jpg"
+        val profilePicturePath = viewModel.mAuth.currentUser?.uid + "_" + "profile_picture.jpg"
         storageRef.child(profilePicturePath).downloadUrl.addOnSuccessListener {
             profileImageUrl.set(it.toString())
             hideProgress()

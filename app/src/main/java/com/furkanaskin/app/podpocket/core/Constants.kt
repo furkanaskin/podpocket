@@ -27,6 +27,7 @@ object Constants {
     object BundleArguments {
         const val PODCAST_ID = "podcastId"
         const val CURRENT_EPISODE = "currentEpisode"
+        const val TOTAL_EPISODES = "totalEpisodes"
     }
 
     object SearchQuery {

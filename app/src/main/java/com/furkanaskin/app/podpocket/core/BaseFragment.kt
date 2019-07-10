@@ -10,9 +10,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import com.furkanaskin.app.podpocket.db.entities.UserEntity
-import com.google.firebase.auth.FirebaseAuth
-import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.runOnUiThread
 
 abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : Fragment() {
@@ -21,9 +18,6 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
     fun init(inflater: LayoutInflater, container: ViewGroup) {
         mBinding = DataBindingUtil.inflate(inflater, getLayoutRes(), container, false)
     }
-
-    lateinit var mAuth: FirebaseAuth
-    var user: UserEntity? = null
 
     open fun init() {}
     @LayoutRes
@@ -36,9 +30,6 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = getViewM()
-
-        initFirebase()
-        getUser()
 
     }
 
@@ -68,22 +59,10 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
         }
     }
 
-
     fun hideProgress() {
         runOnUiThread {
             if (activity != null)
                 (activity as BaseActivity<*, *>).dialog?.dismiss()
-        }
-    }
-
-    private fun initFirebase() {
-        mAuth = FirebaseAuth.getInstance()
-
-    }
-
-    private fun getUser() {
-        doAsync {
-            user = viewModel.mAuth.currentUser?.uid?.let { viewModel.db.userDao().getUser(it) }!!
         }
     }
 }
