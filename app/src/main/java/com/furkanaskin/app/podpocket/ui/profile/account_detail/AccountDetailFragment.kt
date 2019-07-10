@@ -3,6 +3,7 @@ package com.furkanaskin.app.podpocket.ui.profile.account_detail
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -16,11 +17,16 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentAccountDetailBinding
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
+import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_after_register.*
+import kotlinx.android.synthetic.main.activity_after_register.tilBirthday
+import kotlinx.android.synthetic.main.fragment_account_detail.*
 import org.jetbrains.anko.support.v4.runOnUiThread
 import java.io.ByteArrayOutputStream
+import java.util.*
 
 class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccountDetailBinding>(AccountDetailViewModel::class.java) {
 
@@ -55,6 +61,16 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
 
         mBinding.buttonSave.setOnClickListener {
             editProfile()
+        }
+
+        val edittextBirthday = this.etBirthday
+        edittextBirthday.showSoftInputOnFocus = false
+        edittextBirthday.keyListener = null
+        edittextBirthday.setOnClickListener {
+            openDatePickerDialog()
+        }
+        this.detailTilBirthday.setOnClickListener {
+            openDatePickerDialog()
         }
     }
 
@@ -180,5 +196,19 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
             hideProgress()
 
         }
+    }
+
+    private fun openDatePickerDialog() {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        var datePicker = DatePickerDialog((activity as DashboardActivity),
+                DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                    mBinding.etBirthday.setText("$day/${month + 1}/$year")
+                }, year, month, day)
+        datePicker.datePicker.maxDate = c.timeInMillis
+        datePicker.show()
     }
 }

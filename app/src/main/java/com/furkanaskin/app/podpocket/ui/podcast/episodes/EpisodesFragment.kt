@@ -25,6 +25,7 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
     var isLastPage: Boolean = false
     var isLoading: Boolean = false
     var nextEpisodePubDate: Long? = null
+    var totalEpisodes: Int? = null
     private val disposable = CompositeDisposable()
 
 
@@ -75,7 +76,8 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
 
             override fun loadMoreItems() {
                 isLoading = true
-                getMoreItems(nextEpisodePubDate ?: 0)
+                if (totalEpisodes != layoutManager.itemCount)
+                    getMoreItems(nextEpisodePubDate ?: 0)
             }
 
         })
@@ -92,6 +94,7 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
                 .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
                     override fun onSuccess(t: Podcasts) {
                         viewModel.podcast.set(t)
+                        totalEpisodes = t.totalEpisodes
                         this@EpisodesFragment.nextEpisodePubDate = t.nextEpisodePubDate
 
                         doAsync {
@@ -107,15 +110,13 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
 
                     override fun onComplete() {
                         super.onComplete()
-                        hideProgress()
                         isLoading = false
                         viewModel.db.episodesDao().getEpisodes().removeObservers(this@EpisodesFragment)
                         viewModel.db.episodesDao().getEpisodes().observe(this@EpisodesFragment, Observer<List<EpisodeEntity>> { t ->
                             (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
                         })
-
+                        hideProgress()
                     }
-
                 }))
 
     }

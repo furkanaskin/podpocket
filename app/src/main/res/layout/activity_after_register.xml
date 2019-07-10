@@ -151,6 +151,7 @@
                 android:hint="@string/birthday"
                 android:textColorHint="@color/textColor"
                 android:focusableInTouchMode="false"
+                android:focusable="false"
                 app:boxStrokeColor="@color/colorPrettyPurple"
                 app:boxStrokeWidth="2dp">
 
@@ -160,6 +161,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:maxLines="1"
+                    android:focusable="false"
                     android:text="@={viewModel.userBirthDay}"
                     android:focusableInTouchMode="false"
                     android:textColor="@color/colorPrettyPurple" />

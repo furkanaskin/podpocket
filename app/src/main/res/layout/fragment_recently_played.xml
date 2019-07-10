@@ -12,134 +12,141 @@
     </data>
 
 
-    <RelativeLayout
-        android:id="@+id/rootView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_app_bg"
-        android:descendantFocusability="beforeDescendants"
-        android:fitsSystemWindows="true"
-        android:focusable="true"
-        tools:context=".ui.search.SearchFragment">
+        android:background="@drawable/ic_app_bg">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieAnimationView"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignTop="@id/imageViewAppLogoSmall"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="not_found.json"
-            app:lottie_loop="true" />
-
-        <ImageButton
-            android:id="@+id/buttonNavigateHome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewDummyText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_8_dp"
-            android:layout_marginBottom="@dimen/margin_8_dp"
-            android:background="@color/mainBackgroundColor"
-            android:src="@drawable/ic_card_play_button"
-            android:visibility="gone" />
-
-
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
-            android:id="@+id/textViewDummyText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lottieAnimationView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/margin_16_dp"
-            android:gravity="center"
-            android:lines="3"
-            android:maxWidth="210dp"
-            android:text="@string/recently_played_dummy_text"
-            android:textColor="@color/colorPrettyPurple"
-            android:textSize="16sp"
-            android:visibility="gone" />
-
-
-        <ImageView
-            android:layout_width="256dp"
-            android:layout_height="266dp"
-            android:layout_alignParentEnd="true"
-            android:adjustViewBounds="true"
-            android:fitsSystemWindows="true"
-            android:src="@drawable/ic_home_bg" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="57dp" />
-
-
-        <ImageView
-            android:id="@+id/imageViewAppLogoSmall"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="57dp"
-            android:src="@drawable/app_logo_small" />
-
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/imageViewAppLogoSmall"
-            android:layout_alignBottom="@id/imageViewAppLogoSmall"
-            android:layout_marginStart="12dp"
-            android:layout_toEndOf="@id/imageViewAppLogoSmall"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textColor="@color/white" />
-
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
-            android:id="@+id/textViewRecentlyPlayedPodcastsHeading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imageViewAppLogoSmall"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/podcasts"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:visibility="gone" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewRecentlyPlayedPodcast"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewRecentlyPlayedPodcastsHeading"
-            android:layout_marginTop="@dimen/margin_16_dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
-            android:id="@+id/textViewRecentlyPlayedEpisodesHeading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/recyclerViewRecentlyPlayedPodcast"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/episodes"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:visibility="gone" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewRecentlyPlayedEpisodes"
+        <RelativeLayout
+            android:id="@+id/rootView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/textViewRecentlyPlayedEpisodesHeading"
-            android:layout_marginTop="@dimen/margin_16_dp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+            android:descendantFocusability="beforeDescendants"
+            android:fitsSystemWindows="true"
+            android:focusable="true"
+            tools:context=".ui.search.SearchFragment">
 
-        </androidx.recyclerview.widget.RecyclerView>
-    </RelativeLayout>
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieAnimationView"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignTop="@id/imageViewAppLogoSmall"
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="not_found.json"
+                app:lottie_loop="true" />
+
+            <ImageButton
+                android:id="@+id/buttonNavigateHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDummyText"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_8_dp"
+                android:layout_marginBottom="@dimen/margin_8_dp"
+                android:background="@color/mainBackgroundColor"
+                android:src="@drawable/ic_card_play_button"
+                android:visibility="gone" />
+
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                android:id="@+id/textViewDummyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lottieAnimationView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/margin_16_dp"
+                android:gravity="center"
+                android:lines="3"
+                android:maxWidth="210dp"
+                android:text="@string/recently_played_dummy_text"
+                android:textColor="@color/colorPrettyPurple"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+
+            <ImageView
+                android:layout_width="256dp"
+                android:layout_height="266dp"
+                android:layout_alignParentEnd="true"
+                android:adjustViewBounds="true"
+                android:fitsSystemWindows="true"
+                android:src="@drawable/ic_home_bg" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="57dp" />
+
+
+            <ImageView
+                android:id="@+id/imageViewAppLogoSmall"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="57dp"
+                android:src="@drawable/app_logo_small" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/imageViewAppLogoSmall"
+                android:layout_alignBottom="@id/imageViewAppLogoSmall"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@id/imageViewAppLogoSmall"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/white" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                android:id="@+id/textViewRecentlyPlayedPodcastsHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageViewAppLogoSmall"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/podcasts"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewRecentlyPlayedPodcast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewRecentlyPlayedPodcastsHeading"
+                android:layout_marginTop="@dimen/margin_16_dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                android:id="@+id/textViewRecentlyPlayedEpisodesHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recyclerViewRecentlyPlayedPodcast"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/episodes"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewRecentlyPlayedEpisodes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/textViewRecentlyPlayedEpisodesHeading"
+                android:layout_marginTop="@dimen/margin_16_dp"
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

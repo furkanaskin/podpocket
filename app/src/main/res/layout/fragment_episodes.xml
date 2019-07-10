@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             android:orientation="vertical"
-            app:layoutManager="LinearLayoutManager" />
+            app:layoutManager="LinearLayoutManager"
+            android:paddingBottom="@dimen/margin_16_dp"/>
 
     </RelativeLayout>
 

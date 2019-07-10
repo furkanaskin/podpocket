@@ -145,10 +145,13 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/detailTilBirthday"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/profile_birthday"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:textColorHint="@color/colorPrettyOrange"
                     app:boxStrokeColor="@color/colorPrettyPurple">
 
@@ -157,7 +160,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_16_dp"
-                        android:inputType="date"
+                        android:focusable="false"
+                        android:inputType="none"
+                        android:focusableInTouchMode="false"
                         android:text="@{viewModel.userData.birthday}"
                         android:textColor="@color/colorPrettyPurple" />
 
@@ -207,7 +212,8 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margin_16_dp"
                     android:text="@string/update_profie_details"
-                    android:textColor="@color/colorCyan" />
+                    android:textColor="@color/colorCyan"
+                    android:layout_marginBottom="@dimen/margin_16_dp"/>
             </LinearLayout>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

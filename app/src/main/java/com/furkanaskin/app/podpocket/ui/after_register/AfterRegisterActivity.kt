@@ -88,7 +88,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
 
                 viewModel.insertUserToFirebase(willBeUpdated)
 
-            }
+            }else hideProgress()
         }
 
         binding.fabChangeImage.setOnClickListener {
@@ -206,9 +206,11 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        DatePickerDialog(this@AfterRegisterActivity,
+        var datePicker = DatePickerDialog(this@AfterRegisterActivity,
                 DatePickerDialog.OnDateSetListener { _, year, month, day ->
                     viewModel.userBirthDay.set("$day/${month + 1}/$year")
-                }, year, month, day).show()
+                }, year, month, day)
+        datePicker.datePicker.maxDate = c.timeInMillis
+        datePicker.show()
     }
 }

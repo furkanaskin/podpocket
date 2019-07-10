@@ -79,7 +79,7 @@
             android:layout_marginBottom="@dimen/margin_24_dp"
             android:clipToPadding="false"
             android:orientation="vertical"
-            android:paddingBottom="250dp"
+            android:paddingBottom="48dp"
             app:layoutManager="LinearLayoutManager" />
 
     </RelativeLayout>

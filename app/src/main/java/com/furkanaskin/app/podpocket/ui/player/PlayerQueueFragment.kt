@@ -1,6 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.player
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
     var isLastPage: Boolean = false
     var isLoading: Boolean = false
     var nextEpisodePubDate: Long? = null
+    var totalEpisodes: Int? = null
 
     override fun getLayoutRes(): Int = R.layout.fragment_player_queue
 
@@ -80,7 +82,8 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
             override fun loadMoreItems() {
                 isLoading = true
-                getMoreItems(nextEpisodePubDate ?: 0)
+                if (totalEpisodes != layoutManager.itemCount)
+                    getMoreItems(nextEpisodePubDate ?: 0)
             }
 
         })
@@ -93,7 +96,6 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
         doAsync {
             episodes = viewModel.db.episodesDao().getEpisodesWithoutLiveData().toMutableList()
-
             runOnUiThread {
                 mBinding.recyclerViewQueueEpisodes.adapter = adapter
                 (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(episodes)
@@ -112,7 +114,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
                 .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
                     override fun onSuccess(t: Podcasts) {
                         val playerActivity = (activity as PlayerActivity)
-
+                        totalEpisodes = t.totalEpisodes
                         this@PlayerQueueFragment.nextEpisodePubDate = t.nextEpisodePubDate
 
                         doAsync {
@@ -130,7 +132,6 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
                     override fun onComplete() {
                         super.onComplete()
-                        hideProgress()
                         isLoading = false
                         viewModel.db.episodesDao().getEpisodes().removeObservers(this@PlayerQueueFragment)
                         viewModel.db.episodesDao().getEpisodes().observe(this@PlayerQueueFragment, Observer<List<EpisodeEntity>> { t ->
@@ -138,6 +139,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
                             (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(t)
 
                         })
+                        hideProgress()
 
                     }
 
