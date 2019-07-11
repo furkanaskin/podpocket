@@ -156,7 +156,7 @@
                     app:boxStrokeColor="@color/colorPrettyPurple">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etBirthday"
+                        android:id="@+id/editTextBirthday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_16_dp"

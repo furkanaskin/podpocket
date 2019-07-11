@@ -54,7 +54,6 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
 
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="ca3bf0b890d5388553879e80405a7c6cf88f653c" />

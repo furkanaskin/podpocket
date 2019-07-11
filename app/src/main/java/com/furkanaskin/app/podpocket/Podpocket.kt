@@ -2,6 +2,7 @@ package com.furkanaskin.app.podpocket
 
 import android.app.Application
 import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.core.CrashlyticsCore
 import com.facebook.stetho.Stetho
 import com.furkanaskin.app.podpocket.di.component.DaggerApplicationComponent
@@ -31,7 +32,8 @@ class Podpocket : Application() {
                 .disabled(BuildConfig.DEBUG)
                 .build()
 
-        Fabric.with(this, Crashlytics.Builder().core(core).build())
+        Fabric.with(this, Crashlytics.Builder().core(core).build(), Answers())
+
     }
 }
 

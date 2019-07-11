@@ -19,7 +19,6 @@ import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.fragment_account_detail.*
 import org.jetbrains.anko.support.v4.runOnUiThread
 import java.io.ByteArrayOutputStream
 import java.util.*
@@ -40,7 +39,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
 
     override fun init() {
         mBinding.viewModel?.userData = viewModel.user
-        if (viewModel.user!!.profilePictureUrl.isNullOrEmpty()) {
+        if (viewModel.userData?.profilePictureUrl.isNullOrEmpty()) {
             mBinding.fabChangeImage.show()
         } else {
             isUserHavePicture = true
@@ -57,13 +56,12 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
             editProfile()
         }
 
-        val edittextBirthday = this.etBirthday
-        edittextBirthday.showSoftInputOnFocus = false
-        edittextBirthday.keyListener = null
-        edittextBirthday.setOnClickListener {
+        mBinding.editTextBirthday.showSoftInputOnFocus = false
+        mBinding.editTextBirthday.keyListener = null
+        mBinding.editTextBirthday.setOnClickListener {
             openDatePickerDialog()
         }
-        this.detailTilBirthday.setOnClickListener {
+        mBinding.detailTilBirthday.setOnClickListener {
             openDatePickerDialog()
         }
     }
@@ -168,7 +166,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
                 name = mBinding.editTextName.text?.toString(),
                 userName = mBinding.editTextUserName.text?.toString(),
                 surname = mBinding.editTextSurname.text?.toString(),
-                birthday = mBinding.etBirthday.text?.toString(),
+                birthday = mBinding.editTextBirthday.text?.toString(),
                 profilePictureUrl = profileImageUrl.get(),
                 email = mBinding.editTextEmail.text?.toString(),
                 mostLovedCategory = mBinding.editTextMostLovedCategory.text?.toString(),
@@ -200,7 +198,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
 
         var datePicker = DatePickerDialog((activity as DashboardActivity),
                 DatePickerDialog.OnDateSetListener { _, year, month, day ->
-                    mBinding.etBirthday.setText("$day/${month + 1}/$year")
+                    mBinding.editTextBirthday.setText("$day/${month + 1}/$year")
                 }, year, month, day)
         datePicker.datePicker.maxDate = c.timeInMillis
         datePicker.show()
