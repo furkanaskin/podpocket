@@ -13,6 +13,7 @@ class ProfileViewModel(app: Application) : BaseViewModel(app) {
 
     var userName: ObservableField<String> = ObservableField("")
     var userEmail: ObservableField<String> = ObservableField("")
+    var userUniqueID: ObservableField<String> = ObservableField("")
 
     init {
         (app as? Podpocket)?.component?.inject(this)

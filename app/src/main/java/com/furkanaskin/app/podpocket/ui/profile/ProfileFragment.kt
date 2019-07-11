@@ -3,8 +3,6 @@ package com.furkanaskin.app.podpocket.ui.profile
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.furkanaskin.app.podpocket.R
@@ -26,17 +24,15 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
 
     override fun getLayoutRes(): Int = R.layout.fragment_profile
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        initUserDetails()
+    override fun init() {
+        super.init()
         initProfileItemsAdapter()
         prepareProfileItems()
+        initUserDetails()
 
         mBinding.imageViewProfilePicture.setOnClickListener {
             navigateAccountDetailScreen()
         }
-
     }
 
     private fun prepareProfileItems() {
@@ -70,8 +66,11 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
     }
 
     private fun initUserDetails() {
-        viewModel.userName.set(viewModel.user?.userName ?: "")
-        viewModel.userEmail.set(viewModel.user?.email ?: "")
+        if (viewModel.userName.get().isNullOrEmpty()) {
+            viewModel.userName.set(viewModel.user?.userName ?: "")
+            viewModel.userEmail.set(viewModel.user?.email ?: "")
+            viewModel.userUniqueID.set(viewModel.user?.uniqueId ?: "")
+        }
     }
 
     private fun showLogOutAlertDialog() {

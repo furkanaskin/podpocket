@@ -47,7 +47,7 @@ object BindingAdapter {
             return
         } else {
             val usersRef = FirebaseDatabase.getInstance().getReference("users")
-            usersRef.addValueEventListener(object : ValueEventListener {
+            usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
 
                 override fun onCancelled(error: DatabaseError) {
                 }
@@ -60,7 +60,9 @@ object BindingAdapter {
                             try {
                                 Picasso.get().cancelRequest(view)
                                 Picasso.get().load(dataSnapshot.child("profilePictureUrl").value.toString()).into(view)
+                                usersRef.removeEventListener(this)
                             } catch (e: IllegalArgumentException) {
+                                usersRef.removeEventListener(this)
                                 view.setImageResource(R.drawable.ic_dummy_user)
                             }
                         }
@@ -77,7 +79,7 @@ object BindingAdapter {
             return
         } else {
             val usersRef = FirebaseDatabase.getInstance().getReference("users")
-            usersRef.addValueEventListener(object : ValueEventListener {
+            usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
 
                 override fun onCancelled(error: DatabaseError) {
                 }
@@ -89,7 +91,9 @@ object BindingAdapter {
                         if (dataSnapshot.key == userUniqueId) {
                             try {
                                 view.text = dataSnapshot.child("userName").value.toString()
+                                usersRef.removeEventListener(this)
                             } catch (e: IllegalArgumentException) {
+                                usersRef.removeEventListener(this)
                                 view.text = "ERROR!"
                             }
                         }

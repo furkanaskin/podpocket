@@ -40,7 +40,8 @@ class DashboardActivity : BaseActivity<DashboardViewModel, ActivityDashboardBind
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val navController = findNavController(R.id.container_fragment)
-        NavigationUI.onNavDestinationSelected(item!!, navController)
+        if (navController.currentDestination?.id != item?.itemId)
+            NavigationUI.onNavDestinationSelected(item!!, navController)
         return super.onOptionsItemSelected(item)
     }
 
