@@ -18,7 +18,6 @@ import org.jetbrains.anko.contentView
  */
 
 class DashboardActivity : BaseActivity<DashboardViewModel, ActivityDashboardBinding>(DashboardViewModel::class.java) {
-
     var isKeyboardShowing = false
 
     override fun initViewModel(viewModel: DashboardViewModel) {
@@ -36,6 +35,7 @@ class DashboardActivity : BaseActivity<DashboardViewModel, ActivityDashboardBind
     private fun setupNavigation() {
         val navController = findNavController(R.id.container_fragment)
         binding.bottomNavigation.setupWithNavController(navController)
+        binding.bottomNavigation.setOnNavigationItemReselectedListener { false }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

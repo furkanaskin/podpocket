@@ -7,9 +7,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.ObservableField
 import com.bumptech.glide.Glide
@@ -40,9 +38,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
     private var isUserChangePicture = false
     private var profileImageUrl: ObservableField<String> = ObservableField("")
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun init() {
         mBinding.viewModel?.userData = viewModel.user
         if (viewModel.user!!.profilePictureUrl.isNullOrEmpty()) {
             mBinding.fabChangeImage.show()

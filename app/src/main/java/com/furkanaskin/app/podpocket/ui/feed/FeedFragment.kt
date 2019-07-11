@@ -24,7 +24,7 @@ class FeedFragment : BaseFragment<FeedViewModel, FragmentFeedBinding>(FeedViewMo
     }
 
     private fun initAdapter() {
-        fragmentManager?.let { fragmentManager ->
+        childFragmentManager.let { fragmentManager ->
 
             FeedFragmentPagerAdapter(context, fragmentManager).also {
                 mBinding.viewPager.adapter = it

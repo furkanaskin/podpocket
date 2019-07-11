@@ -11,7 +11,9 @@ import com.furkanaskin.app.podpocket.databinding.FragmentProfileBinding
 import com.furkanaskin.app.podpocket.db.entities.ProfileSettingsEntity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.main.MainActivity
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.support.v4.runOnUiThread
 
 /**
  * Created by Furkan on 16.04.2019
@@ -25,7 +27,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
     override fun getLayoutRes(): Int = R.layout.fragment_profile
 
     override fun init() {
-        super.init()
         initProfileItemsAdapter()
         prepareProfileItems()
         initUserDetails()
@@ -67,9 +68,14 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
 
     private fun initUserDetails() {
         if (viewModel.userName.get().isNullOrEmpty()) {
-            viewModel.userName.set(viewModel.user?.userName ?: "")
-            viewModel.userEmail.set(viewModel.user?.email ?: "")
-            viewModel.userUniqueID.set(viewModel.user?.uniqueId ?: "")
+            doAsync {
+                viewModel.getUser()
+                runOnUiThread {
+                    viewModel.userName.set(viewModel.user?.userName ?: "")
+                    viewModel.userEmail.set(viewModel.user?.email ?: "")
+                    viewModel.userUniqueID.set(viewModel.user?.uniqueId ?: "")
+                }
+            }
         }
     }
 
