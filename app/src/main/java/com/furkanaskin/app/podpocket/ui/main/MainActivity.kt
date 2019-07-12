@@ -80,6 +80,7 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>(Ma
                                 binding.imageViewAppLogo.resize(Constants.MainAnimationConstants.LOGO_WIDTH_INT, Constants.MainAnimationConstants.LOGO_HEIGHT_INT),
                                 binding.imageViewAppLogo.translation(pixelsToDps(this, moveX.toInt()).toFloat(), pixelsToDps(this, moveY).toFloat())),
                         binding.textViewAppName.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION),
+                        binding.imageViewAppLogo.rotationY(360f, Constants.MainAnimationConstants.SHORT_DURATION),
                         binding.textViewHello.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION),
                         binding.buttonLogin.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION),
                         binding.buttonRegister.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION))

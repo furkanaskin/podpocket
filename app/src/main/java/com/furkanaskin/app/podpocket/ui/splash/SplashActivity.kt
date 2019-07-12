@@ -39,7 +39,6 @@ class SplashActivity : BaseActivity<SplashActivityViewModel, ActivitySplashBindi
 
                 } else {
                     val intent = Intent(this@SplashActivity, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                    overridePendingTransition(R.anim.no_anim, R.anim.no_anim)
                     startActivity(intent)
                     finish()
                 }
@@ -54,7 +53,6 @@ class SplashActivity : BaseActivity<SplashActivityViewModel, ActivitySplashBindi
 
     override fun onDestroy() {
         super.onDestroy()
-
         countDownTimer?.cancel()
     }
 }

@@ -42,7 +42,7 @@ ext {
     support_version = '1.0.0'
     rxJavaVersion = '2.1.14'
     rxKotlinVersion = '2.2.0'
-    rxAnimationsVersion = '0.0.3'
+    rxAnimationsVersion = '0.0.6'
     timberVersion = '4.7.0'
     daggerVersion = '2.22.1'
     retrofitVersion = '2.5.0'
