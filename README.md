@@ -46,6 +46,7 @@ This project is an Podcast app like Spotify, Spreaker or SoundCloud but we has o
  - [CircularImageView](https://github.com/lopspower/CircularImageView)
  - [ScalingLayout](https://github.com/iammert/ScalingLayout)
  - [ThreeTenABP](https://github.com/JakeWharton/ThreeTenABP)
+ - [FlagKit](https://github.com/KaKaVip/Android-Flag-Kit)
  
 ## Future Development
 
