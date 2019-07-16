@@ -8,7 +8,6 @@ import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.furkanaskin.app.podpocket.R
@@ -18,10 +17,12 @@ import com.furkanaskin.app.podpocket.databinding.FragmentSearchBinding
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.response.Genres
 import com.furkanaskin.app.podpocket.service.response.Podcasts
+import com.furkanaskin.app.podpocket.service.response.ResultsItem
 import com.furkanaskin.app.podpocket.service.response.Search
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.ui.search.episode_search.SearchResultAdapter
 import com.furkanaskin.app.podpocket.ui.search.podcast_search.PodcastSearchResultAdapter
+import com.furkanaskin.app.podpocket.utils.PaginationScrollListener
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import com.google.android.material.chip.Chip
@@ -30,6 +31,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.schedule
 
 /**
  * Created by Furkan on 16.04.2019
@@ -38,6 +42,16 @@ import org.jetbrains.anko.doAsync
 class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(SearchViewModel::class.java) {
     private val disposable = CompositeDisposable()
     var ids: ArrayList<String> = ArrayList()
+    var isLastPage: Boolean = false
+    var isLoading: Boolean = false
+    var episodesOffset: Int = 0
+    var podcastsOffset: Int = 0
+    var totalPodcastResult: Int = 0
+    var totalEpisodeResult: Int = 0
+    var searchTerm: String? = ""
+    var episodesResult: MutableList<ResultsItem?>? = mutableListOf()
+    var podcastsResult: MutableList<ResultsItem?>? = mutableListOf()
+
 
     override fun initViewModel() {
         mBinding.viewModel = viewModel
@@ -90,8 +104,25 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                     }))
         }
 
+        val episodesLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         mBinding.recyclerViewEpisodeSearchResult.adapter = searchEpisodeAdapter
-        mBinding.recyclerViewEpisodeSearchResult.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        mBinding.recyclerViewEpisodeSearchResult.layoutManager = episodesLayoutManager
+        mBinding.recyclerViewEpisodeSearchResult.addOnScrollListener(object : PaginationScrollListener(episodesLayoutManager) {
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+
+            override fun loadMoreItems() {
+                isLoading = true
+                if (totalEpisodeResult != layoutManager.itemCount) {
+                    getSearchResult(searchTerm ?: "", Constants.SearchQuery.EPISODE, episodesOffset)
+                }
+            }
+        })
 
 
         // -- PODCAST --
@@ -103,9 +134,26 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
             findNavController().navigate(action)
         }
 
+        val podcastsLayoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         mBinding.recyclerViewPodcastSearchResult.adapter = searchPodcastAdapter
-        mBinding.recyclerViewPodcastSearchResult.layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
+        mBinding.recyclerViewPodcastSearchResult.layoutManager = podcastsLayoutManager
+        mBinding.recyclerViewPodcastSearchResult.addOnScrollListener(object : PaginationScrollListener(podcastsLayoutManager) {
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
 
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+
+            override fun loadMoreItems() {
+                isLoading = true
+                if (totalPodcastResult != layoutManager.itemCount) {
+                    getSearchResult(searchTerm ?: "", Constants.SearchQuery.PODCAST, podcastsOffset)
+                }
+            }
+
+        })
     }
 
     private fun initSearchView() {
@@ -122,6 +170,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         val linearLayoutSearchView: ViewGroup = searchViewSearchIcon.parent as ViewGroup
         linearLayoutSearchView.removeView(searchViewSearchIcon)
         linearLayoutSearchView.addView(searchViewSearchIcon)
+        var timer = Timer()
 
         // Hide headings
         setEpisodesHeadingVisibility(false)
@@ -130,8 +179,11 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         mBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(newText: String): Boolean {
                 if (newText.isNotEmpty()) {
-                    getSearchResult(newText, Constants.SearchQuery.EPISODE)
-                    getSearchResult(newText, Constants.SearchQuery.PODCAST)
+                    searchTerm = newText
+                    episodesResult?.clear()
+                    podcastsResult?.clear()
+                    getSearchResult(newText, Constants.SearchQuery.EPISODE, episodesOffset)
+                    getSearchResult(newText, Constants.SearchQuery.PODCAST, podcastsOffset)
                 }
                 return false
             }
@@ -139,68 +191,118 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
             override fun onQueryTextChange(newText: String?): Boolean {
                 searchViewCloseIcon.hide()
                 if (newText?.length!! % 3 == 0 && newText.isNotEmpty()) {
-                    getSearchResult(newText.toString(), Constants.SearchQuery.EPISODE)
-                    getSearchResult(newText.toString(), Constants.SearchQuery.PODCAST)
+                    timer.cancel()
+                    searchTerm = newText
+
+                    val sleep = 1500L
+                    timer = Timer()
+                    timer.schedule(sleep) {
+                        episodesResult?.clear()
+                        podcastsResult?.clear()
+                        episodesOffset = 0
+                        podcastsOffset = 0
+                        getSearchResult(newText.toString(), Constants.SearchQuery.EPISODE, episodesOffset)
+                        getSearchResult(newText.toString(), Constants.SearchQuery.PODCAST, podcastsOffset)
+                    }
                 }
 
                 if (newText.isEmpty()) {
+                    episodesResult?.clear()
+                    podcastsResult?.clear()
                     setEpisodesHeadingVisibility(false)
                     setPodcastsHeadingVisibility(false)
                 }
                 return true
             }
-
         })
     }
 
-    private fun getSearchResult(searchText: String, type: String) {
+    private fun getSearchResult(searchText: String, type: String, offset: Int) {
 
         if (viewModel.selectedGenres.size == 0) {
-            disposable.add(viewModel.getSearchResult(searchText, type)
+            disposable.add(viewModel.getSearchResult(searchText, type, offset)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
                         override fun onSuccess(t: Search) {
+                            isLoading = false
+
                             if (type == Constants.SearchQuery.EPISODE && t.results != null) {
                                 setEpisodesHeadingVisibility(true)
                                 setPodcastsHeadingVisibility(true)
-                                (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(t.results)
+
+                                episodesOffset = t.nextOffset ?: 0
+                                totalEpisodeResult = t.total ?: 0
+
+                                t.results.forEach {
+                                    episodesResult?.add(it)
+                                }
+
+                                (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(episodesResult)
+                                mBinding.recyclerViewEpisodeSearchResult.adapter?.notifyDataSetChanged()
+
                             } else if (type == Constants.SearchQuery.PODCAST && t.results != null) {
                                 setEpisodesHeadingVisibility(true)
                                 setPodcastsHeadingVisibility(true)
-                                (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(t.results)
+
+                                podcastsOffset = t.nextOffset ?: 0
+                                totalPodcastResult = t.total ?: 0
+
+                                t.results.forEach {
+                                    podcastsResult?.add(it)
+                                }
+                                (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(podcastsResult)
+                                mBinding.recyclerViewPodcastSearchResult.adapter?.notifyDataSetChanged()
+
+
                             } else {
                                 setEpisodesHeadingVisibility(false)
                                 setPodcastsHeadingVisibility(false)
                             }
-
                         }
-
                     }))
         } else {
 
             val genresIds = viewModel.selectedGenres.joinToString(separator = ",")
 
-            disposable.add(viewModel.getSearchResultWithGenres(searchText, type, genresIds)
+            disposable.add(viewModel.getSearchResultWithGenres(searchText, type, genresIds, offset)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
                         override fun onSuccess(t: Search) {
+                            isLoading = false
+
                             if (type == Constants.SearchQuery.EPISODE && t.results != null) {
                                 setEpisodesHeadingVisibility(true)
                                 setPodcastsHeadingVisibility(true)
-                                (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(t.results)
+
+                                episodesOffset = t.nextOffset ?: 0
+                                totalEpisodeResult = t.total ?: 0
+
+                                t.results.forEach {
+                                    episodesResult?.add(it)
+                                }
+
+                                (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(episodesResult)
+
                             } else if (type == Constants.SearchQuery.PODCAST && t.results != null) {
                                 setEpisodesHeadingVisibility(true)
                                 setPodcastsHeadingVisibility(true)
-                                (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(t.results)
+
+                                podcastsOffset = t.nextOffset ?: 0
+                                totalPodcastResult = t.total ?: 0
+
+                                t.results.forEach {
+                                    podcastsResult?.add(it)
+                                }
+
+                                (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(podcastsResult)
+
                             } else {
                                 setEpisodesHeadingVisibility(false)
                                 setPodcastsHeadingVisibility(false)
                             }
-
                         }
-
                     }))
         }
     }
@@ -271,5 +373,4 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
             mBinding.recyclerViewPodcastSearchResult.visibility = View.GONE
         }
     }
-
 }

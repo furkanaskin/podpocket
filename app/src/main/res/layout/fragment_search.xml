@@ -19,6 +19,7 @@
         android:descendantFocusability="beforeDescendants"
         android:fitsSystemWindows="true"
         android:focusable="true"
+        android:nestedScrollingEnabled="false"
         tools:context=".ui.search.SearchFragment">
 
         <ImageView
@@ -67,57 +68,80 @@
 
         </HorizontalScrollView>
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/scrollViewChipGroupGenres"
-            android:layout_alignParentBottom="true">
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/scrollViewChipGroupGenres">
 
-            <RelativeLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/transparent">
 
-                <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
-                    android:id="@+id/textViewSearchPodcastsHeading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:text="@string/podcasts"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="24sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewPodcastSearchResult"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewSearchPodcastsHeading"
-                    android:layout_marginTop="@dimen/margin_16_dp">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
-                    android:id="@+id/textViewSearchEpisodesHeading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/recyclerViewPodcastSearchResult"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="24dp"
-                    android:text="@string/episodes"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="24sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewEpisodeSearchResult"
+                <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/textViewSearchEpisodesHeading"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginTop="@dimen/margin_16_dp">
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                </androidx.recyclerview.widget.RecyclerView>
-            </RelativeLayout>
-        </androidx.core.widget.NestedScrollView>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                            android:id="@+id/textViewSearchPodcastsHeading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:text="@string/podcasts"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="24sp" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewPodcastSearchResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/textViewSearchPodcastsHeading"
+                            android:layout_marginTop="@dimen/margin_16_dp"
+                            android:nestedScrollingEnabled="true" />
+                    </RelativeLayout>
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <com.furkanaskin.app.podpocket.utils.SmartNestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
+                        android:id="@+id/textViewSearchEpisodesHeading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/episodes"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="24sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewEpisodeSearchResult"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/textViewSearchEpisodesHeading"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="@dimen/margin_16_dp"
+                        android:nestedScrollingEnabled="true">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </RelativeLayout>
+            </com.furkanaskin.app.podpocket.utils.SmartNestedScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </RelativeLayout>
 </layout>

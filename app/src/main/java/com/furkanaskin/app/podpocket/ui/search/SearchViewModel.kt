@@ -25,12 +25,13 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
 
     var selectedGenres: ArrayList<Int> = ArrayList()
 
-    fun getSearchResult(searchText: String, type: String): Observable<Search> {
-        return api.fullTextSearch(searchText, type)
+
+    fun getSearchResult(searchText: String, type: String, offset: Int): Observable<Search> {
+        return api.fullTextSearch(searchText, type, offset)
     }
 
-    fun getSearchResultWithGenres(searchText: String, type: String, genreIds: String): Observable<Search> {
-        return api.fullTextSearchWithGenres(searchText, type, genreIds)
+    fun getSearchResultWithGenres(searchText: String, type: String, genreIds: String, offset: Int): Observable<Search> {
+        return api.fullTextSearchWithGenres(searchText, type, genreIds, offset)
     }
 
     fun getEpisodes(id: String): Observable<Podcasts> {
