@@ -45,7 +45,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
             isUserHavePicture = true
             mBinding.fabChangeImage.hide()
             profileImageUrl.set(viewModel.user?.profilePictureUrl.toString())
-            Glide.with(this.activity!!).load(viewModel.user?.profilePictureUrl).into(mBinding.imageViewProfilePicture)
+            Glide.with((activity as DashboardActivity)).load(viewModel.user?.profilePictureUrl).into(mBinding.imageViewProfilePicture)
         }
 
         mBinding.imageViewProfilePicture.setOnClickListener {
@@ -68,7 +68,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
 
     private fun showAddAvatarDialog() {
 
-        val builder = AlertDialog.Builder(this.activity!!)
+        val builder = AlertDialog.Builder((activity as DashboardActivity))
         // Display a message on alert dialog
         builder.setMessage("Nereden eklemek istersin?")
         // Set a positive button and its click listener on alert dialog
@@ -110,7 +110,6 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
                 changeProfilePicture()
 
             }
-
         }
     }
 
@@ -186,7 +185,6 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         storageRef.child(profilePicturePath).downloadUrl.addOnSuccessListener {
             profileImageUrl.set(it.toString())
             hideProgress()
-
         }
     }
 
@@ -196,7 +194,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        var datePicker = DatePickerDialog((activity as DashboardActivity),
+        val datePicker = DatePickerDialog((activity as DashboardActivity),
                 DatePickerDialog.OnDateSetListener { _, year, month, day ->
                     mBinding.editTextBirthday.setText("$day/${month + 1}/$year")
                 }, year, month, day)

@@ -18,7 +18,6 @@ import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_after_register.*
 import org.jetbrains.anko.doAsync
 import java.io.ByteArrayOutputStream
 import java.util.*
@@ -30,9 +29,9 @@ import java.util.*
 
 class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfterRegisterBinding>(AfterRegisterViewModel::class.java) {
 
-    val storage = FirebaseStorage.getInstance()
-    val storageRef = storage.reference
-    var profileImageUrl: String = ""
+    private val storage = FirebaseStorage.getInstance()
+    private val storageRef = storage.reference
+    private var profileImageUrl: String = ""
 
     override fun getLayoutRes() = R.layout.activity_after_register
 
@@ -48,13 +47,12 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
             false -> binding.buttonDone.hide()
         }
 
-        val edittextBirthday = this.editTextBirthday
-        edittextBirthday.showSoftInputOnFocus = false
-        edittextBirthday.keyListener = null
-        edittextBirthday.setOnClickListener {
+        binding.editTextBirthday.showSoftInputOnFocus = false
+        binding.editTextBirthday.keyListener = null
+        binding.editTextBirthday.setOnClickListener {
             openDatePickerDialog()
         }
-        this.tilBirthday.setOnClickListener {
+        binding.tilBirthday.setOnClickListener {
             openDatePickerDialog()
         }
 
@@ -88,7 +86,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
 
                 viewModel.insertUserToFirebase(willBeUpdated)
 
-            }else hideProgress()
+            } else hideProgress()
         }
 
         binding.fabChangeImage.setOnClickListener {
@@ -96,7 +94,6 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         }
         binding.imageViewUser.setOnClickListener {
             showAddAvatarDialog()
-
         }
 
 
