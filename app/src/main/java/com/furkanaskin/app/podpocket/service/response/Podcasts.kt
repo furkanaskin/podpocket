@@ -146,6 +146,10 @@ data class Podcasts(
         return "$totalEpisodes Bölüm"
     }
 
+    fun getEmailVisibility(): Boolean? {
+        return !email.isNullOrEmpty()
+    }
+
     fun getPodcastLanguage(): String? {
         return "Yayın Dili : $language"
     }
@@ -155,8 +159,7 @@ data class Podcasts(
     }
 
     fun getPubDateMs(): String {
-        return """İlk Yayın Tarihi :
-            |${getDateTime(earliestPubDateMs ?: 0)}""".trimMargin()
+        return """İlk Yayın Tarihi : ${getDateTime(earliestPubDateMs ?: 0)}""".trimMargin()
     }
 
     private fun getDateTime(s: Long): String? {

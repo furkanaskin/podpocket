@@ -98,7 +98,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         val searchPodcastAdapter = PodcastSearchResultAdapter { item ->
 
             val podcastId = item.id
-            val action = SearchFragmentDirections.actionSearchFragmentToPodcastEpisodesFragment()
+            val action = SearchFragmentDirections.actionSearchFragmentToPodcastFragment()
             action.podcastID = podcastId ?: ""
             findNavController().navigate(action)
         }

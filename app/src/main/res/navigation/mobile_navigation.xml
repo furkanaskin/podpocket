@@ -16,8 +16,8 @@
         android:label="ANASAYFA"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_podcastEpisodesFragment"
-            app:destination="@id/podcastEpisodesFragment" />
+            android:id="@+id/action_homeFragment_to_podcastFragment"
+            app:destination="@id/podcastFragment" />
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
@@ -43,17 +43,20 @@
         android:label="ARA"
         tools:layout="@layout/fragment_search">
         <action
-            android:id="@+id/action_searchFragment_to_podcastEpisodesFragment"
-            app:destination="@id/podcastEpisodesFragment" />
+            android:id="@+id/action_searchFragment_to_podcastFragment"
+            app:destination="@id/podcastFragment" />
     </fragment>
     <fragment
-        android:id="@+id/podcastEpisodesFragment"
+        android:id="@+id/podcastFragment"
         android:name="com.furkanaskin.app.podpocket.ui.podcast.PodcastFragment"
         android:label="PodcastEpisodesFragment">
         <argument
             android:name="podcastID"
             android:defaultValue="hello"
             app:argType="string" />
+        <action
+            android:id="@+id/action_podcastFragment_self"
+            app:destination="@id/podcastFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountDetailFragment"
@@ -64,8 +67,8 @@
         android:name="com.furkanaskin.app.podpocket.ui.profile.recently_played.RecentlyPlayedFragment"
         android:label="RecentlyPlayedFragment">
         <action
-            android:id="@+id/action_recentlyPlayedFragment_to_podcastEpisodesFragment"
-            app:destination="@id/podcastEpisodesFragment" />
+            android:id="@+id/action_recentlyPlayedFragment_to_podcastFragment"
+            app:destination="@id/podcastFragment" />
         <action
             android:id="@+id/action_recentlyPlayedFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

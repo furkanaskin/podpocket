@@ -82,6 +82,10 @@
     <string name="podcasts">Podcastler</string>
     <string name="clear_all">Hepsini temizle</string>
     <string name="details">Detaylar</string>
+    <string name="podcast_description">Podcast Açıklaması</string>
+    <string name="about_podcast">Hakkında</string>
+    <string name="country">Ülke :</string>
+    <string name="similar_podcasts">Benzer Podcastler</string>
     <string-array name="feed_fragment_titles">
         <item>@string/locale_feed_fragment</item>
         <item>@string/global_feed_fragment</item>

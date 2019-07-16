@@ -51,7 +51,6 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
 
         parseIntent()
 
-
         val adapter = EpisodesAdapter { item, position ->
 
             val intent = Intent(activity, PlayerActivity::class.java)

@@ -180,6 +180,9 @@ dependencies {
     //exo player
     implementation 'com.google.android.exoplayer:exoplayer:2.9.6'
 
+    //flag kit
+    implementation 'com.github.KaKaVip:Android-Flag-Kit:v0.1'
+
     //test
     testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.arch.core:core-testing:2.0.1'

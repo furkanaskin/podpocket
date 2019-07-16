@@ -57,7 +57,7 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
 
         mBinding.recyclerViewRecentlyPlayedPodcast.adapter = RecentlyPodcastsAdapter {
             val podcastId = it.id
-            val action = RecentlyPlayedFragmentDirections.actionRecentlyPlayedFragmentToPodcastEpisodesFragment()
+            val action = RecentlyPlayedFragmentDirections.actionRecentlyPlayedFragmentToPodcastFragment()
             action.podcastID = podcastId
             findNavController().navigate(action)
 

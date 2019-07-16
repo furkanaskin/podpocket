@@ -21,7 +21,7 @@ class PodcastFragmentPagerAdapter(
 
     private val fragmentList = listOf(
             EpisodesFragment.getInstance(podcast),
-            PodcastDetailFragment()
+            PodcastDetailFragment.getInstance(podcast)
     )
 
     override fun getItem(position: Int): Fragment =

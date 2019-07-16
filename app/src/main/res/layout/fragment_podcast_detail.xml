@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -10,21 +11,140 @@
     </data>
 
 
-    <RelativeLayout
-        android:id="@+id/rootView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/mainBackgroundColor"
-        android:fitsSystemWindows="true"
-        tools:context=".ui.podcast.podcast_detail.PodcastDetailFragment">
+        android:background="@color/mainBackgroundColor">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rootView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/hello"
-            android:textColor="@android:color/white" />
+            android:background="@color/mainBackgroundColor"
+            android:fitsSystemWindows="true"
+            tools:context=".ui.podcast.podcast_detail.PodcastDetailFragment">
 
-    </RelativeLayout>
 
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketSemiBoldTextView
+                android:id="@+id/textViewPodcastDescriptionHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_24_dp"
+                android:singleLine="true"
+                android:text="@string/podcast_description"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_24_sp" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
+                android:id="@+id/textViewPodcastDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewPodcastDescriptionHeading"
+                android:layout_marginStart="@dimen/margin_24_dp"
+                android:layout_marginEnd="@dimen/margin_16_dp"
+                android:textColor="@android:color/white"
+                app:setHtmlText="@{viewModel.podcast.description}" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketSemiBoldTextView
+                android:id="@+id/textViewPodcastAboutHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewPodcastDescription"
+                android:layout_margin="@dimen/margin_24_dp"
+                android:text="@string/about_podcast"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_24_sp" />
+
+            <com.haipq.android.flagkit.FlagImageView
+                android:id="@+id/imageViewPodcastCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewPodcastAboutHeading"
+                android:layout_marginStart="@dimen/margin_24_dp"
+                android:layout_marginEnd="@dimen/margin_24_dp"
+                tools:src="@drawable/flag_tr" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/imageViewPodcastCountry"
+                android:layout_alignBottom="@id/imageViewPodcastCountry"
+                android:layout_toEndOf="@id/imageViewPodcastCountry"
+                android:gravity="center"
+                android:text="@{viewModel.podcast.getCountry}"
+                android:textColor="@color/white" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
+                android:id="@+id/textViewPodcasterEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageViewPodcastCountry"
+                android:layout_marginStart="@dimen/margin_24_dp"
+                android:layout_marginTop="@dimen/margin_24_dp"
+                android:layout_marginEnd="@dimen/margin_24_dp"
+                android:layout_marginBottom="@dimen/margin_8_dp"
+                android:gravity="center"
+                android:text="@{viewModel.podcast.email}"
+                android:textColor="@color/white"
+                android:textIsSelectable="true"
+                app:visibility="@{viewModel.podcast.getEmailVisibility()}" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
+                android:id="@+id/textViewPodcastLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewPodcasterEmail"
+                android:layout_marginStart="@dimen/margin_24_dp"
+                android:layout_marginEnd="@dimen/margin_24_dp"
+                android:layout_marginBottom="@dimen/margin_8_dp"
+                android:gravity="center"
+                android:text="@{viewModel.podcast.getPodcastLanguage}"
+                android:textColor="@color/white"
+                android:textIsSelectable="true" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
+                android:id="@+id/textViewPodcastPublisher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewPodcastLanguage"
+                android:layout_marginStart="@dimen/margin_24_dp"
+                android:layout_marginEnd="@dimen/margin_24_dp"
+                android:layout_marginBottom="@dimen/margin_8_dp"
+                android:gravity="center"
+                android:text="@{viewModel.podcast.getPodcastPublisher()}"
+                android:textColor="@color/white"
+                android:textIsSelectable="true" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
+                android:id="@+id/textViewPodcastFirstPubDateMs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewPodcastPublisher"
+                android:layout_marginStart="@dimen/margin_24_dp"
+                android:layout_marginEnd="@dimen/margin_24_dp"
+                android:layout_marginBottom="@dimen/margin_8_dp"
+                android:gravity="center"
+                android:text="@{viewModel.podcast.getPubDateMs}"
+                android:textColor="@color/white" />
+
+            <com.furkanaskin.app.podpocket.utils.ui.PodPocketSemiBoldTextView
+                android:id="@+id/textViewSimilarPodcastsHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewPodcastFirstPubDateMs"
+                android:layout_marginStart="@dimen/margin_24_dp"
+                android:layout_marginEnd="@dimen/margin_24_dp"
+                android:layout_marginBottom="@dimen/margin_24_dp"
+                android:text="@string/similar_podcasts"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSimilarPodcasts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewSimilarPodcastsHeading" />
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
