@@ -1,9 +1,9 @@
 package com.furkanaskin.app.podpocket.ui.player
 
 import android.os.Bundle
-import androidx.databinding.Observable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.furkanaskin.app.podpocket.R
@@ -63,14 +63,13 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
             playerActivity.currentPosition = position
             playerActivity.episodeId = playerActivity.episodes[position]
             playerActivity.getEpisodeDetail(item.id)
-            mBinding.recyclerViewQueueEpisodes.adapter?.notifyDataSetChanged()
-            mBinding.recyclerViewQueueEpisodes.smoothScrollToPosition(position)
         }
 
-        getData(adapter)
+        getQueue()
 
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         mBinding.recyclerViewQueueEpisodes.layoutManager = layoutManager
+        mBinding.recyclerViewQueueEpisodes.itemAnimator = DefaultItemAnimator()
         mBinding.recyclerViewQueueEpisodes.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
             override fun isLastPage(): Boolean {
                 return isLastPage
@@ -88,34 +87,20 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
         })
 
-        viewModel.updateRecyclerView.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
-            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-                if (viewModel.db.episodesDao().getEpisodes().hasActiveObservers())
-                    viewModel.db.episodesDao().getEpisodes().removeObservers(this@PlayerQueueFragment)
-
-                viewModel.db.episodesDao().getEpisodes().observe(this@PlayerQueueFragment, Observer<List<EpisodeEntity>> { t ->
-                    (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(t)
-                })
-            }
-
-        })
+        mBinding.recyclerViewQueueEpisodes.adapter = adapter
     }
 
-    private fun getData(adapter: QueueAdapter) {
-        showProgress()
+    private fun getQueue() {
         totalEpisodes = arguments?.getInt(Constants.BundleArguments.TOTAL_EPISODES)
 
-        // Add episodes to queue.
-        var episodes: MutableList<EpisodeEntity?>?
-        doAsync {
-            episodes = viewModel.db.episodesDao().getEpisodesWithoutLiveData().toMutableList()
-            runOnUiThread {
-                nextEpisodePubDate = episodes?.last()?.pubDateMs
-                mBinding.recyclerViewQueueEpisodes.adapter = adapter
-                (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(episodes)
-                hideProgress()
-            }
-        }
+        if (viewModel.db.episodesDao().getEpisodes().hasActiveObservers())
+            viewModel.db.episodesDao().getEpisodes().removeObservers(this@PlayerQueueFragment)
+
+        // Get episodes for queue.
+        viewModel.db.episodesDao().getEpisodes().observe(this@PlayerQueueFragment, Observer<List<EpisodeEntity>> { t ->
+            nextEpisodePubDate = t?.last()?.pubDateMs
+            (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(t.toMutableList())
+        })
     }
 
     fun getMoreItems(nextEpisodePubDate: Long) {

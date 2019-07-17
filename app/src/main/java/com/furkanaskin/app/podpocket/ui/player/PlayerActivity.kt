@@ -19,8 +19,8 @@ import com.furkanaskin.app.podpocket.service.response.Episode
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
-import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ExtractorMediaSource
@@ -147,6 +147,14 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             }
         }
 
+        imageViewNextButton.setOnClickListener {
+            nextEpisode()
+        }
+
+        imageViewPreviousButton.setOnClickListener {
+            previousEpisode()
+        }
+
         viewModel.isFavorite.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
                 favoriteVisibility()
@@ -251,9 +259,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                         checkFavorite()
                         viewModel.item.get()?.let { setEpisode(it) }
                         viewModel.item.get()?.let { setEpisodeInfo(it) }
-                        nextEpisode()
-                        previousEpisode()
-
                     }
 
                 }))
@@ -333,38 +338,34 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     }
 
     private fun nextEpisode() {
-        imageViewNextButton.setOnClickListener {
-            if (currentPosition != 0) {
-                player.stop()
+        if (currentPosition != 0) {
+            player.stop()
 
-                // Update positions, it's very important for Player/PlayerQueue
+            // Update positions, it's very important for Player/PlayerQueue
 
-                currentPosition -= 1
-                episodeId = episodes[currentPosition]
-                getEpisodeDetail(episodeId)
-                disableButtons()
+            currentPosition -= 1
+            episodeId = episodes[currentPosition]
+            getEpisodeDetail(episodeId)
+            disableButtons()
 
-            } else {
-                Toast.makeText(this, getString(R.string.no_more_new_episodes), Toast.LENGTH_SHORT).show()
-            }
+        } else {
+            Toast.makeText(this, getString(R.string.no_more_new_episodes), Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun previousEpisode() {
-        imageViewPreviousButton.setOnClickListener {
-            if (currentPosition + 1 != episodes.size) {
-                player.stop()
+        if (currentPosition + 1 != episodes.size) {
+            player.stop()
 
-                // Update positions, it's very important for Player/PlayerQueue
+            // Update positions, it's very important for Player/PlayerQueue
 
-                currentPosition += 1
-                episodeId = episodes[currentPosition]
-                getEpisodeDetail(episodeId)
-                disableButtons()
+            currentPosition += 1
+            episodeId = episodes[currentPosition]
+            getEpisodeDetail(episodeId)
+            disableButtons()
 
-            } else {
-                Toast.makeText(this, getString(R.string.you_are_in_first_episode), Toast.LENGTH_SHORT).show()
-            }
+        } else {
+            Toast.makeText(this, getString(R.string.you_are_in_first_episode), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -392,15 +393,14 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         }
     }
 
-    private val eventListener = object : ExoPlayer.EventListener {
+    private val eventListener = object : Player.EventListener {
         override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
             when (playbackState) {
-                ExoPlayer.STATE_ENDED -> {
-                    setPlayPause(false)
-                    defaultTimeBar.setDuration(player.duration)
-                    player.seekTo(0)
 
+                Player.STATE_ENDED -> {
+                    nextEpisode()
                 }
+
             }
         }
     }
@@ -437,7 +437,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 imageViewPreviousButton.isEnabled = true
                 imageViewNextButton.isEnabled = true
                 imageViewPlayButton.isEnabled = true
-                cancel() // We don't need that countDownTimer any more..
+                this.cancel() // We don't need that countDownTimer any more..
             }
 
             override fun onTick(millisUntilFinished: Long) {
