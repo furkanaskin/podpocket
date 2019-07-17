@@ -81,9 +81,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
 
                 doAsync {
                     getUser()
-
                     runOnUiThread {
-
                         Thread.sleep(1000)
 
                         if (user?.surname.isNullOrEmpty()) {
@@ -100,9 +98,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
                     }
                 }
             }
-
         })
-
     }
 
     private fun init() {
@@ -150,10 +146,12 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
         builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
             // Do something when user press the positive button
             viewModel.forgetPasswordClicked()
+
         }
         // Display a negative button on alert dialog
         builder.setNegativeButton(getString(R.string.no)) { dialog, _ ->
             dialog.dismiss()
+
         }
         // Display a neutral button on alert dialog
         builder.setNeutralButton(getString(R.string.cancel)) { _, _ ->

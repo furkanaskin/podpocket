@@ -13,7 +13,10 @@ import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordActivity
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import io.reactivex.disposables.CompositeDisposable
 import org.jetbrains.anko.doAsync
 import org.threeten.bp.LocalDate
@@ -133,25 +136,34 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
                     ?: "").addOnCompleteListener { task ->
 
                 if (task.isSuccessful && mAuth.currentUser?.isEmailVerified!!) {
-
                     verifySuccess.set(true)
 
-                    insertUserToFirebase() // Save user to firebase.
+                    val usersRef = FirebaseDatabase.getInstance().getReference("users").child("${mAuth.currentUser?.uid}")
+                    usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
 
-                    doAsync {
-                        val user = UserEntity(
-                                uniqueId = mAuth.currentUser?.uid ?: "",
-                                email = userName.get() ?: "")
+                        override fun onCancelled(error: DatabaseError) {
+                        }
 
-                        db.userDao().insertUser(user)
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.getValue(UserEntity::class.java)?.uniqueId != null) {
+                                val userFromFirebase = snapshot.getValue(UserEntity::class.java)
+                                doAsync {
+                                    userFromFirebase?.let { db.userDao().insertUser(it) }
 
-                    }
+                                    loginSuccess.set(true)
+                                    showProgress.set(false)
+                                }
+                            } else {
+                                loginSuccess.set(true)
+                                showProgress.set(false)
+                            }
+                        }
+                    })
 
-                    loginSuccess.set(true)
+                } else if (task.isSuccessful && mAuth.currentUser?.isEmailVerified == false) {
                     showProgress.set(false)
-
-                } else {
                     verifySuccess.set(false)
+                } else {
                     checkFirebaseCredentials(task)
                     showProgress.set(false)
 

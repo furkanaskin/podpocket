@@ -57,7 +57,7 @@ class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(P
     }
 
     private fun initAdapter() {
-        fragmentManager?.let { fragmentManager ->
+        childFragmentManager.let { fragmentManager ->
 
             viewModel.podcast.get()?.let { podcasts ->
                 PodcastFragmentPagerAdapter(context, fragmentManager, podcasts)

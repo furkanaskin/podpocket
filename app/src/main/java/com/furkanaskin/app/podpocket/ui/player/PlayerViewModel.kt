@@ -61,6 +61,5 @@ class PlayerViewModel(app: Application) : BaseViewModel(app) {
             recentlyPlayedEpisode?.let { db.recentlyPlaysDao().insertRecentlyPlay(it) }
             recentlyPlayedPodcast?.let { db.recentlyPlaysDao().insertRecentlyPlay(it) }
         }
-
     }
 }
