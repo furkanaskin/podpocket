@@ -175,7 +175,6 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         val profilePicturePath = viewModel.mAuth.currentUser?.uid + "_" + "profile_picture.jpg"
         storageRef.child(profilePicturePath).downloadUrl.addOnSuccessListener {
             profileImageUrl.set(it.toString())
-            hideProgress()
         }
     }
 

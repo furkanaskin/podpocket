@@ -60,20 +60,14 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
     }
 
     private fun createFirebaseListener() {
-        val usersRef = FirebaseDatabase.getInstance().getReference("users")
+        val usersRef = FirebaseDatabase.getInstance().getReference("users").child("${user?.uniqueId}")
         usersRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                val userList = snapshot.children
-                userList.forEachIndexed { _, dataSnapshot ->
-                    if (dataSnapshot.key == user?.uniqueId) {
-                        currentUser = dataSnapshot.getValue(UserEntity::class.java)!!
-                    }
-                }
+                currentUser = snapshot.getValue(UserEntity::class.java)
             }
-
         })
     }
 

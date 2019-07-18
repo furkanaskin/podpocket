@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.furkanaskin.app.podpocket.R
+import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.firebase.database.DataSnapshot
@@ -46,26 +47,22 @@ object BindingAdapter {
         if (userUniqueId.isNullOrEmpty()) {
             return
         } else {
-            val usersRef = FirebaseDatabase.getInstance().getReference("users")
+            val usersRef = FirebaseDatabase.getInstance().getReference("users").child("$userUniqueId")
             usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
 
                 override fun onCancelled(error: DatabaseError) {
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val allUsers = snapshot.children
+                    val userFromFirebase = snapshot.getValue(UserEntity::class.java)
 
-                    allUsers.forEachIndexed { _, dataSnapshot ->
-                        if (dataSnapshot.key == userUniqueId) {
-                            try {
-                                Picasso.get().cancelRequest(view)
-                                Picasso.get().load(dataSnapshot.child("profilePictureUrl").value.toString()).into(view)
-                                usersRef.removeEventListener(this)
-                            } catch (e: IllegalArgumentException) {
-                                usersRef.removeEventListener(this)
-                                view.setImageResource(R.drawable.ic_dummy_user)
-                            }
-                        }
+                    try {
+                        Picasso.get().cancelRequest(view)
+                        Picasso.get().load(userFromFirebase?.profilePictureUrl).into(view)
+                        usersRef.removeEventListener(this)
+                    } catch (e: IllegalArgumentException) {
+                        usersRef.removeEventListener(this)
+                        view.setImageResource(R.drawable.ic_dummy_user)
                     }
                 }
             })
@@ -78,25 +75,21 @@ object BindingAdapter {
         if (userUniqueId.isNullOrEmpty()) {
             return
         } else {
-            val usersRef = FirebaseDatabase.getInstance().getReference("users")
+            val usersRef = FirebaseDatabase.getInstance().getReference("users").child("$userUniqueId")
             usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
 
                 override fun onCancelled(error: DatabaseError) {
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val allUsers = snapshot.children
+                    val userFromFirebase = snapshot.getValue(UserEntity::class.java)
 
-                    allUsers.forEachIndexed { _, dataSnapshot ->
-                        if (dataSnapshot.key == userUniqueId) {
-                            try {
-                                view.text = dataSnapshot.child("userName").value.toString()
-                                usersRef.removeEventListener(this)
-                            } catch (e: IllegalArgumentException) {
-                                usersRef.removeEventListener(this)
-                                view.text = "ERROR!"
-                            }
-                        }
+                    try {
+                        view.text = userFromFirebase?.userName
+                        usersRef.removeEventListener(this)
+                    } catch (e: IllegalArgumentException) {
+                        usersRef.removeEventListener(this)
+                        view.text = "ERROR!"
                     }
                 }
             })
