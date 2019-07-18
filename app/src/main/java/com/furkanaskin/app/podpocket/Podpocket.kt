@@ -33,7 +33,6 @@ class Podpocket : Application() {
                 .build()
 
         Fabric.with(this, Crashlytics.Builder().core(core).build(), Answers())
-
     }
 }
 

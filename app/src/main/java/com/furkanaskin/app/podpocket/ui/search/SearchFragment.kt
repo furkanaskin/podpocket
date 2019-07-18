@@ -52,13 +52,11 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
     var episodesResult: MutableList<ResultsItem?>? = mutableListOf()
     var podcastsResult: MutableList<ResultsItem?>? = mutableListOf()
 
-
     override fun initViewModel() {
         mBinding.viewModel = viewModel
     }
 
     override fun getLayoutRes(): Int = R.layout.fragment_search
-
 
     override fun init() {
 

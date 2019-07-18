@@ -22,22 +22,18 @@ class AccountDetailViewModel(app: Application) : BaseViewModel(app) {
     var userData: UserEntity? = null
 
     fun getUserName(): String {
-
         return userData?.userName ?: ""
     }
 
     fun getName(): String {
-
         return userData?.name ?: ""
     }
 
     fun getSurname(): String {
-
         return userData?.surname ?: ""
     }
 
     fun changeUserData(user: UserEntity) {
-
         doAsync {
             db.userDao().updateUser(user)
         }

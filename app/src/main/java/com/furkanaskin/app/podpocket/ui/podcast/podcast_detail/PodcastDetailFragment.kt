@@ -29,7 +29,6 @@ class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodca
 
     private val disposable = CompositeDisposable()
 
-
     companion object {
         fun getInstance(podcast: Podcasts): PodcastDetailFragment {
             val bundle = Bundle()
@@ -61,7 +60,6 @@ class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodca
     private fun getCountryCode(countryName: String) = Locale.getAvailableLocales().find { it.getDisplayCountry(Locale.US) == countryName }?.country?.toLowerCase()
 
     private fun initRecommendedPodcasts() {
-
         showProgress()
 
         disposable.add(viewModel.getPodcastRecommendations(viewModel.podcast.get()?.id

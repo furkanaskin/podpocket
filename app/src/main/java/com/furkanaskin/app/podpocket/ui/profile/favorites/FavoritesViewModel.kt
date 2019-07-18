@@ -17,7 +17,6 @@ class FavoritesViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun getEpisodes(id: String): Observable<Podcasts> {
-
         return baseApi.getPodcastById(id)
     }
 }

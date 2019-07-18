@@ -17,7 +17,6 @@ class EpisodesViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun getEpisodesWithPaging(id: String, nextEpisodePubDate: Long): Observable<Podcasts> {
-
         return baseApi.getPodcastByIdWithPaging(id, nextEpisodePubDate)
     }
 }

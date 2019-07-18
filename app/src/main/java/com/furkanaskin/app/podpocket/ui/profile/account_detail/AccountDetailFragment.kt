@@ -69,27 +69,19 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
     private fun showAddAvatarDialog() {
 
         val builder = AlertDialog.Builder((activity as DashboardActivity))
-        // Display a message on alert dialog
         builder.setMessage("Nereden eklemek istersin?")
-        // Set a positive button and its click listener on alert dialog
         builder.setPositiveButton("Galeri") { dialog, which ->
-            // Do something when user press the positive button
             val pickPhoto = Intent(Intent.ACTION_PICK,
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(pickPhoto, 1)//one can be replaced with any action code
+            startActivityForResult(pickPhoto, 1)
         }
-        // Display a negative button on alert dialog
         builder.setNegativeButton("Kamera") { dialog, which ->
             val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(takePicture, 0)//zero can be replaced with any action code
+            startActivityForResult(takePicture, 0)
         }
-        // Display a neutral button on alert dialog
         builder.setNeutralButton("Vazgeç") { _, _ ->
         }
-        // Finally, make the alert dialog using builder
         val dialog: AlertDialog = builder.create()
-
-        // Display the alert dialog on app interface
         dialog.show()
     }
 
@@ -124,14 +116,14 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
     }
 
     private fun removeProfilePicture(profilePicturePath: String) {
-        storageRef.child(profilePicturePath).delete().addOnSuccessListener {
-            // File deleted successfully
-            updateProfilePicture(viewModel.mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
-        }.addOnFailureListener {
-            // Uh-oh, an error occurred!
-        }.addOnSuccessListener {
-            hideProgress()
-        }
+        storageRef.child(profilePicturePath).delete()
+                .addOnSuccessListener {
+                    updateProfilePicture(viewModel.mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
+                }.addOnFailureListener {
+                    // Uh-oh, an error occurred!
+                }.addOnSuccessListener {
+                    hideProgress()
+                }
     }
 
     private fun updateProfilePicture(profilePicturePath: String) {
@@ -145,14 +137,13 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         val data = baos.toByteArray()
 
         val uploadTask = pathRef.putBytes(data)
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-        }.addOnSuccessListener {
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
-            getProfilePicture()
-            isUserChangePicture = true
-        }
+        uploadTask
+                .addOnFailureListener {
+                    // Handle unsuccessful uploads
+                }.addOnSuccessListener {
+                    getProfilePicture()
+                    isUserChangePicture = true
+                }
     }
 
     private fun editProfile() {

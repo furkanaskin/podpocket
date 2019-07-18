@@ -48,7 +48,6 @@ class PlayerViewModel(app: Application) : BaseViewModel(app) {
 
     fun saveRecentlyPlayed() {
         doAsync {
-            // Save last played podcast and episode to DB
             user?.lastPlayedPodcast = item.get()?.podcast?.id
             user?.lastPlayedEpisode = item.get()?.id
             user?.let { db.userDao().updateUser(it) }

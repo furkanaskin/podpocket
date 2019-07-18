@@ -15,7 +15,6 @@ class ConnectivityReceiver : BroadcastReceiver() {
         if (connectivityReceiverListener != null) {
             connectivityReceiverListener!!.onNetworkConnectionChanged(isConnectedOrConnecting(context!!))
         }
-
     }
 
     private fun isConnectedOrConnecting(context: Context): Boolean {

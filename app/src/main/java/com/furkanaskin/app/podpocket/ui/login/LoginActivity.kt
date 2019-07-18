@@ -140,27 +140,19 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
     private fun showVerifyEmailDialog() {
 
         val builder = AlertDialog.Builder(this)
-        // Display a message on alert dialog
         builder.setMessage(getString(R.string.send_verify_mail_again))
-        // Set a positive button and its click listener on alert dialog
         builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
-            // Do something when user press the positive button
             viewModel.forgetPasswordClicked()
 
         }
-        // Display a negative button on alert dialog
         builder.setNegativeButton(getString(R.string.no)) { dialog, _ ->
             dialog.dismiss()
 
         }
-        // Display a neutral button on alert dialog
         builder.setNeutralButton(getString(R.string.cancel)) { _, _ ->
             dialog?.dismiss()
         }
-        // Finally, make the alert dialog using builder
         val dialog: AlertDialog = builder.create()
-
-        // Display the alert dialog on app interface
         dialog.show()
     }
 

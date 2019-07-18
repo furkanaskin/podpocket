@@ -30,15 +30,4 @@ class LocaleFeedContainerFragment : Fragment() {
                     .commit()
         }
     }
-/*
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        // This routes the system back button to this Fragment
-        requireFragmentManager().beginTransaction()
-                .setPrimaryNavigationFragment(this)
-                .commit()
-    }
-*/
-
 }

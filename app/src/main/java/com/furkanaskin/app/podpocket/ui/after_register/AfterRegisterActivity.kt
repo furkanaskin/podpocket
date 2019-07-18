@@ -118,27 +118,20 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
 
     private fun showAddAvatarDialog() {
         val builder = AlertDialog.Builder(this)
-        // Display a message on alert dialog
         builder.setMessage("Nereden eklemek istersin?")
-        // Set a positive button and its click listener on alert dialog
         builder.setPositiveButton("Galeri") { dialog, which ->
             // Do something when user press the positive button
             val pickPhoto = Intent(Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(pickPhoto, 1)//one can be replaced with any action code
+            startActivityForResult(pickPhoto, 1)
         }
-        // Display a negative button on alert dialog
         builder.setNegativeButton("Kamera") { dialog, which ->
             val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(takePicture, 0)//zero can be replaced with any action code
+            startActivityForResult(takePicture, 0)
         }
-        // Display a neutral button on alert dialog
         builder.setNeutralButton("Vazgeç") { _, _ ->
         }
-        // Finally, make the alert dialog using builder
         val dialog: AlertDialog = builder.create()
-
-        // Display the alert dialog on app interface
         dialog.show()
     }
 
@@ -179,10 +172,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         uploadTask.addOnFailureListener {
             // Handle unsuccessful uploads
         }.addOnSuccessListener {
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
             getProfilePicture()
-
         }
     }
 
@@ -203,7 +193,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        var datePicker = DatePickerDialog(this@AfterRegisterActivity,
+        val datePicker = DatePickerDialog(this@AfterRegisterActivity,
                 DatePickerDialog.OnDateSetListener { _, year, month, day ->
                     viewModel.userBirthDay.set("$day/${month + 1}/$year")
                 }, year, month, day)

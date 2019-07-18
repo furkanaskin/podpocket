@@ -35,7 +35,6 @@ class RecentlyPodcastsAdapter(private val clickCallback: ((RecentlyPlaysEntity) 
             }
         }
 
-
         return binding
     }
 

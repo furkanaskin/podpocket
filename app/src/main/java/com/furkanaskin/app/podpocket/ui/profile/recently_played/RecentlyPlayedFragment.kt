@@ -22,7 +22,6 @@ import java.util.*
 
 class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRecentlyPlayedBinding>(RecentlyPlayedViewModel::class.java) {
 
-
     override fun getLayoutRes(): Int = R.layout.fragment_recently_played
 
     override fun initViewModel() {
