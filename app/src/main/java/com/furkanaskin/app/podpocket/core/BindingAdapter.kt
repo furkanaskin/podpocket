@@ -4,12 +4,12 @@ import android.text.Html
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
-import com.google.android.material.card.MaterialCardView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -110,13 +110,21 @@ object BindingAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("app:explicitContent")
-    fun explicitContent(view: MaterialCardView, explicitContent: Boolean) {
-
+    @BindingAdapter("app:explicitContentBorder")
+    fun explicitContentBorder(view: ImageView, explicitContent: Boolean) {
         if (explicitContent) {
-            view.strokeColor = ContextCompat.getColor(view.context, R.color.explicitContent)
-            view.strokeWidth = 8
-        }
+            view.setImageDrawable(ContextCompat.getDrawable(view.context, R.drawable.bg_explicit_content))
+        } else
+            view.setImageDrawable(ContextCompat.getDrawable(view.context, R.drawable.bg_explicit_content_false))
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:explicitContentToolbar")
+    fun explicitContentToolbar(view: Toolbar, explicitContent: Boolean) {
+        if (explicitContent) {
+            view.setBackgroundColor(ContextCompat.getColor(view.context, R.color.explicitContent))
+        } else
+            view.setBackgroundColor(ContextCompat.getColor(view.context, R.color.colorCyan))
     }
 
     @JvmStatic

@@ -10,35 +10,46 @@
     </data>
 
     <RelativeLayout
-        android:layout_width="120dp"
-        android:layout_height="180dp"
+        android:id="@+id/rootView"
+        android:layout_width="136dp"
+        android:layout_height="200dp"
         android:layout_marginStart="@dimen/margin_8_dp"
         android:layout_marginEnd="@dimen/margin_8_dp">
 
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
-            app:explicitContent="@{viewModel.item.getExplicitContent()}"
-            app:cardCornerRadius="10dp"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_4_dp"
+            android:background="@color/transparent"
+            android:backgroundTint="@color/transparent"
+            app:cardCornerRadius="8dp"
             app:cardElevation="10dp">
 
             <ImageView
                 android:id="@+id/imageViewPodcastCover"
-                android:layout_width="120dp"
+                android:layout_width="128dp"
                 android:layout_height="128dp"
-                android:scaleType="centerCrop"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
                 app:setDrawableLink="@{viewModel.item.getImage()}" />
 
         </com.google.android.material.card.MaterialCardView>
+
+        <ImageView
+            android:id="@+id/imageViewBorder"
+            android:layout_width="136dp"
+            android:layout_height="136dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/bg_explicit_content"
+            app:explicitContentBorder="@{viewModel.item.getExplicitContent()}" />
 
         <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
             android:id="@+id/textViewPodcastTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cardView"
+            android:layout_below="@id/imageViewBorder"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"

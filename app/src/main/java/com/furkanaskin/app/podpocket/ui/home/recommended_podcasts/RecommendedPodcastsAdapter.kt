@@ -27,7 +27,7 @@ class RecommendedPodcastsAdapter(private val callBack: (RecommendationsItem) -> 
         val viewModel = RecommendedPodcastsListItemViewModel((parent.context as Activity).application)
         mBinding.viewModel = viewModel
 
-        mBinding.cardView.setOnClickListener {
+        mBinding.rootView.setOnClickListener {
             mBinding.viewModel?.item?.get()?.let {
                 callBack(it)
             }

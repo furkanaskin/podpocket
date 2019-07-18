@@ -94,15 +94,25 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
                 override fun invoke(p1: DialogInterface) {
 
                 }
-
             })
         }.show()
     }
 
     private fun logout() {
-        viewModel.mAuth.signOut()
-        val intent = Intent(activity, MainActivity::class.java)
-        startActivity(intent)
+        doAsync {
+            viewModel.db.userDao().deleteAll()
+            viewModel.db.postsDao().deleteAll()
+            viewModel.db.favoritesDao().deleteAllFavoriteEpisodes()
+            viewModel.db.recentlyPlaysDao().deleteAll()
+            viewModel.db.episodesDao().deleteAllEpisodes()
+            viewModel.db.playerDao().deleteAll()
+
+            runOnUiThread {
+                viewModel.mAuth.signOut()
+                val intent = Intent(activity, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun sendFeedback() {
