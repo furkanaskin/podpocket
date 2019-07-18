@@ -78,116 +78,64 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    //supportLib
-    implementation "androidx.legacy:legacy-support-v4:$support_version"
-    implementation "androidx.appcompat:appcompat:$support_version"
-    implementation "com.google.android.material:material:$support_version"
-    implementation "androidx.recyclerview:recyclerview:$support_version"
-    implementation "androidx.cardview:cardview:$support_version"
-    implementation 'androidx.core:core-ktx:1.2.0-alpha01'
-
-    //firebase
-    implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.google.firebase:firebase-database:17.0.0'
-    implementation 'com.google.firebase:firebase-auth:17.0.0'
-    implementation 'com.google.firebase:firebase-storage:17.0.0'
-    implementation 'com.google.firebase:firebase-auth:17.0.0'
-    implementation 'com.firebaseui:firebase-ui-storage:3.2.1'
-
-    //threetenabp
+    implementation rootProject.ext.supportv4
+    implementation rootProject.ext.appCompat
+    implementation rootProject.ext.materialDesign
+    implementation rootProject.ext.recyclerView
+    implementation rootProject.ext.cardView
+    implementation rootProject.ext.coreKtx
+    implementation rootProject.ext.firebaseCore
+    implementation rootProject.ext.firebaseDatabase
+    implementation rootProject.ext.firebaseAuth
+    implementation rootProject.ext.firebaseStorage
+    implementation rootProject.ext.firebaseUiStorage
     implementation rootProject.ext.threetenabp
-
-    //lottie
     implementation rootProject.ext.lottie
-
-    //scaling layout
-    implementation 'com.github.iammert:ScalingLayout:1.2.1'
-
-    //circular ImageView
-    implementation 'com.mikhaellopez:circularimageview:3.2.0'
-
-    //timber
+    implementation rootProject.ext.scalingLayout
+    implementation rootProject.ext.circularImageView
     implementation rootProject.ext.timber
-
-    //crashlytics
-    implementation(rootProject.ext.crashlytics) {
-        transitive = true
-    }
-
-    //navigation
     implementation rootProject.ext.navigationFragment
     implementation rootProject.ext.navigationUI
-
-    //di
     implementation rootProject.ext.dagger
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
     kapt rootProject.ext.daggerApt
-    //implementation rootProject.ext.daggerSupport
-    //annotationProcessor rootProject.ext.daggerAnnotation
-
-    //rx
     implementation rootProject.ext.rxJava
     implementation rootProject.ext.rxAndroid
     implementation rootProject.ext.rxKotlin
     implementation rootProject.ext.rxAnimations
-
-    //Spannable textView
-    implementation 'com.jaychang:simpletext:2.0.1'
-
-    //net
+    implementation rootProject.ext.simpleText
     implementation rootProject.ext.retrofit
     implementation rootProject.ext.okHttp
     implementation rootProject.ext.gson
     implementation rootProject.ext.rxJavaAdapter
     implementation rootProject.ext.gsonConverter
-
-    //material progressbar
-    implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
-
-    //picasso
     implementation rootProject.ext.picasso
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-
-    //coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
-
-    // anko
-    implementation "org.jetbrains.anko:anko:$anko_version"
-    implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
-
-    //arch-comp Lifecycles, LiveData, and ViewModel
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.0.0'
-
-    //arch-comp Room
-    implementation 'androidx.room:room-runtime:2.0.0'
-    kapt 'androidx.room:room-compiler:2.0.0'
-
-    //Paging
-    implementation 'androidx.paging:paging-runtime:2.1.0'
-
-    // data binding
-    kapt 'androidx.databinding:databinding-compiler:3.4.1'
-    annotationProcessor 'androidx.databinding:databinding-compiler:3.4.1'
-
-    //stetho
+    implementation rootProject.ext.glide
+    annotationProcessor rootProject.ext.glideAnnotation
+    implementation rootProject.ext.coroutinesCore
+    implementation rootProject.ext.anko
+    implementation rootProject.ext.ankoCoroutines
+    implementation rootProject.ext.lifecycleExt
+    annotationProcessor rootProject.ext.lifecycleAnnotation
+    implementation rootProject.ext.lifecycleViewModelKtx
+    implementation rootProject.ext.roomRuntime
+    kapt rootProject.ext.roomCompiler
+    implementation rootProject.ext.pagingRuntime
+    kapt rootProject.ext.dataBindingCompilerKapt
+    annotationProcessor rootProject.ext.dataBindingCompilerAnnotation
     implementation rootProject.ext.stethoCore
     implementation rootProject.ext.stethoOkHttp
     implementation rootProject.ext.stethoUrlConnection
+    implementation rootProject.ext.exoPlayer
+    implementation rootProject.ext.flagKit
+    implementation(rootProject.ext.crashlytics) {
+        transitive = true
+    }
 
-    //exo player
-    implementation 'com.google.android.exoplayer:exoplayer:2.9.6'
 
-    //flag kit
-    implementation 'com.github.KaKaVip:Android-Flag-Kit:v0.1'
-
-    //test
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'androidx.arch.core:core-testing:2.0.1'
-    testImplementation 'androidx.room:room-testing:2.0.0'
-    testImplementation 'androidx.paging:paging-common:2.1.0'
+    testImplementation rootProject.ext.jUnit
+    testImplementation rootProject.ext.archCoreTest
+    testImplementation rootProject.ext.roomTest
+    testImplementation rootProject.ext.pagingTest
 
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'

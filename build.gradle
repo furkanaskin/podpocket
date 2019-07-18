@@ -51,29 +51,47 @@ ext {
     crashlyticsVersion = '2.10.1'
     gsonVersion = '2.8.5'
     lifecycle_version = "1.1.1"
-    room_version = "1.1.1"
-    paging_version = "1.0.0"
     coroutines_version = "1.2.0"
     anko_version = "0.10.8"
     navigationVersion = "1.0.0-rc02"
     lottieVersion = "3.0.2"
     threetenabpVersion = "1.2.0"
     stethoVersion = "1.5.1"
+    firebaseCoreVersion = "17.0.1"
+    firebaseDatabaseVersion = "18.0.0"
+    firebaseAuthVersion = "18.1.0"
+    firebaseStorageVersion = "18.1.0"
+    firebaseUiStorageVersion = "3.2.1"
+    scalingLayoutVersion = "1.2.1"
+    circularImageViewVersion = "3.2.0"
+    legacySupportv4Version = "1.0.0"
+    lifecycleViewModelKtxVersion = "2.0.0"
+    simpleTextVersion = "2.0.1"
+    glideVersion = "4.9.0"
+    lifecycleVersion = "2.0.0"
+    roomVersion = "2.1.0"
+    pagingVersion = "2.1.0"
+    dataBindingVersion = "3.4.1"
+    exoPlayerVersion = "2.9.6"
+    jUnitTestVersion = "4.12"
+    archCoreTestVersion = "2.0.1"
+    roomTestVersion = "2.1.0"
+    pagingTestVersion = "2.1.0"
 
-    //stetho
-    stethoCore = "com.facebook.stetho:stetho:1.5.1"
-    stethoOkHttp = "com.facebook.stetho:stetho-okhttp3:1.5.1"
-    stethoUrlConnection = "com.facebook.stetho:stetho-urlconnection:1.5.1"
+    //supportLib
+    supportv4 = "androidx.legacy:legacy-support-v4:$support_version"
+    appCompat = "androidx.appcompat:appcompat:$support_version"
+    materialDesign = "com.google.android.material:material:$support_version"
+    recyclerView = "androidx.recyclerview:recyclerview:$support_version"
+    cardView = "androidx.cardview:cardview:$support_version"
+    coreKtx = 'androidx.core:core-ktx:1.2.0-alpha01'
 
-    //threetenabp
-    threetenabp = "com.jakewharton.threetenabp:threetenabp:$threetenabpVersion"
-
-    //lottie
-    lottie = "com.airbnb.android:lottie:$lottieVersion"
-
-    //navigation
-    navigationFragment = 'androidx.navigation:navigation-fragment-ktx:2.0.0-rc02'
-    navigationUI = 'androidx.navigation:navigation-ui-ktx:2.0.0-rc02'
+    //firebase
+    firebaseCore = "com.google.firebase:firebase-core:$firebaseCoreVersion"
+    firebaseDatabase = "com.google.firebase:firebase-database:$firebaseDatabaseVersion"
+    firebaseAuth = "com.google.firebase:firebase-auth:$firebaseAuthVersion"
+    firebaseStorage = "com.google.firebase:firebase-storage:$firebaseStorageVersion"
+    firebaseUiStorage = "com.firebaseui:firebase-ui-storage:$firebaseUiStorageVersion"
 
     //rx
     rxJava = "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
@@ -81,11 +99,25 @@ ext {
     rxKotlin = "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion"
     rxAnimations = "com.mikhaellopez:rxanimation:$rxAnimationsVersion"
 
-    //timber
-    timber = "com.jakewharton.timber:timber:$timberVersion"
+    //arch-comp Lifecycles, LiveData, and ViewModel
+    lifecycleExt = "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    lifecycleAnnotation = "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
+    lifecycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleViewModelKtxVersion"
 
-    //crashlytics
-    crashlytics = "com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion@aar"
+    //navigation
+    navigationFragment = 'androidx.navigation:navigation-fragment-ktx:2.0.0-rc02'
+    navigationUI = 'androidx.navigation:navigation-ui-ktx:2.0.0-rc02'
+
+    //room
+    roomRuntime = "androidx.room:room-runtime:$roomVersion"
+    roomCompiler = "androidx.room:room-compiler:$roomVersion"
+
+    //dataBinding
+    dataBindingCompilerKapt = "androidx.databinding:databinding-compiler:$dataBindingVersion"
+    dataBindingCompilerAnnotation = "androidx.databinding:databinding-compiler:$dataBindingVersion"
+
+    //paging
+    pagingRuntime = "androidx.paging:paging-runtime:$pagingVersion"
 
     //dagger
     dagger = "com.google.dagger:dagger-android:$daggerVersion"
@@ -102,8 +134,57 @@ ext {
     rxJavaAdapter = "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     gsonConverter = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
+    //coroutines
+    coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+
+    //anko
+    anko = "org.jetbrains.anko:anko:$anko_version"
+    ankoCoroutines = "org.jetbrains.anko:anko-coroutines:$anko_version"
+    
+    //exoPlayer
+    exoPlayer = "com.google.android.exoplayer:exoplayer:$exoPlayerVersion"
+
     //picasso
     picasso = "com.squareup.picasso:picasso:$picassoVersion"
+
+    //glide
+    glide = "com.github.bumptech.glide:glide:$glideVersion"
+    glideAnnotation = "com.github.bumptech.glide:compiler:$glideVersion"
+
+    //simpleText
+    simpleText = "com.jaychang:simpletext:$simpleTextVersion"
+
+    //scalingLayout
+    scalingLayout = "com.github.iammert:ScalingLayout:$scalingLayoutVersion"
+
+    //circularImageView
+    circularImageView = "com.mikhaellopez:circularimageview:$circularImageViewVersion"
+
+    //flagKit
+    flagKit = "com.github.KaKaVip:Android-Flag-Kit:v0.1"
+
+    //threetenabp
+    threetenabp = "com.jakewharton.threetenabp:threetenabp:$threetenabpVersion"
+
+    //lottie
+    lottie = "com.airbnb.android:lottie:$lottieVersion"
+
+    //timber
+    timber = "com.jakewharton.timber:timber:$timberVersion"
+
+    //crashlytics
+    crashlytics = "com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion@aar"
+
+    //stetho
+    stethoCore = "com.facebook.stetho:stetho:1.5.1"
+    stethoOkHttp = "com.facebook.stetho:stetho-okhttp3:1.5.1"
+    stethoUrlConnection = "com.facebook.stetho:stetho-urlconnection:1.5.1"
+
+    //test
+    jUnit = "junit:junit:$jUnitTestVersion"
+    archCoreTest = "androidx.arch.core:core-testing:$archCoreTestVersion"
+    roomTest = "androidx.room:room-testing:$roomTestVersion"
+    pagingTest = "androidx.paging:paging-common:$pagingTestVersion"
 
     buildTime = new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"))
 }
