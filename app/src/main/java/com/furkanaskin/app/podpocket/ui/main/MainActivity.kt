@@ -15,7 +15,6 @@ import io.reactivex.rxkotlin.addTo
 class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>(MainActivityViewModel::class.java) {
 
 	private val composite = CompositeDisposable()
-	var listenerFlag: Boolean? = true
 
 	override fun initViewModel(viewModel: MainActivityViewModel) {
 		binding.viewModel = viewModel

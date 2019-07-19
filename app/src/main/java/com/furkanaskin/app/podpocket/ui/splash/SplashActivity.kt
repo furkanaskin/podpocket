@@ -35,7 +35,6 @@ class SplashActivity : BaseActivity<SplashActivityViewModel, ActivitySplashBindi
 		// If you don't know what is going over there please don't replace this block or xml file.
 		// ---------------------------------------------------------------------------------------
 
-
 		binding.imageViewAppLogo.viewTreeObserver.addOnGlobalLayoutListener {
 
 			if (listenerFlag != false) {
