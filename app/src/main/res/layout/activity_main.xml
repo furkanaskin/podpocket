@@ -20,16 +20,6 @@
         android:fitsSystemWindows="true"
         tools:context=".ui.main.MainActivity">
 
-
-        <ImageView
-            android:id="@+id/imageViewAppLogo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="-100dp"
-            android:layout_marginEnd="-100dp"
-            android:src="@drawable/ic_app_logo_svg" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,8 +31,9 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/margin_24_dp"
                 android:src="@drawable/app_logo_small"
-                android:visibility="invisible" />
+                android:visibility="visible" />
 
             <com.furkanaskin.app.podpocket.utils.ui.PodPocketTextView
                 android:id="@+id/textViewAppName"

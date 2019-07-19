@@ -44,6 +44,7 @@ object Constants {
 		const val LOGO_HEIGHT_INT = 64
 		const val SHORT_DURATION = 500L
 		const val LONG_DURATION = 1000L
+		const val EXTRA_LONG_DURATION = 3000L
 		const val NO_DURATION = 0L
 	}
 }
