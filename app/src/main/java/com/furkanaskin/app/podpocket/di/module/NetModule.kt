@@ -3,6 +3,7 @@ package com.furkanaskin.app.podpocket.di.module
 import android.os.Environment
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.furkanaskin.app.podpocket.core.Constants
+import com.furkanaskin.app.podpocket.service.DefaultRequestInterceptor
 import com.furkanaskin.app.podpocket.service.PodpocketAPI
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -28,6 +29,7 @@ class NetModule {
         val cache = Cache(Environment.getDownloadCacheDirectory(), 10 * 1024 * 1024)
         return OkHttpClient.Builder()
                 .addNetworkInterceptor(StethoInterceptor())
+		        .addInterceptor(DefaultRequestInterceptor())
                 .readTimeout(1, TimeUnit.MINUTES)
                 .writeTimeout(1, TimeUnit.MINUTES)
                 .cache(cache)
@@ -40,6 +42,7 @@ class NetModule {
     fun provideNonCachedOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
                 .addNetworkInterceptor(StethoInterceptor())
+		        .addInterceptor(DefaultRequestInterceptor())
                 .readTimeout(1, TimeUnit.MINUTES)
                 .writeTimeout(1, TimeUnit.MINUTES)
                 .build()
