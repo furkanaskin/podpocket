@@ -1,5 +1,6 @@
 package com.furkanaskin.app.podpocket.service
 
+import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.service.response.*
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -37,7 +38,7 @@ interface PodpocketAPI {
     fun getCuratedPodcastsById(@Path("id") curatedPodcastId: String): Observable<CuratedPodcasts>
 
     @GET("best_podcasts")
-    fun getBestPodcasts(@Query("region") region: String, @Query("safe_mode") explicitContent: Int): Observable<BestPodcasts>
+    fun getBestPodcasts(@Query("region") region: String, @Query("safe_mode") explicitContent: Int): Observable<Resource<BestPodcasts>>
 
     @GET("genres")
     fun getGenres(): Observable<Genres>

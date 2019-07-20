@@ -8,7 +8,6 @@ import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.FragmentHomeBinding
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
-import com.furkanaskin.app.podpocket.service.response.BestPodcasts
 import com.furkanaskin.app.podpocket.service.response.EpisodeRecommendations
 import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
 import com.furkanaskin.app.podpocket.service.response.Podcasts
@@ -24,7 +23,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
-import timber.log.Timber
 
 /**
  * Created by Furkan on 16.04.2019
@@ -141,37 +139,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     private fun initBestPodcasts() {
 
-        //If block written for just reduce the number of request
-        //Current free request limit is 10k
-        //One-time data is enough for us
-
-        if (viewModel.forceInitBestPodcasts.get() != true && viewModel.bestPodcastsList.isNullOrEmpty()) {
-
-            showProgress()
-            hideTitles()
-
-            disposable.add(viewModel.getBestPodcasts(viewModel.currentLocation, 0)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(object : CallbackWrapper<BestPodcasts>(viewModel.getApplication()) {
-                        override fun onSuccess(t: BestPodcasts) {
-                            (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(t.channels)
-                            hideProgress()
-                            viewModel.bestPodcastsList = t.channels
-                            viewModel.forceInitBestPodcasts.set(true)
-                            showTitles()
-                        }
-
-                        override fun onError(e: Throwable) {
-                            hideProgress()
-                        }
-
-                    }))
-
-        } else {
-            (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(viewModel.bestPodcastsList)
-            Timber.tag("Force Init").i("Best podcasts force initialized.")
-        }
+        viewModel.getBestPodcasts(viewModel.currentLocation, 0)
     }
 
     private fun initRecommendedPodcasts() {
