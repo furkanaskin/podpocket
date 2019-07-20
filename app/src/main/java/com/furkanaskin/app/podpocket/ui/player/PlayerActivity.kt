@@ -9,16 +9,16 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.databinding.Observable
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.core.Constants
+import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.databinding.ActivityPlayerBinding
 import com.furkanaskin.app.podpocket.db.entities.FavoriteEpisodeEntity
-import com.furkanaskin.app.podpocket.db.entities.PlayerEntity
 import com.furkanaskin.app.podpocket.service.response.Episode
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
-import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -33,9 +33,6 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_player.*
 import kotlinx.android.synthetic.main.player_container.*
 import org.jetbrains.anko.doAsync
@@ -58,7 +55,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     private val trackSelector: TrackSelector = DefaultTrackSelector(trackSelectionFactory)
 
     private var handler: Handler = Handler()
-    private val disposable = CompositeDisposable()
     var currentPosition: Int = 0
 
     override fun getLayoutRes(): Int = R.layout.activity_player
@@ -97,8 +93,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
             // After making visibility settings we can add Player Queue
 
-            val playerQueueFragment = PlayerQueueFragment.newInstance(viewModel.item.get()?.podcast?.id
-                    ?: "", currentPosition, viewModel.item.get()?.podcast?.totalEpisodes
+            val playerQueueFragment = PlayerQueueFragment.newInstance(viewModel.episodeDetailLiveData.value?.data?.podcast?.id
+                    ?: "", currentPosition, viewModel.episodeDetailLiveData.value?.data?.podcast?.totalEpisodes
                     ?: 0)
             val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
             val queueFragment = supportFragmentManager.findFragmentByTag("playerQueueFragment")
@@ -162,6 +158,13 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             }
         })
 
+        viewModel.progressLiveData.observe(this, Observer<Boolean> {
+            if (it)
+                showProgress()
+            else
+                hideProgress()
+        })
+
     }
 
     fun favoriteVisibility() {
@@ -181,7 +184,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         doAsync {
             if (viewModel.isFavorite.get() == true) {
-                viewModel.db.favoritesDao().insertFavoriteEpisode(FavoriteEpisodeEntity(viewModel.item.get()!!))
+                viewModel.db.favoritesDao().insertFavoriteEpisode(viewModel.episodeDetailLiveData.value?.data?.let { FavoriteEpisodeEntity(it) })
             } else {
                 viewModel.db.favoritesDao().deleteFavoriteEpisode(episodeId)
             }
@@ -214,54 +217,28 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     fun getEpisodeDetail(episodeId: String) {
 
         // set isSelected false for recently played episode.
-
-        doAsync {
-            val playingEpisodeEntity = viewModel.db.episodesDao().getPlayingEpisode()
-            playingEpisodeEntity.forEachIndexed { index, episode ->
-                episode.isSelected = false
-                viewModel.db.episodesDao().insertEpisode(episode)
-            }
-        }
-
-        // if player already initialized (already playing some episode) release it.
-
-        if (::player.isInitialized) {
-            player.release()
-        }
+        viewModel.setRecentlyPlayed(false)
 
         // Prepare dataSource
 
         httpDataSourceFactory = DefaultHttpDataSourceFactory(Util.getUserAgent(this, "Podpocket"), null, DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS, DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS, true)
         dataSourceFactory = DefaultDataSourceFactory(this, null, httpDataSourceFactory)
 
-        disposable.add(viewModel.getEpisodeDetails(episodeId).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<Episode>(viewModel.getApplication()) {
-                    override fun onSuccess(t: Episode) {
-                        t.isPlaying = true
-                        viewModel.item.set(t)
-                    }
+        viewModel.getEpisodeDetails(episodeId)
 
-                    override fun onComplete() {
-                        super.onComplete()
+        if (viewModel.episodeDetailLiveData.hasActiveObservers())
+            viewModel.episodeDetailLiveData.removeObservers(this)
 
-                        doAsync {
+        viewModel.episodeDetailLiveData.observe(this, Observer<Resource<Episode>> {
+            // if player already initialized (already playing some episode) release it.
+            if (::player.isInitialized) {
+                player.release()
+            }
 
-                            // Set isSelected true for current episode
-
-                            val episodeEntity = viewModel.item.get()?.id?.let {
-                                viewModel.db.episodesDao().getEpisode(it)
-                            }
-                            episodeEntity?.isSelected = true
-                            viewModel.db.episodesDao().insertEpisode(episodeEntity)
-                        }
-
-                        checkFavorite()
-                        viewModel.item.get()?.let { setEpisode(it) }
-                        viewModel.item.get()?.let { setEpisodeInfo(it) }
-                    }
-
-                }))
+            checkFavorite()
+            it.data?.let { episode -> setEpisode(episode) }
+            it.data?.let { episode -> setEpisodeInfo(episode) }
+        })
     }
 
     fun setEpisode(episode: Episode) {
@@ -284,26 +261,13 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         }
 
         // Save current player values to db.
-
-        doAsync {
-            val player = PlayerEntity(id = 0,
-                    episodeId = viewModel.item.get()?.id,
-                    episodeTitle = viewModel.item.get()?.title,
-                    podcastTitle = viewModel.item.get()?.podcast?.title,
-                    podcastId = viewModel.item.get()?.podcast?.id,
-                    explicitContent = viewModel.item.get()?.explicitContent ?: false,
-                    audio = viewModel.item.get()?.audio,
-                    isPlaying = true)
-
-            viewModel.db.playerDao().insertPlayer(player)
-        }
+        viewModel.saveCurrentPlayerValues()
     }
 
     fun setEpisodeInfo(episode: Episode) {
         binding.textViewTrackName.text = episode.title
         binding.textViewPodcastTitle.text = episode.podcast?.title
     }
-
 
     private fun setPlayPause(play: Boolean) {
         isPlaying = play
@@ -340,7 +304,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     private fun nextEpisode() {
         if (currentPosition != 0) {
             player.stop()
-
             // Update positions, it's very important for Player/PlayerQueue
 
             currentPosition -= 1
@@ -356,7 +319,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     private fun previousEpisode() {
         if (currentPosition + 1 != episodes.size) {
             player.stop()
-
             // Update positions, it's very important for Player/PlayerQueue
 
             currentPosition += 1
@@ -426,7 +388,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
     override fun onDestroy() {
         player.stop()
-        disposable.clear()
         viewModel.saveRecentlyPlayed()
         super.onDestroy()
     }

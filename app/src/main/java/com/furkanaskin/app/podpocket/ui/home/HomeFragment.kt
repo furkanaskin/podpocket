@@ -19,7 +19,6 @@ import com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPod
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
-import io.reactivex.disposables.CompositeDisposable
 
 /**
  * Created by Furkan on 16.04.2019
@@ -30,8 +29,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
     override fun initViewModel() {
         mBinding.viewModel = viewModel
     }
-
-    private val disposable = CompositeDisposable()
 
     override fun getLayoutRes(): Int = R.layout.fragment_home
 
@@ -52,6 +49,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         initRecommendedEpisodesAdapter()
         initRecommendedEpisodes()
 
+        hideTitles()
+
         mBinding.buttonSearch.setOnClickListener {
             navigate(R.id.action_homeFragment_to_searchFragment)
             val search = (activity as DashboardActivity).binding.bottomNavigation.menu.getItem(1)
@@ -61,6 +60,13 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         mBinding.swipeRefreshLayout.setOnRefreshListener {
             refreshData()
         }
+
+        viewModel.progressLiveData.observe(this@HomeFragment, Observer<Boolean> {
+            if (it)
+                showProgress()
+            else
+                hideProgress()
+        })
     }
 
     private fun refreshData() {
@@ -118,6 +124,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         viewModel.getBestPodcasts(viewModel.currentLocation, 0)
 
         viewModel.bestPodcastsLiveData.observe(this@HomeFragment, Observer<Resource<BestPodcasts>> {
+            showTitles()
             (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(it.data?.channels)
         })
     }
@@ -128,6 +135,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
                 ?: "1c8374ef2e8c41928010347f66401e56", 0)
 
         viewModel.recommendedPodcastsLiveData.observe(this@HomeFragment, Observer<Resource<PodcastRecommendations>> {
+            showTitles()
             (mBinding.recyclerViewRecommendedPodcasts.adapter as RecommendedPodcastsAdapter).submitList(it.data?.recommendations)
         })
     }
@@ -137,6 +145,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
                 ?: "53fd8c1a373b46888638cbeb14b571d1", 0)
 
         viewModel.recommendedEpisodesLiveData.observe(this@HomeFragment, Observer<Resource<EpisodeRecommendations>> {
+            showTitles()
             (mBinding.recyclerViewRecommendedEpisodes.adapter as RecommendedEpisodesAdapter).submitList(it.data?.recommendations)
         })
     }
@@ -152,10 +161,4 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         mBinding.textViewRecommendedEpisodes.show()
         mBinding.textViewRecommendedPodcasts.show()
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable.clear()
-    }
-
 }

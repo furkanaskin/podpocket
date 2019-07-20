@@ -2,15 +2,13 @@ package com.furkanaskin.app.podpocket.ui.podcast
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
+import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.databinding.FragmentPodcastBinding
 import com.furkanaskin.app.podpocket.service.response.Podcasts
-import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
 
 /**
@@ -20,7 +18,6 @@ import org.jetbrains.anko.doAsync
 class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(PodcastViewModel::class.java) {
 
     private val podcastFragmentArgs: PodcastFragmentArgs by navArgs()
-    private val disposable = CompositeDisposable()
 
     override fun getLayoutRes(): Int = R.layout.fragment_podcast
 
@@ -37,23 +34,25 @@ class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(P
         }
 
         getData()
+
+
+        viewModel.progressLiveData.observe(this@PodcastFragment, Observer<Boolean> {
+            if (it)
+                showProgress()
+            else
+                hideProgress()
+        })
     }
 
     fun getData() {
-        showProgress()
-        disposable.add(viewModel.getEpisodes(podcastFragmentArgs.podcastID).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
-                    override fun onSuccess(t: Podcasts) {
-                        viewModel.podcast.set(t)
-                    }
+        viewModel.getEpisodes(podcastFragmentArgs.podcastID)
 
-                    override fun onComplete() {
-                        super.onComplete()
-                        hideProgress()
-                        initAdapter()
-                    }
-                }))
+        if (viewModel.podcastLiveData.hasActiveObservers())
+            viewModel.podcastLiveData.removeObservers(this)
+
+        viewModel.podcastLiveData.observe(this@PodcastFragment, Observer<Resource<Podcasts>> {
+            initAdapter()
+        })
     }
 
     private fun initAdapter() {
@@ -66,10 +65,5 @@ class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(P
         }
 
         mBinding.tabLayout.setupWithViewPager(mBinding.viewPager)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable.clear()
     }
 }

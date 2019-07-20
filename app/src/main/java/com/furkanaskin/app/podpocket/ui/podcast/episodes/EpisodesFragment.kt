@@ -8,16 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.core.Constants
+import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.databinding.FragmentEpisodesBinding
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.utils.PaginationScrollListener
-import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.runOnUiThread
 import java.util.*
 
 class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding>(EpisodesViewModel::class.java) {
@@ -61,7 +60,6 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
 
         }
 
-
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         mBinding.recyclerViewPodcastEpisodes.layoutManager = layoutManager
         mBinding.recyclerViewPodcastEpisodes.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
@@ -82,45 +80,43 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
         })
         mBinding.recyclerViewPodcastEpisodes.adapter = adapter
 
+        viewModel.progressLiveData.observe(this, Observer<Boolean> {
+            if (it)
+                showProgress()
+            else
+                hideProgress()
+        })
     }
 
 
     fun getMoreItems(nextEpisodePubDate: Long) {
-        showProgress()
-        disposable.add(viewModel.getEpisodesWithPaging(viewModel.podcast.get()?.id
-                ?: "", nextEpisodePubDate).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
-                    override fun onSuccess(t: Podcasts) {
-                        viewModel.podcast.set(t)
-                        totalEpisodes = t.totalEpisodes
-                        this@EpisodesFragment.nextEpisodePubDate = t.nextEpisodePubDate
+        viewModel.getEpisodesWithPaging(viewModel.podcast.get()?.id ?: "", nextEpisodePubDate)
 
-                        doAsync {
-                            t.episodes?.forEachIndexed { _, episode ->
-                                val episodesItem = episode?.let { EpisodeEntity(it) }
-                                episodesItem?.let {
-                                    viewModel.db.episodesDao().insertEpisode(it)
-                                    viewModel.ids.add(episode.id ?: "")
-                                }
-                            }
-                        }
+        viewModel.podcastLiveData.observe(this@EpisodesFragment, Observer<Resource<Podcasts>> {
+            totalEpisodes = it.data?.totalEpisodes
+            this@EpisodesFragment.nextEpisodePubDate = it.data?.nextEpisodePubDate
+
+            doAsync {
+                it.data?.episodes?.forEachIndexed { _, episode ->
+                    val episodesItem = episode?.let { EpisodeEntity(it) }
+                    episodesItem?.let {
+                        viewModel.db.episodesDao().insertEpisode(it)
+                        viewModel.ids.add(episode.id ?: "")
                     }
+                }
 
-                    override fun onComplete() {
-                        super.onComplete()
-                        isLoading = false
-                        viewModel.db.episodesDao().getEpisodes().removeObservers(this@EpisodesFragment)
-                        viewModel.db.episodesDao().getEpisodes().observe(this@EpisodesFragment, Observer<List<EpisodeEntity>> { t ->
-                            (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
-                        })
-                        hideProgress()
-                    }
-                }))
-
+                runOnUiThread {
+                    isLoading = false
+                    viewModel.db.episodesDao().getEpisodes().removeObservers(this@EpisodesFragment)
+                    viewModel.db.episodesDao().getEpisodes().observe(this@EpisodesFragment, Observer<List<EpisodeEntity>> { t ->
+                        (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
+                    })
+                }
+            }
+        })
     }
 
-    fun parseIntent() {
+    private fun parseIntent() {
         if (arguments != null) {
 
             viewModel.podcast.set(arguments?.getParcelable(Constants.IntentName.PODCAST_ITEM))

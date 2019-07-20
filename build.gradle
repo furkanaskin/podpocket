@@ -40,6 +40,7 @@ ext {
     minSdkVersion = 21
 
     support_version = '1.0.0'
+    appCompatVersion = '1.1.0-beta01'
     rxJavaVersion = '2.1.14'
     rxKotlinVersion = '2.2.0'
     rxAnimationsVersion = '0.0.6'
@@ -80,7 +81,7 @@ ext {
 
     //supportLib
     supportv4 = "androidx.legacy:legacy-support-v4:$support_version"
-    appCompat = "androidx.appcompat:appcompat:$support_version"
+    appCompat = "androidx.appcompat:appcompat:$appCompatVersion"
     materialDesign = "com.google.android.material:material:$support_version"
     recyclerView = "androidx.recyclerview:recyclerview:$support_version"
     cardView = "androidx.cardview:cardview:$support_version"
@@ -140,7 +141,7 @@ ext {
     //anko
     anko = "org.jetbrains.anko:anko:$anko_version"
     ankoCoroutines = "org.jetbrains.anko:anko-coroutines:$anko_version"
-    
+
     //exoPlayer
     exoPlayer = "com.google.android.exoplayer:exoplayer:$exoPlayerVersion"
 

@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.home
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
@@ -15,6 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
+import timber.log.Timber
 
 /**
  * Created by Furkan on 16.04.2019
@@ -27,7 +27,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     val recommendedPodcastsLiveData = MutableLiveData<Resource<PodcastRecommendations>>()
     val recommendedEpisodesLiveData = MutableLiveData<Resource<EpisodeRecommendations>>()
     var podcastEpisodeIds = MutableLiveData<ArrayList<String>>()
-
+    var progressLiveData = MutableLiveData<Boolean>()
 
     init {
         (app as? Podpocket)?.component?.inject(this)
@@ -38,12 +38,14 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
                 .subscribeOn(Schedulers.io())
                 .map { Resource.success(it) }
                 .onErrorReturn { Resource.error(it) }
+                .doOnSubscribe { progressLiveData.postValue(true) }
+                .doOnTerminate { progressLiveData.postValue(false) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> bestPodcastsLiveData.postValue(it)
-                        Status.LOADING -> Log.v("BestPodcasts", "Loading")
-                        Status.ERROR -> Log.v("BestPodcasts", "${it.error?.printStackTrace()}")
+                        Status.LOADING -> ""
+                        Status.ERROR -> Timber.e(it.error)
                     }
                 })
     }
@@ -53,12 +55,14 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
                 .subscribeOn(Schedulers.io())
                 .map { Resource.success(it) }
                 .onErrorReturn { Resource.error(it) }
+                .doOnSubscribe { progressLiveData.postValue(true) }
+                .doOnTerminate { progressLiveData.postValue(false) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> recommendedPodcastsLiveData.postValue(it)
-                        Status.LOADING -> Log.v("BestPodcasts", "Loading")
-                        Status.ERROR -> Log.v("BestPodcasts", "${it.error?.printStackTrace()}")
+                        Status.LOADING -> ""
+                        Status.ERROR -> Timber.e(it.error)
                     }
                 })
     }
@@ -68,12 +72,14 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
                 .subscribeOn(Schedulers.io())
                 .map { Resource.success(it) }
                 .onErrorReturn { Resource.error(it) }
+                .doOnSubscribe { progressLiveData.postValue(true) }
+                .doOnTerminate { progressLiveData.postValue(false) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> recommendedEpisodesLiveData.postValue(it)
-                        Status.LOADING -> Log.v("BestPodcasts", "Loading")
-                        Status.ERROR -> Log.v("BestPodcasts", "${it.error?.printStackTrace()}")
+                        Status.LOADING -> progressLiveData.postValue(true)
+                        Status.ERROR -> Timber.e(it.error)
                     }
                 })
     }
@@ -83,6 +89,8 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
                 .subscribeOn(Schedulers.io())
                 .map { Resource.success(it) }
                 .onErrorReturn { Resource.error(it) }
+                .doOnSubscribe { progressLiveData.postValue(true) }
+                .doOnTerminate { progressLiveData.postValue(false) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     when (it?.status) {
@@ -101,10 +109,16 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
                                     episodesItem.let { db.episodesDao().insertEpisode(it) }
                                 }
                             }
+
                         }
-                        Status.LOADING -> Log.v("BestPodcasts", "Loading")
-                        Status.ERROR -> Log.v("BestPodcasts", "${it.error?.printStackTrace()}")
+                        Status.LOADING -> ""
+                        Status.ERROR -> Timber.e(it.error)
                     }
                 })
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
     }
 }

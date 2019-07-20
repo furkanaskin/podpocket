@@ -1,22 +1,21 @@
 package com.furkanaskin.app.podpocket.ui.podcast.podcast_detail
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.core.Constants
+import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.databinding.FragmentPodcastDetailBinding
 import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPodcastsAdapter
 import com.furkanaskin.app.podpocket.ui.podcast.PodcastFragmentDirections
-import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodcastDetailBinding>(PodcastDetailViewModel::class.java) {
@@ -60,19 +59,16 @@ class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodca
     private fun getCountryCode(countryName: String) = Locale.getAvailableLocales().find { it.getDisplayCountry(Locale.US) == countryName }?.country?.toLowerCase()
 
     private fun initRecommendedPodcasts() {
-        showProgress()
 
-        disposable.add(viewModel.getPodcastRecommendations(viewModel.podcast.get()?.id
+        viewModel.getPodcastRecommendations(viewModel.podcast.get()?.id
                 ?: "1c8374ef2e8c41928010347f66401e56", 0)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<PodcastRecommendations>(viewModel.getApplication()) {
-                    override fun onSuccess(t: PodcastRecommendations) {
-                        (mBinding.recyclerViewSimilarPodcasts.adapter as RecommendedPodcastsAdapter).submitList(t.recommendations)
-                        hideProgress()
-                    }
 
-                }))
+        if (viewModel.podcastRecommendationsLiveData.hasActiveObservers())
+            viewModel.podcastRecommendationsLiveData.removeObservers(this)
+
+        viewModel.podcastRecommendationsLiveData.observe(this@PodcastDetailFragment, Observer<Resource<PodcastRecommendations>> {
+            (mBinding.recyclerViewSimilarPodcasts.adapter as RecommendedPodcastsAdapter).submitList(it.data?.recommendations)
+        })
     }
 
     private fun initRecommendedPodcastsAdapter() {
