@@ -2,15 +2,20 @@ package com.furkanaskin.app.podpocket.core
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.db.AppDatabase
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.service.PodpocketAPI
 import com.google.firebase.auth.FirebaseAuth
+import io.reactivex.disposables.CompositeDisposable
 import org.jetbrains.anko.doAsync
 import java.util.*
 import javax.inject.Inject
 
 open class BaseViewModel(app: Application) : AndroidViewModel(app) {
+
+    val disposable = CompositeDisposable()
+    var progressLiveData = MutableLiveData<Boolean>()
 
     @Inject
     lateinit var baseApi: PodpocketAPI

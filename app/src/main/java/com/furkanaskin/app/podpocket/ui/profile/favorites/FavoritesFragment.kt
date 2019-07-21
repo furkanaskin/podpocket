@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.core.Constants
+import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.databinding.FragmentFavoritesBinding
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.db.entities.FavoriteEpisodeEntity
@@ -24,12 +25,8 @@ import com.furkanaskin.app.podpocket.ui.profile.favorites.favorite_episodes.Favo
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.furkanaskin.app.podpocket.utils.extensions.showKeyboard
-import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import iammert.com.view.scalinglib.ScalingLayoutListener
 import iammert.com.view.scalinglib.State
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
 
 /**
@@ -43,7 +40,6 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
         mBinding.viewModel = viewModel
     }
 
-    private val disposable = CompositeDisposable()
     var ids: ArrayList<String> = ArrayList()
 
     override fun init() {
@@ -123,39 +119,27 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
         val adapter = FavoriteEpisodesAdapter { item, position ->
 
             // Get podcastId and collect all episode Ids then navigate PlayerActivity
+            viewModel.getEpisodes(item.podcastId ?: "")
+            viewModel.episodesLiveData.observe(this@FavoritesFragment, Observer<Resource<Podcasts>> {
 
-            showProgress()
-            disposable.add(viewModel.getEpisodes(item.podcastId ?: "").subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
+                it.data?.episodes?.forEachIndexed { _, episodesItem ->
+                    ids.add(episodesItem?.id ?: "")
+                }
 
-                        override fun onSuccess(t: Podcasts) {
-                            t.episodes?.forEachIndexed { _, episodesItem ->
-                                ids.add(episodesItem?.id ?: "")
-                            }
+                doAsync {
+                    viewModel.db.episodesDao().deleteAllEpisodes()
+                    it.data?.episodes?.forEachIndexed { _, episode ->
+                        val episodesItem = episode.let { EpisodeEntity(it!!) }
+                        episodesItem.let { viewModel.db.episodesDao().insertEpisode(it) }
+                    }
+                }
 
-                            doAsync {
-                                viewModel.db.episodesDao().deleteAllEpisodes()
-                                t.episodes?.forEachIndexed { _, episode ->
-                                    val episodesItem = episode.let { EpisodeEntity(it!!) }
-                                    episodesItem.let { viewModel.db.episodesDao().insertEpisode(it) }
-                                }
-                            }
 
-                            hideProgress()
-                        }
-
-                        override fun onComplete() {
-                            super.onComplete()
-                            hideProgress()
-                            val intent = Intent(activity, PlayerActivity::class.java)
-                            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, ids)
-                            intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)
-                            startActivity(intent)
-
-                        }
-
-                    }))
+                val intent = Intent(activity, PlayerActivity::class.java)
+                intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, ids)
+                intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)
+                startActivity(intent)
+            })
         }
 
         viewModel.db.favoritesDao().getFavoriteEpisodes().removeObservers(this@FavoritesFragment)
@@ -233,10 +217,5 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
 
         mBinding.lottieAnimationView.hide()
         mBinding.textViewDummyText.hide()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable.clear()
     }
 }
