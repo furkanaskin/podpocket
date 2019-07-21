@@ -55,7 +55,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
         initFirebase()
         getUser()
 
-
         registerReceiver(connectivityReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
