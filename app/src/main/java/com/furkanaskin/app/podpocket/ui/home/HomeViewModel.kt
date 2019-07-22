@@ -113,9 +113,4 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
                     }
                 })
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        disposable.clear()
-    }
 }

@@ -14,7 +14,6 @@ import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.utils.PaginationScrollListener
-import io.reactivex.disposables.CompositeDisposable
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.runOnUiThread
 import java.util.*
@@ -25,8 +24,6 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
     var isLoading: Boolean = false
     var nextEpisodePubDate: Long? = null
     var totalEpisodes: Int? = null
-    private val disposable = CompositeDisposable()
-
 
     override fun getLayoutRes(): Int = R.layout.fragment_episodes
 

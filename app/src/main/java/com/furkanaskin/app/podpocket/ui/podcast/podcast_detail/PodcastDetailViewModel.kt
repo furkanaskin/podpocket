@@ -41,5 +41,4 @@ class PodcastDetailViewModel(app: Application) : BaseViewModel(app) {
                     }
                 })
     }
-
 }

@@ -126,9 +126,4 @@ class PlayerViewModel(app: Application) : BaseViewModel(app) {
             recentlyPlayedPodcast?.let { db.recentlyPlaysDao().insertRecentlyPlay(it) }
         }
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        disposable.clear()
-    }
 }

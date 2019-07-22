@@ -9,7 +9,6 @@ import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.core.Status
 import com.furkanaskin.app.podpocket.service.response.Podcasts
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -28,10 +27,6 @@ class PlayerQueueViewModel(app: Application) : BaseViewModel(app) {
         (app as? Podpocket)?.component?.inject(this)
     }
 
-    fun getEpisodes(id: String): Observable<Podcasts> {
-        return baseApi.getPodcastById(id)
-    }
-
     fun getEpisodesWithPaging(id: String, nextEpisodePubDate: Long) {
 
         disposable.add(baseApi.getPodcastByIdWithPaging(id, nextEpisodePubDate)
@@ -48,10 +43,5 @@ class PlayerQueueViewModel(app: Application) : BaseViewModel(app) {
                         Status.ERROR -> Timber.e(it.error)
                     }
                 })
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        disposable.clear()
     }
 }

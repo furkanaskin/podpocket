@@ -7,16 +7,16 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.core.Constants
+import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.databinding.FragmentSearchBinding
-import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.response.Genres
-import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.service.response.ResultsItem
 import com.furkanaskin.app.podpocket.service.response.Search
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
@@ -24,15 +24,9 @@ import com.furkanaskin.app.podpocket.ui.search.episode_search.SearchResultAdapte
 import com.furkanaskin.app.podpocket.ui.search.podcast_search.PodcastSearchResultAdapter
 import com.furkanaskin.app.podpocket.utils.PaginationScrollListener
 import com.furkanaskin.app.podpocket.utils.extensions.hide
-import com.furkanaskin.app.podpocket.utils.service.CallbackWrapper
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.doAsync
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.concurrent.schedule
 
 /**
@@ -40,8 +34,6 @@ import kotlin.concurrent.schedule
  */
 
 class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(SearchViewModel::class.java) {
-    private val disposable = CompositeDisposable()
-    var ids: ArrayList<String> = ArrayList()
     var isLastPage: Boolean = false
     var isLoading: Boolean = false
     var episodesOffset: Int = 0
@@ -63,6 +55,19 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         initSearchView()
         initSearchAdapter()
         initGenres()
+        initVisibilities()
+        showResults()
+
+
+        if (viewModel.progressLiveData.hasActiveObservers())
+            viewModel.progressLiveData.removeObservers(this)
+
+        viewModel.progressLiveData.observe(this@SearchFragment, Observer<Boolean> {
+            if (it)
+                showProgress()
+            else
+                hideProgress()
+        })
 
     }
 
@@ -71,35 +76,12 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         // -- EPISODE --
         val searchEpisodeAdapter = SearchResultAdapter { item ->
 
-            disposable.add(viewModel.getEpisodes(item.podcastId ?: "")
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(object : CallbackWrapper<Podcasts>(viewModel.getApplication()) {
+            viewModel.getEpisodes(item.podcastId ?: "")
 
-                        override fun onSuccess(t: Podcasts) {
-                            t.episodes?.forEachIndexed { _, episodesItem ->
-                                ids.add(episodesItem?.id ?: "")
-                            }
-
-                            doAsync {
-                                viewModel.db.episodesDao().deleteAllEpisodes()
-                                t.episodes?.forEachIndexed { _, episode ->
-                                    val episodesItem = episode?.let { EpisodeEntity(it) }
-                                    episodesItem.let { viewModel.db.episodesDao().insertEpisode(it) }
-                                }
-                            }
-                        }
-
-                        override fun onComplete() {
-                            super.onComplete()
-
-                            val intent = Intent(activity, PlayerActivity::class.java)
-                            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, ids)
-                            intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)
-                            startActivity(intent)
-
-                        }
-                    }))
+            val intent = Intent(activity, PlayerActivity::class.java)
+            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, viewModel.podcastEpisodeIds.value)
+            intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)
+            startActivity(intent)
         }
 
         val episodesLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -125,7 +107,6 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
         // -- PODCAST --
         val searchPodcastAdapter = PodcastSearchResultAdapter { item ->
-
             val podcastId = item.id
             val action = SearchFragmentDirections.actionSearchFragmentToPodcastFragment()
             action.podcastID = podcastId ?: ""
@@ -170,10 +151,6 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         linearLayoutSearchView.addView(searchViewSearchIcon)
         var timer = Timer()
 
-        // Hide headings
-        setEpisodesHeadingVisibility(false)
-        setPodcastsHeadingVisibility(false)
-
         mBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(newText: String): Boolean {
                 if (newText.isNotEmpty()) {
@@ -207,116 +184,57 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                 if (newText.isEmpty()) {
                     episodesResult?.clear()
                     podcastsResult?.clear()
-                    setEpisodesHeadingVisibility(false)
-                    setPodcastsHeadingVisibility(false)
                 }
                 return true
             }
         })
     }
 
+    private fun showResults() {
+        viewModel.episodeSearchResultLiveData.observe(this@SearchFragment, Observer<Resource<Search>> {
+            isLoading = false
+            episodesOffset = it.data?.nextOffset ?: 0
+            totalEpisodeResult = it.data?.total ?: 0
+
+            it.data?.results?.forEach {
+                episodesResult?.add(it)
+            }
+
+            (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(episodesResult)
+        })
+
+        viewModel.podcastSearchResultLiveData.observe(this@SearchFragment, Observer<Resource<Search>> {
+            isLoading = false
+            podcastsOffset = it.data?.nextOffset ?: 0
+            totalPodcastResult = it.data?.total ?: 0
+
+            it.data?.results?.forEach {
+                podcastsResult?.add(it)
+            }
+            (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(podcastsResult)
+        })
+    }
+
     private fun getSearchResult(searchText: String, type: String, offset: Int) {
 
         if (viewModel.selectedGenres.size == 0) {
-            disposable.add(viewModel.getSearchResult(searchText, type, offset)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
-                        override fun onSuccess(t: Search) {
-                            isLoading = false
+            viewModel.getSearchResult(searchText, type, offset)
 
-                            if (type == Constants.SearchQuery.EPISODE && t.results != null) {
-                                setEpisodesHeadingVisibility(true)
-                                setPodcastsHeadingVisibility(true)
-
-                                episodesOffset = t.nextOffset ?: 0
-                                totalEpisodeResult = t.total ?: 0
-
-                                t.results.forEach {
-                                    episodesResult?.add(it)
-                                }
-
-                                (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(episodesResult)
-                                mBinding.recyclerViewEpisodeSearchResult.adapter?.notifyDataSetChanged()
-
-                            } else if (type == Constants.SearchQuery.PODCAST && t.results != null) {
-                                setEpisodesHeadingVisibility(true)
-                                setPodcastsHeadingVisibility(true)
-
-                                podcastsOffset = t.nextOffset ?: 0
-                                totalPodcastResult = t.total ?: 0
-
-                                t.results.forEach {
-                                    podcastsResult?.add(it)
-                                }
-                                (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(podcastsResult)
-                                mBinding.recyclerViewPodcastSearchResult.adapter?.notifyDataSetChanged()
-
-
-                            } else {
-                                setEpisodesHeadingVisibility(false)
-                                setPodcastsHeadingVisibility(false)
-                            }
-                        }
-                    }))
         } else {
-
             val genresIds = viewModel.selectedGenres.joinToString(separator = ",")
-
-            disposable.add(viewModel.getSearchResultWithGenres(searchText, type, genresIds, offset)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(object : CallbackWrapper<Search>(viewModel.getApplication()) {
-                        override fun onSuccess(t: Search) {
-                            isLoading = false
-
-                            if (type == Constants.SearchQuery.EPISODE && t.results != null) {
-                                setEpisodesHeadingVisibility(true)
-                                setPodcastsHeadingVisibility(true)
-
-                                episodesOffset = t.nextOffset ?: 0
-                                totalEpisodeResult = t.total ?: 0
-
-                                t.results.forEach {
-                                    episodesResult?.add(it)
-                                }
-
-                                (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(episodesResult)
-
-                            } else if (type == Constants.SearchQuery.PODCAST && t.results != null) {
-                                setEpisodesHeadingVisibility(true)
-                                setPodcastsHeadingVisibility(true)
-
-                                podcastsOffset = t.nextOffset ?: 0
-                                totalPodcastResult = t.total ?: 0
-
-                                t.results.forEach {
-                                    podcastsResult?.add(it)
-                                }
-
-                                (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(podcastsResult)
-
-                            } else {
-                                setEpisodesHeadingVisibility(false)
-                                setPodcastsHeadingVisibility(false)
-                            }
-                        }
-                    }))
+            viewModel.getSearchResultWithGenres(searchText, type, genresIds, offset)
         }
     }
 
     private fun initGenres() {
-        showProgress()
-        disposable.add(viewModel.getGenres()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackWrapper<Genres>(viewModel.getApplication()) {
-                    override fun onSuccess(t: Genres) {
-                        hideProgress()
-                        addChipToGroup(mBinding.chipGroupGenres, t)
-                    }
+        viewModel.getGenres()
 
-                }))
+        if (viewModel.genresLiveData.hasActiveObservers())
+            viewModel.genresLiveData.removeObservers(this)
+
+        viewModel.genresLiveData.observe(this@SearchFragment, Observer<Resource<Genres>> {
+            it.data?.let { genres -> addChipToGroup(mBinding.chipGroupGenres, genres) }
+        })
     }
 
     private fun addChipToGroup(chipGroup: ChipGroup, items: Genres) {
@@ -352,23 +270,27 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         }
     }
 
-    fun setEpisodesHeadingVisibility(isVisible: Boolean) {
-        if (isVisible) {
-            mBinding.textViewSearchEpisodesHeading.visibility = View.VISIBLE
-            mBinding.recyclerViewEpisodeSearchResult.visibility = View.VISIBLE
-        } else {
-            mBinding.textViewSearchEpisodesHeading.visibility = View.GONE
-            mBinding.recyclerViewEpisodeSearchResult.visibility = View.GONE
-        }
-    }
 
-    fun setPodcastsHeadingVisibility(isVisible: Boolean) {
-        if (isVisible) {
-            mBinding.textViewSearchPodcastsHeading.visibility = View.VISIBLE
-            mBinding.recyclerViewPodcastSearchResult.visibility = View.VISIBLE
-        } else {
-            mBinding.textViewSearchPodcastsHeading.visibility = View.GONE
-            mBinding.recyclerViewPodcastSearchResult.visibility = View.GONE
-        }
+    fun initVisibilities() {
+        viewModel.episodeHeadingLiveData.observe(this@SearchFragment, Observer<Boolean> {
+            if (it) {
+                mBinding.textViewSearchEpisodesHeading.visibility = View.VISIBLE
+                mBinding.recyclerViewEpisodeSearchResult.visibility = View.VISIBLE
+            } else {
+                mBinding.textViewSearchEpisodesHeading.visibility = View.GONE
+                mBinding.recyclerViewEpisodeSearchResult.visibility = View.GONE
+
+            }
+        })
+        viewModel.podcastHeadingLiveData.observe(this@SearchFragment, Observer<Boolean> {
+            if (it) {
+                mBinding.textViewSearchPodcastsHeading.visibility = View.VISIBLE
+                mBinding.recyclerViewPodcastSearchResult.visibility = View.VISIBLE
+            } else {
+                mBinding.textViewSearchPodcastsHeading.visibility = View.GONE
+                mBinding.recyclerViewPodcastSearchResult.visibility = View.GONE
+
+            }
+        })
     }
 }

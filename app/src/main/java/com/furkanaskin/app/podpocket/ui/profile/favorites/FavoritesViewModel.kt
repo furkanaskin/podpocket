@@ -6,11 +6,8 @@ import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.core.Status
-import com.furkanaskin.app.podpocket.service.response.BestPodcasts
 import com.furkanaskin.app.podpocket.service.response.Podcasts
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
@@ -41,10 +38,5 @@ class FavoritesViewModel(app: Application) : BaseViewModel(app) {
                         Status.ERROR -> Timber.e(it.error)
                     }
                 })
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        disposable.clear()
     }
 }

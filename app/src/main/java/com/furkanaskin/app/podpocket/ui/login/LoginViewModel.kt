@@ -262,9 +262,4 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     private fun convertDate(date: LocalDate) =
             date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
-    override fun onCleared() {
-        super.onCleared()
-
-        disposables.clear()
-    }
 }
