@@ -61,6 +61,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
             refreshData()
         }
 
+        if (viewModel.progressLiveData.hasActiveObservers())
+            viewModel.progressLiveData.removeObservers(this)
+
         viewModel.progressLiveData.observe(this@HomeFragment, Observer<Boolean> {
             if (it)
                 showProgress()

@@ -15,7 +15,6 @@ import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPodcastsAdapter
 import com.furkanaskin.app.podpocket.ui.podcast.PodcastFragmentDirections
-import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 
 class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodcastDetailBinding>(PodcastDetailViewModel::class.java) {
@@ -25,8 +24,6 @@ class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodca
     override fun initViewModel() {
         mBinding.viewModel = viewModel
     }
-
-    private val disposable = CompositeDisposable()
 
     companion object {
         fun getInstance(podcast: Podcasts): PodcastDetailFragment {

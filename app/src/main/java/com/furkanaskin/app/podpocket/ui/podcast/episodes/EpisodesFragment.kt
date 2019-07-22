@@ -80,6 +80,9 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
         })
         mBinding.recyclerViewPodcastEpisodes.adapter = adapter
 
+        if (viewModel.progressLiveData.hasActiveObservers())
+            viewModel.progressLiveData.removeObservers(this)
+
         viewModel.progressLiveData.observe(this, Observer<Boolean> {
             if (it)
                 showProgress()

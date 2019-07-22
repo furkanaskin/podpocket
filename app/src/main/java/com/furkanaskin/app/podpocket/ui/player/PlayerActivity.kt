@@ -158,6 +158,9 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             }
         })
 
+        if (viewModel.progressLiveData.hasActiveObservers())
+            viewModel.progressLiveData.removeObservers(this)
+
         viewModel.progressLiveData.observe(this, Observer<Boolean> {
             if (it)
                 showProgress()

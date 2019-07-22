@@ -11,7 +11,6 @@ import com.furkanaskin.app.podpocket.service.response.BestPodcasts
 import com.furkanaskin.app.podpocket.service.response.EpisodeRecommendations
 import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
 import timber.log.Timber
@@ -22,12 +21,10 @@ import timber.log.Timber
 
 class HomeViewModel(app: Application) : BaseViewModel(app) {
 
-    private val disposable = CompositeDisposable()
     val bestPodcastsLiveData = MutableLiveData<Resource<BestPodcasts>>()
     val recommendedPodcastsLiveData = MutableLiveData<Resource<PodcastRecommendations>>()
     val recommendedEpisodesLiveData = MutableLiveData<Resource<EpisodeRecommendations>>()
     var podcastEpisodeIds = MutableLiveData<ArrayList<String>>()
-    var progressLiveData = MutableLiveData<Boolean>()
 
     init {
         (app as? Podpocket)?.component?.inject(this)

@@ -36,6 +36,9 @@ class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(P
         getData()
 
 
+        if (viewModel.progressLiveData.hasActiveObservers())
+            viewModel.progressLiveData.removeObservers(this)
+
         viewModel.progressLiveData.observe(this@PodcastFragment, Observer<Boolean> {
             if (it)
                 showProgress()

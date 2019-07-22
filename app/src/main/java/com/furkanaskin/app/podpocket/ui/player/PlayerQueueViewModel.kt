@@ -11,7 +11,6 @@ import com.furkanaskin.app.podpocket.core.Status
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
@@ -21,9 +20,7 @@ import timber.log.Timber
 
 class PlayerQueueViewModel(app: Application) : BaseViewModel(app) {
 
-    val disposable = CompositeDisposable()
     val updateRecyclerView: ObservableField<Boolean> = ObservableField(false)
-    var progressLiveData = MutableLiveData<Boolean>()
     private val _podcastLiveData = MutableLiveData<Resource<Podcasts>>()
     val podcastLiveData: LiveData<Resource<Podcasts>> get() = _podcastLiveData
 

@@ -10,7 +10,6 @@ import com.furkanaskin.app.podpocket.core.Status
 import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
 import com.furkanaskin.app.podpocket.service.response.Podcasts
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
@@ -25,9 +24,7 @@ class PodcastDetailViewModel(app: Application) : BaseViewModel(app) {
     }
 
     var podcast: ObservableField<Podcasts> = ObservableField()
-    private val disposable = CompositeDisposable()
     val podcastRecommendationsLiveData = MutableLiveData<Resource<PodcastRecommendations>>()
-    var progressLiveData = MutableLiveData<Boolean>()
 
 
     fun getPodcastRecommendations(podcastId: String, explicitContent: Int) {
@@ -35,8 +32,6 @@ class PodcastDetailViewModel(app: Application) : BaseViewModel(app) {
                 .subscribeOn(Schedulers.io())
                 .map { Resource.success(it) }
                 .onErrorReturn { Resource.error(it) }
-                .doOnSubscribe { progressLiveData.postValue(true) }
-                .doOnTerminate { progressLiveData.postValue(false) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     when (it?.status) {

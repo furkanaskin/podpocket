@@ -86,6 +86,9 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
         mBinding.recyclerViewQueueEpisodes.adapter = adapter
 
+        if (viewModel.progressLiveData.hasActiveObservers())
+            viewModel.progressLiveData.removeObservers(this)
+
         viewModel.progressLiveData.observe(this, Observer<Boolean> {
             if (it)
                 showProgress()

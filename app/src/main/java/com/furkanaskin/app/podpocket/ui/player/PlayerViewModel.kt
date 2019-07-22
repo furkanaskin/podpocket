@@ -12,7 +12,6 @@ import com.furkanaskin.app.podpocket.db.entities.PlayerEntity
 import com.furkanaskin.app.podpocket.db.entities.RecentlyPlaysEntity
 import com.furkanaskin.app.podpocket.service.response.Episode
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
 import timber.log.Timber
@@ -24,10 +23,8 @@ import java.util.*
 
 class PlayerViewModel(app: Application) : BaseViewModel(app) {
 
-    val disposable = CompositeDisposable()
     val item: ObservableField<Episode> = ObservableField()
     val isFavorite: ObservableField<Boolean> = ObservableField()
-    var progressLiveData = MutableLiveData<Boolean>()
     private val _episodeDetailLiveData = MutableLiveData<Resource<Episode>>()
     val episodeDetailLiveData: LiveData<Resource<Episode>> get() = _episodeDetailLiveData
 
