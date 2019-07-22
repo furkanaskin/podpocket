@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.DiffUtil
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseAdapter
 import com.furkanaskin.app.podpocket.databinding.ItemBestPodcastsBinding
-import com.furkanaskin.app.podpocket.service.response.ChannelsItem
+import com.furkanaskin.app.podpocket.service.response.Podcasts
 
 /**
  * Created by Furkan on 28.04.2019
  */
 
-class BestPodcastsAdapter(private val callBack: (ChannelsItem) -> Unit) : BaseAdapter<ChannelsItem>(diffCallback) {
+class BestPodcastsAdapter(private val callBack: (Podcasts) -> Unit) : BaseAdapter<Podcasts>(diffCallback) {
 
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemBestPodcastsBinding>(
@@ -41,10 +41,10 @@ class BestPodcastsAdapter(private val callBack: (ChannelsItem) -> Unit) : BaseAd
     }
 }
 
-val diffCallback = object : DiffUtil.ItemCallback<ChannelsItem>() {
-    override fun areContentsTheSame(oldItem: ChannelsItem, newItem: ChannelsItem): Boolean =
+val diffCallback = object : DiffUtil.ItemCallback<Podcasts>() {
+    override fun areContentsTheSame(oldItem: Podcasts, newItem: Podcasts): Boolean =
             oldItem == newItem
 
-    override fun areItemsTheSame(oldItem: ChannelsItem, newItem: ChannelsItem): Boolean =
+    override fun areItemsTheSame(oldItem: Podcasts, newItem: Podcasts): Boolean =
             oldItem.id == newItem.id
 }

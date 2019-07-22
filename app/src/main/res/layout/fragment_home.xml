@@ -114,7 +114,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textViewBestPodcasts"
+                    android:layout_marginStart="@dimen/margin_8_dp"
                     android:layout_marginTop="@dimen/margin_16_dp"
+                    android:layout_marginEnd="@dimen/margin_8_dp"
                     android:clipToPadding="false" />
 
                 <com.furkanaskin.app.podpocket.utils.ui.PodPocketBoldTextView
@@ -135,7 +137,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textViewRecommendedPodcasts"
+                    android:layout_marginStart="@dimen/margin_8_dp"
                     android:layout_marginTop="@dimen/margin_16_dp"
+                    android:layout_marginEnd="@dimen/margin_8_dp"
                     android:clipToPadding="false"
                     android:orientation="horizontal" />
 
@@ -157,7 +161,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textViewRecommendedEpisodes"
+                    android:layout_marginStart="@dimen/margin_8_dp"
                     android:layout_marginTop="@dimen/margin_16_dp"
+                    android:layout_marginEnd="@dimen/margin_8_dp"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     app:layoutManager="LinearLayoutManager" />

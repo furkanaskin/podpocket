@@ -128,7 +128,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
         viewModel.bestPodcastsLiveData.observe(this@HomeFragment, Observer<Resource<BestPodcasts>> {
             showTitles()
-            (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(it.data?.channels)
+            (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(it.data?.podcasts)
         })
     }
 

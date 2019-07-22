@@ -3,7 +3,7 @@ package com.furkanaskin.app.podpocket.ui.home.best_podcasts
 import android.app.Application
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.core.BaseViewModel
-import com.furkanaskin.app.podpocket.service.response.ChannelsItem
+import com.furkanaskin.app.podpocket.service.response.Podcasts
 
 /**
  * Created by Furkan on 28.04.2019
@@ -11,5 +11,5 @@ import com.furkanaskin.app.podpocket.service.response.ChannelsItem
 
 class BestPodcastsListItemViewModel(app: Application) : BaseViewModel(app) {
 
-    var item = ObservableField<ChannelsItem>()
+    var item = ObservableField<Podcasts>()
 }

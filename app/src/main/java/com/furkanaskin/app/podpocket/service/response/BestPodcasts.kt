@@ -28,6 +28,9 @@ data class BestPodcasts(
         @field:SerializedName("has_next")
         val hasNext: Boolean? = null,
 
+        @field:SerializedName("podcasts")
+        val podcasts: List<Podcasts?>? = null,
+
         @field:SerializedName("id")
         val id: Int? = null,
 

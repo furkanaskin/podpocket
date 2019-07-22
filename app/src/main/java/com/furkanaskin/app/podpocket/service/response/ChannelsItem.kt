@@ -124,8 +124,4 @@ data class ChannelsItem(
                         return arrayOfNulls(size)
                 }
         }
-
-    fun getTotalEpisodes(): String? {
-        return "$totalEpisodes Bölüm"
-    }
 }
