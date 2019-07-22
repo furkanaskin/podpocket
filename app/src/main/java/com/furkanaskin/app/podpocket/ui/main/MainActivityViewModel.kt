@@ -13,7 +13,6 @@ class MainActivityViewModel(app: Application) : BaseViewModel(app) {
         (app as? Podpocket)?.component?.inject(this)
     }
 
-
     fun registerClick() {
         openLoginActivity(Constants.LoginActivityType.REGISTER_TYPE)
     }

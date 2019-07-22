@@ -191,6 +191,10 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
     }
 
     private fun showResults() {
+
+        if (viewModel.episodeSearchResultLiveData.hasActiveObservers())
+            viewModel.episodeSearchResultLiveData.removeObservers(this)
+
         viewModel.episodeSearchResultLiveData.observe(this@SearchFragment, Observer<Resource<Search>> {
             isLoading = false
             episodesOffset = it.data?.nextOffset ?: 0
@@ -202,6 +206,10 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
             (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(episodesResult)
         })
+
+
+        if (viewModel.podcastSearchResultLiveData.hasActiveObservers())
+            viewModel.podcastSearchResultLiveData.removeObservers(this)
 
         viewModel.podcastSearchResultLiveData.observe(this@SearchFragment, Observer<Resource<Search>> {
             isLoading = false
@@ -272,6 +280,9 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
 
     fun initVisibilities() {
+        if (viewModel.episodeHeadingLiveData.hasActiveObservers())
+            viewModel.episodeHeadingLiveData.removeObservers(this)
+
         viewModel.episodeHeadingLiveData.observe(this@SearchFragment, Observer<Boolean> {
             if (it) {
                 mBinding.textViewSearchEpisodesHeading.visibility = View.VISIBLE
@@ -282,6 +293,10 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
             }
         })
+
+        if (viewModel.podcastHeadingLiveData.hasActiveObservers())
+            viewModel.podcastHeadingLiveData.removeObservers(this)
+
         viewModel.podcastHeadingLiveData.observe(this@SearchFragment, Observer<Boolean> {
             if (it) {
                 mBinding.textViewSearchPodcastsHeading.visibility = View.VISIBLE

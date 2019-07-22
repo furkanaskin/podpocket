@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.player
 
 import android.app.Application
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.Podpocket
@@ -19,7 +18,6 @@ import timber.log.Timber
 
 class PlayerQueueViewModel(app: Application) : BaseViewModel(app) {
 
-    val updateRecyclerView: ObservableField<Boolean> = ObservableField(false)
     private val _podcastLiveData = MutableLiveData<Resource<Podcasts>>()
     val podcastLiveData: LiveData<Resource<Podcasts>> get() = _podcastLiveData
 

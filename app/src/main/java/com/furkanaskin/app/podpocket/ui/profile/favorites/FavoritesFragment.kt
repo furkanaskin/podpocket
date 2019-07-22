@@ -120,6 +120,10 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
 
             // Get podcastId and collect all episode Ids then navigate PlayerActivity
             viewModel.getEpisodes(item.podcastId ?: "")
+
+            if (viewModel.episodesLiveData.hasActiveObservers())
+                viewModel.episodesLiveData.removeObservers(this)
+
             viewModel.episodesLiveData.observe(this@FavoritesFragment, Observer<Resource<Podcasts>> {
 
                 it.data?.episodes?.forEachIndexed { _, episodesItem ->

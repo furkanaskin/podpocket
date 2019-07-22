@@ -17,7 +17,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import io.reactivex.disposables.CompositeDisposable
 import org.jetbrains.anko.doAsync
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
@@ -43,8 +42,6 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
     var verifySuccess: ObservableField<Boolean> = ObservableField()
     var showProgress: ObservableField<Boolean> = ObservableField()
-
-    private val disposables = CompositeDisposable()
 
     init {
         (app as? Podpocket)?.component?.inject(this)

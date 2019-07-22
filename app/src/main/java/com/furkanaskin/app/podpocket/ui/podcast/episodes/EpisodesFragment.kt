@@ -92,7 +92,10 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
     fun getMoreItems(nextEpisodePubDate: Long) {
         viewModel.getEpisodesWithPaging(viewModel.podcast.get()?.id ?: "", nextEpisodePubDate)
 
-        viewModel.podcastLiveData.observe(this@EpisodesFragment, Observer<Resource<Podcasts>> {
+        if (viewModel.podcastLiveData.hasActiveObservers())
+            viewModel.podcastLiveData.removeObservers(this)
+
+        viewModel.podcastLiveData.observe(this, Observer<Resource<Podcasts>> {
             totalEpisodes = it.data?.totalEpisodes
             this@EpisodesFragment.nextEpisodePubDate = it.data?.nextEpisodePubDate
 

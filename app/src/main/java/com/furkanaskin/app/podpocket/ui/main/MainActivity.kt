@@ -48,4 +48,9 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>(Ma
                 .subscribe().addTo(composite)
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        composite.clear()
+    }
 }

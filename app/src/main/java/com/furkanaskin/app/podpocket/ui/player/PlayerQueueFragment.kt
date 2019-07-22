@@ -129,7 +129,6 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
 
                 runOnUiThread {
                     isLoading = false
-                    viewModel.updateRecyclerView.set(true)
                 }
             }
 
