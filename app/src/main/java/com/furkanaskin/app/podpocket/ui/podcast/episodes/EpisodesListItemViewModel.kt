@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.podcast.episodes
 
-import android.app.Application
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
@@ -9,7 +8,7 @@ import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
  * Created by Furkan on 29.04.2019
  */
 
-class EpisodesListItemViewModel(app: Application) : BaseViewModel(app) {
+class EpisodesListItemViewModel : BaseViewModel() {
     var item = ObservableField<EpisodeEntity>()
     var position = -1
 

@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.profile
 
-import android.app.Application
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.db.entities.ProfileSettingsEntity
@@ -9,7 +8,7 @@ import com.furkanaskin.app.podpocket.db.entities.ProfileSettingsEntity
  * Created by Furkan on 2019-05-22
  */
 
-class ProfileItemViewModel(app: Application) : BaseViewModel(app) {
+class ProfileItemViewModel : BaseViewModel() {
     var item = ObservableField<ProfileSettingsEntity>()
     var position = -1
 

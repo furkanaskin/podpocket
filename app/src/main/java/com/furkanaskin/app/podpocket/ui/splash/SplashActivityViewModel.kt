@@ -1,8 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.splash
 
-import android.app.Application
 import androidx.databinding.ObservableField
-import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import org.jetbrains.anko.doAsync
 
@@ -10,13 +8,12 @@ import org.jetbrains.anko.doAsync
  * Created by Furkan on 13.04.2019
  */
 
-class SplashActivityViewModel(app: Application) : BaseViewModel(app) {
+class SplashActivityViewModel : BaseViewModel() {
 
     var loginSuccess: ObservableField<Boolean> = ObservableField(false)
     var afterRegisterSuccess: ObservableField<Boolean> = ObservableField(false)
 
     init {
-        (app as? Podpocket)?.component?.inject(this)
         alreadyLogged()
     }
 

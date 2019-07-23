@@ -1,16 +1,13 @@
 package com.furkanaskin.app.podpocket.ui.login
 
-import android.app.Application
-import android.content.Intent
 import android.util.Patterns
-import android.widget.Toast
 import androidx.databinding.ObservableField
-import com.furkanaskin.app.podpocket.Podpocket
+import androidx.databinding.ObservableInt
+import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
-import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordActivity
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.google.firebase.database.DataSnapshot
@@ -26,7 +23,7 @@ import timber.log.Timber
  * Created by Furkan on 14.04.2019
  */
 
-class LoginViewModel(app: Application) : BaseViewModel(app) {
+class LoginViewModel : BaseViewModel() {
 
     var userName: ObservableField<String> = ObservableField("")
     var password: ObservableField<String> = ObservableField("")
@@ -34,8 +31,8 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     var forgetPasswordView: ObservableField<Boolean> = ObservableField(true)
     var agreementView: ObservableField<Boolean> = ObservableField(false)
-    var buttonText: ObservableField<String> = ObservableField(getApplication<Application>().getString(R.string.sign_in))
-    var summaryText: ObservableField<String> = ObservableField(getApplication<Application>().getString(R.string.already_register))
+    var buttonText: ObservableInt = ObservableInt(R.string.sign_in)
+    var summaryText: ObservableInt = ObservableInt(R.string.already_register)
 
     var loginSuccess: ObservableField<Boolean> = ObservableField(false)
     var registerSuccess: ObservableField<Boolean> = ObservableField(false)
@@ -43,9 +40,8 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     var verifySuccess: ObservableField<Boolean> = ObservableField()
     var showProgress: ObservableField<Boolean> = ObservableField()
 
-    init {
-        (app as? Podpocket)?.component?.inject(this)
-    }
+    var forgetPassIntentLiveData = MutableLiveData<Int>()
+    var toastLiveData = MutableLiveData<String>()
 
     private var type: Int = Constants.LoginActivityType.LOGIN_TYPE
 
@@ -54,8 +50,8 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
 
         forgetPasswordView.set(type == Constants.LoginActivityType.LOGIN_TYPE)
         agreementView.set(type == Constants.LoginActivityType.REGISTER_TYPE)
-        buttonText.set(if (type == Constants.LoginActivityType.LOGIN_TYPE) getApplication<Application>().getString(R.string.sign_in) else getApplication<Application>().getString(R.string.register))
-        summaryText.set(if (type == Constants.LoginActivityType.LOGIN_TYPE) getApplication<Application>().getString(R.string.already_register) else getApplication<Application>().getString(R.string.already_have_account))
+        buttonText.set(if (type == Constants.LoginActivityType.LOGIN_TYPE) R.string.sign_in else R.string.register)
+        summaryText.set(if (type == Constants.LoginActivityType.LOGIN_TYPE) R.string.already_register else R.string.already_have_account)
     }
 
     fun alreadyHasAccount() {
@@ -88,7 +84,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         }
 
         if (message.isNotEmpty()) {
-            Toast.makeText(getApplication(), message, Toast.LENGTH_LONG).show()
+            toastLiveData.postValue(message)
         }
 
         return result
@@ -205,7 +201,6 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
             is FirebaseAuthInvalidUserException -> {
                 errorMessage = "Böyle bir kullanıcı bulunamadı."
                 showProgress.set(false)
-
             }
 
             else -> {
@@ -217,37 +212,18 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         }
 
         if (!errorMessage.isNullOrEmpty()) {
-            Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_LONG).show()
+            toastLiveData.postValue(errorMessage)
         }
-
     }
 
 
     fun forgetPasswordClicked() {
 
         when (verifySuccess.get()) {
-            null -> {
-                val intent = Intent(getApplication(), ForgetPasswordActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                intent.putExtra("TYPE", Constants.LoginActivityType.FORGOT_PASS)
-                getApplication<Application>().startActivity(intent)
-            }
-
-            false -> {
-                val intent = Intent(getApplication(), ForgetPasswordActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                intent.putExtra("TYPE", Constants.LoginActivityType.EMAIL_VERIFY)
-                getApplication<Application>().startActivity(intent)
-            }
-
-            true -> {
-                val intent = Intent(getApplication(), ForgetPasswordActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                intent.putExtra("TYPE", Constants.LoginActivityType.EMAIL_VERIFY)
-                getApplication<Application>().startActivity(intent)
-            }
+            null -> forgetPassIntentLiveData.postValue(Constants.LoginActivityType.FORGOT_PASS)
+            false -> forgetPassIntentLiveData.postValue(Constants.LoginActivityType.EMAIL_VERIFY)
+            true -> forgetPassIntentLiveData.postValue(Constants.LoginActivityType.EMAIL_VERIFY)
         }
-
     }
 
     private fun insertUserToFirebase() {

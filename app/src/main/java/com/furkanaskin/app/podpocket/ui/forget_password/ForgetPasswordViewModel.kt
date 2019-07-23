@@ -1,8 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.forget_password
 
-import android.app.Application
 import androidx.databinding.ObservableField
-import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
 import timber.log.Timber
@@ -11,17 +9,13 @@ import timber.log.Timber
  * Created by Furkan on 15.04.2019
  */
 
-class ForgetPasswordViewModel(app: Application) : BaseViewModel(app) {
+class ForgetPasswordViewModel : BaseViewModel() {
 
     var userName: ObservableField<String> = ObservableField("")
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
     var sendVerifyMailSucces: ObservableField<Boolean> = ObservableField(false)
     var type: ObservableField<Int> = ObservableField(0)
     var showProgress: ObservableField<Boolean> = ObservableField(false)
-
-    init {
-        (app as? Podpocket)?.component?.inject(this)
-    }
 
     fun buttonClick() {
         showProgress.set(true)

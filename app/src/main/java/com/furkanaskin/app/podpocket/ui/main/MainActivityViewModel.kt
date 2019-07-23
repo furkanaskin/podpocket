@@ -1,17 +1,12 @@
 package com.furkanaskin.app.podpocket.ui.main
 
-import android.app.Application
-import android.content.Intent
-import com.furkanaskin.app.podpocket.Podpocket
+import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
-import com.furkanaskin.app.podpocket.ui.login.LoginActivity
 
-class MainActivityViewModel(app: Application) : BaseViewModel(app) {
+class MainActivityViewModel : BaseViewModel() {
 
-    init {
-        (app as? Podpocket)?.component?.inject(this)
-    }
+    var mainActivityIntentLiveData = MutableLiveData<Int>()
 
     fun registerClick() {
         openLoginActivity(Constants.LoginActivityType.REGISTER_TYPE)
@@ -22,10 +17,6 @@ class MainActivityViewModel(app: Application) : BaseViewModel(app) {
     }
 
     private fun openLoginActivity(viewType: Int) {
-        val intent = Intent(getApplication(), LoginActivity::class.java)
-        intent.putExtra(Constants.IntentName.LOGIN_ACTIVITY_TYPE, viewType)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        getApplication<Application>().startActivity(intent)
+        mainActivityIntentLiveData.postValue(viewType)
     }
-
 }

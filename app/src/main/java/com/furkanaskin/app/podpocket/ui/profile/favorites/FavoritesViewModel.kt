@@ -1,8 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.profile.favorites
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.core.Status
@@ -16,13 +14,9 @@ import timber.log.Timber
  * Created by Furkan on 2019-05-18
  */
 
-class FavoritesViewModel(app: Application) : BaseViewModel(app) {
+class FavoritesViewModel : BaseViewModel() {
 
     val episodesLiveData = MutableLiveData<Resource<Podcasts>>()
-
-    init {
-        (app as? Podpocket)?.component?.inject(this)
-    }
 
     fun getEpisodes(id: String) {
         baseApi.getPodcastById(id)

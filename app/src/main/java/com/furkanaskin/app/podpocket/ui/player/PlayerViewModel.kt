@@ -1,10 +1,8 @@
 package com.furkanaskin.app.podpocket.ui.player
 
-import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.core.Status
@@ -22,18 +20,12 @@ import java.util.*
  * Created by Furkan on 16.04.2019
  */
 
-class PlayerViewModel(app: Application) : BaseViewModel(app) {
+class PlayerViewModel : BaseViewModel() {
 
     val item: ObservableField<Episode> = ObservableField()
     val isFavorite: ObservableField<Boolean> = ObservableField()
     private val _episodeDetailLiveData = MutableLiveData<Resource<Episode>>()
     val episodeDetailLiveData: LiveData<Resource<Episode>> get() = _episodeDetailLiveData
-
-
-    init {
-        (app as? Podpocket)?.component!!.inject(this)
-    }
-
 
     fun getEpisodeDetails(id: String) {
         baseApi.getEpisodeById(id)

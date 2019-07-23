@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.core
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.db.AppDatabase
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
@@ -10,7 +9,7 @@ import org.jetbrains.anko.doAsync
 import java.util.*
 import javax.inject.Inject
 
-open class BaseViewModel(app: Application) : AutoDisposeViewModel(app) {
+open class BaseViewModel : AutoDisposeViewModel() {
 
     var progressLiveData = MutableLiveData<Boolean>()
 
@@ -47,5 +46,4 @@ open class BaseViewModel(app: Application) : AutoDisposeViewModel(app) {
         if (currentLocation.isEmpty())
             currentLocation = "us"
     }
-
 }

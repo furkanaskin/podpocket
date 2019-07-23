@@ -10,6 +10,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
@@ -19,12 +20,17 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
+import dagger.android.AndroidInjection
 import org.jetbrains.anko.doAsync
+import javax.inject.Inject
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private var snackBar: Snackbar? = null
-    val scopeProvider by lazy { AndroidLifecycleScopeProvider.from(this) }
+    val scopeProvider: AndroidLifecycleScopeProvider by lazy { AndroidLifecycleScopeProvider.from(this) }
 
     @LayoutRes
     abstract fun getLayoutRes(): Int
@@ -39,7 +45,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
     }
 
     val viewModel by lazy {
-        ViewModelProviders.of(this).get(mViewModelClass)
+        ViewModelProviders.of(this, viewModelFactory).get(mViewModelClass)
     }
 
     /**
@@ -49,6 +55,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
     open fun onInject() {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         initViewModel(viewModel)
         initDialog()

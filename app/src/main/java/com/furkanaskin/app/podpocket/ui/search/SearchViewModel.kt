@@ -1,8 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.search
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.core.Resource
@@ -22,14 +20,10 @@ import javax.inject.Inject
  * Created by Furkan on 16.04.2019
  */
 
-class SearchViewModel(app: Application) : BaseViewModel(app) {
+class SearchViewModel : BaseViewModel() {
 
     @Inject
     lateinit var api: PodpocketAPI
-
-    init {
-        (app as? Podpocket)?.component?.inject(this)
-    }
 
     var selectedGenres: ArrayList<Int> = ArrayList()
     val genresLiveData = MutableLiveData<Resource<Genres>>()

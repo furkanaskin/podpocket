@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.home.best_podcasts
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -24,7 +23,7 @@ class BestPodcastsAdapter(private val callBack: (Podcasts) -> Unit) : BaseAdapte
                 parent,
                 false
         )
-        val viewModel = BestPodcastsListItemViewModel((parent.context as Activity).application)
+        val viewModel = BestPodcastsListItemViewModel()
         mBinding.viewModel = viewModel
 
         mBinding.rootView.setOnClickListener {

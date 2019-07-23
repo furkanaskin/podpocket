@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.podcast.episodes
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -23,7 +22,7 @@ class EpisodesAdapter(private val callBack: (EpisodeEntity, Int) -> Unit) : Base
                 parent,
                 false)
 
-        val viewModel = EpisodesListItemViewModel((parent.context as Activity).application)
+        val viewModel = EpisodesListItemViewModel()
 
         mBinding.viewModel = viewModel
 

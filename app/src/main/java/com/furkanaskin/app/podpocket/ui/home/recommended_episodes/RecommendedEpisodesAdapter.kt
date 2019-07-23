@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.home.recommended_episodes
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -24,7 +23,7 @@ class RecommendedEpisodesAdapter(private val callBack: (RecommendationsItem) -> 
                 parent,
                 false
         )
-        val viewModel = RecommendedEpisodesListViewModel((parent.context as Activity).application)
+        val viewModel = RecommendedEpisodesListViewModel()
         mBinding.viewModel = viewModel
 
         mBinding.rootView.setOnClickListener {

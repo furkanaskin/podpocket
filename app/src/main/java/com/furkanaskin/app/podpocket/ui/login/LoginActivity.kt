@@ -3,14 +3,18 @@ package com.furkanaskin.app.podpocket.ui.login
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.Observable
+import androidx.lifecycle.Observer
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.ActivityLoginBinding
 import com.furkanaskin.app.podpocket.ui.after_register.AfterRegisterActivity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
+import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordActivity
+import com.furkanaskin.app.podpocket.utils.extensions.toast
 import com.jaychang.st.SimpleText
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.doAsync
@@ -73,7 +77,6 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
                     showVerifyEmailDialog()
                 }
             }
-
         })
 
         viewModel.loginSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
@@ -98,6 +101,23 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
                     }
                 }
             }
+        })
+
+        if (viewModel.forgetPassIntentLiveData.hasActiveObservers())
+            viewModel.forgetPassIntentLiveData.removeObservers(this)
+
+        viewModel.forgetPassIntentLiveData.observe(this, Observer<Int> {
+            val intent = Intent(this, ForgetPasswordActivity::class.java)
+            intent.putExtra("TYPE", it)
+            startActivity(intent)
+            finish()
+        })
+
+        if (viewModel.toastLiveData.hasActiveObservers())
+            viewModel.toastLiveData.removeObservers(this)
+
+        viewModel.toastLiveData.observe(this, Observer<String> {
+            toast(it, Toast.LENGTH_LONG)
         })
     }
 
@@ -155,5 +175,4 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
-
 }

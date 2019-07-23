@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.feed.locale_feed.locale_posts
 
-import android.app.Application
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.db.entities.PostEntity
@@ -9,7 +8,7 @@ import com.furkanaskin.app.podpocket.db.entities.PostEntity
  * Created by Furkan on 2019-06-25
  */
 
-class LocalePostsItemViewModel(app: Application) : BaseViewModel(app) {
+class LocalePostsItemViewModel : BaseViewModel() {
 
     var item = ObservableField<PostEntity>()
     var position = -1

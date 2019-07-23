@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.search.podcast_search
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -24,7 +23,7 @@ class PodcastSearchResultAdapter(private val callBack: (ResultsItem) -> Unit) : 
                 false
         )
 
-        val viewModel = PodcastSearchResultViewModel((parent.context as Activity).application)
+        val viewModel = PodcastSearchResultViewModel()
         mBinding.viewModel = viewModel
 
         mBinding.cardView.setOnClickListener {

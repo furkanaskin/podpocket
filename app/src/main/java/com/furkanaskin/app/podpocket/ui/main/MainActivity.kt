@@ -1,20 +1,20 @@
 package com.furkanaskin.app.podpocket.ui.main
 
+import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.databinding.ActivityMainBinding
+import com.furkanaskin.app.podpocket.ui.login.LoginActivity
 import com.mikhaellopez.rxanimation.RxAnimation
 import com.mikhaellopez.rxanimation.fadeIn
 import com.mikhaellopez.rxanimation.fadeOut
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
+import com.uber.autodispose.autoDisposable
 
 
 class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>(MainActivityViewModel::class.java) {
-
-    private val composite = CompositeDisposable()
 
     override fun initViewModel(viewModel: MainActivityViewModel) {
         binding.viewModel = viewModel
@@ -35,22 +35,26 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>(Ma
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.mainActivityIntentLiveData.observe(this, Observer<Int> {
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.putExtra(Constants.IntentName.LOGIN_ACTIVITY_TYPE, it)
+            startActivity(intent)
+            finish()
+        })
+
         RxAnimation.together(
                 binding.textViewHello.fadeOut(Constants.MainAnimationConstants.NO_DURATION),
                 binding.buttonLogin.fadeOut(Constants.MainAnimationConstants.NO_DURATION),
                 binding.buttonRegister.fadeOut(Constants.MainAnimationConstants.NO_DURATION))
-                .subscribe().addTo(composite)
+                .autoDisposable(scopeProvider)
+                .subscribe()
 
         RxAnimation.sequentially(
                 binding.textViewHello.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION),
                 binding.buttonLogin.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION),
                 binding.buttonRegister.fadeIn(Constants.MainAnimationConstants.SHORT_DURATION))
-                .subscribe().addTo(composite)
+                .autoDisposable(scopeProvider)
+                .subscribe()
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        composite.clear()
     }
 }

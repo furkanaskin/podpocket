@@ -1,7 +1,5 @@
 package com.furkanaskin.app.podpocket.core
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import com.uber.autodispose.lifecycle.CorrespondingEventsFunction
 import com.uber.autodispose.lifecycle.LifecycleEndedException
@@ -13,7 +11,7 @@ import io.reactivex.subjects.BehaviorSubject
  * Created by Furkan on 2019-07-22
  */
 
-abstract class AutoDisposeViewModel(app: Application) : AndroidViewModel(app), LifecycleScopeProvider<AutoDisposeViewModel.ViewModelEvent> {
+abstract class AutoDisposeViewModel : ViewModel(), LifecycleScopeProvider<AutoDisposeViewModel.ViewModelEvent> {
 
     // Subject backing the auto disposing of subscriptions.
     private val lifecycleEvents = BehaviorSubject.createDefault(ViewModelEvent.CREATED)

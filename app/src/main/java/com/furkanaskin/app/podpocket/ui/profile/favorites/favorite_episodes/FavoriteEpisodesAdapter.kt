@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.profile.favorites.favorite_episodes
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -23,7 +22,7 @@ class FavoriteEpisodesAdapter(private val callBack: (FavoriteEpisodeEntity, Int)
                 parent,
                 false)
 
-        val viewModel = FavoriteEpisodesListViewModel((parent.context as Activity).application)
+        val viewModel = FavoriteEpisodesListViewModel()
 
         mBinding.viewModel = viewModel
         mBinding.cardView.setOnClickListener {

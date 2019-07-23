@@ -1,8 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.feed.new_post
 
-import android.app.Application
 import androidx.databinding.ObservableField
-import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.model.Post
@@ -15,7 +13,7 @@ import java.util.concurrent.TimeUnit
  * Created by Furkan on 2019-05-26
  */
 
-class NewPostViewModel(app: Application) : BaseViewModel(app) {
+class NewPostViewModel : BaseViewModel() {
     var postText: ObservableField<String> = ObservableField("")
     var pushPostSuccess: ObservableField<Boolean> = ObservableField(false)
 
@@ -23,7 +21,6 @@ class NewPostViewModel(app: Application) : BaseViewModel(app) {
     var currentUser: UserEntity? = null
 
     init {
-        (app as? Podpocket)?.component?.inject(this)
         //get reference to our db
         databaseReference = FirebaseDatabase.getInstance().reference
         getUser() // This is required because BaseViewModel not reached user data yet.

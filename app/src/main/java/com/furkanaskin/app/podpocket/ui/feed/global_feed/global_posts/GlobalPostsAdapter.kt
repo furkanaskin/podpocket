@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.feed.global_feed.global_posts
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -23,7 +22,7 @@ class GlobalPostsAdapter(private val callBack: (PostEntity, Int) -> Unit) : Base
                 parent,
                 false)
 
-        val viewModel = GlobalPostsItemViewModel((parent.context as Activity).application)
+        val viewModel = GlobalPostsItemViewModel()
 
         mBinding.viewModel = viewModel
 

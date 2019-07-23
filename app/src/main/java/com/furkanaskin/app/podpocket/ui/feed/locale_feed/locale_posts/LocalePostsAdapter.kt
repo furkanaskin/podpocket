@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.feed.locale_feed.locale_posts
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -23,7 +22,7 @@ class LocalePostsAdapter(private val callBack: (PostEntity, Int) -> Unit) : Base
                 parent,
                 false)
 
-        val viewModel = LocalePostsItemViewModel((parent.context as Activity).application)
+        val viewModel = LocalePostsItemViewModel()
 
         mBinding.viewModel = viewModel
 

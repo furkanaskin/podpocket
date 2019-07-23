@@ -1,8 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.home
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.core.Status
@@ -20,16 +18,12 @@ import timber.log.Timber
  * Created by Furkan on 16.04.2019
  */
 
-class HomeViewModel(app: Application) : BaseViewModel(app) {
+class HomeViewModel : BaseViewModel() {
 
     val bestPodcastsLiveData = MutableLiveData<Resource<BestPodcasts>>()
     val recommendedPodcastsLiveData = MutableLiveData<Resource<PodcastRecommendations>>()
     val recommendedEpisodesLiveData = MutableLiveData<Resource<EpisodeRecommendations>>()
     var podcastEpisodeIds = MutableLiveData<ArrayList<String>>()
-
-    init {
-        (app as? Podpocket)?.component?.inject(this)
-    }
 
     fun getBestPodcasts(region: String, explicitContent: Int) {
         baseApi.getBestPodcasts(region, explicitContent)

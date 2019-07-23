@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.player.queue
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -24,7 +23,7 @@ class QueueAdapter(private val callBack: (EpisodeEntity, Int, Boolean) -> Unit) 
                 parent,
                 false)
 
-        val viewModel = QueueListItemViewModel((parent.context as Activity).application)
+        val viewModel = QueueListItemViewModel()
 
         mBinding.viewModel = viewModel
 

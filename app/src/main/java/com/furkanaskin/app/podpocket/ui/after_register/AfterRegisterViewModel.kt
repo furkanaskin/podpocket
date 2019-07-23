@@ -1,9 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.after_register
 
-import android.app.Application
-import android.widget.Toast
 import androidx.databinding.ObservableField
-import com.furkanaskin.app.podpocket.Podpocket
+import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.utils.extensions.logE
@@ -14,7 +12,7 @@ import com.google.firebase.database.FirebaseDatabase
  * Created by Furkan on 21.04.2019
  */
 
-class AfterRegisterViewModel(app: Application) : BaseViewModel(app) {
+class AfterRegisterViewModel : BaseViewModel() {
 
     var name: ObservableField<String> = ObservableField("")
     var userName: ObservableField<String> = ObservableField("")
@@ -23,10 +21,7 @@ class AfterRegisterViewModel(app: Application) : BaseViewModel(app) {
     var profileImageUrl: ObservableField<String> = ObservableField("")
     var saveSuccess: ObservableField<Boolean> = ObservableField(false)
     var userID: ObservableField<Int> = ObservableField(0)
-
-    init {
-        (app as? Podpocket)?.component?.inject(this)
-    }
+    var toastLiveData = MutableLiveData<String>()
 
     fun getValidationMessages(): Boolean {
         var result = true
@@ -40,7 +35,7 @@ class AfterRegisterViewModel(app: Application) : BaseViewModel(app) {
         }
 
         if (message.isNotEmpty()) {
-            Toast.makeText(getApplication(), message, Toast.LENGTH_LONG).show()
+            toastLiveData.postValue(message)
         }
 
         return result

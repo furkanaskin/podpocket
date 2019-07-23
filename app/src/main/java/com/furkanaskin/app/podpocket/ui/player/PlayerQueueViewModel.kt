@@ -1,9 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.player
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.core.Status
@@ -17,14 +15,10 @@ import timber.log.Timber
  * Created by Furkan on 14.05.2019
  */
 
-class PlayerQueueViewModel(app: Application) : BaseViewModel(app) {
+class PlayerQueueViewModel : BaseViewModel() {
 
     private val _podcastLiveData = MutableLiveData<Resource<Podcasts>>()
     val podcastLiveData: LiveData<Resource<Podcasts>> get() = _podcastLiveData
-
-    init {
-        (app as? Podpocket)?.component?.inject(this)
-    }
 
     fun getEpisodesWithPaging(id: String, nextEpisodePubDate: Long) {
 

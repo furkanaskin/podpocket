@@ -1,8 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.feed.locale_feed
 
-import android.app.Application
 import androidx.databinding.ObservableArrayList
-import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.db.entities.PostEntity
 import com.furkanaskin.app.podpocket.model.Post
@@ -16,10 +14,9 @@ import org.jetbrains.anko.doAsync
  * Created by Furkan on 2019-05-26
  */
 
-class LocaleFeedViewModel(app: Application) : BaseViewModel(app) {
+class LocaleFeedViewModel : BaseViewModel() {
 
     init {
-        (app as? Podpocket)?.component?.inject(this)
         getLocalePosts()
     }
 

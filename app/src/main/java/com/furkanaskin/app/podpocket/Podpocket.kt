@@ -1,5 +1,6 @@
 package com.furkanaskin.app.podpocket
 
+import android.app.Activity
 import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
@@ -8,18 +9,29 @@ import com.facebook.stetho.Stetho
 import com.furkanaskin.app.podpocket.di.component.DaggerApplicationComponent
 import com.furkanaskin.app.podpocket.di.module.ApplicationModule
 import com.jakewharton.threetenabp.AndroidThreeTen
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
 import io.fabric.sdk.android.Fabric
+import javax.inject.Inject
 
-class Podpocket : Application() {
+class Podpocket : Application(), HasActivityInjector {
 
-    val component by lazy {
-        DaggerApplicationComponent.builder()
-                .applicationModule(ApplicationModule(this))
-                .build()
+    @Inject
+    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+
+    override fun activityInjector(): AndroidInjector<Activity> {
+        return activityInjector
     }
 
     override fun onCreate() {
         super.onCreate()
+
+        DaggerApplicationComponent.builder()
+                .applicationModule(ApplicationModule(this))
+                .build()
+                .app()
+
         AndroidThreeTen.init(this)
         initFabric()
         Stetho.initializeWithDefaults(this)

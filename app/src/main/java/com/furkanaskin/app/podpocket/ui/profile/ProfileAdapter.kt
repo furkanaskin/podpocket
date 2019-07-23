@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.profile
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -23,7 +22,7 @@ class ProfileAdapter(private val callBack: (ProfileSettingsEntity, Int) -> Unit)
                 parent,
                 false)
 
-        val viewModel = ProfileItemViewModel((parent.context as Activity).application)
+        val viewModel = ProfileItemViewModel()
 
         mBinding.viewModel = viewModel
         mBinding.cardView.setOnClickListener {

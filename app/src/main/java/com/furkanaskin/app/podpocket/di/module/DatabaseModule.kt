@@ -17,5 +17,4 @@ class DatabaseModule {
         return Room.databaseBuilder(context,
                 AppDatabase::class.java, "Podpocket-DB").build()
     }
-
 }
