@@ -11,6 +11,7 @@ import com.furkanaskin.app.podpocket.core.Status
 import com.furkanaskin.app.podpocket.db.entities.PlayerEntity
 import com.furkanaskin.app.podpocket.db.entities.RecentlyPlaysEntity
 import com.furkanaskin.app.podpocket.service.response.Episode
+import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
@@ -35,13 +36,14 @@ class PlayerViewModel(app: Application) : BaseViewModel(app) {
 
 
     fun getEpisodeDetails(id: String) {
-        disposable.add(baseApi.getEpisodeById(id)
+        baseApi.getEpisodeById(id)
                 .subscribeOn(Schedulers.io())
                 .map { Resource.success(it) }
                 .onErrorReturn { Resource.error(it) }
                 .doOnSubscribe { progressLiveData.postValue(true) }
                 .doOnTerminate { progressLiveData.postValue(false) }
                 .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> {
@@ -63,7 +65,7 @@ class PlayerViewModel(app: Application) : BaseViewModel(app) {
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }
-                })
+                }
 
     }
 

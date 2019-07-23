@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import org.jetbrains.anko.support.v4.runOnUiThread
 
 abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : Fragment() {
+
     lateinit var viewModel: VM
     open lateinit var mBinding: DB
     fun init(inflater: LayoutInflater, container: ViewGroup) {

@@ -39,6 +39,8 @@ class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodca
     override fun init() {
         super.init()
         parseIntent()
+        if (!isStateSaved)
+            getData()
         initRecommendedPodcastsAdapter()
         initRecommendedPodcasts()
 
@@ -53,12 +55,14 @@ class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodca
         }
     }
 
+    private fun getData() {
+        viewModel.getPodcastRecommendations(viewModel.podcast.get()?.id
+                ?: "1c8374ef2e8c41928010347f66401e56", 0)
+    }
+
     private fun getCountryCode(countryName: String) = Locale.getAvailableLocales().find { it.getDisplayCountry(Locale.US) == countryName }?.country?.toLowerCase()
 
     private fun initRecommendedPodcasts() {
-
-        viewModel.getPodcastRecommendations(viewModel.podcast.get()?.id
-                ?: "1c8374ef2e8c41928010347f66401e56", 0)
 
         if (viewModel.podcastRecommendationsLiveData.hasActiveObservers())
             viewModel.podcastRecommendationsLiveData.removeObservers(this)

@@ -11,6 +11,7 @@ import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.PodpocketAPI
 import com.furkanaskin.app.podpocket.service.response.Genres
 import com.furkanaskin.app.podpocket.service.response.Search
+import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
@@ -40,13 +41,14 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
 
 
     fun getSearchResult(searchText: String, type: String, offset: Int) {
-        disposable.add(baseApi.fullTextSearch(searchText, type, offset)
+        baseApi.fullTextSearch(searchText, type, offset)
                 .subscribeOn(Schedulers.io())
                 .map { Resource.success(it) }
                 .onErrorReturn { Resource.error(it) }
                 .doOnSubscribe { progressLiveData.postValue(true) }
                 .doOnTerminate { progressLiveData.postValue(false) }
                 .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> {
@@ -73,17 +75,18 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }
-                })
+                }
     }
 
     fun getSearchResultWithGenres(searchText: String, type: String, genreIds: String, offset: Int) {
-        disposable.add(baseApi.fullTextSearchWithGenres(searchText, type, genreIds, offset)
+        baseApi.fullTextSearchWithGenres(searchText, type, genreIds, offset)
                 .subscribeOn(Schedulers.io())
                 .map { Resource.success(it) }
                 .onErrorReturn { Resource.error(it) }
                 .doOnSubscribe { progressLiveData.postValue(true) }
                 .doOnTerminate { progressLiveData.postValue(false) }
                 .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> {
@@ -110,17 +113,18 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }
-                })
+                }
     }
 
     fun getEpisodes(id: String) {
-        disposable.add(baseApi.getPodcastById(id)
+        baseApi.getPodcastById(id)
                 .subscribeOn(Schedulers.io())
                 .map { Resource.success(it) }
                 .onErrorReturn { Resource.error(it) }
                 .doOnSubscribe { progressLiveData.postValue(true) }
                 .doOnTerminate { progressLiveData.postValue(false) }
                 .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> {
@@ -143,23 +147,24 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }
-                })
+                }
     }
 
     fun getGenres() {
-        disposable.add(baseApi.getGenres()
+        baseApi.getGenres()
                 .subscribeOn(Schedulers.io())
                 .map { Resource.success(it) }
                 .onErrorReturn { Resource.error(it) }
                 .doOnSubscribe { progressLiveData.postValue(true) }
                 .doOnTerminate { progressLiveData.postValue(false) }
                 .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> genresLiveData.postValue(it)
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }
-                })
+                }
     }
 }

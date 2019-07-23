@@ -9,6 +9,7 @@ import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.core.Status
 import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
 import com.furkanaskin.app.podpocket.service.response.Podcasts
+import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -28,17 +29,18 @@ class PodcastDetailViewModel(app: Application) : BaseViewModel(app) {
 
 
     fun getPodcastRecommendations(podcastId: String, explicitContent: Int) {
-        disposable.add(baseApi.getPodcastRecommendations(podcastId, explicitContent)
+        baseApi.getPodcastRecommendations(podcastId, explicitContent)
                 .subscribeOn(Schedulers.io())
                 .map { Resource.success(it) }
                 .onErrorReturn { Resource.error(it) }
                 .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> podcastRecommendationsLiveData.postValue(it)
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }
-                })
+                }
     }
 }

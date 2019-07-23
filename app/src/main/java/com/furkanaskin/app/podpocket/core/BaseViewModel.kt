@@ -10,7 +10,7 @@ import org.jetbrains.anko.doAsync
 import java.util.*
 import javax.inject.Inject
 
-open class BaseViewModel(app: Application) : RxAwareViewModel(app) {
+open class BaseViewModel(app: Application) : AutoDisposeViewModel(app) {
 
     var progressLiveData = MutableLiveData<Boolean>()
 

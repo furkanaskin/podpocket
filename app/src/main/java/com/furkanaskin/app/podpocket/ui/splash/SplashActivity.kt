@@ -13,15 +13,12 @@ import com.furkanaskin.app.podpocket.ui.main.MainActivity
 import com.furkanaskin.app.podpocket.utils.extensions.dpToPx
 import com.furkanaskin.app.podpocket.utils.extensions.pixelsToDps
 import com.mikhaellopez.rxanimation.*
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
+import com.uber.autodispose.autoDisposable
 
 
 class SplashActivity : BaseActivity<SplashActivityViewModel, ActivitySplashBinding>(SplashActivityViewModel::class.java) {
 
-    private val composite = CompositeDisposable()
     private var listenerFlag: Boolean? = true
-
     override fun getLayoutRes() = R.layout.activity_splash
 
     override fun initViewModel(viewModel: SplashActivityViewModel) {
@@ -57,7 +54,8 @@ class SplashActivity : BaseActivity<SplashActivityViewModel, ActivitySplashBindi
 
                 RxAnimation.together(
                         binding.textViewAppName.fadeOut(Constants.MainAnimationConstants.NO_DURATION))
-                        .subscribe().addTo(composite)
+                        .autoDisposable(scopeProvider)
+                        .subscribe()
 
                 RxAnimation.sequentially(
                         binding.imageViewAppLogo.fadeIn(Constants.MainAnimationConstants.LONG_DURATION),
@@ -86,15 +84,10 @@ class SplashActivity : BaseActivity<SplashActivityViewModel, ActivitySplashBindi
                                         startActivity(intent)
                                         finish()
                                     }
-
-                                }
-                ).subscribe().addTo(composite)
+                                })
+                        .autoDisposable(scopeProvider)
+                        .subscribe()
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        composite.clear()
     }
 }

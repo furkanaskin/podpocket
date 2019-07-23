@@ -8,6 +8,7 @@ import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Resource
 import com.furkanaskin.app.podpocket.core.Status
 import com.furkanaskin.app.podpocket.service.response.Podcasts
+import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -27,19 +28,20 @@ class PlayerQueueViewModel(app: Application) : BaseViewModel(app) {
 
     fun getEpisodesWithPaging(id: String, nextEpisodePubDate: Long) {
 
-        disposable.add(baseApi.getPodcastByIdWithPaging(id, nextEpisodePubDate)
+        baseApi.getPodcastByIdWithPaging(id, nextEpisodePubDate)
                 .subscribeOn(Schedulers.io())
                 .map { Resource.success(it) }
                 .onErrorReturn { Resource.error(it) }
                 .doOnSubscribe { progressLiveData.postValue(true) }
                 .doOnTerminate { progressLiveData.postValue(false) }
                 .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> _podcastLiveData.postValue(it)
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }
-                })
+                }
     }
 }

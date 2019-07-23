@@ -1,7 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.podcast
 
-import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.furkanaskin.app.podpocket.R
@@ -25,15 +23,15 @@ class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(P
         mBinding.viewModel = viewModel
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun init() {
+        super.init()
         // Delete previous episodes.
         doAsync {
             viewModel.db.episodesDao().deleteAllEpisodes()
         }
 
-        getData()
+        if (!isStateSaved)
+            getData()
 
 
         if (viewModel.progressLiveData.hasActiveObservers())

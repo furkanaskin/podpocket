@@ -18,11 +18,13 @@ import com.furkanaskin.app.podpocket.utils.PodPocketProgressDialog
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import org.jetbrains.anko.doAsync
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 
     private var snackBar: Snackbar? = null
+    val scopeProvider by lazy { AndroidLifecycleScopeProvider.from(this) }
 
     @LayoutRes
     abstract fun getLayoutRes(): Int
