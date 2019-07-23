@@ -90,7 +90,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
         mBinding.recyclerViewBestPodcasts.adapter = adapter
         mBinding.recyclerViewBestPodcasts.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
-
     }
 
     private fun initRecommendedPodcastsAdapter() {
