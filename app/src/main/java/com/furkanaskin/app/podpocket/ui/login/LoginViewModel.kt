@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
+import com.furkanaskin.app.podpocket.db.AppDatabase
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
+import com.furkanaskin.app.podpocket.service.PodpocketAPI
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.google.firebase.database.DataSnapshot
@@ -18,12 +20,13 @@ import org.jetbrains.anko.doAsync
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Created by Furkan on 14.04.2019
  */
 
-class LoginViewModel : BaseViewModel() {
+class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
 
     var userName: ObservableField<String> = ObservableField("")
     var password: ObservableField<String> = ObservableField("")
@@ -108,7 +111,7 @@ class LoginViewModel : BaseViewModel() {
                                 email = userName.get() ?: "",
                                 accountCreatedAt = convertDate(LocalDate.now()))
 
-                        db.userDao().insertUser(user)
+                        db?.userDao()?.insertUser(user)
                     }
 
                     showProgress.set(false)
@@ -141,7 +144,7 @@ class LoginViewModel : BaseViewModel() {
                             if (snapshot.getValue(UserEntity::class.java)?.uniqueId != null) {
                                 val userFromFirebase = snapshot.getValue(UserEntity::class.java)
                                 doAsync {
-                                    userFromFirebase?.let { db.userDao().insertUser(it) }
+                                    userFromFirebase?.let { db?.userDao()?.insertUser(it) }
 
                                     loginSuccess.set(true)
                                     showProgress.set(false)

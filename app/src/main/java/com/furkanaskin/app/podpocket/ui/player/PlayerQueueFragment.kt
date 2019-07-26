@@ -100,11 +100,11 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
     private fun getQueue() {
         totalEpisodes = arguments?.getInt(Constants.BundleArguments.TOTAL_EPISODES)
 
-        if (viewModel.db.episodesDao().getEpisodes().hasActiveObservers())
-            viewModel.db.episodesDao().getEpisodes().removeObservers(this@PlayerQueueFragment)
+        if (viewModel.db?.episodesDao()?.getEpisodes()?.hasActiveObservers() == true)
+            viewModel?.db?.episodesDao()?.getEpisodes()?.removeObservers(this@PlayerQueueFragment)
 
         // Get episodes for queue.
-        viewModel.db.episodesDao().getEpisodes().observe(this@PlayerQueueFragment, Observer<List<EpisodeEntity>> { t ->
+        viewModel?.db?.episodesDao()?.getEpisodes()?.observe(this@PlayerQueueFragment, Observer<List<EpisodeEntity>> { t ->
             nextEpisodePubDate = t?.last()?.pubDateMs
             (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(t.toMutableList())
         })
@@ -122,7 +122,7 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
                 it.data?.episodes?.forEachIndexed { _, episode ->
                     val episodesItem = episode?.let { EpisodeEntity(it) }
                     episodesItem?.let {
-                        viewModel.db.episodesDao().insertEpisode(it)
+                        viewModel.db?.episodesDao()?.insertEpisode(it)
                         playerActivity.episodes.add(episode.id ?: "")
                     }
                 }

@@ -9,15 +9,9 @@ import org.jetbrains.anko.doAsync
 import java.util.*
 import javax.inject.Inject
 
-open class BaseViewModel : AutoDisposeViewModel() {
+open class BaseViewModel(var baseApi: PodpocketAPI? = null, var db: AppDatabase? = null) : AutoDisposeViewModel() {
 
     var progressLiveData = MutableLiveData<Boolean>()
-
-    @Inject
-    lateinit var baseApi: PodpocketAPI
-
-    @Inject
-    lateinit var db: AppDatabase
 
     lateinit var mAuth: FirebaseAuth
     var user: UserEntity? = null
@@ -36,7 +30,7 @@ open class BaseViewModel : AutoDisposeViewModel() {
 
     fun getUser() {
         doAsync {
-            user = mAuth.currentUser?.uid?.let { db.userDao().getUser(it) }
+            user = mAuth.currentUser?.uid?.let { db?.userDao()?.getUser(it) }
         }
     }
 

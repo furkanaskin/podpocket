@@ -103,15 +103,15 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
                 it.data?.episodes?.forEachIndexed { _, episode ->
                     val episodesItem = episode?.let { EpisodeEntity(it) }
                     episodesItem?.let {
-                        viewModel.db.episodesDao().insertEpisode(it)
+                        viewModel.db?.episodesDao()?.insertEpisode(it)
                         viewModel.ids.add(episode.id ?: "")
                     }
                 }
 
                 runOnUiThread {
                     isLoading = false
-                    viewModel.db.episodesDao().getEpisodes().removeObservers(this@EpisodesFragment)
-                    viewModel.db.episodesDao().getEpisodes().observe(this@EpisodesFragment, Observer<List<EpisodeEntity>> { t ->
+                    viewModel.db?.episodesDao()?.getEpisodes()?.removeObservers(this@EpisodesFragment)
+                    viewModel.db?.episodesDao()?.getEpisodes()?.observe(this@EpisodesFragment, Observer<List<EpisodeEntity>> { t ->
                         (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
                     })
                 }
@@ -129,14 +129,14 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
                 viewModel.podcast.get()?.episodes?.forEachIndexed { _, episode ->
                     val episodesItem = episode?.let { EpisodeEntity(it) }
                     episodesItem?.let {
-                        viewModel.db.episodesDao().insertEpisode(it)
+                        viewModel.db?.episodesDao()?.insertEpisode(it)
                         viewModel.ids.add(episode.id ?: "")
                     }
                 }
             }
 
-            viewModel.db.episodesDao().getEpisodes().removeObservers(this@EpisodesFragment)
-            viewModel.db.episodesDao().getEpisodes().observe(this@EpisodesFragment, Observer<List<EpisodeEntity>> { t ->
+            viewModel.db?.episodesDao()?.getEpisodes()?.removeObservers(this@EpisodesFragment)
+            viewModel.db?.episodesDao()?.getEpisodes()?.observe(this@EpisodesFragment, Observer<List<EpisodeEntity>> { t ->
                 (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
             })
         }

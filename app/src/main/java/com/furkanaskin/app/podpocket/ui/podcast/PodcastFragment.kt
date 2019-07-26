@@ -27,7 +27,7 @@ class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(P
         super.init()
         // Delete previous episodes.
         doAsync {
-            viewModel.db.episodesDao().deleteAllEpisodes()
+            viewModel.db?.episodesDao()?.deleteAllEpisodes()
         }
 
         if (!isStateSaved)

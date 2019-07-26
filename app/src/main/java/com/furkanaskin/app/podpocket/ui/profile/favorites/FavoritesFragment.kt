@@ -131,10 +131,10 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
                 }
 
                 doAsync {
-                    viewModel.db.episodesDao().deleteAllEpisodes()
+                    viewModel.db?.episodesDao()?.deleteAllEpisodes()
                     it.data?.episodes?.forEachIndexed { _, episode ->
                         val episodesItem = episode.let { EpisodeEntity(it!!) }
-                        episodesItem.let { viewModel.db.episodesDao().insertEpisode(it) }
+                        episodesItem.let { viewModel.db?.episodesDao()?.insertEpisode(it) }
                     }
                 }
 
@@ -146,8 +146,8 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
             })
         }
 
-        viewModel.db.favoritesDao().getFavoriteEpisodes().removeObservers(this@FavoritesFragment)
-        viewModel.db.favoritesDao().getFavoriteEpisodes().observe(this@FavoritesFragment, Observer<List<FavoriteEpisodeEntity>> { t ->
+        viewModel.db?.favoritesDao()?.getFavoriteEpisodes()?.removeObservers(this@FavoritesFragment)
+        viewModel.db?.favoritesDao()?.getFavoriteEpisodes()?.observe(this@FavoritesFragment, Observer<List<FavoriteEpisodeEntity>> { t ->
 
             if (t.isNotEmpty()) {
                 hideAnimation()
@@ -186,13 +186,13 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
             override fun onQueryTextChange(newText: String?): Boolean {
 
                 if (newText?.length ?: 0 > 1) {
-                    viewModel.db.favoritesDao().getFavoriteEpisodes(newText).removeObservers(this@FavoritesFragment)
-                    viewModel.db.favoritesDao().getFavoriteEpisodes(newText).observe(this@FavoritesFragment, Observer<List<FavoriteEpisodeEntity>> {
+                    viewModel.db?.favoritesDao()?.getFavoriteEpisodes(newText)?.removeObservers(this@FavoritesFragment)
+                    viewModel.db?.favoritesDao()?.getFavoriteEpisodes(newText)?.observe(this@FavoritesFragment, Observer<List<FavoriteEpisodeEntity>> {
                         (mBinding.recyclerViewFavoriteEpisodes.adapter as FavoriteEpisodesAdapter).submitList(it)
                     })
                 } else if (newText?.length == 0) {
-                    viewModel.db.favoritesDao().getFavoriteEpisodes().removeObservers(this@FavoritesFragment)
-                    viewModel.db.favoritesDao().getFavoriteEpisodes().observe(this@FavoritesFragment, Observer<List<FavoriteEpisodeEntity>> {
+                    viewModel.db?.favoritesDao()?.getFavoriteEpisodes()?.removeObservers(this@FavoritesFragment)
+                    viewModel.db?.favoritesDao()?.getFavoriteEpisodes()?.observe(this@FavoritesFragment, Observer<List<FavoriteEpisodeEntity>> {
                         (mBinding.recyclerViewFavoriteEpisodes.adapter as FavoriteEpisodesAdapter).submitList(it)
                     })
                 }

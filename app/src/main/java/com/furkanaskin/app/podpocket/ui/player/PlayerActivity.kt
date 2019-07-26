@@ -187,9 +187,9 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         doAsync {
             if (viewModel.isFavorite.get() == true) {
-                viewModel.db.favoritesDao().insertFavoriteEpisode(viewModel.episodeDetailLiveData.value?.data?.let { FavoriteEpisodeEntity(it) })
+                viewModel.db?.favoritesDao()?.insertFavoriteEpisode(viewModel.episodeDetailLiveData.value?.data?.let { FavoriteEpisodeEntity(it) })
             } else {
-                viewModel.db.favoritesDao().deleteFavoriteEpisode(episodeId)
+                viewModel.db?.favoritesDao()?.deleteFavoriteEpisode(episodeId)
             }
         }
     }
@@ -199,7 +199,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         // Check current episode isFavorite true or false
 
         doAsync {
-            val favoriteEpisode = viewModel.db.favoritesDao().getFavoriteEpisode(episodeId)
+            val favoriteEpisode = viewModel.db?.favoritesDao()?.getFavoriteEpisode(episodeId)
 
             runOnUiThread {
 
@@ -208,7 +208,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 // if it's fav. set true else set false.
 
                 try {
-                    favoriteEpisode.title
+                    favoriteEpisode?.title
                     viewModel.isFavorite.set(true)
                 } catch (e: NullPointerException) {
                     viewModel.isFavorite.set(false)

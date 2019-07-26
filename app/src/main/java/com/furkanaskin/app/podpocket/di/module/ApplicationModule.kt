@@ -1,5 +1,6 @@
 package com.furkanaskin.app.podpocket.di.module
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
@@ -9,18 +10,13 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(var app: Podpocket) {
-
-
-    @Provides
-    @Singleton
-    fun provideApp(): Podpocket = app
+class ApplicationModule{
 
     @Provides
     @Singleton
-    fun provideContext(): Context = app.applicationContext
+    fun provideContext(application: Application): Context = application.applicationContext
 
     @Provides
     @Singleton
-    fun provideSharedPreferences(): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(app)
+    fun provideSharedPreferences(application: Application): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
 }

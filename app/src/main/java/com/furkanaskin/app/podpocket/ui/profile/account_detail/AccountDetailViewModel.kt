@@ -2,15 +2,18 @@ package com.furkanaskin.app.podpocket.ui.profile.account_detail
 
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.core.BaseViewModel
+import com.furkanaskin.app.podpocket.db.AppDatabase
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
+import com.furkanaskin.app.podpocket.service.PodpocketAPI
 import com.google.firebase.database.FirebaseDatabase
 import org.jetbrains.anko.doAsync
+import javax.inject.Inject
 
 /**
  * Created by Furkan on 17.05.2019
  */
 
-class AccountDetailViewModel : BaseViewModel() {
+class AccountDetailViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
     var item: ObservableField<String> = ObservableField("")
 
     var userData: UserEntity? = null
@@ -29,7 +32,7 @@ class AccountDetailViewModel : BaseViewModel() {
 
     fun changeUserData(user: UserEntity) {
         doAsync {
-            db.userDao().updateUser(user)
+            db?.userDao()?.updateUser(user)
         }
     }
 

@@ -31,7 +31,7 @@ class GlobalFeedFragment : BaseFragment<GlobalFeedViewModel, FragmentGlobalFeedB
         initGlobalFeedAdapter()
         showProgress()
 
-        viewModel.db.postsDao().getPosts().observe(this@GlobalFeedFragment, Observer<List<PostEntity>> {
+        viewModel.db?.postsDao()?.getPosts()?.observe(this@GlobalFeedFragment, Observer<List<PostEntity>> {
             hideProgress()
 
             (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).submitList(it)

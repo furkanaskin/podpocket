@@ -16,6 +16,7 @@ import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordActivity
 import com.furkanaskin.app.podpocket.utils.extensions.toast
 import com.jaychang.st.SimpleText
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.doAsync
 

@@ -7,7 +7,6 @@ import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.core.CrashlyticsCore
 import com.facebook.stetho.Stetho
 import com.furkanaskin.app.podpocket.di.component.DaggerApplicationComponent
-import com.furkanaskin.app.podpocket.di.module.ApplicationModule
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -28,9 +27,9 @@ class Podpocket : Application(), HasActivityInjector {
         super.onCreate()
 
         DaggerApplicationComponent.builder()
-                .applicationModule(ApplicationModule(this))
+                .application(this)
                 .build()
-                .app()
+                .inject(this)
 
         AndroidThreeTen.init(this)
         initFabric()

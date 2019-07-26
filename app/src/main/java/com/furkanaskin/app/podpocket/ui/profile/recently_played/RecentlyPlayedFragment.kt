@@ -68,14 +68,14 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
 
     fun getDataFromDB() {
         doAsync {
-            val podcasts = viewModel.db.recentlyPlaysDao().getRecentlyPlayedPodcasts()
-            val episodes = viewModel.db.recentlyPlaysDao().getRecentlyPlayedEpisodes()
+            val podcasts = viewModel.db?.recentlyPlaysDao()?.getRecentlyPlayedPodcasts()
+            val episodes = viewModel.db?.recentlyPlaysDao()?.getRecentlyPlayedEpisodes()
 
             runOnUiThread {
                 (mBinding.recyclerViewRecentlyPlayedPodcast.adapter as RecentlyPodcastsAdapter).submitList(podcasts)
                 (mBinding.recyclerViewRecentlyPlayedEpisodes.adapter as RecentlyEpisodesAdapter).submitList(episodes)
 
-                if (podcasts.isEmpty() && episodes.isEmpty()) {
+                if (podcasts?.isEmpty() == true && episodes?.isEmpty() == true) {
                     showAnimation()
                 } else {
                     hideAnimation()

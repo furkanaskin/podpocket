@@ -21,10 +21,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import dagger.android.AndroidInjection
+import dagger.android.support.DaggerAppCompatActivity
 import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
-abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
+abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : DaggerAppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -55,7 +56,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
     open fun onInject() {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         initViewModel(viewModel)
         initDialog()
@@ -138,7 +138,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
 
     fun getUser() {
         doAsync {
-            user = viewModel.mAuth.currentUser?.uid?.let { viewModel.db.userDao().getUser(it) }!!
+            user = viewModel.mAuth.currentUser?.uid?.let { viewModel.db?.userDao()?.getUser(it) }!!
         }
     }
 }

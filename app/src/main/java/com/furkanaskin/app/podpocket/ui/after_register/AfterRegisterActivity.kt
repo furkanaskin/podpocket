@@ -86,7 +86,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
 
                 doAsync {
 
-                    viewModel.db.userDao().updateUser(willBeUpdated)
+                    viewModel.db?.userDao()?.updateUser(willBeUpdated)
 
                     runOnUiThread {
                         viewModel.saveSuccess.set(true)

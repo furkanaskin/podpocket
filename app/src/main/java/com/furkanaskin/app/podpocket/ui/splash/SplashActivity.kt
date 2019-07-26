@@ -14,6 +14,7 @@ import com.furkanaskin.app.podpocket.utils.extensions.dpToPx
 import com.furkanaskin.app.podpocket.utils.extensions.pixelsToDps
 import com.mikhaellopez.rxanimation.*
 import com.uber.autodispose.autoDisposable
+import dagger.android.AndroidInjection
 
 
 class SplashActivity : BaseActivity<SplashActivityViewModel, ActivitySplashBinding>(SplashActivityViewModel::class.java) {

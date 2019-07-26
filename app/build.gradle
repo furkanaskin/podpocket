@@ -100,7 +100,9 @@ dependencies {
     implementation rootProject.ext.navigationFragment
     implementation rootProject.ext.navigationUI
     implementation rootProject.ext.dagger
+    implementation rootProject.ext.daggerSupport
     kapt rootProject.ext.daggerApt
+    kapt rootProject.ext.daggerAnnotation
     implementation rootProject.ext.rxJava
     implementation rootProject.ext.rxAndroid
     implementation rootProject.ext.rxKotlin

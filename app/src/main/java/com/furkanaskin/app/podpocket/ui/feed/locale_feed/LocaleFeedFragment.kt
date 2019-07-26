@@ -31,7 +31,7 @@ class LocaleFeedFragment : BaseFragment<LocaleFeedViewModel, FragmentLocaleFeedB
         initLocaleFeedAdapter()
         showProgress()
 
-        viewModel.db.postsDao().getLocalePosts(viewModel.currentLocation).observe(this@LocaleFeedFragment, Observer<List<PostEntity>> {
+        viewModel.db?.postsDao()?.getLocalePosts(viewModel.currentLocation)?.observe(this@LocaleFeedFragment, Observer<List<PostEntity>> {
             hideProgress()
 
             (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).submitList(it)

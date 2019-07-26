@@ -100,12 +100,12 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
 
     private fun logout() {
         doAsync {
-            viewModel.db.userDao().deleteAll()
-            viewModel.db.postsDao().deleteAll()
-            viewModel.db.favoritesDao().deleteAllFavoriteEpisodes()
-            viewModel.db.recentlyPlaysDao().deleteAll()
-            viewModel.db.episodesDao().deleteAllEpisodes()
-            viewModel.db.playerDao().deleteAll()
+            viewModel.db?.userDao()?.deleteAll()
+            viewModel.db?.postsDao()?.deleteAll()
+            viewModel.db?.favoritesDao()?.deleteAllFavoriteEpisodes()
+            viewModel.db?.recentlyPlaysDao()?.deleteAll()
+            viewModel.db?.episodesDao()?.deleteAllEpisodes()
+            viewModel.db?.playerDao()?.deleteAll()
 
             runOnUiThread {
                 viewModel.mAuth.signOut()

@@ -47,7 +47,7 @@ class LocaleFeedViewModel : BaseViewModel() {
     private fun writePostToDB(post: Post) {
         doAsync {
             val postEntity = PostEntity(post)
-            db.postsDao().insertPost(postEntity)
+            db?.postsDao()?.insertPost(postEntity)
         }
     }
 }
