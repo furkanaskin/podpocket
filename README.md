@@ -2,9 +2,7 @@
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f1b0282cde98426da473ee7070e86403)](https://www.codacy.com/app/furkanaskin/podpocket?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=furkanaskin/podpocket&amp;utm_campaign=Badge_Grade)
-
-[![](https://tokei.rs/b1/github/furkanaskin/podpocket?files=Kotlin)](https://api.codetabs.com/v1/loc?github=furkanaskin/Podpocket)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/furkanaskin/podpocket.svg)
+[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 
 
 ## Podpocket
@@ -51,6 +49,7 @@ This project is an Podcast app like Spotify, Spreaker or SoundCloud but we has o
  - [ScalingLayout](https://github.com/iammert/ScalingLayout)
  - [ThreeTenABP](https://github.com/JakeWharton/ThreeTenABP)
  - [FlagKit](https://github.com/KaKaVip/Android-Flag-Kit)
+ - [Ktlint](https://github.com/pinterest/ktlint)
  
 ## Future Development
 
