@@ -24,20 +24,20 @@ class FavoritesViewModel @Inject constructor(api: PodpocketAPI, appDatabase: App
     fun getEpisodes(id: String) {
         baseApi?.let { baseApi ->
             baseApi.getPodcastById(id)
-                    .subscribeOn(Schedulers.io())
-                    .map { Resource.success(it) }
-                    .onErrorReturn { Resource.error(it) }
-                    .doOnSubscribe { progressLiveData.postValue(true) }
-                    .doOnTerminate { progressLiveData.postValue(false) }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .autoDisposable(this)
-                    .subscribe {
-                        when (it?.status) {
-                            Status.SUCCESS -> episodesLiveData.postValue(it)
-                            Status.LOADING -> ""
-                            Status.ERROR -> Timber.e(it.error)
-                        }
+                .subscribeOn(Schedulers.io())
+                .map { Resource.success(it) }
+                .onErrorReturn { Resource.error(it) }
+                .doOnSubscribe { progressLiveData.postValue(true) }
+                .doOnTerminate { progressLiveData.postValue(false) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
+                .subscribe {
+                    when (it?.status) {
+                        Status.SUCCESS -> episodesLiveData.postValue(it)
+                        Status.LOADING -> ""
+                        Status.ERROR -> Timber.e(it.error)
                     }
+                }
         }
     }
 }

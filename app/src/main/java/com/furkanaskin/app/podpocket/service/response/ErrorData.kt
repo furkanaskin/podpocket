@@ -7,6 +7,6 @@ import com.google.gson.annotations.SerializedName
  */
 
 data class ErrorData(
-        @SerializedName("source")
-        var data: ErrorSource
+    @SerializedName("source")
+    var data: ErrorSource
 )

@@ -2,18 +2,21 @@ package com.furkanaskin.app.podpocket.ui.feed.new_post
 
 import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.core.BaseViewModel
+import com.furkanaskin.app.podpocket.db.AppDatabase
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.model.Post
+import com.furkanaskin.app.podpocket.service.PodpocketAPI
 import com.google.firebase.database.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 /**
  * Created by Furkan on 2019-05-26
  */
 
-class NewPostViewModel : BaseViewModel() {
+class NewPostViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
     var postText: ObservableField<String> = ObservableField("")
     var pushPostSuccess: ObservableField<Boolean> = ObservableField(false)
 
@@ -21,7 +24,7 @@ class NewPostViewModel : BaseViewModel() {
     var currentUser: UserEntity? = null
 
     init {
-        //get reference to our db
+        // get reference to our db
         databaseReference = FirebaseDatabase.getInstance().reference
         getUser() // This is required because BaseViewModel not reached user data yet.
         createFirebaseListener()
@@ -30,22 +33,24 @@ class NewPostViewModel : BaseViewModel() {
     fun shareClicked() {
         if (postText.get() != null && postText.get()!!.length > 5 && databaseReference != null) {
             val newPost = Post(
-                    user?.podcaster,
-                    convertDate(LocalDate.now()),
-                    user?.verifiedUser,
-                    user?.userName,
-                    postText.get(),
-                    createUniquePostId(),
-                    user?.uniqueId,
-                    currentLocation)
+                user?.podcaster,
+                convertDate(LocalDate.now()),
+                user?.verifiedUser,
+                user?.userName,
+                postText.get(),
+                createUniquePostId(),
+                user?.uniqueId,
+                currentLocation
+            )
             insertPostToFirebase(newPost)
         }
     }
 
-
     private fun insertPostToFirebase(post: Post) {
-        databaseReference?.child("posts")?.child(post.postId
-                ?: "")?.setValue(post)?.addOnCompleteListener { task ->
+        databaseReference?.child("posts")?.child(
+            post.postId
+                ?: ""
+        )?.setValue(post)?.addOnCompleteListener { task ->
 
             if (task.isSuccessful) {
                 pushPostSuccess.set(true)
@@ -53,7 +58,6 @@ class NewPostViewModel : BaseViewModel() {
                 pushPostSuccess.set(false)
             }
         }
-
     }
 
     private fun createFirebaseListener() {

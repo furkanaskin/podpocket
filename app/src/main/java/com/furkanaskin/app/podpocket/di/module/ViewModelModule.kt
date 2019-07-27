@@ -39,6 +39,9 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class ViewModelModule {
 
+    @Binds
+    abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
+
     @IntoMap
     @Binds
     @ViewModelKey(SplashActivityViewModel::class)
@@ -52,13 +55,110 @@ abstract class ViewModelModule {
     @IntoMap
     @Binds
     @ViewModelKey(MainActivityViewModel::class)
-    abstract fun provideMainActivityViewModel(mainActivityViewModel: MainActivityViewModel): ViewModel
+    abstract fun provideMainViewModel(mainActivityViewModel: MainActivityViewModel): ViewModel
 
-
-    //TODO: Add viewmodels which need to Dagger
-    //TODO: You need to extend BaseActivity like below
-    // @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase)
-
+    @IntoMap
     @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    @ViewModelKey(ForgetPasswordViewModel::class)
+    abstract fun provideForgetPasswordViewModel(forgetPasswordViewModel: ForgetPasswordViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(DashboardViewModel::class)
+    abstract fun provideDashboardViewModel(dashboardViewModel: DashboardViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(HomeViewModel::class)
+    abstract fun provideHomeViewModel(homeViewModel: HomeViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun provideSearchViewModel(searchViewModel: SearchViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(FeedViewModel::class)
+    abstract fun provideFeedViewModel(feedViewModel: FeedViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(ProfileViewModel::class)
+    abstract fun provideProfileViewModel(profileViewModel: ProfileViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(SettingsViewModel::class)
+    abstract fun provideSettingsViewModel(settingsViewModel: SettingsViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(AfterRegisterViewModel::class)
+    abstract fun provideAfterRegisterViewModel(afterRegisterViewModel: AfterRegisterViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(PlayerViewModel::class)
+    abstract fun providePlayerViewModel(playerViewModel: PlayerViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(PodcastViewModel::class)
+    abstract fun providePodcastViewModel(podcastViewModel: PodcastViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(PlayerQueueViewModel::class)
+    abstract fun providePlayerQueueViewModel(playerQueueViewModel: PlayerQueueViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(AccountDetailViewModel::class)
+    abstract fun provideAccountDetailViewModel(accountDetailViewModel: AccountDetailViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(RecentlyPlayedViewModel::class)
+    abstract fun provideRecentlyPlayedViewModel(recentlyPlayedViewModel: RecentlyPlayedViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(FavoritesViewModel::class)
+    abstract fun provideFavoritesViewModel(favoritesViewModel: FavoritesViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(PostDetailViewModel::class)
+    abstract fun providePostDetailViewModel(postDetailViewModel: PostDetailViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(NewPostViewModel::class)
+    abstract fun provideNewPostViewModel(newPostViewModel: NewPostViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(LocaleFeedViewModel::class)
+    abstract fun provideLocaleFeedViewModel(localeFeedViewModel: LocaleFeedViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(GlobalFeedViewModel::class)
+    abstract fun provideGlobalFeedViewModel(globalFeedViewModel: GlobalFeedViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(FeedSearchViewModel::class)
+    abstract fun provideFeedSearchViewModel(feedSearchViewModel: FeedSearchViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(EpisodesViewModel::class)
+    abstract fun provideEpisodesViewModel(episodesViewModel: EpisodesViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(PodcastDetailViewModel::class)
+    abstract fun providePodcastDetailViewModel(podcastDetailViewModel: PodcastDetailViewModel): ViewModel
 }

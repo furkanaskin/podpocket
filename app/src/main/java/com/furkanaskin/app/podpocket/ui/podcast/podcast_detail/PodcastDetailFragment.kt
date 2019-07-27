@@ -44,9 +44,10 @@ class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodca
         initRecommendedPodcastsAdapter()
         initRecommendedPodcasts()
 
-        mBinding.imageViewPodcastCountry.countryCode = getCountryCode(viewModel.podcast.get()?.country
-                ?: "")
-
+        mBinding.imageViewPodcastCountry.countryCode = getCountryCode(
+            viewModel.podcast.get()?.country
+                ?: ""
+        )
     }
 
     private fun parseIntent() {
@@ -56,8 +57,11 @@ class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodca
     }
 
     private fun getData() {
-        viewModel.getPodcastRecommendations(viewModel.podcast.get()?.id
-                ?: "1c8374ef2e8c41928010347f66401e56", 0)
+        viewModel.getPodcastRecommendations(
+            viewModel.podcast.get()?.id
+                ?: "1c8374ef2e8c41928010347f66401e56",
+            0
+        )
     }
 
     private fun getCountryCode(countryName: String) = Locale.getAvailableLocales().find { it.getDisplayCountry(Locale.US) == countryName }?.country?.toLowerCase()
@@ -67,9 +71,12 @@ class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodca
         if (viewModel.podcastRecommendationsLiveData.hasActiveObservers())
             viewModel.podcastRecommendationsLiveData.removeObservers(this)
 
-        viewModel.podcastRecommendationsLiveData.observe(this@PodcastDetailFragment, Observer<Resource<PodcastRecommendations>> {
-            (mBinding.recyclerViewSimilarPodcasts.adapter as RecommendedPodcastsAdapter).submitList(it.data?.recommendations)
-        })
+        viewModel.podcastRecommendationsLiveData.observe(
+            this@PodcastDetailFragment,
+            Observer<Resource<PodcastRecommendations>> {
+                (mBinding.recyclerViewSimilarPodcasts.adapter as RecommendedPodcastsAdapter).submitList(it.data?.recommendations)
+            }
+        )
     }
 
     private fun initRecommendedPodcastsAdapter() {

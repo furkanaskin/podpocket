@@ -22,7 +22,6 @@ class RecentlyPodcastsAdapter(private val clickCallback: ((RecentlyPlaysEntity) 
     override fun areContentsTheSame(oldItem: RecentlyPlaysEntity, newItem: RecentlyPlaysEntity): Boolean {
         return oldItem == newItem
     }
-
 }) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val viewModel = RecentlyPodcastsItemViewModel()

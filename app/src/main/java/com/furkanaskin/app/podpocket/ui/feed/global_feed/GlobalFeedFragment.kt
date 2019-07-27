@@ -31,11 +31,14 @@ class GlobalFeedFragment : BaseFragment<GlobalFeedViewModel, FragmentGlobalFeedB
         initGlobalFeedAdapter()
         showProgress()
 
-        viewModel.db?.postsDao()?.getPosts()?.observe(this@GlobalFeedFragment, Observer<List<PostEntity>> {
-            hideProgress()
+        viewModel.db?.postsDao()?.getPosts()?.observe(
+            this@GlobalFeedFragment,
+            Observer<List<PostEntity>> {
+                hideProgress()
 
-            (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).submitList(it)
-        })
+                (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).submitList(it)
+            }
+        )
     }
 
     private fun initGlobalFeedAdapter() {
@@ -46,6 +49,5 @@ class GlobalFeedFragment : BaseFragment<GlobalFeedViewModel, FragmentGlobalFeedB
 
         mBinding.recyclerViewGlobalPosts.adapter = adapter
         mBinding.recyclerViewGlobalPosts.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-
     }
 }

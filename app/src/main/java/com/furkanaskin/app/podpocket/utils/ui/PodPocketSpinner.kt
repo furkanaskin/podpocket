@@ -12,7 +12,6 @@ class PodPocketSpinner : AppCompatSpinner {
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0) {
         setDefaultFont()
-
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
@@ -20,8 +19,5 @@ class PodPocketSpinner : AppCompatSpinner {
     }
 
     private fun setDefaultFont() {
-
     }
-
-
 }

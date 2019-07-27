@@ -15,6 +15,5 @@ class GlobalPostsItemViewModel : BaseViewModel() {
     fun setModel(item: PostEntity, position: Int) {
         this.item.set(item)
         this.position = position
-
     }
 }

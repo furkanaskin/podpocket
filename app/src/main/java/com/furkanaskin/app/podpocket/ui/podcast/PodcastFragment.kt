@@ -33,16 +33,18 @@ class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(P
         if (!isStateSaved)
             getData()
 
-
         if (viewModel.progressLiveData.hasActiveObservers())
             viewModel.progressLiveData.removeObservers(this)
 
-        viewModel.progressLiveData.observe(this@PodcastFragment, Observer<Boolean> {
-            if (it)
-                showProgress()
-            else
-                hideProgress()
-        })
+        viewModel.progressLiveData.observe(
+            this@PodcastFragment,
+            Observer<Boolean> {
+                if (it)
+                    showProgress()
+                else
+                    hideProgress()
+            }
+        )
     }
 
     fun getData() {
@@ -51,9 +53,12 @@ class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(P
         if (viewModel.podcastLiveData.hasActiveObservers())
             viewModel.podcastLiveData.removeObservers(this)
 
-        viewModel.podcastLiveData.observe(this@PodcastFragment, Observer<Resource<Podcasts>> {
-            initAdapter()
-        })
+        viewModel.podcastLiveData.observe(
+            this@PodcastFragment,
+            Observer<Resource<Podcasts>> {
+                initAdapter()
+            }
+        )
     }
 
     private fun initAdapter() {
@@ -61,7 +66,7 @@ class PodcastFragment : BaseFragment<PodcastViewModel, FragmentPodcastBinding>(P
 
             viewModel.podcast.get()?.let { podcasts ->
                 PodcastFragmentPagerAdapter(context, fragmentManager, podcasts)
-                        .also { mBinding.viewPager.adapter = it }
+                    .also { mBinding.viewPager.adapter = it }
             }
         }
 

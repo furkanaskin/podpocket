@@ -73,7 +73,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             // User coming from homeFragment recommendations or favorites fragment, just try to get episode detail.
             episodeId = intent.getStringExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION)
             getEpisodeDetail(episodeId)
-
         } else {
 
             // User coming from Podcast Episodes fragment. First we need the find which position clicked then we can get episode detail.
@@ -81,7 +80,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             episodeId = episodes[currentPosition]
             getEpisodeDetail(episodeId)
         }
-
 
         binding.buttonQueue.setOnClickListener {
             fragmentLayoutQueue.show()
@@ -93,16 +91,20 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
             // After making visibility settings we can add Player Queue
 
-            val playerQueueFragment = PlayerQueueFragment.newInstance(viewModel.episodeDetailLiveData.value?.data?.podcast?.id
-                    ?: "", currentPosition, viewModel.episodeDetailLiveData.value?.data?.podcast?.totalEpisodes
-                    ?: 0)
+            val playerQueueFragment = PlayerQueueFragment.newInstance(
+                viewModel.episodeDetailLiveData.value?.data?.podcast?.id
+                    ?: "",
+                currentPosition,
+                viewModel.episodeDetailLiveData.value?.data?.podcast?.totalEpisodes
+                    ?: 0
+            )
             val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
             val queueFragment = supportFragmentManager.findFragmentByTag("playerQueueFragment")
             if (queueFragment != null) {
                 // If is already committed, don't commit again.
             } else {
                 transaction.add(R.id.fragmentLayoutQueue, playerQueueFragment, "playerQueueFragment")
-                        .commitNow()
+                    .commitNow()
             }
 
             binding.relativeLayoutNowPlaying.hide()
@@ -124,7 +126,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
             fragmentLayoutQueue.hide()
             binding.relativeLayoutNowPlaying.show()
-
         }
 
         binding.imageButtonFavorite.setOnClickListener {
@@ -136,7 +137,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             if (viewModel.isFavorite.get() == false) {
                 viewModel.isFavorite.set(true)
                 binding.imageButtonFavorite.setImageResource(R.drawable.ic_favorite_enabled)
-
             } else {
                 viewModel.isFavorite.set(false)
                 binding.imageButtonFavorite.setImageResource(R.drawable.ic_favorite_disabled)
@@ -161,13 +161,15 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         if (viewModel.progressLiveData.hasActiveObservers())
             viewModel.progressLiveData.removeObservers(this)
 
-        viewModel.progressLiveData.observe(this, Observer<Boolean> {
-            if (it)
-                showProgress()
-            else
-                hideProgress()
-        })
-
+        viewModel.progressLiveData.observe(
+            this,
+            Observer<Boolean> {
+                if (it)
+                    showProgress()
+                else
+                    hideProgress()
+            }
+        )
     }
 
     fun favoriteVisibility() {
@@ -232,16 +234,19 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         if (viewModel.episodeDetailLiveData.hasActiveObservers())
             viewModel.episodeDetailLiveData.removeObservers(this)
 
-        viewModel.episodeDetailLiveData.observe(this, Observer<Resource<Episode>> {
-            // if player already initialized (already playing some episode) release it.
-            if (::player.isInitialized) {
-                player.release()
-            }
+        viewModel.episodeDetailLiveData.observe(
+            this,
+            Observer<Resource<Episode>> {
+                // if player already initialized (already playing some episode) release it.
+                if (::player.isInitialized) {
+                    player.release()
+                }
 
-            checkFavorite()
-            it.data?.let { episode -> setEpisode(episode) }
-            it.data?.let { episode -> setEpisodeInfo(episode) }
-        })
+                checkFavorite()
+                it.data?.let { episode -> setEpisode(episode) }
+                it.data?.let { episode -> setEpisodeInfo(episode) }
+            }
+        )
     }
 
     fun setEpisode(episode: Episode) {
@@ -251,7 +256,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         player = ExoPlayerFactory.newSimpleInstance(this, trackSelector)
         player.addListener(eventListener)
         initDefaultTimeBar()
-
 
         with(player) {
             prepare(mediaSource)
@@ -313,7 +317,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             episodeId = episodes[currentPosition]
             getEpisodeDetail(episodeId)
             disableButtons()
-
         } else {
             Toast.makeText(this, getString(R.string.no_more_new_episodes), Toast.LENGTH_SHORT).show()
         }
@@ -328,7 +331,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             episodeId = episodes[currentPosition]
             getEpisodeDetail(episodeId)
             disableButtons()
-
         } else {
             Toast.makeText(this, getString(R.string.you_are_in_first_episode), Toast.LENGTH_SHORT).show()
         }
@@ -365,7 +367,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 Player.STATE_ENDED -> {
                     nextEpisode()
                 }
-
             }
         }
     }
@@ -381,7 +382,6 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         override fun onScrubStop(timeBar: TimeBar?, position: Long, canceled: Boolean) {
             player.seekTo(position * 1000L)
         }
-
     }
 
     override fun onBackPressed() {

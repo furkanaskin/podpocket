@@ -17,7 +17,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 import com.furkanaskin.app.podpocket.R
 
-
 class PodPocketCircleImageView : AppCompatImageView {
 
     private val mDrawableRect = RectF()
@@ -137,11 +136,15 @@ class PodPocketCircleImageView : AppCompatImageView {
 
         // Look for deprecated civ_fill_color if civ_circle_background_color is not set
         if (a.hasValue(R.styleable.CircleImageView_civ_circle_background_color)) {
-            mCircleBackgroundColor = a.getColor(R.styleable.CircleImageView_civ_circle_background_color,
-                    DEFAULT_CIRCLE_BACKGROUND_COLOR)
+            mCircleBackgroundColor = a.getColor(
+                R.styleable.CircleImageView_civ_circle_background_color,
+                DEFAULT_CIRCLE_BACKGROUND_COLOR
+            )
         } else if (a.hasValue(R.styleable.CircleImageView_civ_fill_color)) {
-            mCircleBackgroundColor = a.getColor(R.styleable.CircleImageView_civ_fill_color,
-                    DEFAULT_CIRCLE_BACKGROUND_COLOR)
+            mCircleBackgroundColor = a.getColor(
+                R.styleable.CircleImageView_civ_fill_color,
+                DEFAULT_CIRCLE_BACKGROUND_COLOR
+            )
         }
 
         a.recycle()
@@ -212,7 +215,6 @@ class PodPocketCircleImageView : AppCompatImageView {
         super.setPaddingRelative(start, top, end, bottom)
         setup()
     }
-
 
     @Deprecated("Use {@link #setBorderColor(int)} instead")
     fun setBorderColorResource(@ColorRes borderColorRes: Int) {
@@ -295,7 +297,6 @@ class PodPocketCircleImageView : AppCompatImageView {
             e.printStackTrace()
             return null
         }
-
     }
 
     private fun initializeBitmap() {
@@ -394,7 +395,6 @@ class PodPocketCircleImageView : AppCompatImageView {
             mBorderRect.roundOut(bounds)
             outline.setRoundRect(bounds, bounds.width() / 2.0f)
         }
-
     }
 
     companion object {
@@ -409,5 +409,4 @@ class PodPocketCircleImageView : AppCompatImageView {
         private val DEFAULT_CIRCLE_BACKGROUND_COLOR = Color.TRANSPARENT
         private val DEFAULT_BORDER_OVERLAY = false
     }
-
 }

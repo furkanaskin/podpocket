@@ -16,6 +16,5 @@ class FavoriteEpisodesListViewModel : BaseViewModel() {
     fun setModel(item: FavoriteEpisodeEntity, position: Int) {
         this.item.set(item)
         this.position = position
-
     }
 }

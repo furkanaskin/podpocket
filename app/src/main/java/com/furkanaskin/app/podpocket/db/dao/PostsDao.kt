@@ -25,5 +25,4 @@ interface PostsDao {
 
     @Query("Select * from Posts where region=:userRegion order by pubDate asc")
     fun getLocalePosts(userRegion: String): LiveData<List<PostEntity>>
-
 }

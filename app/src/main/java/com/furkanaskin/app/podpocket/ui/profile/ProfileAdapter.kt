@@ -17,10 +17,11 @@ import com.furkanaskin.app.podpocket.db.entities.ProfileSettingsEntity
 class ProfileAdapter(private val callBack: (ProfileSettingsEntity, Int) -> Unit) : BaseAdapter<ProfileSettingsEntity>(profileSettingsDiffCallback) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemProfileBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.item_profile,
-                parent,
-                false)
+            LayoutInflater.from(parent.context),
+            R.layout.item_profile,
+            parent,
+            false
+        )
 
         val viewModel = ProfileItemViewModel()
 
@@ -41,10 +42,8 @@ class ProfileAdapter(private val callBack: (ProfileSettingsEntity, Int) -> Unit)
 
 val profileSettingsDiffCallback = object : DiffUtil.ItemCallback<ProfileSettingsEntity>() {
     override fun areContentsTheSame(oldItem: ProfileSettingsEntity, newItem: ProfileSettingsEntity): Boolean =
-            oldItem == newItem
+        oldItem == newItem
 
     override fun areItemsTheSame(oldItem: ProfileSettingsEntity, newItem: ProfileSettingsEntity): Boolean =
-            oldItem.title == newItem.title
-
-
+        oldItem.title == newItem.title
 }

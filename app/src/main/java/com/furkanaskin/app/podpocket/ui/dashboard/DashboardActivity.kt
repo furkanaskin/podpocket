@@ -12,7 +12,6 @@ import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityDashboardBinding
 import org.jetbrains.anko.contentView
 
-
 /**
  * Created by Furkan on 16.04.2019
  */

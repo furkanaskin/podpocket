@@ -14,7 +14,6 @@ abstract class BaseRetrofitCallback<T>(private val callBack: BaseCallBack<T>?) :
 
     private val API_ERROR = "Api Error"
 
-
     override fun onResponse(call: Call<T>?, response: Response<T>?) {
         callBack?.let {
 
@@ -31,7 +30,6 @@ abstract class BaseRetrofitCallback<T>(private val callBack: BaseCallBack<T>?) :
             }
 
             callBack.onSuccess(response.body()!!)
-
         }
     }
 

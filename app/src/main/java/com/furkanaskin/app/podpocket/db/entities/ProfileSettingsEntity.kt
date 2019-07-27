@@ -9,12 +9,13 @@ import com.furkanaskin.app.podpocket.core.BaseEntity
  */
 
 data class ProfileSettingsEntity(
-        var title: String? = null,
-        var imageSource: Int? = null
+    var title: String? = null,
+    var imageSource: Int? = null
 ) : BaseEntity(), Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readValue(Int::class.java.classLoader) as? Int)
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
@@ -34,5 +35,4 @@ data class ProfileSettingsEntity(
             return arrayOfNulls(size)
         }
     }
-
 }

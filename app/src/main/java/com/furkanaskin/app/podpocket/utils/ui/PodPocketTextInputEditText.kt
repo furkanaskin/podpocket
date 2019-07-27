@@ -6,7 +6,6 @@ import androidx.core.content.res.ResourcesCompat
 import com.furkanaskin.app.podpocket.R
 import com.google.android.material.textfield.TextInputEditText
 
-
 class PodPocketTextInputEditText : TextInputEditText {
 
     constructor(context: Context) : this(context, null) {
@@ -15,7 +14,6 @@ class PodPocketTextInputEditText : TextInputEditText {
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0) {
         setDefaultFont()
-
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
@@ -28,6 +26,4 @@ class PodPocketTextInputEditText : TextInputEditText {
             setTypeface(typeface)
         }
     }
-
-
 }

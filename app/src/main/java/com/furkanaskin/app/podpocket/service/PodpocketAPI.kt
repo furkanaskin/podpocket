@@ -70,5 +70,4 @@ interface PodpocketAPI {
 
     @POST("podcasts/submit")
     fun registerPodcast(@Query("rss") rssUrl: String, @Query("email") email: String): Observable<PodcastsItem>
-
 }

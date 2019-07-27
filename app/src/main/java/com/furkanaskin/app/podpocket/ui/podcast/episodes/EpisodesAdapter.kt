@@ -17,10 +17,11 @@ import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 class EpisodesAdapter(private val callBack: (EpisodeEntity, Int) -> Unit) : BaseAdapter<EpisodeEntity>(episodeDiffCallback) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemPodcastEpisodesBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.item_podcast_episodes,
-                parent,
-                false)
+            LayoutInflater.from(parent.context),
+            R.layout.item_podcast_episodes,
+            parent,
+            false
+        )
 
         val viewModel = EpisodesListItemViewModel()
 
@@ -42,10 +43,8 @@ class EpisodesAdapter(private val callBack: (EpisodeEntity, Int) -> Unit) : Base
 
 val episodeDiffCallback = object : DiffUtil.ItemCallback<EpisodeEntity>() {
     override fun areContentsTheSame(oldItem: EpisodeEntity, newItem: EpisodeEntity): Boolean =
-            oldItem == newItem
+        oldItem == newItem
 
     override fun areItemsTheSame(oldItem: EpisodeEntity, newItem: EpisodeEntity): Boolean =
-            oldItem.id == newItem.id
-
-
+        oldItem.id == newItem.id
 }

@@ -19,27 +19,26 @@ import javax.inject.Inject
  * Created by Furkan on 2019-07-06
  */
 
-class PodcastDetailViewModel  @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
+class PodcastDetailViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
 
     var podcast: ObservableField<Podcasts> = ObservableField()
     val podcastRecommendationsLiveData = MutableLiveData<Resource<PodcastRecommendations>>()
 
-
     fun getPodcastRecommendations(podcastId: String, explicitContent: Int) {
         baseApi?.let { baseApi ->
             baseApi.getPodcastRecommendations(podcastId, explicitContent)
-                    .subscribeOn(Schedulers.io())
-                    .map { Resource.success(it) }
-                    .onErrorReturn { Resource.error(it) }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .autoDisposable(this)
-                    .subscribe {
-                        when (it?.status) {
-                            Status.SUCCESS -> podcastRecommendationsLiveData.postValue(it)
-                            Status.LOADING -> ""
-                            Status.ERROR -> Timber.e(it.error)
-                        }
+                .subscribeOn(Schedulers.io())
+                .map { Resource.success(it) }
+                .onErrorReturn { Resource.error(it) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
+                .subscribe {
+                    when (it?.status) {
+                        Status.SUCCESS -> podcastRecommendationsLiveData.postValue(it)
+                        Status.LOADING -> ""
+                        Status.ERROR -> Timber.e(it.error)
                     }
+                }
         }
     }
 }

@@ -26,23 +26,23 @@ class PodcastViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDa
     fun getEpisodes(id: String) {
         baseApi?.let { baseApi ->
             baseApi.getPodcastById(id)
-                    .subscribeOn(Schedulers.io())
-                    .map { Resource.success(it) }
-                    .onErrorReturn { Resource.error(it) }
-                    .doOnSubscribe { progressLiveData.postValue(true) }
-                    .doOnTerminate { progressLiveData.postValue(false) }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .autoDisposable(this)
-                    .subscribe {
-                        when (it?.status) {
-                            Status.SUCCESS -> {
-                                podcastLiveData.postValue(it)
-                                podcast.set(it.data)
-                            }
-                            Status.LOADING -> ""
-                            Status.ERROR -> Timber.e(it.error)
+                .subscribeOn(Schedulers.io())
+                .map { Resource.success(it) }
+                .onErrorReturn { Resource.error(it) }
+                .doOnSubscribe { progressLiveData.postValue(true) }
+                .doOnTerminate { progressLiveData.postValue(false) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
+                .subscribe {
+                    when (it?.status) {
+                        Status.SUCCESS -> {
+                            podcastLiveData.postValue(it)
+                            podcast.set(it.data)
                         }
+                        Status.LOADING -> ""
+                        Status.ERROR -> Timber.e(it.error)
                     }
+                }
         }
     }
 }

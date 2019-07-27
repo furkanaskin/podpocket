@@ -31,11 +31,14 @@ class LocaleFeedFragment : BaseFragment<LocaleFeedViewModel, FragmentLocaleFeedB
         initLocaleFeedAdapter()
         showProgress()
 
-        viewModel.db?.postsDao()?.getLocalePosts(viewModel.currentLocation)?.observe(this@LocaleFeedFragment, Observer<List<PostEntity>> {
-            hideProgress()
+        viewModel.db?.postsDao()?.getLocalePosts(viewModel.currentLocation)?.observe(
+            this@LocaleFeedFragment,
+            Observer<List<PostEntity>> {
+                hideProgress()
 
-            (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).submitList(it)
-        })
+                (mBinding.recyclerViewLocalePosts.adapter as LocalePostsAdapter).submitList(it)
+            }
+        )
     }
 
     private fun initLocaleFeedAdapter() {
@@ -46,6 +49,5 @@ class LocaleFeedFragment : BaseFragment<LocaleFeedViewModel, FragmentLocaleFeedB
 
         mBinding.recyclerViewLocalePosts.adapter = adapter
         mBinding.recyclerViewLocalePosts.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-
     }
 }

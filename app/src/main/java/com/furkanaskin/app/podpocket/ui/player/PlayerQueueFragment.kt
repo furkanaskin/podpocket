@@ -63,7 +63,6 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
             playerActivity.getEpisodeDetail(item.id)
         }
 
-
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         mBinding.recyclerViewQueueEpisodes.layoutManager = layoutManager
         mBinding.recyclerViewQueueEpisodes.itemAnimator = DefaultItemAnimator()
@@ -81,7 +80,6 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
                 if (totalEpisodes ?: 0 > layoutManager.itemCount)
                     getMoreItems(nextEpisodePubDate ?: 0)
             }
-
         })
 
         mBinding.recyclerViewQueueEpisodes.adapter = adapter
@@ -89,12 +87,15 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
         if (viewModel.progressLiveData.hasActiveObservers())
             viewModel.progressLiveData.removeObservers(this)
 
-        viewModel.progressLiveData.observe(this, Observer<Boolean> {
-            if (it)
-                showProgress()
-            else
-                hideProgress()
-        })
+        viewModel.progressLiveData.observe(
+            this,
+            Observer<Boolean> {
+                if (it)
+                    showProgress()
+                else
+                    hideProgress()
+            }
+        )
     }
 
     private fun getQueue() {
@@ -104,35 +105,40 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
             viewModel?.db?.episodesDao()?.getEpisodes()?.removeObservers(this@PlayerQueueFragment)
 
         // Get episodes for queue.
-        viewModel?.db?.episodesDao()?.getEpisodes()?.observe(this@PlayerQueueFragment, Observer<List<EpisodeEntity>> { t ->
-            nextEpisodePubDate = t?.last()?.pubDateMs
-            (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(t.toMutableList())
-        })
+        viewModel?.db?.episodesDao()?.getEpisodes()?.observe(
+            this@PlayerQueueFragment,
+            Observer<List<EpisodeEntity>> { t ->
+                nextEpisodePubDate = t?.last()?.pubDateMs
+                (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(t.toMutableList())
+            }
+        )
     }
 
     fun getMoreItems(nextEpisodePubDate: Long) {
         val playerActivity = (activity as PlayerActivity)
         viewModel.getEpisodesWithPaging(getPodcastId() ?: "", nextEpisodePubDate)
 
-        viewModel.podcastLiveData.observe(this@PlayerQueueFragment, Observer<Resource<Podcasts>> {
-            totalEpisodes = it.data?.totalEpisodes
-            this@PlayerQueueFragment.nextEpisodePubDate = it.data?.nextEpisodePubDate
+        viewModel.podcastLiveData.observe(
+            this@PlayerQueueFragment,
+            Observer<Resource<Podcasts>> {
+                totalEpisodes = it.data?.totalEpisodes
+                this@PlayerQueueFragment.nextEpisodePubDate = it.data?.nextEpisodePubDate
 
-            doAsync {
-                it.data?.episodes?.forEachIndexed { _, episode ->
-                    val episodesItem = episode?.let { EpisodeEntity(it) }
-                    episodesItem?.let {
-                        viewModel.db?.episodesDao()?.insertEpisode(it)
-                        playerActivity.episodes.add(episode.id ?: "")
+                doAsync {
+                    it.data?.episodes?.forEachIndexed { _, episode ->
+                        val episodesItem = episode?.let { EpisodeEntity(it) }
+                        episodesItem?.let {
+                            viewModel.db?.episodesDao()?.insertEpisode(it)
+                            playerActivity.episodes.add(episode.id ?: "")
+                        }
+                    }
+
+                    runOnUiThread {
+                        isLoading = false
                     }
                 }
-
-                runOnUiThread {
-                    isLoading = false
-                }
             }
-
-        })
+        )
     }
 
     private fun getPodcastId(): String? {

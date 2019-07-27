@@ -14,8 +14,9 @@ import com.furkanaskin.app.podpocket.R
 class LocaleFeedContainerFragment : Fragment() {
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_locale_feed_container, container, false)
     }
@@ -26,8 +27,8 @@ class LocaleFeedContainerFragment : Fragment() {
         if (menuVisible) {
             // This routes the system back button to this Fragment
             requireFragmentManager().beginTransaction()
-                    .setPrimaryNavigationFragment(this)
-                    .commit()
+                .setPrimaryNavigationFragment(this)
+                .commit()
         }
     }
 }

@@ -42,14 +42,12 @@ class ForgetPasswordActivity : BaseActivity<ForgetPasswordViewModel, ActivityFor
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
                 showResetPasswordDialog()
             }
-
         })
 
         viewModel.sendVerifyMailSucces.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
                 showVerifyEmailDialog()
             }
-
         })
 
         when (viewType) {
@@ -66,23 +64,25 @@ class ForgetPasswordActivity : BaseActivity<ForgetPasswordViewModel, ActivityFor
 
     private fun showResetPasswordDialog() {
         AlertDialog.Builder(this)
-                .setMessage(R.string.reset_password_dialog)
-                .setNeutralButton("Tamam"
-                ) { dialogInterface: DialogInterface, _: Int ->
-                    dialogInterface.cancel()
-                }
-                .create()
-                .show()
+            .setMessage(R.string.reset_password_dialog)
+            .setNeutralButton(
+                "Tamam"
+            ) { dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.cancel()
+            }
+            .create()
+            .show()
     }
 
     private fun showVerifyEmailDialog() {
         AlertDialog.Builder(this)
-                .setMessage(R.string.verify_email_dialog)
-                .setNeutralButton("Tamam"
-                ) { dialogInterface: DialogInterface, _: Int ->
-                    dialogInterface.cancel()
-                }
-                .create()
-                .show()
+            .setMessage(R.string.verify_email_dialog)
+            .setNeutralButton(
+                "Tamam"
+            ) { dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.cancel()
+            }
+            .create()
+            .show()
     }
 }

@@ -26,7 +26,6 @@ class NewPostFragment : BaseFragment<NewPostViewModel, FragmentNewPostBinding>(N
                 navigate(R.id.action_newPostFragment_to_feedFragment)
                 toast("Post başarıyla paylaşıldı.")
             }
-
         })
     }
 }

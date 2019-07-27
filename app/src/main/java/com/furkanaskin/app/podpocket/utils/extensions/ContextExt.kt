@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 
 fun Context.getColorCompat(@ColorRes resourceId: Int) = ContextCompat.getColor(this, resourceId)
 
-
 fun isNetworkAvailable(context: Context): Boolean {
     val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     var activeNetworkInfo: NetworkInfo? = null

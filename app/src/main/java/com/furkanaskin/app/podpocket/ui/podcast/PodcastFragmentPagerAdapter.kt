@@ -14,22 +14,22 @@ import com.furkanaskin.app.podpocket.ui.podcast.podcast_detail.PodcastDetailFrag
  */
 
 class PodcastFragmentPagerAdapter(
-        private val context: Context?,
-        fragmentManager: FragmentManager,
-        podcast: Podcasts
+    private val context: Context?,
+    fragmentManager: FragmentManager,
+    podcast: Podcasts
 ) : FragmentStatePagerAdapter(fragmentManager) {
 
     private val fragmentList = listOf(
-            EpisodesFragment.getInstance(podcast),
-            PodcastDetailFragment.getInstance(podcast)
+        EpisodesFragment.getInstance(podcast),
+        PodcastDetailFragment.getInstance(podcast)
     )
 
     override fun getItem(position: Int): Fragment =
-            fragmentList[position]
+        fragmentList[position]
 
     override fun getCount(): Int =
-            fragmentList.size
+        fragmentList.size
 
     override fun getPageTitle(position: Int): String? =
-            context?.resources?.getStringArray(R.array.podcast_titles)?.get(position)
+        context?.resources?.getStringArray(R.array.podcast_titles)?.get(position)
 }

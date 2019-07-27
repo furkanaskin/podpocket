@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.viewpager.widget.ViewPager
 
-
 class PodPocketViewPager : ViewPager {
 
     var swipeEnabled = false
@@ -19,7 +18,6 @@ class PodPocketViewPager : ViewPager {
     }
 
     private fun init() {
-
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -29,6 +27,4 @@ class PodPocketViewPager : ViewPager {
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
         return this.swipeEnabled && super.onInterceptTouchEvent(event)
     }
-
-
 }

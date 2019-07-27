@@ -33,48 +33,50 @@ class PlayerViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDat
     fun getEpisodeDetails(id: String) {
         baseApi?.let { baseApi ->
             baseApi.getEpisodeById(id)
-                    .subscribeOn(Schedulers.io())
-                    .map { Resource.success(it) }
-                    .onErrorReturn { Resource.error(it) }
-                    .doOnSubscribe { progressLiveData.postValue(true) }
-                    .doOnTerminate { progressLiveData.postValue(false) }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .autoDisposable(this)
-                    .subscribe {
-                        when (it?.status) {
-                            Status.SUCCESS -> {
-                                it.data?.isPlaying = true
-                                val currentEpisode = it
-                                item.set(currentEpisode.data)
-                                _episodeDetailLiveData.postValue(currentEpisode)
+                .subscribeOn(Schedulers.io())
+                .map { Resource.success(it) }
+                .onErrorReturn { Resource.error(it) }
+                .doOnSubscribe { progressLiveData.postValue(true) }
+                .doOnTerminate { progressLiveData.postValue(false) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
+                .subscribe {
+                    when (it?.status) {
+                        Status.SUCCESS -> {
+                            it.data?.isPlaying = true
+                            val currentEpisode = it
+                            item.set(currentEpisode.data)
+                            _episodeDetailLiveData.postValue(currentEpisode)
 
-                                doAsync {
+                            doAsync {
 
-                                    // Set isSelected true for current episode
-                                    val episodeEntity = episodeDetailLiveData.value?.data?.id?.let {
-                                        db?.episodesDao()?.getEpisode(it)
-                                    }
-                                    episodeEntity?.isSelected = true
-                                    db?.episodesDao()?.insertEpisode(episodeEntity)
+                                // Set isSelected true for current episode
+                                val episodeEntity = episodeDetailLiveData.value?.data?.id?.let {
+                                    db?.episodesDao()?.getEpisode(it)
                                 }
+                                episodeEntity?.isSelected = true
+                                db?.episodesDao()?.insertEpisode(episodeEntity)
                             }
-                            Status.LOADING -> ""
-                            Status.ERROR -> Timber.e(it.error)
                         }
+                        Status.LOADING -> ""
+                        Status.ERROR -> Timber.e(it.error)
                     }
+                }
         }
     }
 
     fun saveCurrentPlayerValues() {
         doAsync {
-            val player = PlayerEntity(id = 0,
-                    episodeId = episodeDetailLiveData.value?.data?.id,
-                    episodeTitle = episodeDetailLiveData.value?.data?.title,
-                    podcastTitle = episodeDetailLiveData.value?.data?.podcast?.title,
-                    podcastId = episodeDetailLiveData.value?.data?.podcast?.id,
-                    explicitContent = episodeDetailLiveData.value?.data?.explicitContent ?: false,
-                    audio = episodeDetailLiveData.value?.data?.audio,
-                    isPlaying = true)
+            val player = PlayerEntity(
+                id = 0,
+                episodeId = episodeDetailLiveData.value?.data?.id,
+                episodeTitle = episodeDetailLiveData.value?.data?.title,
+                podcastTitle = episodeDetailLiveData.value?.data?.podcast?.title,
+                podcastId = episodeDetailLiveData.value?.data?.podcast?.id,
+                explicitContent = episodeDetailLiveData.value?.data?.explicitContent ?: false,
+                audio = episodeDetailLiveData.value?.data?.audio,
+                isPlaying = true
+            )
 
             db?.playerDao()?.insertPlayer(player)
         }
@@ -89,7 +91,6 @@ class PlayerViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDat
             }
         }
     }
-
 
     fun stringForTime(timeMs: Int): String {
         val mFormatBuilder = StringBuilder()

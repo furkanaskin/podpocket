@@ -96,8 +96,11 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
     private fun registerClicked() {
         if (getValidationMessages()) {
             showProgress.set(true)
-            mAuth.createUserWithEmailAndPassword(userName.get() ?: "", password.get()
-                    ?: "").addOnCompleteListener { task ->
+            mAuth.createUserWithEmailAndPassword(
+                userName.get() ?: "",
+                password.get()
+                    ?: ""
+            ).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     registerSuccess.set(true)
                     verifyEmail()
@@ -107,15 +110,15 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
                     doAsync {
 
                         val user = UserEntity(
-                                uniqueId = mAuth.currentUser?.uid ?: "",
-                                email = userName.get() ?: "",
-                                accountCreatedAt = convertDate(LocalDate.now()))
+                            uniqueId = mAuth.currentUser?.uid ?: "",
+                            email = userName.get() ?: "",
+                            accountCreatedAt = convertDate(LocalDate.now())
+                        )
 
                         db?.userDao()?.insertUser(user)
                     }
 
                     showProgress.set(false)
-
                 } else {
                     checkFirebaseCredentials(task)
                 }
@@ -123,13 +126,15 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
         }
     }
 
-
     private fun loginClicked() {
         if (getValidationMessages()) {
             showProgress.set(true)
 
-            mAuth.signInWithEmailAndPassword(userName.get() ?: "", password.get()
-                    ?: "").addOnCompleteListener { task ->
+            mAuth.signInWithEmailAndPassword(
+                userName.get() ?: "",
+                password.get()
+                    ?: ""
+            ).addOnCompleteListener { task ->
 
                 if (task.isSuccessful && mAuth.currentUser?.isEmailVerified!!) {
                     verifySuccess.set(true)
@@ -155,14 +160,12 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
                             }
                         }
                     })
-
                 } else if (task.isSuccessful && mAuth.currentUser?.isEmailVerified == false) {
                     showProgress.set(false)
                     verifySuccess.set(false)
                 } else {
                     checkFirebaseCredentials(task)
                     showProgress.set(false)
-
                 }
             }
         }
@@ -177,7 +180,6 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
         }
     }
 
-
     private fun checkFirebaseCredentials(task: Task<AuthResult>) {
         showProgress.set(true)
 
@@ -189,17 +191,14 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
             is FirebaseAuthInvalidCredentialsException -> {
                 errorMessage = "Lütfen mail adresi ve şifrenizi kontrol ediniz."
                 showProgress.set(false)
-
             }
             is FirebaseAuthWeakPasswordException -> {
                 errorMessage = "Lütfen daha güçlü bir parola deneyiniz."
                 showProgress.set(false)
-
             }
             is FirebaseAuthUserCollisionException -> {
                 errorMessage = "Zaten böyle bir kullanıcı var."
                 showProgress.set(false)
-
             }
             is FirebaseAuthInvalidUserException -> {
                 errorMessage = "Böyle bir kullanıcı bulunamadı."
@@ -210,7 +209,6 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
                 Timber.e(errorType.toString())
                 errorMessage = "Beklenmedik bir hata oluştu."
                 showProgress.set(false)
-
             }
         }
 
@@ -218,7 +216,6 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
             toastLiveData.postValue(errorMessage)
         }
     }
-
 
     fun forgetPasswordClicked() {
 
@@ -231,11 +228,12 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
 
     private fun insertUserToFirebase() {
         getUser()
-        FirebaseDatabase.getInstance().reference.child("users").child(mAuth.currentUser?.uid
-                ?: "").setValue(user)
+        FirebaseDatabase.getInstance().reference.child("users").child(
+            mAuth.currentUser?.uid
+                ?: ""
+        ).setValue(user)
     }
 
     private fun convertDate(date: LocalDate) =
-            date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-
+        date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 }

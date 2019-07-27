@@ -17,10 +17,11 @@ import com.furkanaskin.app.podpocket.db.entities.PostEntity
 class LocalePostsAdapter(private val callBack: (PostEntity, Int) -> Unit) : BaseAdapter<PostEntity>(localePostsDiffCallback) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemLocalePostBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.item_locale_post,
-                parent,
-                false)
+            LayoutInflater.from(parent.context),
+            R.layout.item_locale_post,
+            parent,
+            false
+        )
 
         val viewModel = LocalePostsItemViewModel()
 

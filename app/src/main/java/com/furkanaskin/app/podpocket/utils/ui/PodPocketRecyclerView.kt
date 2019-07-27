@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
 
-
 class PodPocketRecyclerView : RecyclerView {
     private var emptyView: View? = null
     private var loadingView: View? = null
@@ -45,32 +44,31 @@ class PodPocketRecyclerView : RecyclerView {
 
     private fun checkIfEmpty() {
         if (context is Activity)
-            (context as Activity).runOnUiThread {
-                val count: Int
-                if (adapter != null && isLoadingFinished) {
-                    if (loadingView != null)
-                        loadingView!!.hide()
-                    count = adapter!!.itemCount
-                    if (this@PodPocketRecyclerView.countTextView != null) {
-                        if (isCountTextAdd) {
-                            countTextView!!.text = String.format("%s Adet", count)
-                        } else {
-                            countTextView!!.text = count.toString()
-                        }
+        (context as Activity).runOnUiThread {
+            val count: Int
+            if (adapter != null && isLoadingFinished) {
+                if (loadingView != null)
+                    loadingView!!.hide()
+                count = adapter!!.itemCount
+                if (this@PodPocketRecyclerView.countTextView != null) {
+                    if (isCountTextAdd) {
+                        countTextView!!.text = String.format("%s Adet", count)
+                    } else {
+                        countTextView!!.text = count.toString()
                     }
-                    val emptyViewVisible = count < 1
-                    emptyView?.visibility = if (emptyViewVisible) View.VISIBLE else View.GONE
-                    visibility = if (!emptyViewVisible) {
-                        View.VISIBLE
-                    } else
-                        View.GONE
-
-                } else if (loadingView != null) {
-                    loadingView!!.show()
-                    emptyView?.hide()
-                    visibility = View.GONE
                 }
+                val emptyViewVisible = count < 1
+                emptyView?.visibility = if (emptyViewVisible) View.VISIBLE else View.GONE
+                visibility = if (!emptyViewVisible) {
+                    View.VISIBLE
+                } else
+                    View.GONE
+            } else if (loadingView != null) {
+                loadingView!!.show()
+                emptyView?.hide()
+                visibility = View.GONE
             }
+        }
     }
 
     override fun setAdapter(adapter: RecyclerView.Adapter<*>?) {

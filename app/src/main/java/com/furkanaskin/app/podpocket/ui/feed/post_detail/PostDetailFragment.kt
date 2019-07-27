@@ -14,5 +14,4 @@ class PostDetailFragment : BaseFragment<PostDetailViewModel, FragmentPostDetailB
     override fun initViewModel() {
         mBinding.viewModel = viewModel
     }
-
 }

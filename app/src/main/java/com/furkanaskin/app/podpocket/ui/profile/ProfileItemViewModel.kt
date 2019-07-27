@@ -15,6 +15,5 @@ class ProfileItemViewModel : BaseViewModel() {
     fun setModel(item: ProfileSettingsEntity, position: Int) {
         this.item.set(item)
         this.position = position
-
     }
 }

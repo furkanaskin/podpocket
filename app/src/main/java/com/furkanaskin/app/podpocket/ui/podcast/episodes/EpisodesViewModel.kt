@@ -25,20 +25,20 @@ class EpisodesViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppD
     fun getEpisodesWithPaging(id: String, nextEpisodePubDate: Long) {
         baseApi?.let { baseApi ->
             baseApi.getPodcastByIdWithPaging(id, nextEpisodePubDate)
-                    .subscribeOn(Schedulers.io())
-                    .map { Resource.success(it) }
-                    .onErrorReturn { Resource.error(it) }
-                    .doOnSubscribe { progressLiveData.postValue(true) }
-                    .doOnTerminate { progressLiveData.postValue(false) }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .autoDisposable(this)
-                    .subscribe {
-                        when (it?.status) {
-                            Status.SUCCESS -> _podcastLiveData.postValue(it)
-                            Status.LOADING -> ""
-                            Status.ERROR -> Timber.e(it.error)
-                        }
+                .subscribeOn(Schedulers.io())
+                .map { Resource.success(it) }
+                .onErrorReturn { Resource.error(it) }
+                .doOnSubscribe { progressLiveData.postValue(true) }
+                .doOnTerminate { progressLiveData.postValue(false) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
+                .subscribe {
+                    when (it?.status) {
+                        Status.SUCCESS -> _podcastLiveData.postValue(it)
+                        Status.LOADING -> ""
+                        Status.ERROR -> Timber.e(it.error)
                     }
+                }
         }
     }
 }

@@ -58,17 +58,18 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         initVisibilities()
         showResults()
 
-
         if (viewModel.progressLiveData.hasActiveObservers())
             viewModel.progressLiveData.removeObservers(this)
 
-        viewModel.progressLiveData.observe(this@SearchFragment, Observer<Boolean> {
-            if (it)
-                showProgress()
-            else
-                hideProgress()
-        })
-
+        viewModel.progressLiveData.observe(
+            this@SearchFragment,
+            Observer<Boolean> {
+                if (it)
+                    showProgress()
+                else
+                    hideProgress()
+            }
+        )
     }
 
     private fun initSearchAdapter() {
@@ -104,7 +105,6 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
             }
         })
 
-
         // -- PODCAST --
         val searchPodcastAdapter = PodcastSearchResultAdapter { item ->
             val podcastId = item.id
@@ -131,7 +131,6 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                     getSearchResult(searchTerm ?: "", Constants.SearchQuery.PODCAST, podcastsOffset)
                 }
             }
-
         })
     }
 
@@ -195,39 +194,43 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         if (viewModel.episodeSearchResultLiveData.hasActiveObservers())
             viewModel.episodeSearchResultLiveData.removeObservers(this)
 
-        viewModel.episodeSearchResultLiveData.observe(this@SearchFragment, Observer<Resource<Search>> {
-            isLoading = false
-            episodesOffset = it.data?.nextOffset ?: 0
-            totalEpisodeResult = it.data?.total ?: 0
+        viewModel.episodeSearchResultLiveData.observe(
+            this@SearchFragment,
+            Observer<Resource<Search>> {
+                isLoading = false
+                episodesOffset = it.data?.nextOffset ?: 0
+                totalEpisodeResult = it.data?.total ?: 0
 
-            it.data?.results?.forEach {
-                episodesResult?.add(it)
+                it.data?.results?.forEach {
+                    episodesResult?.add(it)
+                }
+
+                (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(episodesResult)
             }
-
-            (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(episodesResult)
-        })
-
+        )
 
         if (viewModel.podcastSearchResultLiveData.hasActiveObservers())
             viewModel.podcastSearchResultLiveData.removeObservers(this)
 
-        viewModel.podcastSearchResultLiveData.observe(this@SearchFragment, Observer<Resource<Search>> {
-            isLoading = false
-            podcastsOffset = it.data?.nextOffset ?: 0
-            totalPodcastResult = it.data?.total ?: 0
+        viewModel.podcastSearchResultLiveData.observe(
+            this@SearchFragment,
+            Observer<Resource<Search>> {
+                isLoading = false
+                podcastsOffset = it.data?.nextOffset ?: 0
+                totalPodcastResult = it.data?.total ?: 0
 
-            it.data?.results?.forEach {
-                podcastsResult?.add(it)
+                it.data?.results?.forEach {
+                    podcastsResult?.add(it)
+                }
+                (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(podcastsResult)
             }
-            (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(podcastsResult)
-        })
+        )
     }
 
     private fun getSearchResult(searchText: String, type: String, offset: Int) {
 
         if (viewModel.selectedGenres.size == 0) {
             viewModel.getSearchResult(searchText, type, offset)
-
         } else {
             val genresIds = viewModel.selectedGenres.joinToString(separator = ",")
             viewModel.getSearchResultWithGenres(searchText, type, genresIds, offset)
@@ -240,9 +243,12 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         if (viewModel.genresLiveData.hasActiveObservers())
             viewModel.genresLiveData.removeObservers(this)
 
-        viewModel.genresLiveData.observe(this@SearchFragment, Observer<Resource<Genres>> {
-            it.data?.let { genres -> addChipToGroup(mBinding.chipGroupGenres, genres) }
-        })
+        viewModel.genresLiveData.observe(
+            this@SearchFragment,
+            Observer<Resource<Genres>> {
+                it.data?.let { genres -> addChipToGroup(mBinding.chipGroupGenres, genres) }
+            }
+        )
     }
 
     private fun addChipToGroup(chipGroup: ChipGroup, items: Genres) {
@@ -278,34 +284,37 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         }
     }
 
-
     fun initVisibilities() {
         if (viewModel.episodeHeadingLiveData.hasActiveObservers())
             viewModel.episodeHeadingLiveData.removeObservers(this)
 
-        viewModel.episodeHeadingLiveData.observe(this@SearchFragment, Observer<Boolean> {
-            if (it) {
-                mBinding.textViewSearchEpisodesHeading.visibility = View.VISIBLE
-                mBinding.recyclerViewEpisodeSearchResult.visibility = View.VISIBLE
-            } else {
-                mBinding.textViewSearchEpisodesHeading.visibility = View.GONE
-                mBinding.recyclerViewEpisodeSearchResult.visibility = View.GONE
-
+        viewModel.episodeHeadingLiveData.observe(
+            this@SearchFragment,
+            Observer<Boolean> {
+                if (it) {
+                    mBinding.textViewSearchEpisodesHeading.visibility = View.VISIBLE
+                    mBinding.recyclerViewEpisodeSearchResult.visibility = View.VISIBLE
+                } else {
+                    mBinding.textViewSearchEpisodesHeading.visibility = View.GONE
+                    mBinding.recyclerViewEpisodeSearchResult.visibility = View.GONE
+                }
             }
-        })
+        )
 
         if (viewModel.podcastHeadingLiveData.hasActiveObservers())
             viewModel.podcastHeadingLiveData.removeObservers(this)
 
-        viewModel.podcastHeadingLiveData.observe(this@SearchFragment, Observer<Boolean> {
-            if (it) {
-                mBinding.textViewSearchPodcastsHeading.visibility = View.VISIBLE
-                mBinding.recyclerViewPodcastSearchResult.visibility = View.VISIBLE
-            } else {
-                mBinding.textViewSearchPodcastsHeading.visibility = View.GONE
-                mBinding.recyclerViewPodcastSearchResult.visibility = View.GONE
-
+        viewModel.podcastHeadingLiveData.observe(
+            this@SearchFragment,
+            Observer<Boolean> {
+                if (it) {
+                    mBinding.textViewSearchPodcastsHeading.visibility = View.VISIBLE
+                    mBinding.recyclerViewPodcastSearchResult.visibility = View.VISIBLE
+                } else {
+                    mBinding.textViewSearchPodcastsHeading.visibility = View.GONE
+                    mBinding.recyclerViewPodcastSearchResult.visibility = View.GONE
+                }
             }
-        })
+        )
     }
 }

@@ -31,96 +31,95 @@ class HomeViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatab
     fun getBestPodcasts(region: String, explicitContent: Int) {
         baseApi?.let { baseApi ->
             baseApi.getBestPodcasts(region, explicitContent)
-                    .subscribeOn(Schedulers.io())
-                    .map { Resource.success(it) }
-                    .onErrorReturn { Resource.error(it) }
-                    .doOnSubscribe { progressLiveData.postValue(true) }
-                    .doOnTerminate { progressLiveData.postValue(false) }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .autoDisposable(this)
-                    .subscribe {
-                        when (it?.status) {
-                            Status.SUCCESS -> bestPodcastsLiveData.postValue(it)
-                            Status.LOADING -> ""
-                            Status.ERROR -> Timber.e(it.error)
-                        }
+                .subscribeOn(Schedulers.io())
+                .map { Resource.success(it) }
+                .onErrorReturn { Resource.error(it) }
+                .doOnSubscribe { progressLiveData.postValue(true) }
+                .doOnTerminate { progressLiveData.postValue(false) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
+                .subscribe {
+                    when (it?.status) {
+                        Status.SUCCESS -> bestPodcastsLiveData.postValue(it)
+                        Status.LOADING -> ""
+                        Status.ERROR -> Timber.e(it.error)
                     }
+                }
         }
     }
 
     fun getPodcastRecommendations(podcastId: String, explicitContent: Int) {
         baseApi?.let { baseApi ->
             baseApi.getPodcastRecommendations(podcastId, explicitContent)
-                    .subscribeOn(Schedulers.io())
-                    .map { Resource.success(it) }
-                    .onErrorReturn { Resource.error(it) }
-                    .doOnSubscribe { progressLiveData.postValue(true) }
-                    .doOnTerminate { progressLiveData.postValue(false) }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .autoDisposable(this)
-                    .subscribe {
-                        when (it?.status) {
-                            Status.SUCCESS -> recommendedPodcastsLiveData.postValue(it)
-                            Status.LOADING -> ""
-                            Status.ERROR -> Timber.e(it.error)
-                        }
+                .subscribeOn(Schedulers.io())
+                .map { Resource.success(it) }
+                .onErrorReturn { Resource.error(it) }
+                .doOnSubscribe { progressLiveData.postValue(true) }
+                .doOnTerminate { progressLiveData.postValue(false) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
+                .subscribe {
+                    when (it?.status) {
+                        Status.SUCCESS -> recommendedPodcastsLiveData.postValue(it)
+                        Status.LOADING -> ""
+                        Status.ERROR -> Timber.e(it.error)
                     }
+                }
         }
     }
 
     fun getEpisodeRecommendations(podcastId: String, explicitContent: Int) {
         baseApi?.let { baseApi ->
             baseApi.getEpisodeRecommendations(podcastId, explicitContent)
-                    .subscribeOn(Schedulers.io())
-                    .map { Resource.success(it) }
-                    .onErrorReturn { Resource.error(it) }
-                    .doOnSubscribe { progressLiveData.postValue(true) }
-                    .doOnTerminate { progressLiveData.postValue(false) }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .autoDisposable(this)
-                    .subscribe {
-                        when (it?.status) {
-                            Status.SUCCESS -> recommendedEpisodesLiveData.postValue(it)
-                            Status.LOADING -> progressLiveData.postValue(true)
-                            Status.ERROR -> Timber.e(it.error)
-                        }
+                .subscribeOn(Schedulers.io())
+                .map { Resource.success(it) }
+                .onErrorReturn { Resource.error(it) }
+                .doOnSubscribe { progressLiveData.postValue(true) }
+                .doOnTerminate { progressLiveData.postValue(false) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
+                .subscribe {
+                    when (it?.status) {
+                        Status.SUCCESS -> recommendedEpisodesLiveData.postValue(it)
+                        Status.LOADING -> progressLiveData.postValue(true)
+                        Status.ERROR -> Timber.e(it.error)
                     }
+                }
         }
     }
 
     fun getEpisodes(id: String) {
         baseApi?.let { baseApi ->
             baseApi.getPodcastById(id)
-                    .subscribeOn(Schedulers.io())
-                    .map { Resource.success(it) }
-                    .onErrorReturn { Resource.error(it) }
-                    .doOnSubscribe { progressLiveData.postValue(true) }
-                    .doOnTerminate { progressLiveData.postValue(false) }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .autoDisposable(this)
-                    .subscribe {
-                        when (it?.status) {
-                            Status.SUCCESS -> {
-                                val ids = ArrayList<String>()
-                                it.data?.episodes?.forEachIndexed { _, episodesItem ->
-                                    ids.add(episodesItem?.id ?: "")
-                                }
-
-                                podcastEpisodeIds.postValue(ids)
-
-                                doAsync {
-                                    db?.episodesDao()?.deleteAllEpisodes()
-                                    it.data?.episodes?.forEachIndexed { _, episode ->
-                                        val episodesItem = episode.let { EpisodeEntity(it!!) }
-                                        episodesItem.let { db?.episodesDao()?.insertEpisode(it) }
-                                    }
-                                }
-
+                .subscribeOn(Schedulers.io())
+                .map { Resource.success(it) }
+                .onErrorReturn { Resource.error(it) }
+                .doOnSubscribe { progressLiveData.postValue(true) }
+                .doOnTerminate { progressLiveData.postValue(false) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this)
+                .subscribe {
+                    when (it?.status) {
+                        Status.SUCCESS -> {
+                            val ids = ArrayList<String>()
+                            it.data?.episodes?.forEachIndexed { _, episodesItem ->
+                                ids.add(episodesItem?.id ?: "")
                             }
-                            Status.LOADING -> ""
-                            Status.ERROR -> Timber.e(it.error)
+
+                            podcastEpisodeIds.postValue(ids)
+
+                            doAsync {
+                                db?.episodesDao()?.deleteAllEpisodes()
+                                it.data?.episodes?.forEachIndexed { _, episode ->
+                                    val episodesItem = episode.let { EpisodeEntity(it!!) }
+                                    episodesItem.let { db?.episodesDao()?.insertEpisode(it) }
+                                }
+                            }
                         }
+                        Status.LOADING -> ""
+                        Status.ERROR -> Timber.e(it.error)
                     }
+                }
         }
     }
 }

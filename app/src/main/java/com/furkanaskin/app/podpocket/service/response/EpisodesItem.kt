@@ -8,60 +8,60 @@ import java.util.*
 
 data class EpisodesItem(
 
-        @field:SerializedName("image")
-        val image: String? = null,
+    @field:SerializedName("image")
+    val image: String? = null,
 
-        @field:SerializedName("thumbnail")
-        val thumbnail: String? = null,
+    @field:SerializedName("thumbnail")
+    val thumbnail: String? = null,
 
-        @field:SerializedName("explicit_content")
-        val explicitContent: Boolean? = null,
+    @field:SerializedName("explicit_content")
+    val explicitContent: Boolean? = null,
 
-        @field:SerializedName("listennotes_edit_url")
-        val listennotesEditUrl: String? = null,
+    @field:SerializedName("listennotes_edit_url")
+    val listennotesEditUrl: String? = null,
 
-        @field:SerializedName("audio_length_sec")
-        val audioLength: Int? = null,
+    @field:SerializedName("audio_length_sec")
+    val audioLength: Int? = null,
 
-        @field:SerializedName("description")
-        val description: String? = null,
+    @field:SerializedName("description")
+    val description: String? = null,
 
-        @field:SerializedName("audio")
-        val audio: String? = null,
+    @field:SerializedName("audio")
+    val audio: String? = null,
 
-        @field:SerializedName("id")
-        val id: String? = null,
+    @field:SerializedName("id")
+    val id: String? = null,
 
-        @field:SerializedName("title")
-        val title: String? = null,
+    @field:SerializedName("title")
+    val title: String? = null,
 
-        @field:SerializedName("pub_date_ms")
-        val pubDateMs: Long? = null,
+    @field:SerializedName("pub_date_ms")
+    val pubDateMs: Long? = null,
 
-        @field:SerializedName("listennotes_url")
-        val listennotesUrl: String? = null,
+    @field:SerializedName("listennotes_url")
+    val listennotesUrl: String? = null,
 
-        @field:SerializedName("maybe_audio_invalid")
-        val maybeAudioInvalid: Boolean? = null,
+    @field:SerializedName("maybe_audio_invalid")
+    val maybeAudioInvalid: Boolean? = null,
 
-        var isSelected: Boolean? = false
+    var isSelected: Boolean? = false
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-            parcel.readString(),
-            parcel.readValue(Int::class.java.classLoader) as? Int,
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readValue(Long::class.java.classLoader) as? Long,
-            parcel.readString(),
-            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-            parcel.readValue(Boolean::class.java.classLoader) as? Boolean)
-
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Long::class.java.classLoader) as? Long,
+        parcel.readString(),
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(image)
@@ -106,5 +106,4 @@ data class EpisodesItem(
             e.toString()
         }
     }
-
 }

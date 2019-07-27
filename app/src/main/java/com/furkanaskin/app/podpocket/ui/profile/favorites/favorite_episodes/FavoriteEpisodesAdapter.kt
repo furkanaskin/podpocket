@@ -17,10 +17,11 @@ import com.furkanaskin.app.podpocket.db.entities.FavoriteEpisodeEntity
 class FavoriteEpisodesAdapter(private val callBack: (FavoriteEpisodeEntity, Int) -> Unit) : BaseAdapter<FavoriteEpisodeEntity>(favoriteEpisodeDiffCallback) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemFavoriteEpisodesBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.item_favorite_episodes,
-                parent,
-                false)
+            LayoutInflater.from(parent.context),
+            R.layout.item_favorite_episodes,
+            parent,
+            false
+        )
 
         val viewModel = FavoriteEpisodesListViewModel()
 
@@ -41,8 +42,8 @@ class FavoriteEpisodesAdapter(private val callBack: (FavoriteEpisodeEntity, Int)
 
 val favoriteEpisodeDiffCallback = object : DiffUtil.ItemCallback<FavoriteEpisodeEntity>() {
     override fun areContentsTheSame(oldItem: FavoriteEpisodeEntity, newItem: FavoriteEpisodeEntity): Boolean =
-            oldItem == newItem
+        oldItem == newItem
 
     override fun areItemsTheSame(oldItem: FavoriteEpisodeEntity, newItem: FavoriteEpisodeEntity): Boolean =
-            oldItem.id == newItem.id
+        oldItem.id == newItem.id
 }

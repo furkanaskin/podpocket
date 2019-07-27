@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class EpisodeRecommendations(
 
-        @field:SerializedName("recommendations")
-        val recommendations: List<RecommendationsItem?>? = null
+    @field:SerializedName("recommendations")
+    val recommendations: List<RecommendationsItem?>? = null
 )

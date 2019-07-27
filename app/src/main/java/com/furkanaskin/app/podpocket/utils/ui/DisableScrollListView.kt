@@ -5,9 +5,10 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.ListView
 
-
 class DisableScrollListView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : ListView(context, attrs, defStyleAttr) {
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {

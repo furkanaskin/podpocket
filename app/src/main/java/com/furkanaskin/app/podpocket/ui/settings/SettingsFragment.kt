@@ -14,5 +14,4 @@ class SettingsFragment : BaseFragment<SettingsViewModel, FragmentSettingsBinding
     }
 
     override fun getLayoutRes(): Int = R.layout.fragment_settings
-
 }

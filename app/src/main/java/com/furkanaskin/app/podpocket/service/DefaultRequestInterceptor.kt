@@ -14,9 +14,11 @@ import javax.inject.Singleton
 class DefaultRequestInterceptor @Inject constructor() : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        return chain.proceed(with(chain.request().newBuilder()) {
-            addHeader(Constants.NetworkService.API_KEY_HEADER_NAME, Constants.NetworkService.API_KEY_VALUE)
-            build()
-        })
+        return chain.proceed(
+            with(chain.request().newBuilder()) {
+                addHeader(Constants.NetworkService.API_KEY_HEADER_NAME, Constants.NetworkService.API_KEY_VALUE)
+                build()
+            }
+        )
     }
 }

@@ -6,7 +6,6 @@ import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentFeedBinding
 
-
 /**
  * Created by Furkan on 16.04.2019
  */

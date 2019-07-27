@@ -10,6 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import dagger.android.AndroidInjection
 import org.jetbrains.anko.support.v4.runOnUiThread
 
 abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : Fragment() {
@@ -26,16 +27,19 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
 
     abstract fun initViewModel()
 
-    private fun getViewM(): VM = ViewModelProviders.of(this).get(mViewModelClass)
+    private fun getViewM(): VM = ViewModelProviders.of(this, (activity as BaseActivity<*, *>).viewModelProviderFactory).get(mViewModelClass)
     open fun onInject() {}
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(activity)
         super.onCreate(savedInstanceState)
         viewModel = getViewM()
-
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         init(inflater, container!!)
         initViewModel()
         init()
@@ -56,14 +60,14 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
         runOnUiThread {
             if (activity != null)
                 if ((activity as? BaseActivity<*, *>)?.isShow() == false)
-                    (activity as? BaseActivity<*, *>)?.dialog?.show()
+                (activity as? BaseActivity<*, *>)?.dialog?.show()
         }
     }
 
     fun hideProgress() {
         runOnUiThread {
             if (activity != null)
-                (activity as BaseActivity<*, *>).dialog?.dismiss()
+            (activity as BaseActivity<*, *>).dialog?.dismiss()
         }
     }
 }

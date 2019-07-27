@@ -25,7 +25,6 @@ import org.jetbrains.anko.doAsync
 import java.io.ByteArrayOutputStream
 import java.util.*
 
-
 /**
  * Created by Furkan on 21.04.2019
  */
@@ -48,9 +47,12 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         if (viewModel.toastLiveData.hasActiveObservers())
             viewModel.toastLiveData.removeObservers(this)
 
-        viewModel.toastLiveData.observe(this, Observer<String> {
-            toast(it, Toast.LENGTH_LONG)
-        })
+        viewModel.toastLiveData.observe(
+            this,
+            Observer<String> {
+                toast(it, Toast.LENGTH_LONG)
+            }
+        )
 
         when (isCurrentUserIDAvailable()) {
             true -> binding.buttonDone.show()
@@ -72,17 +74,18 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
             if (viewModel.getValidationMessages() && viewModel.userID.get() != null) {
 
                 val willBeUpdated = UserEntity(
-                        id = user?.id ?: 0,
-                        podcaster = user?.podcaster,
-                        verifiedUser = user?.verifiedUser,
-                        accountCreatedAt = user?.accountCreatedAt,
-                        uniqueId = user?.uniqueId ?: "",
-                        email = user?.email,
-                        userName = viewModel.userName.get(),
-                        name = viewModel.name.get(),
-                        surname = viewModel.surname.get(),
-                        birthday = viewModel.userBirthDay.get(),
-                        profilePictureUrl = viewModel.profileImageUrl.get())
+                    id = user?.id ?: 0,
+                    podcaster = user?.podcaster,
+                    verifiedUser = user?.verifiedUser,
+                    accountCreatedAt = user?.accountCreatedAt,
+                    uniqueId = user?.uniqueId ?: "",
+                    email = user?.email,
+                    userName = viewModel.userName.get(),
+                    name = viewModel.name.get(),
+                    surname = viewModel.surname.get(),
+                    birthday = viewModel.userBirthDay.get(),
+                    profilePictureUrl = viewModel.profileImageUrl.get()
+                )
 
                 doAsync {
 
@@ -95,7 +98,6 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
                 }
 
                 viewModel.insertUserToFirebase(willBeUpdated)
-
             } else hideProgress()
         }
 
@@ -105,7 +107,6 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         binding.imageViewUser.setOnClickListener {
             showAddAvatarDialog()
         }
-
 
         viewModel.saveSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
@@ -119,7 +120,6 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         })
 
         getUser()
-
     }
 
     private fun isCurrentUserIDAvailable(): Boolean {
@@ -131,8 +131,10 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         builder.setMessage("Nereden eklemek istersin?")
         builder.setPositiveButton("Galeri") { dialog, which ->
             // Do something when user press the positive button
-            val pickPhoto = Intent(Intent.ACTION_PICK,
-                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            val pickPhoto = Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            )
             startActivityForResult(pickPhoto, 1)
         }
         builder.setNegativeButton("Kamera") { dialog, which ->
@@ -162,9 +164,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
                 binding.imageViewUser.setImageURI(selectedImage)
                 binding.fabChangeImage.hide()
                 updateProfilePicture(mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
-
             }
-
         }
     }
 
@@ -186,14 +186,12 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         }
     }
 
-
     private fun getProfilePicture() {
         val profilePicturePath = mAuth.currentUser?.uid + "_" + "profile_picture.jpg"
         storageRef.child(profilePicturePath).downloadUrl.addOnSuccessListener {
             viewModel.profileImageUrl.set(it.toString())
             profileImageUrl = it.toString()
             hideProgress()
-
         }
     }
 
@@ -203,10 +201,13 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        val datePicker = DatePickerDialog(this@AfterRegisterActivity,
-                DatePickerDialog.OnDateSetListener { _, year, month, day ->
-                    viewModel.userBirthDay.set("$day/${month + 1}/$year")
-                }, year, month, day)
+        val datePicker = DatePickerDialog(
+            this@AfterRegisterActivity,
+            DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                viewModel.userBirthDay.set("$day/${month + 1}/$year")
+            },
+            year, month, day
+        )
         datePicker.datePicker.maxDate = c.timeInMillis
         datePicker.show()
     }

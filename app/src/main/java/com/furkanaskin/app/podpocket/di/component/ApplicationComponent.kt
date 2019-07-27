@@ -5,31 +5,31 @@ import com.furkanaskin.app.podpocket.Podpocket
 import com.furkanaskin.app.podpocket.di.module.*
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(
-        modules = [
-            AndroidInjectionModule::class,
-            ApplicationModule::class,
-            NetModule::class,
-            DatabaseModule::class,
-            ViewModelModule::class,
-            ActivityModule::class
-        ])
+    modules = [
+        AndroidSupportInjectionModule::class,
+        ApplicationModule::class,
+        NetModule::class,
+        DatabaseModule::class,
+        ActivityModule::class,
+        ViewModelModule::class
+    ]
+)
 
-interface ApplicationComponent : AndroidInjector<DaggerApplication> {
+interface ApplicationComponent : AndroidInjector<Podpocket> {
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        fun application(application: Application): Builder
+        fun applicationBind(application: Application): Builder
 
         fun build(): ApplicationComponent
     }
 
-    fun inject(app: Podpocket)
+    // fun inject(app: Podpocket)
 }

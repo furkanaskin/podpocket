@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.ui.profile.account_detail
 
-
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -71,8 +70,10 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         val builder = AlertDialog.Builder((activity as DashboardActivity))
         builder.setMessage("Nereden eklemek istersin?")
         builder.setPositiveButton("Galeri") { dialog, which ->
-            val pickPhoto = Intent(Intent.ACTION_PICK,
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            val pickPhoto = Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            )
             startActivityForResult(pickPhoto, 1)
         }
         builder.setNegativeButton("Kamera") { dialog, which ->
@@ -100,7 +101,6 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
                 val selectedImage = data?.data
                 mBinding.imageViewProfilePicture.setImageURI(selectedImage)
                 changeProfilePicture()
-
             }
         }
     }
@@ -117,13 +117,13 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
 
     private fun removeProfilePicture(profilePicturePath: String) {
         storageRef.child(profilePicturePath).delete()
-                .addOnSuccessListener {
-                    updateProfilePicture(viewModel.mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
-                }.addOnFailureListener {
-                    // Uh-oh, an error occurred!
-                }.addOnSuccessListener {
-                    hideProgress()
-                }
+            .addOnSuccessListener {
+                updateProfilePicture(viewModel.mAuth.currentUser?.uid + "_" + "profile_picture.jpg")
+            }.addOnFailureListener {
+            // Uh-oh, an error occurred!
+        }.addOnSuccessListener {
+            hideProgress()
+        }
     }
 
     private fun updateProfilePicture(profilePicturePath: String) {
@@ -138,30 +138,31 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
 
         val uploadTask = pathRef.putBytes(data)
         uploadTask
-                .addOnFailureListener {
-                    // Handle unsuccessful uploads
-                }.addOnSuccessListener {
-                    getProfilePicture()
-                    isUserChangePicture = true
-                }
+            .addOnFailureListener {
+                // Handle unsuccessful uploads
+            }.addOnSuccessListener {
+            getProfilePicture()
+            isUserChangePicture = true
+        }
     }
 
     private fun editProfile() {
         val updateUser = UserEntity(
-                id = viewModel.user?.id ?: 0,
-                podcaster = viewModel.user?.podcaster,
-                verifiedUser = viewModel.user?.verifiedUser,
-                uniqueId = viewModel.user?.uniqueId ?: "",
-                accountCreatedAt = viewModel.user?.accountCreatedAt,
-                name = mBinding.editTextName.text?.toString(),
-                userName = mBinding.editTextUserName.text?.toString(),
-                surname = mBinding.editTextSurname.text?.toString(),
-                birthday = mBinding.editTextBirthday.text?.toString(),
-                profilePictureUrl = profileImageUrl.get(),
-                email = mBinding.editTextEmail.text?.toString(),
-                mostLovedCategory = mBinding.editTextMostLovedCategory.text?.toString(),
-                lastPlayedPodcast = viewModel.user?.lastPlayedPodcast,
-                lastPlayedEpisode = viewModel.user?.lastPlayedEpisode)
+            id = viewModel.user?.id ?: 0,
+            podcaster = viewModel.user?.podcaster,
+            verifiedUser = viewModel.user?.verifiedUser,
+            uniqueId = viewModel.user?.uniqueId ?: "",
+            accountCreatedAt = viewModel.user?.accountCreatedAt,
+            name = mBinding.editTextName.text?.toString(),
+            userName = mBinding.editTextUserName.text?.toString(),
+            surname = mBinding.editTextSurname.text?.toString(),
+            birthday = mBinding.editTextBirthday.text?.toString(),
+            profilePictureUrl = profileImageUrl.get(),
+            email = mBinding.editTextEmail.text?.toString(),
+            mostLovedCategory = mBinding.editTextMostLovedCategory.text?.toString(),
+            lastPlayedPodcast = viewModel.user?.lastPlayedPodcast,
+            lastPlayedEpisode = viewModel.user?.lastPlayedEpisode
+        )
 
         viewModel.changeUserData(updateUser)
 
@@ -184,10 +185,13 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        val datePicker = DatePickerDialog((activity as DashboardActivity),
-                DatePickerDialog.OnDateSetListener { _, year, month, day ->
-                    mBinding.editTextBirthday.setText("$day/${month + 1}/$year")
-                }, year, month, day)
+        val datePicker = DatePickerDialog(
+            (activity as DashboardActivity),
+            DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                mBinding.editTextBirthday.setText("$day/${month + 1}/$year")
+            },
+            year, month, day
+        )
         datePicker.datePicker.maxDate = c.timeInMillis
         datePicker.show()
     }

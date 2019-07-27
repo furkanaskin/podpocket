@@ -127,8 +127,6 @@ object BindingAdapter {
             view.setTextColor(ContextCompat.getColor(view.context, R.color.colorCyan))
         else
             view.setTextColor(ContextCompat.getColor(view.context, R.color.white))
-
-
     }
 
     @JvmStatic
@@ -146,6 +144,5 @@ object BindingAdapter {
             view.setImageResource(R.drawable.ic_track_disk)
         else
             view.setImageResource(R.drawable.ic_unplayed_episode_disc)
-
     }
 }

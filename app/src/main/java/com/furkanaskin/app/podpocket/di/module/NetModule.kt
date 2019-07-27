@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
-
 @Module
 class NetModule {
     @Singleton
@@ -28,12 +27,12 @@ class NetModule {
     fun provideOkHttpClient(): OkHttpClient {
         val cache = Cache(Environment.getDownloadCacheDirectory(), 10 * 1024 * 1024)
         return OkHttpClient.Builder()
-                .addNetworkInterceptor(StethoInterceptor())
-		        .addInterceptor(DefaultRequestInterceptor())
-                .readTimeout(1, TimeUnit.MINUTES)
-                .writeTimeout(1, TimeUnit.MINUTES)
-                .cache(cache)
-                .build()
+            .addNetworkInterceptor(StethoInterceptor())
+            .addInterceptor(DefaultRequestInterceptor())
+            .readTimeout(1, TimeUnit.MINUTES)
+            .writeTimeout(1, TimeUnit.MINUTES)
+            .cache(cache)
+            .build()
     }
 
     @Singleton
@@ -41,11 +40,11 @@ class NetModule {
     @Named("non_cached")
     fun provideNonCachedOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-                .addNetworkInterceptor(StethoInterceptor())
-		        .addInterceptor(DefaultRequestInterceptor())
-                .readTimeout(1, TimeUnit.MINUTES)
-                .writeTimeout(1, TimeUnit.MINUTES)
-                .build()
+            .addNetworkInterceptor(StethoInterceptor())
+            .addInterceptor(DefaultRequestInterceptor())
+            .readTimeout(1, TimeUnit.MINUTES)
+            .writeTimeout(1, TimeUnit.MINUTES)
+            .build()
     }
 
     @Provides
@@ -60,17 +59,16 @@ class NetModule {
     @Provides
     fun provideRetrofit(gson: Gson, @Named("cached") client: OkHttpClient): Retrofit.Builder {
         return Retrofit.Builder()
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
     }
-
 
     @Provides
     @Singleton
     fun provideService(retrofit: Retrofit.Builder): PodpocketAPI {
         return retrofit.baseUrl(Constants.NetworkService.BASE_URL)
-                .build()
-                .create(PodpocketAPI::class.java)
+            .build()
+            .create(PodpocketAPI::class.java)
     }
 }

@@ -7,7 +7,6 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
@@ -28,7 +27,7 @@ import javax.inject.Inject
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : DaggerAppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    internal lateinit var viewModelProviderFactory: ViewModelProvider.Factory
 
     private var snackBar: Snackbar? = null
     val scopeProvider: AndroidLifecycleScopeProvider by lazy { AndroidLifecycleScopeProvider.from(this) }
@@ -46,7 +45,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
     }
 
     val viewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory).get(mViewModelClass)
+        ViewModelProviders.of(this, viewModelProviderFactory).get(mViewModelClass)
     }
 
     /**
@@ -56,6 +55,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
     open fun onInject() {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         initViewModel(viewModel)
         initDialog()
@@ -65,7 +65,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
         getUser()
 
         registerReceiver(connectivityReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
-
     }
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
@@ -97,14 +96,14 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
             snackBar?.duration = BaseTransientBottomBar.LENGTH_INDEFINITE
             snackBar?.view?.setBackgroundColor(Color.parseColor("#F48B8C"))
             window.setFlags(
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
             )
 
             snackBar?.show()
         } else {
             window.clearFlags(
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
             )
 
             snackBar?.dismiss()
@@ -113,7 +112,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
 
     fun initFirebase() {
         mAuth = FirebaseAuth.getInstance()
-
     }
 
     private fun initDialog() {

@@ -25,13 +25,15 @@ class PodPocketProgressDialog {
             val logo = dialog.imageViewAppLogo
 
             RxAnimation.sequentially(
-                    logo.rotation(360f, Constants.MainAnimationConstants.SHORT_DURATION),
-                    logo.rotation(0f, Constants.MainAnimationConstants.NO_DURATION))
-                    .repeat()
-                    .subscribe().addTo(composite)
+                logo.rotation(360f, Constants.MainAnimationConstants.SHORT_DURATION),
+                logo.rotation(0f, Constants.MainAnimationConstants.NO_DURATION)
+            )
+                .repeat()
+                .subscribe().addTo(composite)
 
             dialog.window!!.setBackgroundDrawable(
-                    ColorDrawable(Color.TRANSPARENT))
+                ColorDrawable(Color.TRANSPARENT)
+            )
             return dialog
         }
     }

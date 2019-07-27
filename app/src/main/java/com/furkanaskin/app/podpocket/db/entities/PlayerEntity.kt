@@ -12,25 +12,26 @@ import com.furkanaskin.app.podpocket.core.BaseEntity
 
 @Entity(tableName = "Player")
 data class PlayerEntity(
-        @PrimaryKey
-        var id: Int = 0,
-        var episodeId: String?,
-        var episodeTitle: String?,
-        var podcastTitle: String?,
-        var podcastId: String?,
-        var explicitContent: Boolean,
-        var audio: String?,
-        var isPlaying: Boolean) : BaseEntity(), Parcelable {
+    @PrimaryKey
+    var id: Int = 0,
+    var episodeId: String?,
+    var episodeTitle: String?,
+    var podcastTitle: String?,
+    var podcastId: String?,
+    var explicitContent: Boolean,
+    var audio: String?,
+    var isPlaying: Boolean
+) : BaseEntity(), Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readInt(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte())
-
+        parcel.readInt(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte()
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
@@ -56,5 +57,4 @@ data class PlayerEntity(
             return arrayOfNulls(size)
         }
     }
-
 }

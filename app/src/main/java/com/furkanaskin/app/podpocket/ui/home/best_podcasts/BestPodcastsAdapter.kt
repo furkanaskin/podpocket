@@ -18,10 +18,10 @@ class BestPodcastsAdapter(private val callBack: (Podcasts) -> Unit) : BaseAdapte
 
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemBestPodcastsBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.item_best_podcasts,
-                parent,
-                false
+            LayoutInflater.from(parent.context),
+            R.layout.item_best_podcasts,
+            parent,
+            false
         )
         val viewModel = BestPodcastsListItemViewModel()
         mBinding.viewModel = viewModel
@@ -42,8 +42,8 @@ class BestPodcastsAdapter(private val callBack: (Podcasts) -> Unit) : BaseAdapte
 
 val diffCallback = object : DiffUtil.ItemCallback<Podcasts>() {
     override fun areContentsTheSame(oldItem: Podcasts, newItem: Podcasts): Boolean =
-            oldItem == newItem
+        oldItem == newItem
 
     override fun areItemsTheSame(oldItem: Podcasts, newItem: Podcasts): Boolean =
-            oldItem.id == newItem.id
+        oldItem.id == newItem.id
 }

@@ -14,7 +14,6 @@ class PodPocketButton : AppCompatButton {
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0) {
         setDefaultFont()
-
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
@@ -27,6 +26,4 @@ class PodPocketButton : AppCompatButton {
             setTypeface(typeface)
         }
     }
-
-
 }

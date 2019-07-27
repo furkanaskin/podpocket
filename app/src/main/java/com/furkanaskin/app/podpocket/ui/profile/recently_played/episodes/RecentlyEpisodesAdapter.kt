@@ -22,7 +22,6 @@ class RecentlyEpisodesAdapter(private val clickCallback: ((RecentlyPlaysEntity) 
     override fun areContentsTheSame(oldItem: RecentlyPlaysEntity, newItem: RecentlyPlaysEntity): Boolean {
         return oldItem == newItem
     }
-
 }) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val viewModel = RecentlyEpisodesItemViewModel()
@@ -34,7 +33,6 @@ class RecentlyEpisodesAdapter(private val clickCallback: ((RecentlyPlaysEntity) 
                 clickCallback?.invoke(it)
             }
         }
-
 
         return binding
     }

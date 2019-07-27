@@ -11,7 +11,6 @@ class PodPocketItemDecoration(private val spacing: Int) : RecyclerView.ItemDecor
             val spanCount = 1
             val column = position % spanCount // item column
 
-
             outRect.left = spacing - column * spacing / spanCount // spacing - column * ((1f / spanCount) * spacing)
             outRect.right = (column + 1) * spacing / spanCount // (column + 1) * ((1f / spanCount) * spacing)
 

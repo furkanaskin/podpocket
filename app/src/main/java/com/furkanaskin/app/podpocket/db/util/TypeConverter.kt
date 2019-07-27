@@ -17,7 +17,6 @@ class TypeConverter {
         }
 
         val listType = object : TypeToken<List<String>>() {
-
         }.type
 
         return Gson().fromJson<List<String>>(data, listType)

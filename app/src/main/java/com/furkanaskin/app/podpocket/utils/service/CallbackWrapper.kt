@@ -50,7 +50,5 @@ abstract class CallbackWrapper<T : Any>(application: Application?) : DisposableO
         } catch (e: Exception) {
             ""
         }
-
     }
-
 }

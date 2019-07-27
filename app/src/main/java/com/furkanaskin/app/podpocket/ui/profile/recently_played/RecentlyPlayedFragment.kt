@@ -31,7 +31,6 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
     override fun init() {
         super.init()
 
-
         mBinding.buttonNavigateHome.setOnClickListener {
             navigate(R.id.action_recentlyPlayedFragment_to_homeFragment)
             val home = (activity as DashboardActivity).binding.bottomNavigation.menu.getItem(0)
@@ -59,11 +58,9 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
             val action = RecentlyPlayedFragmentDirections.actionRecentlyPlayedFragmentToPodcastFragment()
             action.podcastID = podcastId
             findNavController().navigate(action)
-
         }
 
         getDataFromDB()
-
     }
 
     fun getDataFromDB() {
@@ -92,7 +89,6 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
         mBinding.lottieAnimationView.visibility = View.VISIBLE
         mBinding.buttonNavigateHome.visibility = View.VISIBLE
         mBinding.textViewDummyText.visibility = View.VISIBLE
-
     }
 
     private fun hideAnimation() {
@@ -103,7 +99,5 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
         mBinding.lottieAnimationView.visibility = View.GONE
         mBinding.buttonNavigateHome.visibility = View.GONE
         mBinding.textViewDummyText.visibility = View.GONE
-
     }
-
 }

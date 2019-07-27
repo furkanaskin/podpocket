@@ -12,20 +12,22 @@ import com.furkanaskin.app.podpocket.model.Post
 
 @Entity(tableName = "Posts")
 class PostEntity(
-        var post: String? = null,
-        @PrimaryKey
-        var postId: String,
-        var pubDate: String? = null,
-        var region: String? = null,
-        var userName: String? = null,
-        var userUniqueId: String? = null) : Parcelable {
+    var post: String? = null,
+    @PrimaryKey
+    var postId: String,
+    var pubDate: String? = null,
+    var region: String? = null,
+    var userName: String? = null,
+    var userUniqueId: String? = null
+) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString())
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(post)
@@ -51,11 +53,11 @@ class PostEntity(
     }
 
     constructor(postItem: Post) : this(
-            post = postItem.post,
-            postId = postItem.postId ?: "",
-            pubDate = postItem.pubDate,
-            region = postItem.region,
-            userName = postItem.userName,
-            userUniqueId = postItem.userUniqueId
+        post = postItem.post,
+        postId = postItem.postId ?: "",
+        pubDate = postItem.pubDate,
+        region = postItem.region,
+        userName = postItem.userName,
+        userUniqueId = postItem.userUniqueId
     )
 }

@@ -18,10 +18,11 @@ class QueueAdapter(private val callBack: (EpisodeEntity, Int, Boolean) -> Unit) 
 
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemQueueBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.item_queue,
-                parent,
-                false)
+            LayoutInflater.from(parent.context),
+            R.layout.item_queue,
+            parent,
+            false
+        )
 
         val viewModel = QueueListItemViewModel()
 
@@ -37,19 +38,20 @@ class QueueAdapter(private val callBack: (EpisodeEntity, Int, Boolean) -> Unit) 
     }
 
     override fun bind(binding: ViewDataBinding, position: Int) {
-        (binding as ItemQueueBinding).viewModel?.setModel(getItem(position), position, getItem(position).isSelected
-                ?: false)
+        (binding as ItemQueueBinding).viewModel?.setModel(
+            getItem(position), position,
+            getItem(position).isSelected
+                ?: false
+        )
 
         binding.executePendingBindings()
-
     }
-
 }
 
 val queueDiffCallback = object : DiffUtil.ItemCallback<EpisodeEntity>() {
     override fun areContentsTheSame(oldItem: EpisodeEntity, newItem: EpisodeEntity): Boolean =
-            oldItem == newItem
+        oldItem == newItem
 
     override fun areItemsTheSame(oldItem: EpisodeEntity, newItem: EpisodeEntity): Boolean =
-            oldItem.id == newItem.id
+        oldItem.id == newItem.id
 }

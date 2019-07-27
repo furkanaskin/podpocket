@@ -27,23 +27,21 @@ class Podpocket : Application(), HasActivityInjector {
         super.onCreate()
 
         DaggerApplicationComponent.builder()
-                .application(this)
-                .build()
-                .inject(this)
+            .applicationBind(this)
+            .build()
+            .inject(this)
 
         AndroidThreeTen.init(this)
         initFabric()
         Stetho.initializeWithDefaults(this)
     }
 
-
     private fun initFabric() {
 
         val core = CrashlyticsCore.Builder()
-                .disabled(BuildConfig.DEBUG)
-                .build()
+            .disabled(BuildConfig.DEBUG)
+            .build()
 
         Fabric.with(this, Crashlytics.Builder().core(core).build(), Answers())
     }
 }
-

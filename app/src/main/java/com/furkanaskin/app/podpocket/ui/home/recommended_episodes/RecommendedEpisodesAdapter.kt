@@ -18,10 +18,10 @@ class RecommendedEpisodesAdapter(private val callBack: (RecommendationsItem) -> 
 
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemRecommendedEpisodesBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.item_recommended_episodes,
-                parent,
-                false
+            LayoutInflater.from(parent.context),
+            R.layout.item_recommended_episodes,
+            parent,
+            false
         )
         val viewModel = RecommendedEpisodesListViewModel()
         mBinding.viewModel = viewModel
@@ -42,10 +42,8 @@ class RecommendedEpisodesAdapter(private val callBack: (RecommendationsItem) -> 
 
 val diffCallback = object : DiffUtil.ItemCallback<RecommendationsItem>() {
     override fun areContentsTheSame(oldItem: RecommendationsItem, newItem: RecommendationsItem): Boolean =
-            oldItem == newItem
+        oldItem == newItem
 
     override fun areItemsTheSame(oldItem: RecommendationsItem, newItem: RecommendationsItem): Boolean =
-            oldItem.id == newItem.id
-
-
+        oldItem.id == newItem.id
 }

@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.furkanaskin.app.podpocket.R
 
-
 class PodPocketToolbar : Toolbar {
     private var isBackButtonVisible = true
 
@@ -21,7 +20,6 @@ class PodPocketToolbar : Toolbar {
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.style.ToolBarStyle_Base) {
         initView(context, attrs, R.attr.toolbarStyle)
-
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
@@ -54,5 +52,4 @@ class PodPocketToolbar : Toolbar {
             requestLayout()
         }
     }
-
 }

@@ -1,6 +1,5 @@
 package com.furkanaskin.app.podpocket.utils.extensions
 
-
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
@@ -17,19 +16,19 @@ import androidx.databinding.ViewDataBinding
 import com.google.android.material.textfield.TextInputLayout
 
 fun ViewGroup.inflate(@LayoutRes resourceId: Int) =
-        LayoutInflater.from(context).inflate(
-                resourceId,
-                this,
-                false
-        )
+    LayoutInflater.from(context).inflate(
+        resourceId,
+        this,
+        false
+    )
 
 fun <T : ViewDataBinding?> ViewGroup.bindingInflate(@LayoutRes resourceId: Int) =
-        DataBindingUtil.inflate<T>(
-                LayoutInflater.from(context),
-                resourceId,
-                this,
-                false
-        )
+    DataBindingUtil.inflate<T>(
+        LayoutInflater.from(context),
+        resourceId,
+        this,
+        false
+    )
 
 inline fun ViewGroup.forEach(action: (view: View) -> Unit) {
     for (index in 0 until childCount) {
@@ -61,7 +60,6 @@ fun View.hideKeyboard(activity: Activity) {
     inputManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-
 fun View.hide() {
     visibility = GONE
 }
@@ -71,8 +69,7 @@ fun View.show() {
 }
 
 fun Float.dpToPx(): Float =
-        this * Resources.getSystem().displayMetrics.density
-
+    this * Resources.getSystem().displayMetrics.density
 
 fun pixelsToDps(context: Context, pixels: Int): Int {
     val r = context.resources

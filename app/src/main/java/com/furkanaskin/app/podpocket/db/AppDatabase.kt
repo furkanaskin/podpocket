@@ -5,13 +5,17 @@ import androidx.room.RoomDatabase
 import com.furkanaskin.app.podpocket.db.dao.*
 import com.furkanaskin.app.podpocket.db.entities.*
 
-@Database(entities = [
-    UserEntity::class,
-    PlayerEntity::class,
-    EpisodeEntity::class,
-    FavoriteEpisodeEntity::class,
-    RecentlyPlaysEntity::class,
-    PostEntity::class], version = 3)
+@Database(
+    entities = [
+        UserEntity::class,
+        PlayerEntity::class,
+        EpisodeEntity::class,
+        FavoriteEpisodeEntity::class,
+        RecentlyPlaysEntity::class,
+        PostEntity::class
+    ],
+    version = 3
+)
 
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao

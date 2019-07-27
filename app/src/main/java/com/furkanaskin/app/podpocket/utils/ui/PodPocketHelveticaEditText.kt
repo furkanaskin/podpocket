@@ -6,7 +6,6 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.res.ResourcesCompat
 import com.furkanaskin.app.podpocket.R
 
-
 class PodPocketHelveticaEditText : AppCompatEditText {
 
     constructor(context: Context) : this(context, null) {
@@ -15,7 +14,6 @@ class PodPocketHelveticaEditText : AppCompatEditText {
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0) {
         setDefaultFont()
-
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
@@ -28,5 +26,4 @@ class PodPocketHelveticaEditText : AppCompatEditText {
             setTypeface(typeface)
         }
     }
-
 }

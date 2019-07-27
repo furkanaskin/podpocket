@@ -12,38 +12,39 @@ import com.furkanaskin.app.podpocket.core.BaseEntity
 
 @Entity(tableName = "User")
 data class UserEntity(
-        @PrimaryKey(autoGenerate = true)
-        var id: Int = 0,
-        val podcaster: Boolean? = null,
-        val verifiedUser: Boolean? = null,
-        val accountCreatedAt: String? = null,
-        var uniqueId: String? = null,
-        var userName: String? = null,
-        var email: String? = null,
-        var name: String? = null,
-        var surname: String? = null,
-        var birthday: String? = null,
-        var profilePictureUrl: String? = null,
-        var mostLovedCategory: String? = null,
-        var lastPlayedPodcast: String? = null,
-        var lastPlayedEpisode: String? = null) : BaseEntity(), Parcelable {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+    val podcaster: Boolean? = null,
+    val verifiedUser: Boolean? = null,
+    val accountCreatedAt: String? = null,
+    var uniqueId: String? = null,
+    var userName: String? = null,
+    var email: String? = null,
+    var name: String? = null,
+    var surname: String? = null,
+    var birthday: String? = null,
+    var profilePictureUrl: String? = null,
+    var mostLovedCategory: String? = null,
+    var lastPlayedPodcast: String? = null,
+    var lastPlayedEpisode: String? = null
+) : BaseEntity(), Parcelable {
 
     constructor(parcel: Parcel) : this(
-            parcel.readValue(Int::class.java.classLoader) as Int,
-            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString())
-
+        parcel.readValue(Int::class.java.classLoader) as Int,
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(id)

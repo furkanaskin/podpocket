@@ -48,7 +48,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
         (mBinding.recyclerViewProfile.adapter as ProfileAdapter).submitList(itemList)
     }
 
-
     private fun initProfileItemsAdapter() {
         val adapter = ProfileAdapter { _, position ->
 
@@ -63,7 +62,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
 
         mBinding.recyclerViewProfile.adapter = adapter
         mBinding.recyclerViewProfile.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-
     }
 
     private fun initUserDetails() {
@@ -84,17 +82,22 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
             ctx.setTheme(R.style.Theme_MaterialComponents_Light_Dialog)
 
             message = "Gerçekten çıkış yapmak istiyor musunuz?"
-            positiveButton("Evet", object : (DialogInterface) -> Unit {
-                override fun invoke(p1: DialogInterface) {
-                    logout()
+            positiveButton(
+                "Evet",
+                object : (DialogInterface) -> Unit {
+                    override fun invoke(p1: DialogInterface) {
+                        logout()
+                    }
                 }
-            })
+            )
 
-            negativeButton("Hayır", object : (DialogInterface) -> Unit {
-                override fun invoke(p1: DialogInterface) {
-
+            negativeButton(
+                "Hayır",
+                object : (DialogInterface) -> Unit {
+                    override fun invoke(p1: DialogInterface) {
+                    }
                 }
-            })
+            )
         }.show()
     }
 

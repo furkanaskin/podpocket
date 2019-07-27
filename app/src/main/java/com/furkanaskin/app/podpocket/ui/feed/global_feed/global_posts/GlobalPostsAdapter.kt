@@ -17,10 +17,11 @@ import com.furkanaskin.app.podpocket.db.entities.PostEntity
 class GlobalPostsAdapter(private val callBack: (PostEntity, Int) -> Unit) : BaseAdapter<PostEntity>(globalPostsDiffCallback) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemGlobalPostBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.item_global_post,
-                parent,
-                false)
+            LayoutInflater.from(parent.context),
+            R.layout.item_global_post,
+            parent,
+            false
+        )
 
         val viewModel = GlobalPostsItemViewModel()
 

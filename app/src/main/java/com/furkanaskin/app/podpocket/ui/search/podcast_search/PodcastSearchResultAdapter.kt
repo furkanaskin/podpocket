@@ -17,10 +17,10 @@ import com.furkanaskin.app.podpocket.service.response.ResultsItem
 class PodcastSearchResultAdapter(private val callBack: (ResultsItem) -> Unit) : BaseAdapter<ResultsItem>(diffCallbackForPodcast) {
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val mBinding = DataBindingUtil.inflate<ItemSearchResultPodcastBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.item_search_result_podcast,
-                parent,
-                false
+            LayoutInflater.from(parent.context),
+            R.layout.item_search_result_podcast,
+            parent,
+            false
         )
 
         val viewModel = PodcastSearchResultViewModel()
@@ -43,8 +43,8 @@ class PodcastSearchResultAdapter(private val callBack: (ResultsItem) -> Unit) : 
 
 val diffCallbackForPodcast = object : DiffUtil.ItemCallback<ResultsItem>() {
     override fun areContentsTheSame(oldItem: ResultsItem, newItem: ResultsItem): Boolean =
-            oldItem == newItem
+        oldItem == newItem
 
     override fun areItemsTheSame(oldItem: ResultsItem, newItem: ResultsItem): Boolean =
-            oldItem == newItem
+        oldItem == newItem
 }

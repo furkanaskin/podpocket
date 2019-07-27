@@ -15,6 +15,5 @@ class EpisodesListItemViewModel : BaseViewModel() {
     fun setModel(item: EpisodeEntity, position: Int) {
         this.item.set(item)
         this.position = position
-
     }
 }

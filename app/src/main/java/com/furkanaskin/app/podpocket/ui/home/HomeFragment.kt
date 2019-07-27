@@ -64,12 +64,15 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         if (viewModel.progressLiveData.hasActiveObservers())
             viewModel.progressLiveData.removeObservers(this)
 
-        viewModel.progressLiveData.observe(this@HomeFragment, Observer<Boolean> {
-            if (it)
-                showProgress()
-            else
-                hideProgress()
-        })
+        viewModel.progressLiveData.observe(
+            this@HomeFragment,
+            Observer<Boolean> {
+                if (it)
+                    showProgress()
+                else
+                    hideProgress()
+            }
+        )
     }
 
     private fun refreshData() {
@@ -113,12 +116,15 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
             if (viewModel.podcastEpisodeIds.hasActiveObservers())
                 viewModel.podcastEpisodeIds.removeObservers(this)
 
-            viewModel.podcastEpisodeIds.observe(this@HomeFragment, Observer<ArrayList<String>> {
-                val intent = Intent(activity, PlayerActivity::class.java)
-                intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, it)
-                intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)
-                startActivity(intent)
-            })
+            viewModel.podcastEpisodeIds.observe(
+                this@HomeFragment,
+                Observer<ArrayList<String>> {
+                    val intent = Intent(activity, PlayerActivity::class.java)
+                    intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, it)
+                    intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)
+                    startActivity(intent)
+                }
+            )
         }
 
         mBinding.recyclerViewRecommendedEpisodes.adapter = adapter
@@ -131,37 +137,52 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         if (viewModel.bestPodcastsLiveData.hasActiveObservers())
             viewModel.bestPodcastsLiveData.removeObservers(this)
 
-        viewModel.bestPodcastsLiveData.observe(this@HomeFragment, Observer<Resource<BestPodcasts>> {
-            showTitles()
-            (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(it.data?.podcasts)
-        })
+        viewModel.bestPodcastsLiveData.observe(
+            this@HomeFragment,
+            Observer<Resource<BestPodcasts>> {
+                showTitles()
+                (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(it.data?.podcasts)
+            }
+        )
     }
 
     private fun initRecommendedPodcasts() {
 
-        viewModel.getPodcastRecommendations(viewModel.user?.lastPlayedPodcast
-                ?: "1c8374ef2e8c41928010347f66401e56", 0)
+        viewModel.getPodcastRecommendations(
+            viewModel.user?.lastPlayedPodcast
+                ?: "1c8374ef2e8c41928010347f66401e56",
+            0
+        )
 
         if (viewModel.recommendedPodcastsLiveData.hasActiveObservers())
             viewModel.recommendedPodcastsLiveData.removeObservers(this)
 
-        viewModel.recommendedPodcastsLiveData.observe(this@HomeFragment, Observer<Resource<PodcastRecommendations>> {
-            showTitles()
-            (mBinding.recyclerViewRecommendedPodcasts.adapter as RecommendedPodcastsAdapter).submitList(it.data?.recommendations)
-        })
+        viewModel.recommendedPodcastsLiveData.observe(
+            this@HomeFragment,
+            Observer<Resource<PodcastRecommendations>> {
+                showTitles()
+                (mBinding.recyclerViewRecommendedPodcasts.adapter as RecommendedPodcastsAdapter).submitList(it.data?.recommendations)
+            }
+        )
     }
 
     private fun initRecommendedEpisodes() {
-        viewModel.getEpisodeRecommendations(viewModel.user?.lastPlayedEpisode
-                ?: "53fd8c1a373b46888638cbeb14b571d1", 0)
+        viewModel.getEpisodeRecommendations(
+            viewModel.user?.lastPlayedEpisode
+                ?: "53fd8c1a373b46888638cbeb14b571d1",
+            0
+        )
 
         if (viewModel.recommendedEpisodesLiveData.hasActiveObservers())
             viewModel.recommendedEpisodesLiveData.removeObservers(this)
 
-        viewModel.recommendedEpisodesLiveData.observe(this@HomeFragment, Observer<Resource<EpisodeRecommendations>> {
-            showTitles()
-            (mBinding.recyclerViewRecommendedEpisodes.adapter as RecommendedEpisodesAdapter).submitList(it.data?.recommendations)
-        })
+        viewModel.recommendedEpisodesLiveData.observe(
+            this@HomeFragment,
+            Observer<Resource<EpisodeRecommendations>> {
+                showTitles()
+                (mBinding.recyclerViewRecommendedEpisodes.adapter as RecommendedEpisodesAdapter).submitList(it.data?.recommendations)
+            }
+        )
     }
 
     private fun hideTitles() {

@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName
  */
 
 data class ErrorSource(
-        @SerializedName("pointer")
-        var pointer: String? = null,
-        @SerializedName("detail")
-        var detail: String? = null
+    @SerializedName("pointer")
+    var pointer: String? = null,
+    @SerializedName("detail")
+    var detail: String? = null
 )

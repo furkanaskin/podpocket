@@ -7,7 +7,6 @@ import com.furkanaskin.app.podpocket.service.PodpocketAPI
 import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.doAsync
 import java.util.*
-import javax.inject.Inject
 
 open class BaseViewModel(var baseApi: PodpocketAPI? = null, var db: AppDatabase? = null) : AutoDisposeViewModel() {
 

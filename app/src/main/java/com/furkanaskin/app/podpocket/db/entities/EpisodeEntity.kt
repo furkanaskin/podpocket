@@ -14,55 +14,55 @@ import java.util.*
 
 @Entity(tableName = "Episode")
 data class EpisodeEntity(
-        @PrimaryKey
-        var id: String,
-        var image: String?,
-        var thumbnail: String?,
-        var explicitContent: Boolean?,
-        var listennotesEditUrl: String?,
-        var audioLength: Int?,
-        var description: String?,
-        var audio: String?,
-        var title: String?,
-        var pubDateMs: Long?,
-        var listennotesUrl: String?,
-        var nextEpisodePubDate: Long?,
-        var maybeAudioInvalid: Boolean?,
-        var isSelected: Boolean?
+    @PrimaryKey
+    var id: String,
+    var image: String?,
+    var thumbnail: String?,
+    var explicitContent: Boolean?,
+    var listennotesEditUrl: String?,
+    var audioLength: Int?,
+    var description: String?,
+    var audio: String?,
+    var title: String?,
+    var pubDateMs: Long?,
+    var listennotesUrl: String?,
+    var nextEpisodePubDate: Long?,
+    var maybeAudioInvalid: Boolean?,
+    var isSelected: Boolean?
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-            parcel.readString(),
-            parcel.readValue(Int::class.java.classLoader) as? Int,
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readValue(Long::class.java.classLoader) as? Long,
-            parcel.readString(),
-            parcel.readValue(Long::class.java.classLoader) as? Long,
-            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-            parcel.readValue(Boolean::class.java.classLoader) as? Boolean)
-
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Long::class.java.classLoader) as? Long,
+        parcel.readString(),
+        parcel.readValue(Long::class.java.classLoader) as? Long,
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean
+    )
 
     constructor(item: EpisodesItem) : this(
-            id = item.id ?: "",
-            image = item.id,
-            thumbnail = item.thumbnail,
-            explicitContent = item.explicitContent,
-            listennotesEditUrl = item.listennotesEditUrl,
-            audioLength = item.audioLength,
-            description = item.description,
-            audio = item.audio,
-            title = item.title,
-            pubDateMs = item.pubDateMs,
-            nextEpisodePubDate = null,
-            listennotesUrl = item.listennotesUrl,
-            maybeAudioInvalid = item.maybeAudioInvalid,
-            isSelected = item.isSelected
+        id = item.id ?: "",
+        image = item.id,
+        thumbnail = item.thumbnail,
+        explicitContent = item.explicitContent,
+        listennotesEditUrl = item.listennotesEditUrl,
+        audioLength = item.audioLength,
+        description = item.description,
+        audio = item.audio,
+        title = item.title,
+        pubDateMs = item.pubDateMs,
+        nextEpisodePubDate = null,
+        listennotesUrl = item.listennotesUrl,
+        maybeAudioInvalid = item.maybeAudioInvalid,
+        isSelected = item.isSelected
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -109,6 +109,4 @@ data class EpisodeEntity(
             e.toString()
         }
     }
-
-
 }
