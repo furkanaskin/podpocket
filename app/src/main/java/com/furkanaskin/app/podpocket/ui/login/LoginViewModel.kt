@@ -11,7 +11,11 @@ import com.furkanaskin.app.podpocket.db.AppDatabase
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.service.PodpocketAPI
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.*
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -26,7 +30,8 @@ import javax.inject.Inject
  * Created by Furkan on 14.04.2019
  */
 
-class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
+class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) :
+    BaseViewModel(api, appDatabase) {
 
     var userName: ObservableField<String> = ObservableField("")
     var password: ObservableField<String> = ObservableField("")
@@ -41,7 +46,6 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
     var registerSuccess: ObservableField<Boolean> = ObservableField(false)
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
     var verifySuccess: ObservableField<Boolean> = ObservableField()
-    var showProgress: ObservableField<Boolean> = ObservableField()
 
     var forgetPassIntentLiveData = MutableLiveData<Int>()
     var toastLiveData = MutableLiveData<String>()
@@ -95,7 +99,7 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
 
     private fun registerClicked() {
         if (getValidationMessages()) {
-            showProgress.set(true)
+            progressLiveData.postValue(true)
             mAuth.createUserWithEmailAndPassword(
                 userName.get() ?: "",
                 password.get()
@@ -117,8 +121,7 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
 
                         db?.userDao()?.insertUser(user)
                     }
-
-                    showProgress.set(false)
+                    progressLiveData.postValue(false)
                 } else {
                     checkFirebaseCredentials(task)
                 }
@@ -128,7 +131,7 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
 
     private fun loginClicked() {
         if (getValidationMessages()) {
-            showProgress.set(true)
+            progressLiveData.postValue(true)
 
             mAuth.signInWithEmailAndPassword(
                 userName.get() ?: "",
@@ -139,7 +142,8 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
                 if (task.isSuccessful && mAuth.currentUser?.isEmailVerified!!) {
                     verifySuccess.set(true)
 
-                    val usersRef = FirebaseDatabase.getInstance().getReference("users").child("${mAuth.currentUser?.uid}")
+                    val usersRef =
+                        FirebaseDatabase.getInstance().getReference("users").child("${mAuth.currentUser?.uid}")
                     usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
 
                         override fun onCancelled(error: DatabaseError) {
@@ -152,20 +156,20 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
                                     userFromFirebase?.let { db?.userDao()?.insertUser(it) }
 
                                     loginSuccess.set(true)
-                                    showProgress.set(false)
+                                    progressLiveData.postValue(false)
                                 }
                             } else {
                                 loginSuccess.set(true)
-                                showProgress.set(false)
+                                progressLiveData.postValue(false)
                             }
                         }
                     })
                 } else if (task.isSuccessful && mAuth.currentUser?.isEmailVerified == false) {
-                    showProgress.set(false)
+                    progressLiveData.postValue(false)
                     verifySuccess.set(false)
                 } else {
                     checkFirebaseCredentials(task)
-                    showProgress.set(false)
+                    progressLiveData.postValue(false)
                 }
             }
         }
@@ -181,7 +185,8 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
     }
 
     private fun checkFirebaseCredentials(task: Task<AuthResult>) {
-        showProgress.set(true)
+        progressLiveData.postValue(true)
+
 
         val errorType = task.exception
         var errorMessage: String
@@ -190,25 +195,25 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
 
             is FirebaseAuthInvalidCredentialsException -> {
                 errorMessage = "Lütfen mail adresi ve şifrenizi kontrol ediniz."
-                showProgress.set(false)
+                progressLiveData.postValue(false)
             }
             is FirebaseAuthWeakPasswordException -> {
                 errorMessage = "Lütfen daha güçlü bir parola deneyiniz."
-                showProgress.set(false)
+                progressLiveData.postValue(false)
             }
             is FirebaseAuthUserCollisionException -> {
                 errorMessage = "Zaten böyle bir kullanıcı var."
-                showProgress.set(false)
+                progressLiveData.postValue(false)
             }
             is FirebaseAuthInvalidUserException -> {
                 errorMessage = "Böyle bir kullanıcı bulunamadı."
-                showProgress.set(false)
+                progressLiveData.postValue(false)
             }
 
             else -> {
                 Timber.e(errorType.toString())
                 errorMessage = "Beklenmedik bir hata oluştu."
-                showProgress.set(false)
+                progressLiveData.postValue(false)
             }
         }
 
