@@ -16,7 +16,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
 import timber.log.Timber
-import java.util.*
+import java.util.Formatter
+import java.util.Locale
 import javax.inject.Inject
 
 /**

@@ -187,7 +187,6 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
     private fun checkFirebaseCredentials(task: Task<AuthResult>) {
         progressLiveData.postValue(true)
 
-
         val errorType = task.exception
         var errorMessage: String
 

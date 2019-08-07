@@ -14,7 +14,7 @@ import com.furkanaskin.app.podpocket.ui.profile.recently_played.podcasts.Recentl
 import com.furkanaskin.app.podpocket.utils.extensions.toast
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.runOnUiThread
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by Furkan on 17.05.2019

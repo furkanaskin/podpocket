@@ -16,7 +16,7 @@ import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.utils.PaginationScrollListener
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.runOnUiThread
-import java.util.*
+import java.util.ArrayList
 
 class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding>(EpisodesViewModel::class.java) {
 
