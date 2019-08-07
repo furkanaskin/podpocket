@@ -1,5 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.profile.favorites
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Resource
@@ -17,9 +18,11 @@ import timber.log.Timber
  * Created by Furkan on 2019-05-18
  */
 
-class FavoritesViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
+class FavoritesViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) :
+    BaseViewModel(api, appDatabase) {
 
-    val episodesLiveData = MutableLiveData<Resource<Podcasts>>()
+    private val _episodesLiveData = MutableLiveData<Resource<Podcasts>>()
+    val episodesLiveData: LiveData<Resource<Podcasts>> get() = _episodesLiveData
 
     fun getEpisodes(id: String) {
         baseApi?.let { baseApi ->
@@ -33,7 +36,7 @@ class FavoritesViewModel @Inject constructor(api: PodpocketAPI, appDatabase: App
                 .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
-                        Status.SUCCESS -> episodesLiveData.postValue(it)
+                        Status.SUCCESS -> _episodesLiveData.postValue(it)
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }

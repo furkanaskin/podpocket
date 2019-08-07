@@ -1,5 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Resource
@@ -23,9 +24,12 @@ import timber.log.Timber
 
 class HomeViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
 
-    val bestPodcastsLiveData = MutableLiveData<Resource<BestPodcasts>>()
-    val recommendedPodcastsLiveData = MutableLiveData<Resource<PodcastRecommendations>>()
-    val recommendedEpisodesLiveData = MutableLiveData<Resource<EpisodeRecommendations>>()
+    private val _bestPodcastsLiveData = MutableLiveData<Resource<BestPodcasts>>()
+    val bestPodcastsLiveData: LiveData<Resource<BestPodcasts>> get() = _bestPodcastsLiveData
+    private val _recommendedPodcastsLiveData = MutableLiveData<Resource<PodcastRecommendations>>()
+    val recommendedPodcastsLiveData: LiveData<Resource<PodcastRecommendations>> get() = _recommendedPodcastsLiveData
+    private val _recommendedEpisodesLiveData = MutableLiveData<Resource<EpisodeRecommendations>>()
+    val recommendedEpisodesLiveData: LiveData<Resource<EpisodeRecommendations>> get() = _recommendedEpisodesLiveData
     var podcastEpisodeIds = MutableLiveData<ArrayList<String>>()
 
     fun getBestPodcasts(region: String, explicitContent: Int) {
@@ -40,7 +44,7 @@ class HomeViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatab
                 .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
-                        Status.SUCCESS -> bestPodcastsLiveData.postValue(it)
+                        Status.SUCCESS -> _bestPodcastsLiveData.postValue(it)
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }
@@ -60,7 +64,7 @@ class HomeViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatab
                 .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
-                        Status.SUCCESS -> recommendedPodcastsLiveData.postValue(it)
+                        Status.SUCCESS -> _recommendedPodcastsLiveData.postValue(it)
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }
@@ -80,7 +84,7 @@ class HomeViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatab
                 .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
-                        Status.SUCCESS -> recommendedEpisodesLiveData.postValue(it)
+                        Status.SUCCESS -> _recommendedEpisodesLiveData.postValue(it)
                         Status.LOADING -> progressLiveData.postValue(true)
                         Status.ERROR -> Timber.e(it.error)
                     }

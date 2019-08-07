@@ -1,5 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.search
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
@@ -21,12 +22,16 @@ import timber.log.Timber
  * Created by Furkan on 16.04.2019
  */
 
-class SearchViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
+class SearchViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) :
+    BaseViewModel(api, appDatabase) {
 
     var selectedGenres: ArrayList<Int> = ArrayList()
-    val genresLiveData = MutableLiveData<Resource<Genres>>()
-    val episodeSearchResultLiveData = MutableLiveData<Resource<Search>>()
-    val podcastSearchResultLiveData = MutableLiveData<Resource<Search>>()
+    private val _genresLiveData = MutableLiveData<Resource<Genres>>()
+    val genresLiveData: LiveData<Resource<Genres>> get() = _genresLiveData
+    private val _episodeSearchResultLiveData = MutableLiveData<Resource<Search>>()
+    val episodeSearchResultLiveData: LiveData<Resource<Search>> get() = _episodeSearchResultLiveData
+    private val _podcastSearchResultLiveData = MutableLiveData<Resource<Search>>()
+    val podcastSearchResultLiveData: LiveData<Resource<Search>> get() = _podcastSearchResultLiveData
     var podcastEpisodeIds = MutableLiveData<ArrayList<String>>()
     var episodeHeadingLiveData = MutableLiveData<Boolean>()
     var podcastHeadingLiveData = MutableLiveData<Boolean>()
@@ -51,7 +56,7 @@ class SearchViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDat
                                     else
                                         episodeHeadingLiveData.postValue(true)
 
-                                    episodeSearchResultLiveData.postValue(it)
+                                    _episodeSearchResultLiveData.postValue(it)
                                 }
                                 Constants.SearchQuery.PODCAST -> {
                                     if (it.data?.results.isNullOrEmpty())
@@ -59,7 +64,7 @@ class SearchViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDat
                                     else
                                         podcastHeadingLiveData.postValue(true)
 
-                                    podcastSearchResultLiveData.postValue(it)
+                                    _podcastSearchResultLiveData.postValue(it)
                                 }
                             }
                         }
@@ -90,7 +95,7 @@ class SearchViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDat
                                     else
                                         episodeHeadingLiveData.postValue(true)
 
-                                    episodeSearchResultLiveData.postValue(it)
+                                    _episodeSearchResultLiveData.postValue(it)
                                 }
                                 Constants.SearchQuery.PODCAST -> {
                                     if (it.data?.results.isNullOrEmpty())
@@ -98,7 +103,7 @@ class SearchViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDat
                                     else
                                         podcastHeadingLiveData.postValue(true)
 
-                                    podcastSearchResultLiveData.postValue(it)
+                                    _podcastSearchResultLiveData.postValue(it)
                                 }
                             }
                         }
@@ -156,7 +161,7 @@ class SearchViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDat
                 .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
-                        Status.SUCCESS -> genresLiveData.postValue(it)
+                        Status.SUCCESS -> _genresLiveData.postValue(it)
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }

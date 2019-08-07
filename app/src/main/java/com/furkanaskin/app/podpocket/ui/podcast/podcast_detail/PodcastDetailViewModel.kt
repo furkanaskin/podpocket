@@ -1,6 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.podcast.podcast_detail
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Resource
@@ -19,10 +20,12 @@ import timber.log.Timber
  * Created by Furkan on 2019-07-06
  */
 
-class PodcastDetailViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
+class PodcastDetailViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) :
+    BaseViewModel(api, appDatabase) {
 
     var podcast: ObservableField<Podcasts> = ObservableField()
-    val podcastRecommendationsLiveData = MutableLiveData<Resource<PodcastRecommendations>>()
+    private val _podcastRecommendationsLiveData = MutableLiveData<Resource<PodcastRecommendations>>()
+    val podcastRecommendationsLiveData: LiveData<Resource<PodcastRecommendations>> get() = _podcastRecommendationsLiveData
 
     fun getPodcastRecommendations(podcastId: String, explicitContent: Int) {
         baseApi?.let { baseApi ->
@@ -34,7 +37,7 @@ class PodcastDetailViewModel @Inject constructor(api: PodpocketAPI, appDatabase:
                 .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
-                        Status.SUCCESS -> podcastRecommendationsLiveData.postValue(it)
+                        Status.SUCCESS -> _podcastRecommendationsLiveData.postValue(it)
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }

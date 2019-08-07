@@ -1,6 +1,7 @@
 package com.furkanaskin.app.podpocket.ui.podcast
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Resource
@@ -18,10 +19,12 @@ import timber.log.Timber
  * Created by Furkan on 29.04.2019
  */
 
-class PodcastViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
+class PodcastViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) :
+    BaseViewModel(api, appDatabase) {
 
     var podcast: ObservableField<Podcasts> = ObservableField()
-    val podcastLiveData = MutableLiveData<Resource<Podcasts>>()
+    private val _podcastLiveData = MutableLiveData<Resource<Podcasts>>()
+    val podcastLiveData: LiveData<Resource<Podcasts>> get() = _podcastLiveData
 
     fun getEpisodes(id: String) {
         baseApi?.let { baseApi ->
@@ -36,7 +39,7 @@ class PodcastViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDa
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> {
-                            podcastLiveData.postValue(it)
+                            _podcastLiveData.postValue(it)
                             podcast.set(it.data)
                         }
                         Status.LOADING -> ""
