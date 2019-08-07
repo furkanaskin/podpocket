@@ -4,8 +4,8 @@ import androidx.databinding.ObservableField
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.db.AppDatabase
 import com.furkanaskin.app.podpocket.service.PodpocketAPI
-import org.jetbrains.anko.doAsync
 import javax.inject.Inject
+import org.jetbrains.anko.doAsync
 
 /**
  * Created by Furkan on 13.04.2019

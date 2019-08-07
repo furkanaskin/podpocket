@@ -10,8 +10,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import org.jetbrains.anko.doAsync
 import javax.inject.Inject
+import org.jetbrains.anko.doAsync
 
 /**
  * Created by Furkan on 2019-05-26

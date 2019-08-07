@@ -20,11 +20,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import javax.inject.Inject
 import org.jetbrains.anko.doAsync
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Created by Furkan on 14.04.2019

@@ -21,8 +21,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
-import org.jetbrains.anko.doAsync
 import javax.inject.Inject
+import org.jetbrains.anko.doAsync
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : DaggerAppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 

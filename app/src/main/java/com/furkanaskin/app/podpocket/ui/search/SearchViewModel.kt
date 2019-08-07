@@ -13,9 +13,9 @@ import com.furkanaskin.app.podpocket.service.response.Search
 import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 import org.jetbrains.anko.doAsync
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Created by Furkan on 16.04.2019

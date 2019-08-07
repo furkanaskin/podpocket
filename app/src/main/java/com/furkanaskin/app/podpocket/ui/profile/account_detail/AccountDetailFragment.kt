@@ -18,9 +18,9 @@ import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.firebase.storage.FirebaseStorage
-import org.jetbrains.anko.support.v4.runOnUiThread
 import java.io.ByteArrayOutputStream
 import java.util.Calendar
+import org.jetbrains.anko.support.v4.runOnUiThread
 
 class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccountDetailBinding>(AccountDetailViewModel::class.java) {
 

@@ -12,9 +12,9 @@ import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.ui.profile.recently_played.episodes.RecentlyEpisodesAdapter
 import com.furkanaskin.app.podpocket.ui.profile.recently_played.podcasts.RecentlyPodcastsAdapter
 import com.furkanaskin.app.podpocket.utils.extensions.toast
+import java.util.ArrayList
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.runOnUiThread
-import java.util.ArrayList
 
 /**
  * Created by Furkan on 17.05.2019

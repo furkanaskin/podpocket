@@ -14,11 +14,11 @@ import com.furkanaskin.app.podpocket.service.response.Episode
 import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.doAsync
-import timber.log.Timber
 import java.util.Formatter
 import java.util.Locale
 import javax.inject.Inject
+import org.jetbrains.anko.doAsync
+import timber.log.Timber
 
 /**
  * Created by Furkan on 16.04.2019

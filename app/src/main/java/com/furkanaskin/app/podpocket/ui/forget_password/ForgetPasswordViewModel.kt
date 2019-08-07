@@ -5,8 +5,8 @@ import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.core.Constants
 import com.furkanaskin.app.podpocket.db.AppDatabase
 import com.furkanaskin.app.podpocket.service.PodpocketAPI
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * Created by Furkan on 15.04.2019

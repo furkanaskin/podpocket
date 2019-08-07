@@ -1,10 +1,10 @@
 package com.furkanaskin.app.podpocket.service
 
 import com.furkanaskin.app.podpocket.core.Constants
-import okhttp3.Interceptor
-import okhttp3.Response
 import javax.inject.Inject
 import javax.inject.Singleton
+import okhttp3.Interceptor
+import okhttp3.Response
 
 /**
  * Created by Furkan on 2019-07-19
