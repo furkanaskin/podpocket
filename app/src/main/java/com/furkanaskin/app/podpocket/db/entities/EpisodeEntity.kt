@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.furkanaskin.app.podpocket.service.response.EpisodesItem
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 /**
  * Created by Furkan on 16.05.2019
@@ -96,9 +96,7 @@ data class EpisodeEntity(
         }
     }
 
-    fun formatPubDateMs(): String {
-        return getDateTime(pubDateMs ?: 0) ?: ""
-    }
+    fun formatPubDateMs(): String = getDateTime(pubDateMs ?: 0) ?: ""
 
     private fun getDateTime(s: Long): String? {
         return try {

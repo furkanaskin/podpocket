@@ -6,15 +6,18 @@ import android.graphics.Color
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.utils.ConnectivityReceiver
 import com.furkanaskin.app.podpocket.utils.PodPocketProgressDialog
+import com.furkanaskin.app.podpocket.utils.extensions.toast
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -24,7 +27,8 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 import org.jetbrains.anko.doAsync
 
-abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) : DaggerAppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
+abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private val mViewModelClass: Class<VM>) :
+    DaggerAppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 
     @Inject
     internal lateinit var viewModelProviderFactory: ViewModelProvider.Factory
@@ -62,6 +66,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
         onInject()
 
         initFirebase()
+        initToast()
         getUser()
 
         registerReceiver(connectivityReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
@@ -92,7 +97,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
 
     private fun showNetworkMessage(isConnected: Boolean) {
         if (!isConnected) {
-            snackBar = Snackbar.make(findViewById(R.id.rootView), "Internet bağlantınızı kontrol edin.", Snackbar.LENGTH_LONG)
+            snackBar =
+                Snackbar.make(findViewById(R.id.rootView), "Internet bağlantınızı kontrol edin.", Snackbar.LENGTH_LONG)
             snackBar?.duration = BaseTransientBottomBar.LENGTH_INDEFINITE
             snackBar?.view?.setBackgroundColor(Color.parseColor("#F48B8C"))
             window.setFlags(
@@ -108,6 +114,18 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
 
             snackBar?.dismiss()
         }
+    }
+
+    fun initToast() {
+        if (viewModel.toastLiveData.hasActiveObservers())
+            viewModel.toastLiveData.removeObservers(this)
+
+        viewModel.toastLiveData.observe(
+            this,
+            Observer<String> {
+                toast(it, Toast.LENGTH_LONG)
+            }
+        )
     }
 
     fun initFirebase() {

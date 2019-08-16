@@ -13,22 +13,17 @@ import org.jetbrains.anko.doAsync
  * Created by Furkan on 17.05.2019
  */
 
-class AccountDetailViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
+class AccountDetailViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) :
+    BaseViewModel(api, appDatabase) {
     var item: ObservableField<String> = ObservableField("")
 
     var userData: UserEntity? = null
 
-    fun getUserName(): String {
-        return userData?.userName ?: ""
-    }
+    fun getUserName(): String = userData?.userName ?: ""
 
-    fun getName(): String {
-        return userData?.name ?: ""
-    }
+    fun getName(): String = userData?.name ?: ""
 
-    fun getSurname(): String {
-        return userData?.surname ?: ""
-    }
+    fun getSurname(): String = userData?.surname ?: ""
 
     fun changeUserData(user: UserEntity) {
         doAsync {

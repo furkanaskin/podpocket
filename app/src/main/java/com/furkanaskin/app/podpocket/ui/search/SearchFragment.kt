@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.search
 
 import android.content.Intent
-import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
@@ -24,9 +23,10 @@ import com.furkanaskin.app.podpocket.ui.search.episode_search.SearchResultAdapte
 import com.furkanaskin.app.podpocket.ui.search.podcast_search.PodcastSearchResultAdapter
 import com.furkanaskin.app.podpocket.utils.PaginationScrollListener
 import com.furkanaskin.app.podpocket.utils.extensions.hide
+import com.furkanaskin.app.podpocket.utils.extensions.show
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import java.util.*
+import java.util.Timer
 import kotlin.concurrent.schedule
 
 /**
@@ -80,7 +80,10 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
             viewModel.getEpisodes(item.podcastId ?: "")
 
             val intent = Intent(activity, PlayerActivity::class.java)
-            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, viewModel.podcastEpisodeIds.value)
+            intent.putStringArrayListExtra(
+                Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS,
+                viewModel.podcastEpisodeIds.value
+            )
             intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)
             startActivity(intent)
         }
@@ -88,22 +91,23 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         val episodesLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         mBinding.recyclerViewEpisodeSearchResult.adapter = searchEpisodeAdapter
         mBinding.recyclerViewEpisodeSearchResult.layoutManager = episodesLayoutManager
-        mBinding.recyclerViewEpisodeSearchResult.addOnScrollListener(object : PaginationScrollListener(episodesLayoutManager) {
-            override fun isLastPage(): Boolean {
-                return isLastPage
-            }
-
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
-
-            override fun loadMoreItems() {
-                isLoading = true
-                if (totalEpisodeResult != layoutManager.itemCount) {
-                    getSearchResult(searchTerm ?: "", Constants.SearchQuery.EPISODE, episodesOffset)
+        mBinding.recyclerViewEpisodeSearchResult.addOnScrollListener(object :
+                PaginationScrollListener(episodesLayoutManager) {
+                override fun isLastPage(): Boolean {
+                    return isLastPage
                 }
-            }
-        })
+
+                override fun isLoading(): Boolean {
+                    return isLoading
+                }
+
+                override fun loadMoreItems() {
+                    isLoading = true
+                    if (totalEpisodeResult != layoutManager.itemCount) {
+                        getSearchResult(searchTerm ?: "", Constants.SearchQuery.EPISODE, episodesOffset)
+                    }
+                }
+            })
 
         // -- PODCAST --
         val searchPodcastAdapter = PodcastSearchResultAdapter { item ->
@@ -116,28 +120,31 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         val podcastsLayoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         mBinding.recyclerViewPodcastSearchResult.adapter = searchPodcastAdapter
         mBinding.recyclerViewPodcastSearchResult.layoutManager = podcastsLayoutManager
-        mBinding.recyclerViewPodcastSearchResult.addOnScrollListener(object : PaginationScrollListener(podcastsLayoutManager) {
-            override fun isLastPage(): Boolean {
-                return isLastPage
-            }
-
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
-
-            override fun loadMoreItems() {
-                isLoading = true
-                if (totalPodcastResult != layoutManager.itemCount) {
-                    getSearchResult(searchTerm ?: "", Constants.SearchQuery.PODCAST, podcastsOffset)
+        mBinding.recyclerViewPodcastSearchResult.addOnScrollListener(object :
+                PaginationScrollListener(podcastsLayoutManager) {
+                override fun isLastPage(): Boolean {
+                    return isLastPage
                 }
-            }
-        })
+
+                override fun isLoading(): Boolean {
+                    return isLoading
+                }
+
+                override fun loadMoreItems() {
+                    isLoading = true
+                    if (totalPodcastResult != layoutManager.itemCount) {
+                        getSearchResult(searchTerm ?: "", Constants.SearchQuery.PODCAST, podcastsOffset)
+                    }
+                }
+            })
     }
 
     private fun initSearchView() {
         val searchEditText: EditText = mBinding.searchView.findViewById(R.id.search_src_text)
-        activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.white) }?.let { searchEditText.setTextColor(it) }
-        activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.grayTextColor) }?.let { searchEditText.setHintTextColor(it) }
+        activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.white) }
+            ?.let { searchEditText.setTextColor(it) }
+        activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.grayTextColor) }
+            ?.let { searchEditText.setHintTextColor(it) }
         mBinding.searchView.isActivated = true
         mBinding.searchView.setIconifiedByDefault(false)
         mBinding.searchView.isIconified = false
@@ -222,7 +229,9 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                 it.data?.results?.forEach {
                     podcastsResult?.add(it)
                 }
-                (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(podcastsResult)
+                (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(
+                    podcastsResult
+                )
             }
         )
     }
@@ -292,11 +301,11 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
             this@SearchFragment,
             Observer<Boolean> {
                 if (it) {
-                    mBinding.textViewSearchEpisodesHeading.visibility = View.VISIBLE
-                    mBinding.recyclerViewEpisodeSearchResult.visibility = View.VISIBLE
+                    mBinding.textViewSearchEpisodesHeading.show()
+                    mBinding.recyclerViewEpisodeSearchResult.show()
                 } else {
-                    mBinding.textViewSearchEpisodesHeading.visibility = View.GONE
-                    mBinding.recyclerViewEpisodeSearchResult.visibility = View.GONE
+                    mBinding.textViewSearchEpisodesHeading.hide()
+                    mBinding.recyclerViewEpisodeSearchResult.hide()
                 }
             }
         )
@@ -308,11 +317,11 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
             this@SearchFragment,
             Observer<Boolean> {
                 if (it) {
-                    mBinding.textViewSearchPodcastsHeading.visibility = View.VISIBLE
-                    mBinding.recyclerViewPodcastSearchResult.visibility = View.VISIBLE
+                    mBinding.textViewSearchPodcastsHeading.show()
+                    mBinding.recyclerViewPodcastSearchResult.show()
                 } else {
-                    mBinding.textViewSearchPodcastsHeading.visibility = View.GONE
-                    mBinding.recyclerViewPodcastSearchResult.visibility = View.GONE
+                    mBinding.textViewSearchPodcastsHeading.hide()
+                    mBinding.recyclerViewPodcastSearchResult.hide()
                 }
             }
         )

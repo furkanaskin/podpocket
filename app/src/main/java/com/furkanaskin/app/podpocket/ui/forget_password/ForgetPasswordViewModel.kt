@@ -12,16 +12,16 @@ import timber.log.Timber
  * Created by Furkan on 15.04.2019
  */
 
-class ForgetPasswordViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
+class ForgetPasswordViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) :
+    BaseViewModel(api, appDatabase) {
 
     var userName: ObservableField<String> = ObservableField("")
     var sendMailSuccess: ObservableField<Boolean> = ObservableField(false)
     var sendVerifyMailSucces: ObservableField<Boolean> = ObservableField(false)
     var type: ObservableField<Int> = ObservableField(0)
-    var showProgress: ObservableField<Boolean> = ObservableField(false)
 
     fun buttonClick() {
-        showProgress.set(true)
+        progressLiveData.postValue(true)
         when (type.get()) {
             Constants.LoginActivityType.FORGOT_PASS -> forgetPassword()
             Constants.LoginActivityType.EMAIL_VERIFY -> verifyEmail()
@@ -35,12 +35,12 @@ class ForgetPasswordViewModel @Inject constructor(api: PodpocketAPI, appDatabase
                 mAuth.sendPasswordResetEmail(it).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         sendMailSuccess.set(true)
-                        showProgress.set(false)
+                        progressLiveData.postValue(false)
                     }
                 }
             }?.addOnFailureListener {
                 Timber.e(it.toString())
-                showProgress.set(false)
+                progressLiveData.postValue(false)
             }
         }
     }
@@ -50,9 +50,9 @@ class ForgetPasswordViewModel @Inject constructor(api: PodpocketAPI, appDatabase
         mUser!!.sendEmailVerification().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 sendVerifyMailSucces.set(true)
-                showProgress.set(false)
+                progressLiveData.postValue(false)
             } else {
-                showProgress.set(false)
+                progressLiveData.postValue(false)
             }
         }
     }

@@ -3,7 +3,6 @@ package com.furkanaskin.app.podpocket.ui.login
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.Observable
 import androidx.lifecycle.Observer
@@ -14,7 +13,6 @@ import com.furkanaskin.app.podpocket.databinding.ActivityLoginBinding
 import com.furkanaskin.app.podpocket.ui.after_register.AfterRegisterActivity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.forget_password.ForgetPasswordActivity
-import com.furkanaskin.app.podpocket.utils.extensions.toast
 import com.jaychang.st.SimpleText
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.doAsync
@@ -33,35 +31,25 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        init()
+        parseIntent()
+        initObservers()
+        initAgreement()
+    }
 
-        val simpleText = SimpleText.from(getString(R.string.agreement))
-            .first(getString(R.string.agreement_part_first))
-            .textColor(R.color.colorPrettyOrange)
-            .pressedTextColor(R.color.colorPrettyOrange)
-            .onClick(textViewAgreement) { _, _, _ ->
-                showAgreementDialog()
-            }
-            .first(getString(R.string.agreement_part_second))
-            .textColor(R.color.colorPrettyOrange)
-            .pressedTextColor(R.color.colorPrettyOrange)
-            .onClick(textViewAgreement) { _, _, _ ->
-                showAgreementDialog()
-            }
-            .first(getString(R.string.agreement_part_third))
-            .textColor(R.color.colorPrettyPurple)
-            .pressedTextColor(R.color.colorPrettyPurple)
-            .onClick(textViewAgreement) { _, _, _ ->
-                showAgreementDialog()
-            }
-            .first(getString(R.string.agreement_part_fourth))
-            .textColor(R.color.colorPrettyOrange)
-            .pressedTextColor(R.color.colorPrettyOrange)
-            .onClick(textViewAgreement) { _, _, _ ->
-                showAgreementDialog()
-            }
+    private fun initObservers() {
 
-        textViewAgreement.text = simpleText
+        if (viewModel.progressLiveData.hasActiveObservers())
+            viewModel.progressLiveData.removeObservers(this)
+
+        viewModel.progressLiveData.observe(
+            this,
+            Observer<Boolean> {
+                if (it)
+                    showProgress()
+                else
+                    hideProgress()
+            }
+        )
 
         viewModel.registerSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
@@ -114,35 +102,6 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
                 finish()
             }
         )
-
-        if (viewModel.toastLiveData.hasActiveObservers())
-            viewModel.toastLiveData.removeObservers(this)
-
-        viewModel.toastLiveData.observe(
-            this,
-            Observer<String> {
-                toast(it, Toast.LENGTH_LONG)
-            }
-        )
-    }
-
-    private fun init() {
-        val viewType =
-            intent.getIntExtra(Constants.IntentName.LOGIN_ACTIVITY_TYPE, Constants.LoginActivityType.LOGIN_TYPE)
-        viewModel.setType(viewType)
-
-        if (viewModel.progressLiveData.hasActiveObservers())
-            viewModel.progressLiveData.removeObservers(this)
-
-        viewModel.progressLiveData.observe(
-            this,
-            Observer<Boolean> {
-                if (it)
-                    showProgress()
-                else
-                    hideProgress()
-            }
-        )
     }
 
     private fun showAgreementDialog() {
@@ -165,6 +124,12 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
             .show()
     }
 
+    private fun parseIntent() {
+        val viewType =
+            intent.getIntExtra(Constants.IntentName.LOGIN_ACTIVITY_TYPE, Constants.LoginActivityType.LOGIN_TYPE)
+        viewModel.setType(viewType)
+    }
+
     private fun showVerifyEmailDialog() {
 
         val builder = AlertDialog.Builder(this)
@@ -180,5 +145,35 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>(LoginVi
         }
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+    private fun initAgreement() {
+        val simpleText = SimpleText.from(getString(R.string.agreement))
+            .first(getString(R.string.agreement_part_first))
+            .textColor(R.color.colorPrettyOrange)
+            .pressedTextColor(R.color.colorPrettyOrange)
+            .onClick(textViewAgreement) { _, _, _ ->
+                showAgreementDialog()
+            }
+            .first(getString(R.string.agreement_part_second))
+            .textColor(R.color.colorPrettyOrange)
+            .pressedTextColor(R.color.colorPrettyOrange)
+            .onClick(textViewAgreement) { _, _, _ ->
+                showAgreementDialog()
+            }
+            .first(getString(R.string.agreement_part_third))
+            .textColor(R.color.colorPrettyPurple)
+            .pressedTextColor(R.color.colorPrettyPurple)
+            .onClick(textViewAgreement) { _, _, _ ->
+                showAgreementDialog()
+            }
+            .first(getString(R.string.agreement_part_fourth))
+            .textColor(R.color.colorPrettyOrange)
+            .pressedTextColor(R.color.colorPrettyOrange)
+            .onClick(textViewAgreement) { _, _, _ ->
+                showAgreementDialog()
+            }
+
+        textViewAgreement.text = simpleText
     }
 }

@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 data class EpisodesItem(
 
@@ -93,9 +93,7 @@ data class EpisodesItem(
         }
     }
 
-    fun getPubDateMs(): String {
-        return getDateTime(pubDateMs ?: 0) ?: ""
-    }
+    fun getPubDateMs(): String = getDateTime(pubDateMs ?: 0) ?: ""
 
     private fun getDateTime(s: Long): String? {
         return try {

@@ -48,7 +48,6 @@ class LoginViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppData
     var verifySuccess: ObservableField<Boolean> = ObservableField()
 
     var forgetPassIntentLiveData = MutableLiveData<Int>()
-    var toastLiveData = MutableLiveData<String>()
 
     private var type: Int = Constants.LoginActivityType.LOGIN_TYPE
 

@@ -20,7 +20,8 @@ import org.threeten.bp.format.DateTimeFormatter
  * Created by Furkan on 2019-05-26
  */
 
-class NewPostViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
+class NewPostViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) :
+    BaseViewModel(api, appDatabase) {
     var postText: ObservableField<String> = ObservableField("")
     var pushPostSuccess: ObservableField<Boolean> = ObservableField(false)
 

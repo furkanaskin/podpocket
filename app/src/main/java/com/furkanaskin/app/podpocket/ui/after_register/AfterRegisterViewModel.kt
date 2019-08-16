@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.after_register
 
 import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
 import com.furkanaskin.app.podpocket.core.BaseViewModel
 import com.furkanaskin.app.podpocket.db.AppDatabase
 import com.furkanaskin.app.podpocket.db.entities.UserEntity
@@ -24,7 +23,6 @@ class AfterRegisterViewModel @Inject constructor(api: PodpocketAPI, appDatabase:
     var profileImageUrl: ObservableField<String> = ObservableField("")
     var saveSuccess: ObservableField<Boolean> = ObservableField(false)
     var userID: ObservableField<Int> = ObservableField(0)
-    var toastLiveData = MutableLiveData<String>()
 
     fun getValidationMessages(): Boolean {
         var result = true

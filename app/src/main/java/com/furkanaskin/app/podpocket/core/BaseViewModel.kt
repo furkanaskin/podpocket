@@ -11,6 +11,7 @@ import org.jetbrains.anko.doAsync
 open class BaseViewModel(var baseApi: PodpocketAPI? = null, var db: AppDatabase? = null) : AutoDisposeViewModel() {
 
     var progressLiveData = MutableLiveData<Boolean>()
+    var toastLiveData = MutableLiveData<String>()
 
     lateinit var mAuth: FirebaseAuth
     var user: UserEntity? = null

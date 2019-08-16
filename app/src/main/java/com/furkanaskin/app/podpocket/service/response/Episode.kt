@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 data class Episode(
 
@@ -98,22 +98,15 @@ data class Episode(
         }
     }
 
-    fun getTotalEpisodes(): String? {
-        return "${podcast?.totalEpisodes} Bölüm"
-    }
+    fun getTotalEpisodes(): String? = "${podcast?.totalEpisodes} Bölüm"
 
-    fun getPodcastLanguage(): String? {
-        return "Yayın Dili : ${podcast?.language}"
-    }
+    fun getPodcastLanguage(): String? = "Yayın Dili : ${podcast?.language}"
 
-    fun getPodcast(): String? {
-        return "Podcast : ${podcast?.title}"
-    }
+    fun getPodcast(): String? = "Podcast : ${podcast?.title}"
 
-    fun getPubDateMs(): String {
-        return """Yayınlanma Tarihi :
+    fun getPubDateMs(): String =
+        """Yayınlanma Tarihi :
             |${getDateTime(pubDateMs ?: 0)}""".trimMargin()
-    }
 
     private fun getDateTime(s: Long): String? {
         return try {

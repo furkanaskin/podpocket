@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.furkanaskin.app.podpocket.ui.podcast.episodes.EpisodesViewModel" />
+            type="com.furkanaskin.app.podpocket.ui.podcast.episodes.EpisodesViewModel"/>
     </data>
 
 
@@ -20,10 +20,20 @@
         android:fitsSystemWindows="true"
         tools:context=".ui.podcast.episodes.EpisodesFragment">
 
+        <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
+            android:id="@+id/textViewTotalEpisodesHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16_dp"
+            android:textColor="@color/colorCyan"
+            android:layout_centerHorizontal="true"
+            android:text="@{viewModel.podcast.getTotalEpisodesHeading()}"/>
+
         <com.furkanaskin.app.podpocket.utils.ui.PodPocketRecyclerView
             android:id="@+id/recyclerViewPodcastEpisodes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/textViewTotalEpisodesHeading"
             android:fitsSystemWindows="true"
             android:orientation="vertical"
             app:layoutManager="LinearLayoutManager"

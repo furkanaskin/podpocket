@@ -13,6 +13,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import io.fabric.sdk.android.Fabric
 import javax.inject.Inject
+import timber.log.Timber
 
 class Podpocket : Application(), HasActivityInjector {
 
@@ -34,6 +35,7 @@ class Podpocket : Application(), HasActivityInjector {
         AndroidThreeTen.init(this)
         initFabric()
         Stetho.initializeWithDefaults(this)
+        Timber.plant(Timber.DebugTree())
     }
 
     private fun initFabric() {

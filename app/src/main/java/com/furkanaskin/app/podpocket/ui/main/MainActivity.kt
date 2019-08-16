@@ -34,6 +34,8 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>(Ma
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setAnimation()
+
         viewModel.mainActivityIntentLiveData.observe(
             this,
             Observer<Int> {
@@ -43,7 +45,9 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>(Ma
                 finish()
             }
         )
+    }
 
+    private fun setAnimation() {
         RxAnimation.together(
             binding.textViewHello.fadeOut(Constants.MainAnimationConstants.NO_DURATION),
             binding.buttonLogin.fadeOut(Constants.MainAnimationConstants.NO_DURATION),

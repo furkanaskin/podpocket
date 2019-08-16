@@ -8,10 +8,8 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.Observable
-import androidx.lifecycle.Observer
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.databinding.ActivityAfterRegisterBinding
@@ -19,7 +17,6 @@ import com.furkanaskin.app.podpocket.db.entities.UserEntity
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
-import com.furkanaskin.app.podpocket.utils.extensions.toast
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
 import java.util.Calendar
@@ -43,16 +40,6 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (viewModel.toastLiveData.hasActiveObservers())
-            viewModel.toastLiveData.removeObservers(this)
-
-        viewModel.toastLiveData.observe(
-            this,
-            Observer<String> {
-                toast(it, Toast.LENGTH_LONG)
-            }
-        )
 
         when (isCurrentUserIDAvailable()) {
             true -> binding.buttonDone.show()

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import com.furkanaskin.app.podpocket.service.response.Episode
 import com.furkanaskin.app.podpocket.service.response.EpisodesItem
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 /**
  * Created by Furkan on 2019-05-18
@@ -109,9 +109,7 @@ data class FavoriteEpisodeEntity(
         }
     }
 
-    fun formatPubDateMs(): String {
-        return getDateTime(pubDateMs ?: 0) ?: ""
-    }
+    fun formatPubDateMs(): String = getDateTime(pubDateMs ?: 0) ?: ""
 
     private fun getDateTime(s: Long): String? {
         return try {

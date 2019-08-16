@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.Observable
+import androidx.lifecycle.Observer
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.core.Constants
@@ -15,7 +16,8 @@ import com.furkanaskin.app.podpocket.utils.extensions.show
  * Created by Furkan on 15.04.2019
  */
 
-class ForgetPasswordActivity : BaseActivity<ForgetPasswordViewModel, ActivityForgetPasswordBinding>(ForgetPasswordViewModel::class.java) {
+class ForgetPasswordActivity :
+    BaseActivity<ForgetPasswordViewModel, ActivityForgetPasswordBinding>(ForgetPasswordViewModel::class.java) {
     override fun getLayoutRes() = R.layout.activity_forget_password
 
     override fun initViewModel(viewModel: ForgetPasswordViewModel) {
@@ -28,15 +30,18 @@ class ForgetPasswordActivity : BaseActivity<ForgetPasswordViewModel, ActivityFor
         val viewType = intent.getIntExtra("TYPE", 0)
         viewModel.type.set(viewType)
 
-        viewModel.showProgress.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
-            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-                if (viewModel.showProgress.get() == true) {
+        if (viewModel.progressLiveData.hasActiveObservers())
+            viewModel.progressLiveData.removeObservers(this)
+
+        viewModel.progressLiveData.observe(
+            this,
+            Observer<Boolean> {
+                if (it)
                     showProgress()
-                } else {
+                else
                     hideProgress()
-                }
             }
-        })
+        )
 
         viewModel.sendMailSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {

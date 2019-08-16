@@ -5,7 +5,6 @@ import androidx.databinding.Observable
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
 import com.furkanaskin.app.podpocket.databinding.FragmentNewPostBinding
-import com.furkanaskin.app.podpocket.utils.extensions.toast
 
 /**
  * Created by Furkan on 2019-05-26
@@ -23,8 +22,8 @@ class NewPostFragment : BaseFragment<NewPostViewModel, FragmentNewPostBinding>(N
 
         viewModel.pushPostSuccess.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                viewModel.toastLiveData.postValue("Post başarıyla paylaşıldı.")
                 navigate(R.id.action_newPostFragment_to_feedFragment)
-                toast("Post başarıyla paylaşıldı.")
             }
         })
     }

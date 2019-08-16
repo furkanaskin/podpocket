@@ -6,7 +6,6 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.view.View
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.databinding.Observable
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
@@ -189,7 +188,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         doAsync {
             if (viewModel.isFavorite.get() == true) {
-                viewModel.db?.favoritesDao()?.insertFavoriteEpisode(viewModel.episodeDetailLiveData.value?.data?.let { FavoriteEpisodeEntity(it) })
+                viewModel.db?.favoritesDao()
+                    ?.insertFavoriteEpisode(viewModel.episodeDetailLiveData.value?.data?.let { FavoriteEpisodeEntity(it) })
             } else {
                 viewModel.db?.favoritesDao()?.deleteFavoriteEpisode(episodeId)
             }
@@ -226,7 +226,13 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
 
         // Prepare dataSource
 
-        httpDataSourceFactory = DefaultHttpDataSourceFactory(Util.getUserAgent(this, "Podpocket"), null, DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS, DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS, true)
+        httpDataSourceFactory = DefaultHttpDataSourceFactory(
+            Util.getUserAgent(this, "Podpocket"),
+            null,
+            DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,
+            DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS,
+            true
+        )
         dataSourceFactory = DefaultDataSourceFactory(this, null, httpDataSourceFactory)
 
         viewModel.getEpisodeDetails(episodeId)
@@ -318,7 +324,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             getEpisodeDetail(episodeId)
             disableButtons()
         } else {
-            Toast.makeText(this, getString(R.string.no_more_new_episodes), Toast.LENGTH_SHORT).show()
+            viewModel.toastLiveData.postValue(getString(R.string.no_more_new_episodes))
         }
     }
 
@@ -332,7 +338,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             getEpisodeDetail(episodeId)
             disableButtons()
         } else {
-            Toast.makeText(this, getString(R.string.you_are_in_first_episode), Toast.LENGTH_SHORT).show()
+            viewModel.toastLiveData.postValue(getString(R.string.you_are_in_first_episode))
         }
     }
 

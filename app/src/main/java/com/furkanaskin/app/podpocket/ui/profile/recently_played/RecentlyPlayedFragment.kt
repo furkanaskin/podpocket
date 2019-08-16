@@ -1,7 +1,6 @@
 package com.furkanaskin.app.podpocket.ui.profile.recently_played
 
 import android.content.Intent
-import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseFragment
@@ -11,7 +10,8 @@ import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.ui.profile.recently_played.episodes.RecentlyEpisodesAdapter
 import com.furkanaskin.app.podpocket.ui.profile.recently_played.podcasts.RecentlyPodcastsAdapter
-import com.furkanaskin.app.podpocket.utils.extensions.toast
+import com.furkanaskin.app.podpocket.utils.extensions.hide
+import com.furkanaskin.app.podpocket.utils.extensions.show
 import java.util.ArrayList
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.runOnUiThread
@@ -20,7 +20,8 @@ import org.jetbrains.anko.support.v4.runOnUiThread
  * Created by Furkan on 17.05.2019
  */
 
-class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRecentlyPlayedBinding>(RecentlyPlayedViewModel::class.java) {
+class RecentlyPlayedFragment :
+    BaseFragment<RecentlyPlayedViewModel, FragmentRecentlyPlayedBinding>(RecentlyPlayedViewModel::class.java) {
 
     override fun getLayoutRes(): Int = R.layout.fragment_recently_played
 
@@ -38,7 +39,7 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
         }
 
         mBinding.recyclerViewRecentlyPlayedEpisodes.adapter = RecentlyEpisodesAdapter {
-            var ids: ArrayList<String> = ArrayList()
+            val ids: ArrayList<String> = ArrayList()
 
             ids.add(it.id)
 
@@ -49,7 +50,7 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
                 intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, it.id)
                 startActivity(intent)
             } else {
-                toast("Bir hata meydana geldi.")
+                viewModel.toastLiveData.postValue("Bir hata meydana geldi.")
             }
         }
 
@@ -82,22 +83,22 @@ class RecentlyPlayedFragment : BaseFragment<RecentlyPlayedViewModel, FragmentRec
     }
 
     private fun showAnimation() {
-        mBinding.textViewRecentlyPlayedEpisodesHeading.visibility = View.GONE
-        mBinding.textViewRecentlyPlayedPodcastsHeading.visibility = View.GONE
-        mBinding.recyclerViewRecentlyPlayedEpisodes.visibility = View.GONE
-        mBinding.recyclerViewRecentlyPlayedPodcast.visibility = View.GONE
-        mBinding.lottieAnimationView.visibility = View.VISIBLE
-        mBinding.buttonNavigateHome.visibility = View.VISIBLE
-        mBinding.textViewDummyText.visibility = View.VISIBLE
+        mBinding.textViewRecentlyPlayedEpisodesHeading.hide()
+        mBinding.textViewRecentlyPlayedPodcastsHeading.hide()
+        mBinding.recyclerViewRecentlyPlayedEpisodes.hide()
+        mBinding.recyclerViewRecentlyPlayedPodcast.hide()
+        mBinding.lottieAnimationView.show()
+        mBinding.buttonNavigateHome.show()
+        mBinding.textViewDummyText.show()
     }
 
     private fun hideAnimation() {
-        mBinding.textViewRecentlyPlayedEpisodesHeading.visibility = View.VISIBLE
-        mBinding.textViewRecentlyPlayedPodcastsHeading.visibility = View.VISIBLE
-        mBinding.recyclerViewRecentlyPlayedEpisodes.visibility = View.VISIBLE
-        mBinding.recyclerViewRecentlyPlayedPodcast.visibility = View.VISIBLE
-        mBinding.lottieAnimationView.visibility = View.GONE
-        mBinding.buttonNavigateHome.visibility = View.GONE
-        mBinding.textViewDummyText.visibility = View.GONE
+        mBinding.textViewRecentlyPlayedEpisodesHeading.show()
+        mBinding.textViewRecentlyPlayedPodcastsHeading.show()
+        mBinding.recyclerViewRecentlyPlayedEpisodes.show()
+        mBinding.recyclerViewRecentlyPlayedPodcast.show()
+        mBinding.lottieAnimationView.hide()
+        mBinding.buttonNavigateHome.hide()
+        mBinding.textViewDummyText.hide()
     }
 }

@@ -34,13 +34,14 @@ import org.jetbrains.anko.doAsync
  */
 
 class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBinding>(FavoritesViewModel::class.java) {
+
+    var ids: ArrayList<String> = ArrayList()
+
     override fun getLayoutRes(): Int = R.layout.fragment_favorites
 
     override fun initViewModel() {
         mBinding.viewModel = viewModel
     }
-
-    var ids: ArrayList<String> = ArrayList()
 
     override fun init() {
 
@@ -56,39 +57,41 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
 
             override fun onExpanded() {
                 ViewCompat.animate(mBinding.buttonSearch).alpha(0f).setDuration(350).start()
-                ViewCompat.animate(mBinding.searchView).alpha(1f).setDuration(350).setListener(object : ViewPropertyAnimatorListener {
+                ViewCompat.animate(mBinding.searchView).alpha(1f).setDuration(350)
+                    .setListener(object : ViewPropertyAnimatorListener {
 
-                    override fun onAnimationEnd(view: View?) {
-                        mBinding.buttonSearch.visibility = View.INVISIBLE
-                    }
+                        override fun onAnimationEnd(view: View?) {
+                            mBinding.buttonSearch.visibility = View.INVISIBLE
+                        }
 
-                    override fun onAnimationCancel(view: View?) {
-                    }
+                        override fun onAnimationCancel(view: View?) {
+                        }
 
-                    override fun onAnimationStart(view: View?) {
-                        mBinding.imageViewAppLogoSmall.visibility = View.INVISIBLE
-                        mBinding.textViewAppName.visibility = View.INVISIBLE
-                        mBinding.searchView.visibility = View.VISIBLE
-                    }
-                }).start()
+                        override fun onAnimationStart(view: View?) {
+                            mBinding.imageViewAppLogoSmall.visibility = View.INVISIBLE
+                            mBinding.textViewAppName.visibility = View.INVISIBLE
+                            mBinding.searchView.visibility = View.VISIBLE
+                        }
+                    }).start()
             }
 
             override fun onCollapsed() {
                 ViewCompat.animate(mBinding.buttonSearch).alpha(1f).setDuration(200).start()
-                ViewCompat.animate(mBinding.searchView).alpha(0f).setDuration(200).setListener(object : ViewPropertyAnimatorListener {
-                    override fun onAnimationEnd(view: View?) {
-                        mBinding.searchView.visibility = View.INVISIBLE
-                    }
+                ViewCompat.animate(mBinding.searchView).alpha(0f).setDuration(200)
+                    .setListener(object : ViewPropertyAnimatorListener {
+                        override fun onAnimationEnd(view: View?) {
+                            mBinding.searchView.visibility = View.INVISIBLE
+                        }
 
-                    override fun onAnimationCancel(view: View?) {
-                    }
+                        override fun onAnimationCancel(view: View?) {
+                        }
 
-                    override fun onAnimationStart(view: View?) {
-                        mBinding.buttonSearch.visibility = View.VISIBLE
-                        mBinding.imageViewAppLogoSmall.visibility = View.VISIBLE
-                        mBinding.textViewAppName.visibility = View.VISIBLE
-                    }
-                }).start()
+                        override fun onAnimationStart(view: View?) {
+                            mBinding.buttonSearch.visibility = View.VISIBLE
+                            mBinding.imageViewAppLogoSmall.visibility = View.VISIBLE
+                            mBinding.textViewAppName.visibility = View.VISIBLE
+                        }
+                    }).start()
             }
         })
 
@@ -161,8 +164,10 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
 
     private fun initSearchView() {
         val searchEditText: EditText = mBinding.searchView.findViewById(R.id.search_src_text)
-        activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.white) }?.let { searchEditText.setTextColor(it) }
-        activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.grayTextColor) }?.let { searchEditText.setHintTextColor(it) }
+        activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.white) }
+            ?.let { searchEditText.setTextColor(it) }
+        activity?.applicationContext?.let { ContextCompat.getColor(it, R.color.grayTextColor) }
+            ?.let { searchEditText.setHintTextColor(it) }
         searchEditText.clearFocus()
         mBinding.searchView.isActivated = true
         mBinding.searchView.setIconifiedByDefault(false)
