@@ -50,7 +50,7 @@ class PodPocketRecyclerView : RecyclerView {
                 if (loadingView != null)
                     loadingView!!.hide()
                 count = adapter!!.itemCount
-                if (this@PodPocketRecyclerView.countTextView != null) {
+                if (this.countTextView != null) {
                     if (isCountTextAdd) {
                         countTextView!!.text = String.format("%s Adet", count)
                     } else {

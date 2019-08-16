@@ -36,7 +36,7 @@ class LocalePostsAdapter(private val callBack: (PostEntity, Int) -> Unit) : Base
     }
 
     override fun bind(binding: ViewDataBinding, position: Int) {
-        (binding as ItemLocalePostBinding).viewModel?.setModel(getItem(position), position)
+        (binding as? ItemLocalePostBinding)?.viewModel?.setModel(getItem(position), position)
         binding.executePendingBindings()
     }
 }

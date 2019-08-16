@@ -48,21 +48,21 @@ data class EpisodeEntity(
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean
     )
 
-    constructor(item: EpisodesItem) : this(
-        id = item.id ?: "",
-        image = item.id,
-        thumbnail = item.thumbnail,
-        explicitContent = item.explicitContent,
-        listennotesEditUrl = item.listennotesEditUrl,
-        audioLength = item.audioLength,
-        description = item.description,
-        audio = item.audio,
-        title = item.title,
-        pubDateMs = item.pubDateMs,
+    constructor(item: EpisodesItem?) : this(
+        id = item?.id ?: "",
+        image = item?.id,
+        thumbnail = item?.thumbnail,
+        explicitContent = item?.explicitContent,
+        listennotesEditUrl = item?.listennotesEditUrl,
+        audioLength = item?.audioLength,
+        description = item?.description,
+        audio = item?.audio,
+        title = item?.title,
+        pubDateMs = item?.pubDateMs,
         nextEpisodePubDate = null,
-        listennotesUrl = item.listennotesUrl,
-        maybeAudioInvalid = item.maybeAudioInvalid,
-        isSelected = item.isSelected
+        listennotesUrl = item?.listennotesUrl,
+        maybeAudioInvalid = item?.maybeAudioInvalid,
+        isSelected = item?.isSelected
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

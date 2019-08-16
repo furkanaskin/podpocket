@@ -40,12 +40,17 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
         val itemList = ArrayList<ProfileSettingsEntity>()
         itemList.add(ProfileSettingsEntity(resources.getString(R.string.favorites), R.drawable.ic_favorites))
         itemList.add(ProfileSettingsEntity(resources.getString(R.string.recently_played), R.drawable.ic_recently_plays))
-        itemList.add(ProfileSettingsEntity(resources.getString(R.string.account_details), R.drawable.ic_account_settings))
+        itemList.add(
+            ProfileSettingsEntity(
+                resources.getString(R.string.account_details),
+                R.drawable.ic_account_settings
+            )
+        )
         itemList.add(ProfileSettingsEntity(resources.getString(R.string.rate_us), R.drawable.ic_rate_us))
         itemList.add(ProfileSettingsEntity(resources.getString(R.string.give_feedback), R.drawable.ic_give_feedback))
         itemList.add(ProfileSettingsEntity(resources.getString(R.string.logout), R.drawable.ic_exit))
 
-        (mBinding.recyclerViewProfile.adapter as ProfileAdapter).submitList(itemList)
+        (mBinding.recyclerViewProfile.adapter as? ProfileAdapter)?.submitList(itemList)
     }
 
     private fun initProfileItemsAdapter() {
@@ -118,11 +123,12 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>(P
         }
     }
 
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     private fun sendFeedback() {
         val intent = Intent(Intent.ACTION_SENDTO)
         intent.data = Uri.parse("mailto:askinn.furkan@gmail.com") // only email apps should handle this
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.thanks_for_sharing_expreience))
-        if (intent.resolveActivity((activity as DashboardActivity).packageManager) != null) {
+        if (intent.resolveActivity((activity as? DashboardActivity)?.packageManager) != null) {
             startActivity(intent)
         }
     }

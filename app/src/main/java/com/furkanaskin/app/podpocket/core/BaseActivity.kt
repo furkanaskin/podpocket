@@ -72,8 +72,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>(private va
         registerReceiver(connectivityReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
-    override fun onNetworkConnectionChanged(isConnected: Boolean) {
-        showNetworkMessage(isConnected)
+    override fun onNetworkConnectionChanged(isConnected: Boolean?) {
+        isConnected?.let { showNetworkMessage(it) }
     }
 
     override fun onResume() {

@@ -22,7 +22,8 @@ import java.io.ByteArrayOutputStream
 import java.util.Calendar
 import org.jetbrains.anko.support.v4.runOnUiThread
 
-class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccountDetailBinding>(AccountDetailViewModel::class.java) {
+class AccountDetailFragment :
+    BaseFragment<AccountDetailViewModel, FragmentAccountDetailBinding>(AccountDetailViewModel::class.java) {
 
     override fun getLayoutRes(): Int = R.layout.fragment_account_detail
 
@@ -44,7 +45,10 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
             isUserHavePicture = true
             mBinding.fabChangeImage.hide()
             profileImageUrl.set(viewModel.user?.profilePictureUrl.toString())
-            Glide.with((activity as DashboardActivity)).load(viewModel.user?.profilePictureUrl).into(mBinding.imageViewProfilePicture)
+            (activity as? DashboardActivity)?.let {
+                Glide.with(it).load(viewModel.user?.profilePictureUrl)
+                    .into(mBinding.imageViewProfilePicture)
+            }
         }
 
         mBinding.imageViewProfilePicture.setOnClickListener {
@@ -67,23 +71,23 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
 
     private fun showAddAvatarDialog() {
 
-        val builder = AlertDialog.Builder((activity as DashboardActivity))
-        builder.setMessage("Nereden eklemek istersin?")
-        builder.setPositiveButton("Galeri") { dialog, which ->
+        val builder = (activity as? DashboardActivity)?.let { AlertDialog.Builder(it) }
+        builder?.setMessage("Nereden eklemek istersin?")
+        builder?.setPositiveButton("Galeri") { dialog, which ->
             val pickPhoto = Intent(
                 Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             )
             startActivityForResult(pickPhoto, 1)
         }
-        builder.setNegativeButton("Kamera") { dialog, which ->
+        builder?.setNegativeButton("Kamera") { dialog, which ->
             val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(takePicture, 0)
         }
-        builder.setNeutralButton("Vazgeç") { _, _ ->
+        builder?.setNeutralButton("Vazgeç") { _, _ ->
         }
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
+        val dialog: AlertDialog? = builder?.create()
+        dialog?.show()
     }
 
     @SuppressLint("RestrictedApi")
@@ -94,7 +98,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
 
                 val selectedImage = data?.extras?.get("data")
 
-                mBinding.imageViewProfilePicture.setImageBitmap(selectedImage as Bitmap?)
+                mBinding.imageViewProfilePicture.setImageBitmap(selectedImage as? Bitmap?)
                 changeProfilePicture()
             }
             1 -> if (resultCode === Activity.RESULT_OK) {
@@ -131,9 +135,9 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
 
         mBinding.imageViewProfilePicture.isDrawingCacheEnabled = true
         mBinding.imageViewProfilePicture.buildDrawingCache()
-        val bitmap = (mBinding.imageViewProfilePicture.drawable as BitmapDrawable).bitmap
+        val bitmap = (mBinding.imageViewProfilePicture.drawable as? BitmapDrawable)?.bitmap
         val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
 
         val uploadTask = pathRef.putBytes(data)
@@ -179,6 +183,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         }
     }
 
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     private fun openDatePickerDialog() {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -186,7 +191,7 @@ class AccountDetailFragment : BaseFragment<AccountDetailViewModel, FragmentAccou
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         val datePicker = DatePickerDialog(
-            (activity as DashboardActivity),
+            (activity as? DashboardActivity),
             DatePickerDialog.OnDateSetListener { _, year, month, day ->
                 mBinding.editTextBirthday.setText("$day/${month + 1}/$year")
             },

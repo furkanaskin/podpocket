@@ -34,8 +34,8 @@ class RecentlyPlayedFragment :
 
         mBinding.buttonNavigateHome.setOnClickListener {
             navigate(R.id.action_recentlyPlayedFragment_to_homeFragment)
-            val home = (activity as DashboardActivity).binding.bottomNavigation.menu.getItem(0)
-            (activity as DashboardActivity).binding.bottomNavigation.selectedItemId = home.itemId
+            val home = (activity as? DashboardActivity)?.binding?.bottomNavigation?.menu?.getItem(0)
+            (activity as DashboardActivity).binding.bottomNavigation.selectedItemId = home?.itemId ?: 0
         }
 
         mBinding.recyclerViewRecentlyPlayedEpisodes.adapter = RecentlyEpisodesAdapter {
@@ -70,8 +70,8 @@ class RecentlyPlayedFragment :
             val episodes = viewModel.db?.recentlyPlaysDao()?.getRecentlyPlayedEpisodes()
 
             runOnUiThread {
-                (mBinding.recyclerViewRecentlyPlayedPodcast.adapter as RecentlyPodcastsAdapter).submitList(podcasts)
-                (mBinding.recyclerViewRecentlyPlayedEpisodes.adapter as RecentlyEpisodesAdapter).submitList(episodes)
+                (mBinding.recyclerViewRecentlyPlayedPodcast.adapter as? RecentlyPodcastsAdapter)?.submitList(podcasts)
+                (mBinding.recyclerViewRecentlyPlayedEpisodes.adapter as? RecentlyEpisodesAdapter)?.submitList(episodes)
 
                 if (podcasts?.isEmpty() == true && episodes?.isEmpty() == true) {
                     showAnimation()

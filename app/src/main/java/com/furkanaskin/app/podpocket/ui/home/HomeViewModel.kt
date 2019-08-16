@@ -11,6 +11,7 @@ import com.furkanaskin.app.podpocket.service.PodpocketAPI
 import com.furkanaskin.app.podpocket.service.response.BestPodcasts
 import com.furkanaskin.app.podpocket.service.response.EpisodeRecommendations
 import com.furkanaskin.app.podpocket.service.response.PodcastRecommendations
+import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -92,6 +93,7 @@ class HomeViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatab
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun getEpisodes(id: String) {
         baseApi?.let { baseApi ->
             baseApi.getPodcastById(id)
@@ -105,25 +107,25 @@ class HomeViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatab
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> {
-                            val ids = ArrayList<String>()
-                            it.data?.episodes?.forEachIndexed { _, episodesItem ->
-                                ids.add(episodesItem?.id ?: "")
-                            }
-
+                            val ids: ArrayList<String>? =
+                                it.data?.episodes?.map { episodes -> episodes?.id } as? ArrayList<String>
                             podcastEpisodeIds.postValue(ids)
-
-                            doAsync {
-                                db?.episodesDao()?.deleteAllEpisodes()
-                                it.data?.episodes?.forEachIndexed { _, episode ->
-                                    val episodesItem = episode.let { EpisodeEntity(it!!) }
-                                    episodesItem.let { db?.episodesDao()?.insertEpisode(it) }
-                                }
-                            }
+                            writeEpisodesToDb(it)
                         }
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }
                 }
+        }
+    }
+
+    private fun writeEpisodesToDb(resource: Resource<Podcasts>) {
+        doAsync {
+            db?.episodesDao()?.deleteAllEpisodes()
+            resource.data?.episodes?.forEachIndexed { _, episode ->
+                val episodesItem = episode.let { EpisodeEntity(it) }
+                episodesItem.let { db?.episodesDao()?.insertEpisode(it) }
+            }
         }
     }
 }

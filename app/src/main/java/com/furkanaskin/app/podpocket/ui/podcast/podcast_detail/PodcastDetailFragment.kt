@@ -15,9 +15,10 @@ import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.ui.dashboard.DashboardActivity
 import com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPodcastsAdapter
 import com.furkanaskin.app.podpocket.ui.podcast.PodcastFragmentDirections
-import java.util.*
+import java.util.Locale
 
-class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodcastDetailBinding>(PodcastDetailViewModel::class.java) {
+class PodcastDetailFragment :
+    BaseFragment<PodcastDetailViewModel, FragmentPodcastDetailBinding>(PodcastDetailViewModel::class.java) {
 
     override fun getLayoutRes(): Int = R.layout.fragment_podcast_detail
 
@@ -64,7 +65,8 @@ class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodca
         )
     }
 
-    private fun getCountryCode(countryName: String) = Locale.getAvailableLocales().find { it.getDisplayCountry(Locale.US) == countryName }?.country?.toLowerCase()
+    private fun getCountryCode(countryName: String) =
+        Locale.getAvailableLocales().find { it.getDisplayCountry(Locale.US) == countryName }?.country?.toLowerCase()
 
     private fun initRecommendedPodcasts() {
 
@@ -72,9 +74,9 @@ class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodca
             viewModel.podcastRecommendationsLiveData.removeObservers(this)
 
         viewModel.podcastRecommendationsLiveData.observe(
-            this@PodcastDetailFragment,
+            this,
             Observer<Resource<PodcastRecommendations>> {
-                (mBinding.recyclerViewSimilarPodcasts.adapter as RecommendedPodcastsAdapter).submitList(it.data?.recommendations)
+                (mBinding.recyclerViewSimilarPodcasts.adapter as? RecommendedPodcastsAdapter)?.submitList(it.data?.recommendations)
             }
         )
     }
@@ -89,6 +91,7 @@ class PodcastDetailFragment : BaseFragment<PodcastDetailViewModel, FragmentPodca
         }
 
         mBinding.recyclerViewSimilarPodcasts.adapter = adapter
-        mBinding.recyclerViewSimilarPodcasts.layoutManager = LinearLayoutManager((activity as DashboardActivity), RecyclerView.HORIZONTAL, false)
+        mBinding.recyclerViewSimilarPodcasts.layoutManager =
+            LinearLayoutManager((activity as DashboardActivity), RecyclerView.HORIZONTAL, false)
     }
 }

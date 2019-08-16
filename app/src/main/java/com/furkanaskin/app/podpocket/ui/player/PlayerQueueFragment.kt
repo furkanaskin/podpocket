@@ -23,7 +23,8 @@ import org.jetbrains.anko.support.v4.runOnUiThread
  * Created by Furkan on 6.05.2019
  */
 
-class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQueueBinding>(PlayerQueueViewModel::class.java) {
+class PlayerQueueFragment :
+    BaseFragment<PlayerQueueViewModel, FragmentPlayerQueueBinding>(PlayerQueueViewModel::class.java) {
 
     var player: PlayerEntity? = null
     var isLastPage: Boolean = false
@@ -56,11 +57,11 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
         val adapter = QueueAdapter { item, position, _ ->
 
             // Update playerActivity's currentPosition and EpisodeId then getEpisodeDetail
-            val playerActivity = (activity as PlayerActivity)
+            val playerActivity = (activity as? PlayerActivity)
 
-            playerActivity.currentPosition = position
-            playerActivity.episodeId = playerActivity.episodes[position]
-            playerActivity.getEpisodeDetail(item.id)
+            playerActivity?.currentPosition = position
+            playerActivity?.episodeId = playerActivity?.episodes?.get(position) ?: ""
+            playerActivity?.getEpisodeDetail(item.id)
         }
 
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -102,34 +103,34 @@ class PlayerQueueFragment : BaseFragment<PlayerQueueViewModel, FragmentPlayerQue
         totalEpisodes = arguments?.getInt(Constants.BundleArguments.TOTAL_EPISODES)
 
         if (viewModel.db?.episodesDao()?.getEpisodes()?.hasActiveObservers() == true)
-            viewModel?.db?.episodesDao()?.getEpisodes()?.removeObservers(this@PlayerQueueFragment)
+            viewModel.db?.episodesDao()?.getEpisodes()?.removeObservers(this)
 
         // Get episodes for queue.
-        viewModel?.db?.episodesDao()?.getEpisodes()?.observe(
+        viewModel.db?.episodesDao()?.getEpisodes()?.observe(
             this@PlayerQueueFragment,
             Observer<List<EpisodeEntity>> { t ->
                 nextEpisodePubDate = t?.last()?.pubDateMs
-                (mBinding.recyclerViewQueueEpisodes.adapter as QueueAdapter).submitList(t.toMutableList())
+                (mBinding.recyclerViewQueueEpisodes.adapter as? QueueAdapter)?.submitList(t.toMutableList())
             }
         )
     }
 
-    fun getMoreItems(nextEpisodePubDate: Long) {
-        val playerActivity = (activity as PlayerActivity)
-        viewModel.getEpisodesWithPaging(getPodcastId() ?: "", nextEpisodePubDate)
+    fun getMoreItems(pubDate: Long) {
+        val playerActivity = (activity as? PlayerActivity)
+        viewModel.getEpisodesWithPaging(getPodcastId() ?: "", pubDate)
 
         viewModel.podcastLiveData.observe(
-            this@PlayerQueueFragment,
+            this,
             Observer<Resource<Podcasts>> {
                 totalEpisodes = it.data?.totalEpisodes
-                this@PlayerQueueFragment.nextEpisodePubDate = it.data?.nextEpisodePubDate
+                nextEpisodePubDate = it.data?.nextEpisodePubDate
 
                 doAsync {
                     it.data?.episodes?.forEachIndexed { _, episode ->
                         val episodesItem = episode?.let { EpisodeEntity(it) }
                         episodesItem?.let {
                             viewModel.db?.episodesDao()?.insertEpisode(it)
-                            playerActivity.episodes.add(episode.id ?: "")
+                            playerActivity?.episodes?.add(episode.id ?: "")
                         }
                     }
 

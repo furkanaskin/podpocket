@@ -36,7 +36,7 @@ class SearchResultAdapter(private val callBack: (ResultsItem) -> Unit) : BaseAda
     }
 
     override fun bind(binding: ViewDataBinding, position: Int) {
-        (binding as ItemSearchResultBinding).viewModel?.item?.set(getItem(position))
+        (binding as? ItemSearchResultBinding)?.viewModel?.item?.set(getItem(position))
         binding.executePendingBindings()
     }
 }

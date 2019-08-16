@@ -15,7 +15,8 @@ import com.furkanaskin.app.podpocket.ui.feed.global_feed.global_posts.GlobalPost
  * Created by Furkan on 2019-05-26
  */
 
-class GlobalFeedFragment : BaseFragment<GlobalFeedViewModel, FragmentGlobalFeedBinding>(GlobalFeedViewModel::class.java) {
+class GlobalFeedFragment :
+    BaseFragment<GlobalFeedViewModel, FragmentGlobalFeedBinding>(GlobalFeedViewModel::class.java) {
     override fun getLayoutRes(): Int = R.layout.fragment_global_feed
 
     override fun initViewModel() {
@@ -32,11 +33,11 @@ class GlobalFeedFragment : BaseFragment<GlobalFeedViewModel, FragmentGlobalFeedB
         showProgress()
 
         viewModel.db?.postsDao()?.getPosts()?.observe(
-            this@GlobalFeedFragment,
+            this,
             Observer<List<PostEntity>> {
                 hideProgress()
 
-                (mBinding.recyclerViewGlobalPosts.adapter as GlobalPostsAdapter).submitList(it)
+                (mBinding.recyclerViewGlobalPosts.adapter as? GlobalPostsAdapter)?.submitList(it)
             }
         )
     }

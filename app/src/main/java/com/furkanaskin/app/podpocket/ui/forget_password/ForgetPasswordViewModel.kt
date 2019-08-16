@@ -47,7 +47,7 @@ class ForgetPasswordViewModel @Inject constructor(api: PodpocketAPI, appDatabase
 
     private fun verifyEmail() {
         val mUser = mAuth.currentUser
-        mUser!!.sendEmailVerification().addOnCompleteListener { task ->
+        mUser?.sendEmailVerification()?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 sendVerifyMailSucces.set(true)
                 progressLiveData.postValue(false)

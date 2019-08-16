@@ -13,7 +13,7 @@ class ConnectivityReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
         if (connectivityReceiverListener != null) {
-            connectivityReceiverListener!!.onNetworkConnectionChanged(isConnectedOrConnecting(context!!))
+            connectivityReceiverListener!!.onNetworkConnectionChanged(context?.let { isConnectedOrConnecting(it) })
         }
     }
 
@@ -24,7 +24,7 @@ class ConnectivityReceiver : BroadcastReceiver() {
     }
 
     interface ConnectivityReceiverListener {
-        fun onNetworkConnectionChanged(isConnected: Boolean)
+        fun onNetworkConnectionChanged(isConnected: Boolean?)
     }
 
     companion object {

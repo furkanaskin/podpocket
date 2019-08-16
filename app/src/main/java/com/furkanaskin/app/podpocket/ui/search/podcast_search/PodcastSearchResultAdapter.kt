@@ -36,7 +36,7 @@ class PodcastSearchResultAdapter(private val callBack: (ResultsItem) -> Unit) : 
     }
 
     override fun bind(binding: ViewDataBinding, position: Int) {
-        (binding as ItemSearchResultPodcastBinding).viewModel?.item?.set(getItem(position))
+        (binding as? ItemSearchResultPodcastBinding)?.viewModel?.item?.set(getItem(position))
         binding.executePendingBindings()
     }
 }

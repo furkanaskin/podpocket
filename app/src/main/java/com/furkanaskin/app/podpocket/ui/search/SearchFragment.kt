@@ -76,16 +76,23 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
         // -- EPISODE --
         val searchEpisodeAdapter = SearchResultAdapter { item ->
-
             viewModel.getEpisodes(item.podcastId ?: "")
 
-            val intent = Intent(activity, PlayerActivity::class.java)
-            intent.putStringArrayListExtra(
-                Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS,
-                viewModel.podcastEpisodeIds.value
+            if (viewModel.podcastEpisodeIds.hasActiveObservers())
+                viewModel.podcastEpisodeIds.removeObservers(this)
+
+            viewModel.podcastEpisodeIds.observe(
+                this,
+                Observer<ArrayList<String>> {
+                    val intent = Intent(activity, PlayerActivity::class.java)
+                    intent.putStringArrayListExtra(
+                        Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS,
+                        viewModel.podcastEpisodeIds.value
+                    )
+                    intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)
+                    startActivity(intent)
+                }
             )
-            intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, item.id)
-            startActivity(intent)
         }
 
         val episodesLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -152,9 +159,9 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         val searchViewCloseIcon = mBinding.searchView.findViewById<ImageView>(R.id.search_close_btn)
         searchViewSearchIcon.setImageResource(R.drawable.ic_search)
         searchViewCloseIcon.setImageResource(R.color.mainBackgroundColor)
-        val linearLayoutSearchView: ViewGroup = searchViewSearchIcon.parent as ViewGroup
-        linearLayoutSearchView.removeView(searchViewSearchIcon)
-        linearLayoutSearchView.addView(searchViewSearchIcon)
+        val linearLayoutSearchView: ViewGroup? = searchViewSearchIcon.parent as? ViewGroup
+        linearLayoutSearchView?.removeView(searchViewSearchIcon)
+        linearLayoutSearchView?.addView(searchViewSearchIcon)
         var timer = Timer()
 
         mBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -212,7 +219,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                     episodesResult?.add(it)
                 }
 
-                (mBinding.recyclerViewEpisodeSearchResult.adapter as SearchResultAdapter).submitList(episodesResult)
+                (mBinding.recyclerViewEpisodeSearchResult.adapter as? SearchResultAdapter)?.submitList(episodesResult)
             }
         )
 
@@ -229,7 +236,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
                 it.data?.results?.forEach {
                     podcastsResult?.add(it)
                 }
-                (mBinding.recyclerViewPodcastSearchResult.adapter as PodcastSearchResultAdapter).submitList(
+                (mBinding.recyclerViewPodcastSearchResult.adapter as? PodcastSearchResultAdapter)?.submitList(
                     podcastsResult
                 )
             }
@@ -279,11 +286,11 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
 
             chip.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    viewModel.selectedGenres.add(buttonView.tag as Int)
+                    viewModel.selectedGenres.add(buttonView.tag as? Int ?: 0)
                     buttonView.setTextColor(ContextCompat.getColor(this.context!!, R.color.colorCyan))
                     chip.setChipStrokeColorResource(R.color.colorCyan)
                 } else {
-                    viewModel.selectedGenres.remove(buttonView.tag as Int)
+                    viewModel.selectedGenres.remove(buttonView.tag as? Int ?: 0)
                     buttonView.setTextColor(ContextCompat.getColor(this.context!!, R.color.white))
                     chip.setChipStrokeColorResource(R.color.colorLoginText)
                 }

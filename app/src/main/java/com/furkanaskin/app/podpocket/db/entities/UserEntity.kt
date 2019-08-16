@@ -13,7 +13,7 @@ import com.furkanaskin.app.podpocket.core.BaseEntity
 @Entity(tableName = "User")
 data class UserEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
+    var id: Int? = 0,
     val podcaster: Boolean? = null,
     val verifiedUser: Boolean? = null,
     val accountCreatedAt: String? = null,
@@ -30,7 +30,7 @@ data class UserEntity(
 ) : BaseEntity(), Parcelable {
 
     constructor(parcel: Parcel) : this(
-        parcel.readValue(Int::class.java.classLoader) as Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.readString(),

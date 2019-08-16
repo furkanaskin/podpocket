@@ -35,7 +35,7 @@ class FavoriteEpisodesAdapter(private val callBack: (FavoriteEpisodeEntity, Int)
     }
 
     override fun bind(binding: ViewDataBinding, position: Int) {
-        (binding as ItemFavoriteEpisodesBinding).viewModel?.setModel(getItem(position), position)
+        (binding as? ItemFavoriteEpisodesBinding)?.viewModel?.setModel(getItem(position), position)
         binding.executePendingBindings()
     }
 }

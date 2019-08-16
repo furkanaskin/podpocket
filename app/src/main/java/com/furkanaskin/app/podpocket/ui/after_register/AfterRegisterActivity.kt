@@ -116,7 +116,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
     private fun showAddAvatarDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Nereden eklemek istersin?")
-        builder.setPositiveButton("Galeri") { dialog, which ->
+        builder.setPositiveButton("Galeri") { _, _ ->
             // Do something when user press the positive button
             val pickPhoto = Intent(
                 Intent.ACTION_PICK,
@@ -124,7 +124,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
             )
             startActivityForResult(pickPhoto, 1)
         }
-        builder.setNegativeButton("Kamera") { dialog, which ->
+        builder.setNegativeButton("Kamera") { _, _ ->
             val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(takePicture, 0)
         }
@@ -189,7 +189,7 @@ class AfterRegisterActivity : BaseActivity<AfterRegisterViewModel, ActivityAfter
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         val datePicker = DatePickerDialog(
-            this@AfterRegisterActivity,
+            this,
             DatePickerDialog.OnDateSetListener { _, year, month, day ->
                 viewModel.userBirthDay.set("$day/${month + 1}/$year")
             },

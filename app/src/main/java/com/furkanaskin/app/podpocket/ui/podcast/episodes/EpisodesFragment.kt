@@ -52,7 +52,10 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
             val intent = Intent(activity, PlayerActivity::class.java)
             intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_ITEM, item)
             intent.putExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION, position.toString())
-            intent.putStringArrayListExtra(Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS, viewModel.ids as ArrayList<String>?)
+            intent.putStringArrayListExtra(
+                Constants.IntentName.PLAYER_ACTIVITY_ALL_IDS,
+                viewModel.ids as? ArrayList<String>?
+            )
             startActivity(intent)
         }
 
@@ -89,8 +92,8 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
         )
     }
 
-    fun getMoreItems(nextEpisodePubDate: Long) {
-        viewModel.getEpisodesWithPaging(viewModel.podcast.get()?.id ?: "", nextEpisodePubDate)
+    fun getMoreItems(pubDate: Long) {
+        viewModel.getEpisodesWithPaging(viewModel.podcast.get()?.id ?: "", pubDate)
 
         if (viewModel.podcastLiveData.hasActiveObservers())
             viewModel.podcastLiveData.removeObservers(this)
@@ -99,7 +102,7 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
             this,
             Observer<Resource<Podcasts>> {
                 totalEpisodes = it.data?.totalEpisodes
-                this@EpisodesFragment.nextEpisodePubDate = it.data?.nextEpisodePubDate
+                nextEpisodePubDate = it.data?.nextEpisodePubDate
 
                 doAsync {
                     it.data?.episodes?.forEachIndexed { _, episode ->
@@ -116,7 +119,7 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
                         viewModel.db?.episodesDao()?.getEpisodes()?.observe(
                             this@EpisodesFragment,
                             Observer<List<EpisodeEntity>> { t ->
-                                (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
+                                (mBinding.recyclerViewPodcastEpisodes.adapter as? EpisodesAdapter)?.submitList(t)
                             }
                         )
                     }
@@ -141,11 +144,11 @@ class EpisodesFragment : BaseFragment<EpisodesViewModel, FragmentEpisodesBinding
                 }
             }
 
-            viewModel.db?.episodesDao()?.getEpisodes()?.removeObservers(this@EpisodesFragment)
+            viewModel.db?.episodesDao()?.getEpisodes()?.removeObservers(this)
             viewModel.db?.episodesDao()?.getEpisodes()?.observe(
-                this@EpisodesFragment,
+                this,
                 Observer<List<EpisodeEntity>> { t ->
-                    (mBinding.recyclerViewPodcastEpisodes.adapter as EpisodesAdapter).submitList(t)
+                    (mBinding.recyclerViewPodcastEpisodes.adapter as? EpisodesAdapter)?.submitList(t)
                 }
             )
         }

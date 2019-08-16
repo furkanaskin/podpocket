@@ -32,7 +32,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
     abstract fun initViewModel()
 
     private fun getViewM(): VM =
-        ViewModelProviders.of(this, (activity as BaseActivity<*, *>).viewModelProviderFactory).get(mViewModelClass)
+        ViewModelProviders.of(this, (activity as? BaseActivity<*, *>)?.viewModelProviderFactory).get(mViewModelClass)
 
     open fun onInject() {}
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +73,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding>(private va
     fun hideProgress() {
         runOnUiThread {
             if (activity != null)
-            (activity as BaseActivity<*, *>).dialog?.dismiss()
+            (activity as? BaseActivity<*, *>)?.dialog?.dismiss()
         }
     }
 

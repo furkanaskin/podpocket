@@ -10,6 +10,7 @@ import com.furkanaskin.app.podpocket.db.AppDatabase
 import com.furkanaskin.app.podpocket.db.entities.EpisodeEntity
 import com.furkanaskin.app.podpocket.service.PodpocketAPI
 import com.furkanaskin.app.podpocket.service.response.Genres
+import com.furkanaskin.app.podpocket.service.response.Podcasts
 import com.furkanaskin.app.podpocket.service.response.Search
 import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -48,26 +49,7 @@ class SearchViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDat
                 .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
-                        Status.SUCCESS -> {
-                            when (type) {
-                                Constants.SearchQuery.EPISODE -> {
-                                    if (it.data?.results.isNullOrEmpty())
-                                        episodeHeadingLiveData.postValue(false)
-                                    else
-                                        episodeHeadingLiveData.postValue(true)
-
-                                    _episodeSearchResultLiveData.postValue(it)
-                                }
-                                Constants.SearchQuery.PODCAST -> {
-                                    if (it.data?.results.isNullOrEmpty())
-                                        podcastHeadingLiveData.postValue(false)
-                                    else
-                                        podcastHeadingLiveData.postValue(true)
-
-                                    _podcastSearchResultLiveData.postValue(it)
-                                }
-                            }
-                        }
+                        Status.SUCCESS -> parseType(type, it)
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }
@@ -87,26 +69,7 @@ class SearchViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDat
                 .autoDisposable(this)
                 .subscribe {
                     when (it?.status) {
-                        Status.SUCCESS -> {
-                            when (type) {
-                                Constants.SearchQuery.EPISODE -> {
-                                    if (it.data?.results.isNullOrEmpty())
-                                        episodeHeadingLiveData.postValue(false)
-                                    else
-                                        episodeHeadingLiveData.postValue(true)
-
-                                    _episodeSearchResultLiveData.postValue(it)
-                                }
-                                Constants.SearchQuery.PODCAST -> {
-                                    if (it.data?.results.isNullOrEmpty())
-                                        podcastHeadingLiveData.postValue(false)
-                                    else
-                                        podcastHeadingLiveData.postValue(true)
-
-                                    _podcastSearchResultLiveData.postValue(it)
-                                }
-                            }
-                        }
+                        Status.SUCCESS -> parseType(type, it)
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
                     }
@@ -114,6 +77,29 @@ class SearchViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDat
         }
     }
 
+    private fun parseType(type: String, resource: Resource<Search>) {
+        when (type) {
+            Constants.SearchQuery.EPISODE -> {
+                if (resource.data?.results.isNullOrEmpty())
+                    episodeHeadingLiveData.postValue(false)
+                else
+                    episodeHeadingLiveData.postValue(true)
+
+                _episodeSearchResultLiveData.postValue(resource)
+            }
+
+            Constants.SearchQuery.PODCAST -> {
+                if (resource.data?.results.isNullOrEmpty())
+                    podcastHeadingLiveData.postValue(false)
+                else
+                    podcastHeadingLiveData.postValue(true)
+
+                _podcastSearchResultLiveData.postValue(resource)
+            }
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
     fun getEpisodes(id: String) {
         baseApi?.let { baseApi ->
             baseApi.getPodcastById(id)
@@ -127,20 +113,10 @@ class SearchViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDat
                 .subscribe {
                     when (it?.status) {
                         Status.SUCCESS -> {
-                            val ids = ArrayList<String>()
-                            it.data?.episodes?.forEachIndexed { _, episodesItem ->
-                                ids.add(episodesItem?.id ?: "")
-                            }
-
+                            val ids: ArrayList<String>? =
+                                it.data?.episodes?.map { episodes -> episodes?.id } as? ArrayList<String>
                             podcastEpisodeIds.postValue(ids)
-
-                            doAsync {
-                                db?.episodesDao()?.deleteAllEpisodes()
-                                it.data?.episodes?.forEachIndexed { _, episode ->
-                                    val episodesItem = episode.let { EpisodeEntity(it!!) }
-                                    episodesItem.let { db?.episodesDao()?.insertEpisode(it) }
-                                }
-                            }
+                            writeEpisodesToDb(it)
                         }
                         Status.LOADING -> ""
                         Status.ERROR -> Timber.e(it.error)
@@ -166,6 +142,16 @@ class SearchViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDat
                         Status.ERROR -> Timber.e(it.error)
                     }
                 }
+        }
+    }
+
+    private fun writeEpisodesToDb(resource: Resource<Podcasts>) {
+        doAsync {
+            db?.episodesDao()?.deleteAllEpisodes()
+            resource.data?.episodes?.forEachIndexed { _, episode ->
+                val episodesItem = episode.let { EpisodeEntity(it) }
+                episodesItem.let { db?.episodesDao()?.insertEpisode(it) }
+            }
         }
     }
 }

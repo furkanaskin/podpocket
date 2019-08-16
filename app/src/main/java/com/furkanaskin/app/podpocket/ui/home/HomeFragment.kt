@@ -53,8 +53,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
         mBinding.buttonSearch.setOnClickListener {
             navigate(R.id.action_homeFragment_to_searchFragment)
-            val search = (activity as DashboardActivity).binding.bottomNavigation.menu.getItem(1)
-            (activity as DashboardActivity).binding.bottomNavigation.selectedItemId = search.itemId
+            val search = (activity as? DashboardActivity)?.binding?.bottomNavigation?.menu?.getItem(1)
+            (activity as? DashboardActivity)?.binding?.bottomNavigation?.selectedItemId = search?.itemId!!
         }
 
         mBinding.swipeRefreshLayout.setOnRefreshListener {
@@ -92,7 +92,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         }
 
         mBinding.recyclerViewBestPodcasts.adapter = adapter
-        mBinding.recyclerViewBestPodcasts.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
+        mBinding.recyclerViewBestPodcasts.layoutManager =
+            GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
     }
 
     private fun initRecommendedPodcastsAdapter() {
@@ -105,7 +106,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         }
 
         mBinding.recyclerViewRecommendedPodcasts.adapter = adapter
-        mBinding.recyclerViewRecommendedPodcasts.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
+        mBinding.recyclerViewRecommendedPodcasts.layoutManager =
+            GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
     }
 
     private fun initRecommendedEpisodesAdapter() {
@@ -141,7 +143,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
             this@HomeFragment,
             Observer<Resource<BestPodcasts>> {
                 showTitles()
-                (mBinding.recyclerViewBestPodcasts.adapter as BestPodcastsAdapter).submitList(it.data?.podcasts)
+                (mBinding.recyclerViewBestPodcasts.adapter as? BestPodcastsAdapter)?.submitList(it.data?.podcasts)
             }
         )
     }
@@ -161,7 +163,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
             this@HomeFragment,
             Observer<Resource<PodcastRecommendations>> {
                 showTitles()
-                (mBinding.recyclerViewRecommendedPodcasts.adapter as RecommendedPodcastsAdapter).submitList(it.data?.recommendations)
+                (mBinding.recyclerViewRecommendedPodcasts.adapter as? RecommendedPodcastsAdapter)?.submitList(it.data?.recommendations)
             }
         )
     }
@@ -180,7 +182,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
             this@HomeFragment,
             Observer<Resource<EpisodeRecommendations>> {
                 showTitles()
-                (mBinding.recyclerViewRecommendedEpisodes.adapter as RecommendedEpisodesAdapter).submitList(it.data?.recommendations)
+                (mBinding.recyclerViewRecommendedEpisodes.adapter as? RecommendedEpisodesAdapter)?.submitList(it.data?.recommendations)
             }
         )
     }

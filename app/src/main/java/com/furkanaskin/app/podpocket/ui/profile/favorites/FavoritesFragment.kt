@@ -98,7 +98,11 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
         mBinding.scalingLayout.setOnClickListener {
             if (mBinding.scalingLayout.state == State.COLLAPSED) {
                 mBinding.scalingLayout.expand()
-                mBinding.searchView.showKeyboard((activity as DashboardActivity))
+                (activity as? DashboardActivity)?.let { dashboardActivity ->
+                    mBinding.searchView.showKeyboard(
+                        dashboardActivity
+                    )
+                }
                 mBinding.searchView.requestFocus()
             }
         }
@@ -123,7 +127,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
                 viewModel.episodesLiveData.removeObservers(this)
 
             viewModel.episodesLiveData.observe(
-                this@FavoritesFragment,
+                this,
                 Observer<Resource<Podcasts>> {
 
                     it.data?.episodes?.forEachIndexed { _, episodesItem ->
@@ -133,7 +137,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
                     doAsync {
                         viewModel.db?.episodesDao()?.deleteAllEpisodes()
                         it.data?.episodes?.forEachIndexed { _, episode ->
-                            val episodesItem = episode.let { EpisodeEntity(it!!) }
+                            val episodesItem = episode.let { EpisodeEntity(it) }
                             episodesItem.let { viewModel.db?.episodesDao()?.insertEpisode(it) }
                         }
                     }
@@ -146,9 +150,9 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
             )
         }
 
-        viewModel.db?.favoritesDao()?.getFavoriteEpisodes()?.removeObservers(this@FavoritesFragment)
+        viewModel.db?.favoritesDao()?.getFavoriteEpisodes()?.removeObservers(this)
         viewModel.db?.favoritesDao()?.getFavoriteEpisodes()?.observe(
-            this@FavoritesFragment,
+            this,
             Observer<List<FavoriteEpisodeEntity>> { t ->
 
                 if (t.isNotEmpty()) {
