@@ -86,8 +86,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         val adapter = BestPodcastsAdapter { item ->
 
             val podcastId = item.id
-            val action = HomeFragmentDirections.actionHomeFragmentToPodcastFragment()
-            action.podcastID = podcastId ?: ""
+            val action = HomeFragmentDirections.actionHomeFragmentToPodcastFragment().setPodcastID(podcastId ?: "")
             findNavController().navigate(action)
         }
 
@@ -100,8 +99,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
         val adapter = RecommendedPodcastsAdapter { item ->
             val podcastId = item.id
-            val action = HomeFragmentDirections.actionHomeFragmentToPodcastFragment()
-            action.podcastID = podcastId ?: ""
+            val action = HomeFragmentDirections.actionHomeFragmentToPodcastFragment().setPodcastID(podcastId ?: "")
             findNavController().navigate(action)
         }
 
