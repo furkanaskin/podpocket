@@ -41,6 +41,12 @@ android {
         versionName "0.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField STRING, BUILD_TIME, "\"${rootProject.ext.buildTime}\""
+
+        manifestPlaceholders = [
+                pushbots_app_id               : "5d602b0bb7941205307ed81a",
+                pushbots_loglevel             : "DEBUG",
+                google_sender_id              : "907664402095"
+        ]
     }
     buildTypes {
         release {
@@ -79,6 +85,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {
@@ -95,6 +104,8 @@ dependencies {
     implementation rootProject.ext.firebaseAuth
     implementation rootProject.ext.firebaseStorage
     implementation rootProject.ext.firebaseUiStorage
+    implementation rootProject.ext.firebaseMessaging
+    implementation rootProject.ext.pushBots
     implementation rootProject.ext.threetenabp
     implementation rootProject.ext.lottie
     implementation rootProject.ext.scalingLayout
@@ -142,7 +153,6 @@ dependencies {
     implementation(rootProject.ext.crashlytics) {
         transitive = true
     }
-
 
     testImplementation rootProject.ext.jUnit
     testImplementation rootProject.ext.archCoreTest

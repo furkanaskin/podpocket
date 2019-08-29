@@ -99,22 +99,22 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         mBinding.recyclerViewEpisodeSearchResult.adapter = searchEpisodeAdapter
         mBinding.recyclerViewEpisodeSearchResult.layoutManager = episodesLayoutManager
         mBinding.recyclerViewEpisodeSearchResult.addOnScrollListener(object :
-            PaginationScrollListener(episodesLayoutManager) {
-            override fun isLastPage(): Boolean {
-                return isLastPage
-            }
-
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
-
-            override fun loadMoreItems() {
-                isLoading = true
-                if (totalEpisodeResult != layoutManager.itemCount) {
-                    getSearchResult(searchTerm ?: "", Constants.SearchQuery.EPISODE, episodesOffset)
+                PaginationScrollListener(episodesLayoutManager) {
+                override fun isLastPage(): Boolean {
+                    return isLastPage
                 }
-            }
-        })
+
+                override fun isLoading(): Boolean {
+                    return isLoading
+                }
+
+                override fun loadMoreItems() {
+                    isLoading = true
+                    if (totalEpisodeResult != layoutManager.itemCount) {
+                        getSearchResult(searchTerm ?: "", Constants.SearchQuery.EPISODE, episodesOffset)
+                    }
+                }
+            })
 
         // -- PODCAST --
         val searchPodcastAdapter = PodcastSearchResultAdapter { item ->
@@ -127,22 +127,22 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>(Sear
         mBinding.recyclerViewPodcastSearchResult.adapter = searchPodcastAdapter
         mBinding.recyclerViewPodcastSearchResult.layoutManager = podcastsLayoutManager
         mBinding.recyclerViewPodcastSearchResult.addOnScrollListener(object :
-            PaginationScrollListener(podcastsLayoutManager) {
-            override fun isLastPage(): Boolean {
-                return isLastPage
-            }
-
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
-
-            override fun loadMoreItems() {
-                isLoading = true
-                if (totalPodcastResult != layoutManager.itemCount) {
-                    getSearchResult(searchTerm ?: "", Constants.SearchQuery.PODCAST, podcastsOffset)
+                PaginationScrollListener(podcastsLayoutManager) {
+                override fun isLastPage(): Boolean {
+                    return isLastPage
                 }
-            }
-        })
+
+                override fun isLoading(): Boolean {
+                    return isLoading
+                }
+
+                override fun loadMoreItems() {
+                    isLoading = true
+                    if (totalPodcastResult != layoutManager.itemCount) {
+                        getSearchResult(searchTerm ?: "", Constants.SearchQuery.PODCAST, podcastsOffset)
+                    }
+                }
+            })
     }
 
     private fun initSearchView() {

@@ -8,6 +8,7 @@ import com.crashlytics.android.core.CrashlyticsCore
 import com.facebook.stetho.Stetho
 import com.furkanaskin.app.podpocket.di.component.DaggerApplicationComponent
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.pushbots.push.Pushbots
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -36,6 +37,7 @@ class Podpocket : Application(), HasActivityInjector {
         initFabric()
         Stetho.initializeWithDefaults(this)
         Timber.plant(Timber.DebugTree())
+        Pushbots.sharedInstance().init(this)
     }
 
     private fun initFabric() {
