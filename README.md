@@ -92,8 +92,6 @@
 
 <li><a href="https://github.com/JakeWharton/ThreeTenABP">ThreeTenABP</a></li>
 
-<li><a href="https://github.com/marlonlom/timeago">TimeAgo</a></li>
-
 <li><a href="https://github.com/KaKaVip/Android-Flag-Kit">FlagKit</a></li>
 
 <li><a href="https://github.com/pinterest/ktlint">Ktlint</a></li>
