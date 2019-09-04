@@ -13,8 +13,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
 
 /**
  * Created by Furkan on 2019-05-26
@@ -39,7 +37,7 @@ class NewPostViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDa
         if (postText.get() != null && postText.get()!!.length > 5 && databaseReference != null) {
             val newPost = Post(
                 user?.podcaster,
-                convertDate(LocalDate.now()),
+                System.currentTimeMillis().toString(),
                 user?.verifiedUser,
                 user?.userName,
                 postText.get(),
@@ -66,7 +64,8 @@ class NewPostViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDa
     }
 
     private fun createFirebaseListener() {
-        val usersRef = FirebaseDatabase.getInstance().getReference("users").child("${user?.uniqueId}")
+        val usersRef =
+            FirebaseDatabase.getInstance().getReference("users").child("${user?.uniqueId}")
         usersRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
             }
@@ -76,8 +75,6 @@ class NewPostViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDa
             }
         })
     }
-
-    private fun convertDate(date: LocalDate) = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
     private fun createUniquePostId(): String {
         return "${(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()))}${user?.uniqueId}"

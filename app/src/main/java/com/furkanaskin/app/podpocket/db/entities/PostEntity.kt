@@ -5,6 +5,9 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.furkanaskin.app.podpocket.model.Post
+import com.github.marlonlom.utilities.timeago.TimeAgo
+import com.github.marlonlom.utilities.timeago.TimeAgoMessages
+import java.util.Locale
 
 /**
  * Created by Furkan on 2019-07-03
@@ -60,4 +63,10 @@ class PostEntity(
         userName = postItem.userName,
         userUniqueId = postItem.userUniqueId
     )
+
+    fun getTimeAgoString(): String? {
+        val localeBylanguageTag = Locale.forLanguageTag("tr")
+        val messages = TimeAgoMessages.Builder().withLocale(localeBylanguageTag).build()
+        return pubDate?.toLong()?.let { TimeAgo.using(it, messages) }
+    }
 }

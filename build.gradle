@@ -81,6 +81,7 @@ ext {
     pagingTestVersion = "2.1.0"
     autoDisposeVersion = "1.3.0"
     stethoVersion = "1.5.1"
+    timeAgoVersion = "4.0.1"
 
     //supportLib
     supportv4 = "androidx.legacy:legacy-support-v4:$support_version"
@@ -167,6 +168,9 @@ ext {
 
     //simpleText
     simpleText = "com.jaychang:simpletext:$simpleTextVersion"
+
+    //timeAgo
+    timeAgo = "com.github.marlonlom:timeago:$timeAgoVersion"
 
     //scalingLayout
     scalingLayout = "com.github.iammert:ScalingLayout:$scalingLayoutVersion"

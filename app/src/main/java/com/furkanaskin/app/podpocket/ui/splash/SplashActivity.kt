@@ -3,7 +3,6 @@ package com.furkanaskin.app.podpocket.ui.splash
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import com.furkanaskin.app.podpocket.R
 import com.furkanaskin.app.podpocket.core.BaseActivity
 import com.furkanaskin.app.podpocket.core.Constants
@@ -20,7 +19,6 @@ import com.mikhaellopez.rxanimation.resize
 import com.mikhaellopez.rxanimation.rotation
 import com.mikhaellopez.rxanimation.rotationY
 import com.mikhaellopez.rxanimation.translation
-import com.pushbots.push.Pushbots
 import com.uber.autodispose.autoDisposable
 
 class SplashActivity :
@@ -35,8 +33,6 @@ class SplashActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setupPushBots()
 
         // ---------------------------------------------------------------------------------------
         // If you don't know what is going over there please don't replace this block or xml file.
@@ -118,19 +114,5 @@ class SplashActivity :
                     .subscribe()
             }
         }
-    }
-
-    private fun setupPushBots() {
-        Pushbots.sharedInstance().registerForRemoteNotifications()
-        // Register custom fields after user registered on PushBots
-        // Customer profile
-        Pushbots.setFirstName("${user?.name}")
-        Log.v("PB3", "Name : ${user?.name}")
-        Pushbots.setLastName("${user?.surname}")
-        Log.v("PB3", "Surname : ${user?.surname}")
-        Pushbots.setName("${user?.name} ${user?.surname}")
-        Log.v("PB3", "Full Name : ${user?.name} ${user?.surname}")
-        Pushbots.setEmail("${user?.email}")
-        Log.v("PB3", "Email : ${user?.email}")
     }
 }

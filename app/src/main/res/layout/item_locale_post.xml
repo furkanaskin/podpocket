@@ -18,8 +18,14 @@
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_8_dp"
+            android:layout_marginTop="@dimen/margin_6_dp"
+            android:layout_marginEnd="@dimen/margin_8_dp"
+            android:layout_marginBottom="@dimen/margin_6_dp"
             android:background="@color/mainBackgroundColor"
-            android:backgroundTint="@android:color/transparent">
+            android:backgroundTint="@android:color/transparent"
+            app:cardCornerRadius="@dimen/margin_8_dp"
+            app:cardElevation="@dimen/margin_4_dp">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -34,9 +40,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_dummy_user"
                     app:civ_background_color="@color/mainBackgroundColor"
-                    app:civ_border="true"
-                    app:civ_border_color="@color/colorCyan"
-                    app:civ_border_width="@dimen/margin_2_dp"
+                    app:civ_border="false"
                     app:civ_shadow="true"
                     app:setProfilePicture="@{viewModel.item.userUniqueId}" />
 
@@ -54,6 +58,19 @@
                     app:setUserName="@{viewModel.item.userUniqueId}" />
 
                 <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
+                    android:id="@+id/textViewPubDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewUserNickName"
+                    android:layout_marginStart="@dimen/margin_16_dp"
+                    android:layout_marginTop="@dimen/margin_8_dp"
+                    android:layout_toEndOf="@id/imageViewUser"
+                    android:gravity="center_vertical"
+                    android:text="@{viewModel.item.getTimeAgoString()}"
+                    android:textColor="@color/colorLoginText"
+                    android:textSize="@dimen/dimen_12_sp" />
+
+                <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
                     android:id="@+id/textViewPost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,25 +82,15 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/dimen_12_sp" />
 
-                <com.furkanaskin.app.podpocket.utils.ui.PodPocketLightTextView
-                    android:id="@+id/textViewPubDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_24_dp"
-                    android:layout_marginTop="@dimen/margin_8_dp"
-                    android:layout_toEndOf="@id/textViewUserNickName"
-                    android:gravity="center_vertical"
-                    android:text="@{viewModel.item.getPubDate()}"
-                    android:textColor="@color/colorLoginText"
-                    android:textSize="@dimen/dimen_12_sp" />
-
                 <ImageView
                     android:id="@+id/imageViewShare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/imageViewUser"
+                    android:layout_alignBottom="@id/imageViewUser"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/margin_24_dp"
-                    android:layout_marginEnd="@dimen/margin_24_dp"
+                    android:layout_marginStart="@dimen/margin_8_dp"
+                    android:layout_marginEnd="@dimen/margin_8_dp"
                     android:src="@drawable/ic_more" />
 
             </RelativeLayout>

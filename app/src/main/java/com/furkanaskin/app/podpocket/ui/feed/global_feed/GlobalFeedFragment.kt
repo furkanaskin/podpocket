@@ -37,7 +37,7 @@ class GlobalFeedFragment :
             Observer<List<PostEntity>> {
                 hideProgress()
 
-                (mBinding.recyclerViewGlobalPosts.adapter as? GlobalPostsAdapter)?.submitList(it)
+                (mBinding.recyclerViewGlobalPosts.adapter as? GlobalPostsAdapter)?.submitList(it.sortedByDescending { it.pubDate })
             }
         )
     }

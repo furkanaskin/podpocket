@@ -36,7 +36,7 @@ class LocaleFeedFragment : BaseFragment<LocaleFeedViewModel, FragmentLocaleFeedB
             Observer<List<PostEntity>> {
                 hideProgress()
 
-                (mBinding.recyclerViewLocalePosts.adapter as? LocalePostsAdapter)?.submitList(it)
+                (mBinding.recyclerViewLocalePosts.adapter as? LocalePostsAdapter)?.submitList(it.sortedByDescending { it.pubDate })
             }
         )
     }

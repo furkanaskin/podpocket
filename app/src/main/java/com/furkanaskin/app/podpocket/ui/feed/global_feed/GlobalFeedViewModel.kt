@@ -17,7 +17,8 @@ import org.jetbrains.anko.doAsync
  * Created by Furkan on 2019-05-26
  */
 
-class GlobalFeedViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) : BaseViewModel(api, appDatabase) {
+class GlobalFeedViewModel @Inject constructor(api: PodpocketAPI, appDatabase: AppDatabase) :
+    BaseViewModel(api, appDatabase) {
     var posts: ObservableArrayList<Post?> = ObservableArrayList()
 
     init {
@@ -35,7 +36,7 @@ class GlobalFeedViewModel @Inject constructor(api: PodpocketAPI, appDatabase: Ap
                 val allPosts = snapshot.children
                 posts.clear()
 
-                allPosts.reversed().forEachIndexed { _, dataSnapshot ->
+                allPosts.forEachIndexed { _, dataSnapshot ->
                     val post = dataSnapshot.getValue(Post::class.java)
                     posts.add(post)
                     post?.let { writePostToDB(it) }

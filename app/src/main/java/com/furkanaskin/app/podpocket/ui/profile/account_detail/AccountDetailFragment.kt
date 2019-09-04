@@ -94,14 +94,13 @@ class AccountDetailFragment :
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            0 -> if (resultCode === Activity.RESULT_OK) {
+            0 -> if (resultCode == Activity.RESULT_OK) {
 
                 val selectedImage = data?.extras?.get("data")
-
                 mBinding.imageViewProfilePicture.setImageBitmap(selectedImage as? Bitmap?)
                 changeProfilePicture()
             }
-            1 -> if (resultCode === Activity.RESULT_OK) {
+            1 -> if (resultCode == Activity.RESULT_OK) {
                 val selectedImage = data?.data
                 mBinding.imageViewProfilePicture.setImageURI(selectedImage)
                 changeProfilePicture()
@@ -145,6 +144,7 @@ class AccountDetailFragment :
             .addOnFailureListener {
                 // Handle unsuccessful uploads
             }.addOnSuccessListener {
+            hideProgress()
             getProfilePicture()
             isUserChangePicture = true
         }

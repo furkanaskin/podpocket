@@ -20,9 +20,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewGlobalPosts"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_24_dp"
-            android:layout_marginBottom="@dimen/margin_8_dp" />
+            android:layout_height="match_parent" />
 
     </RelativeLayout>
 </layout>

@@ -19,6 +19,7 @@ import com.furkanaskin.app.podpocket.ui.home.recommended_podcasts.RecommendedPod
 import com.furkanaskin.app.podpocket.ui.player.PlayerActivity
 import com.furkanaskin.app.podpocket.utils.extensions.hide
 import com.furkanaskin.app.podpocket.utils.extensions.show
+import com.pushbots.push.Pushbots
 
 /**
  * Created by Furkan on 16.04.2019
@@ -50,11 +51,14 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         initRecommendedEpisodes()
 
         hideTitles()
+        setupPushBots()
 
         mBinding.buttonSearch.setOnClickListener {
             navigate(R.id.action_homeFragment_to_searchFragment)
-            val search = (activity as? DashboardActivity)?.binding?.bottomNavigation?.menu?.getItem(1)
-            (activity as? DashboardActivity)?.binding?.bottomNavigation?.selectedItemId = search?.itemId!!
+            val search =
+                (activity as? DashboardActivity)?.binding?.bottomNavigation?.menu?.getItem(1)
+            (activity as? DashboardActivity)?.binding?.bottomNavigation?.selectedItemId =
+                search?.itemId!!
         }
 
         mBinding.swipeRefreshLayout.setOnRefreshListener {
@@ -86,7 +90,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         val adapter = BestPodcastsAdapter { item ->
 
             val podcastId = item.id
-            val action = HomeFragmentDirections.actionHomeFragmentToPodcastFragment().setPodcastID(podcastId ?: "")
+            val action = HomeFragmentDirections.actionHomeFragmentToPodcastFragment()
+                .setPodcastID(podcastId ?: "")
             findNavController().navigate(action)
         }
 
@@ -99,7 +104,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
         val adapter = RecommendedPodcastsAdapter { item ->
             val podcastId = item.id
-            val action = HomeFragmentDirections.actionHomeFragmentToPodcastFragment().setPodcastID(podcastId ?: "")
+            val action = HomeFragmentDirections.actionHomeFragmentToPodcastFragment()
+                .setPodcastID(podcastId ?: "")
             findNavController().navigate(action)
         }
 
@@ -161,7 +167,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
             this@HomeFragment,
             Observer<Resource<PodcastRecommendations>> {
                 showTitles()
-                (mBinding.recyclerViewRecommendedPodcasts.adapter as? RecommendedPodcastsAdapter)?.submitList(it.data?.recommendations)
+                (mBinding.recyclerViewRecommendedPodcasts.adapter as? RecommendedPodcastsAdapter)?.submitList(
+                    it.data?.recommendations
+                )
             }
         )
     }
@@ -180,7 +188,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
             this@HomeFragment,
             Observer<Resource<EpisodeRecommendations>> {
                 showTitles()
-                (mBinding.recyclerViewRecommendedEpisodes.adapter as? RecommendedEpisodesAdapter)?.submitList(it.data?.recommendations)
+                (mBinding.recyclerViewRecommendedEpisodes.adapter as? RecommendedEpisodesAdapter)?.submitList(
+                    it.data?.recommendations
+                )
             }
         )
     }
@@ -195,5 +205,15 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
         mBinding.textViewBestPodcasts.show()
         mBinding.textViewRecommendedEpisodes.show()
         mBinding.textViewRecommendedPodcasts.show()
+    }
+
+    private fun setupPushBots() {
+        Pushbots.sharedInstance().registerForRemoteNotifications()
+        // Register custom fields after user registered on PushBots
+        // Customer profile
+        Pushbots.setFirstName("${viewModel.user?.name}")
+        Pushbots.setLastName("${viewModel.user?.surname}")
+        Pushbots.setName("${viewModel.user?.name} ${viewModel.user?.surname}")
+        Pushbots.setEmail("${viewModel.user?.email}")
     }
 }

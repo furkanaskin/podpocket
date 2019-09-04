@@ -40,7 +40,8 @@ import org.jetbrains.anko.doAsync
  * Created by Furkan on 16.04.2019
  */
 
-class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(PlayerViewModel::class.java) {
+class PlayerActivity :
+    BaseActivity<PlayerViewModel, ActivityPlayerBinding>(PlayerViewModel::class.java) {
 
     private lateinit var player: SimpleExoPlayer
     private lateinit var mediaSource: ConcatenatingMediaSource
@@ -75,7 +76,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         } else {
 
             // User coming from Podcast Episodes fragment. First we need the find which position clicked then we can get episode detail.
-            currentPosition = intent.getStringExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION).toInt()
+            currentPosition =
+                intent.getStringExtra(Constants.IntentName.PLAYER_ACTIVITY_POSITION).toInt()
             episodeId = episodes[currentPosition]
             getEpisodeDetail(episodeId)
         }
@@ -102,7 +104,11 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             if (queueFragment != null) {
                 // If is already committed, don't commit again.
             } else {
-                transaction.add(R.id.fragmentLayoutQueue, playerQueueFragment, "playerQueueFragment")
+                transaction.add(
+                    R.id.fragmentLayoutQueue,
+                    playerQueueFragment,
+                    "playerQueueFragment"
+                )
                     .commitNow()
             }
 
@@ -150,12 +156,13 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
             previousEpisode()
         }
 
-        viewModel.isFavorite.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
-            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-                favoriteVisibility()
-                setFavorite()
-            }
-        })
+        viewModel.isFavorite.addOnPropertyChangedCallback(object :
+                Observable.OnPropertyChangedCallback() {
+                override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                    favoriteVisibility()
+                    setFavorite()
+                }
+            })
 
         if (viewModel.progressLiveData.hasActiveObservers())
             viewModel.progressLiveData.removeObservers(this)
@@ -189,14 +196,20 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         doAsync {
             if (viewModel.isFavorite.get() == true) {
                 viewModel.db?.favoritesDao()
-                    ?.insertFavoriteEpisode(viewModel.episodeDetailLiveData.value?.data?.let { FavoriteEpisodeEntity(it) })
+                    ?.insertFavoriteEpisode(
+                        viewModel.episodeDetailLiveData.value?.data?.let {
+                            FavoriteEpisodeEntity(
+                                it
+                            )
+                        }
+                    )
             } else {
                 viewModel.db?.favoritesDao()?.deleteFavoriteEpisode(episodeId)
             }
         }
     }
 
-    fun checkFavorite() {
+    private fun checkFavorite(title: String?) {
 
         // Check current episode isFavorite true or false
 
@@ -210,8 +223,10 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                 // if it's fav. set true else set false.
 
                 try {
-                    favoriteEpisode?.title
-                    viewModel.isFavorite.set(true)
+                    if (favoriteEpisode?.title == title)
+                        viewModel.isFavorite.set(true)
+                    else
+                        viewModel.isFavorite.set(false)
                 } catch (e: NullPointerException) {
                     viewModel.isFavorite.set(false)
                 }
@@ -248,15 +263,16 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                     player.release()
                 }
 
-                checkFavorite()
+                checkFavorite(it.data?.title)
                 it.data?.let { episode -> setEpisode(episode) }
                 it.data?.let { episode -> setEpisodeInfo(episode) }
             }
         )
     }
 
-    fun setEpisode(episode: Episode) {
-        val media = ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(episode.audio))
+    private fun setEpisode(episode: Episode) {
+        val media = ExtractorMediaSource.Factory(dataSourceFactory)
+            .createMediaSource(Uri.parse(episode.audio))
 
         mediaSource = ConcatenatingMediaSource(media)
         player = ExoPlayerFactory.newSimpleInstance(this, trackSelector)
@@ -277,7 +293,7 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
         viewModel.saveCurrentPlayerValues()
     }
 
-    fun setEpisodeInfo(episode: Episode) {
+    private fun setEpisodeInfo(episode: Episode) {
         binding.textViewTrackName.text = episode.title
         binding.textViewPodcastTitle.text = episode.podcast?.title
     }
@@ -306,7 +322,8 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
                     defaultTimeBar.setDuration((player.duration / 1000))
                     val mCurrentPosition = player.currentPosition.toInt() / 1000
                     defaultTimeBar.setPosition(mCurrentPosition.toLong())
-                    textViewCurrentTime.text = binding.viewModel?.stringForTime(player.currentPosition.toInt())
+                    textViewCurrentTime.text =
+                        binding.viewModel?.stringForTime(player.currentPosition.toInt())
                     textViewEndTime.text = binding.viewModel?.stringForTime(player.duration.toInt())
                     handler.postDelayed(this, 1000)
                 }
@@ -345,25 +362,26 @@ class PlayerActivity : BaseActivity<PlayerViewModel, ActivityPlayerBinding>(Play
     private fun initDefaultTimeBar() {
         defaultTimeBar.requestFocus()
         defaultTimeBar.addListener(timeBarListener)
-        defaultTimeBar.onFocusChangeListener = object : SeekBar.OnSeekBarChangeListener, View.OnFocusChangeListener {
-            override fun onFocusChange(p0: View?, p1: Boolean) {}
+        defaultTimeBar.onFocusChangeListener =
+            object : SeekBar.OnSeekBarChangeListener, View.OnFocusChangeListener {
+                override fun onFocusChange(p0: View?, p1: Boolean) {}
 
-            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                if (!p2) {
-                    return
+                override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+                    if (!p2) {
+                        return
+                    }
+
+                    player.seekTo(p1 * 1000L)
                 }
 
-                player.seekTo(p1 * 1000L)
-            }
+                override fun onStartTrackingTouch(p0: SeekBar?) {
+                    player.seekTo((p0?.progress ?: 0) * 1000L)
+                }
 
-            override fun onStartTrackingTouch(p0: SeekBar?) {
-                player.seekTo((p0?.progress ?: 0) * 1000L)
+                override fun onStopTrackingTouch(p0: SeekBar?) {
+                    player.seekTo((p0?.progress ?: 0) * 1000L)
+                }
             }
-
-            override fun onStopTrackingTouch(p0: SeekBar?) {
-                player.seekTo((p0?.progress ?: 0) * 1000L)
-            }
-        }
     }
 
     private val eventListener = object : Player.EventListener {

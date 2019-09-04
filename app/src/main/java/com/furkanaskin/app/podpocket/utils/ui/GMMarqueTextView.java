@@ -13,10 +13,8 @@ import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
-
-import com.furkanaskin.app.podpocket.R;
-
 import androidx.core.content.ContextCompat;
+import com.furkanaskin.app.podpocket.R;
 
 /**
  * Created by Furkan on 29.04.2019

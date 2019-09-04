@@ -36,7 +36,7 @@ class LocaleFeedViewModel @Inject constructor(api: PodpocketAPI, appDatabase: Ap
                 val localePosts = snapshot.children
                 posts.clear()
 
-                localePosts.reversed().forEachIndexed { _, dataSnapshot ->
+                localePosts.forEachIndexed { _, dataSnapshot ->
                     if (dataSnapshot.getValue(Post::class.java)?.region == currentLocation) {
                         val post = dataSnapshot.getValue(Post::class.java)
                         posts.add(post)
